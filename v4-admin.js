@@ -97,8 +97,10 @@
         '<td>' + fmtDate(data.requestedAt) + '</td>' +
         '<td>' + statusBadge(data.status) + '</td>' +
         '<td class="actions">' +
-        '<button type="button" data-approve="' + escapeHtml(id) + '">核准</button>' +
-        '<button type="button" class="danger" data-reject="' + escapeHtml(id) + '">拒絕</button>' +
+        (data.status === 'pending'
+          ? '<button type="button" data-approve="' + escapeHtml(id) + '">核准</button>' +
+            '<button type="button" class="danger" data-reject="' + escapeHtml(id) + '">拒絕</button>'
+          : '') +
         '<button type="button" class="ghost" data-delete-request="' + escapeHtml(id) + '">刪除</button>' +
         '</td></tr>'
       );
