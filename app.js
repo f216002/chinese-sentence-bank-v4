@@ -1563,14 +1563,6 @@ document.addEventListener('keydown', event => {
     $('topicToggle').setAttribute('aria-expanded', 'false');
   }
 });
-$('helpButton').addEventListener('click', () => $('helpDialog').showModal());
-$('copyPrompt').addEventListener('click', async () => {
-  await navigator.clipboard.writeText(AI_PROMPT_TEMPLATE.replace('{{STUDENT_SENTENCE}}', '[Paste one Hindi or Romanized Hindi sentence here]'));
-  const button = $('copyPrompt'); button.textContent = 'Copied!';
-  setTimeout(() => { button.textContent = 'Copy AI prompt'; }, 1400);
-});
-$('closeHelp').addEventListener('click', () => $('helpDialog').close());
-$('helpDialog').addEventListener('click', e => { if (e.target === $('helpDialog')) $('helpDialog').close(); });
 $('saveButton').addEventListener('click', trySaveSentence);
 $('confirmAudioSave').addEventListener('click', submitTeacherAudio);
 $('closeAudioPin').addEventListener('click', () => { pendingModelSave = null; $('audioPinDialog').close(); });
