@@ -55,6 +55,7 @@ function docToSentence(id, d) {
     aiSource: d.aiSource || '',
     originalPaste: d.originalPaste || '',
     favorite: !!d.favorite,
+    i18n: (d.i18n && typeof d.i18n === 'object') ? d.i18n : {},
     audioPath,
     audioMime: d.audioMime || '',
     standardAudioUrl: audioPath, /* truthy marker: existing UI checks keep working */
@@ -198,6 +199,8 @@ function applyV4LanguageProfile(code) {
   if ($('generatedPrompt')) $('generatedPrompt').value = '';
   if ($('generatedPromptPanel')) $('generatedPromptPanel').classList.add('hidden');
   if ($('promptMessage')) $('promptMessage').textContent = '';
+  /* 課程跟著老師選的語言即時切換。 */
+  try { if (typeof renderCourse === 'function' && $('courseSection')) renderCourse(); } catch (_) {}
 }
 
 function buildPrompt() {
@@ -270,6 +273,34 @@ function romanHindiFor(sentence) {
   if (sentence.romanHindi) return sentence.romanHindi;
   if (!sentence.originalPaste) return '';
   return parsePaste(sentence.originalPaste).romanHindi;
+}
+
+/* ---- 課程多語言顯示（V4 第二階段） ----
+   課程記錄（seq != null）跟著老師在「Students' first language」選的語言顯示：
+   有 i18n 翻譯就用翻譯，沒有就退回印地語原文。個人句庫句子不受影響。 */
+function isCourseRecord(s) { return !!(s && s.seq != null); }
+function courseI18n(s) {
+  const lang = state.sourceLanguage || 'hi';
+  return (s && s.i18n && s.i18n[lang]) || null;
+}
+function displaySource(s) {
+  const tr = isCourseRecord(s) ? courseI18n(s) : null;
+  return (tr && tr.s) || s.hindiSentence || '';
+}
+function displayRoman(s) {
+  if (isCourseRecord(s)) {
+    const tr = courseI18n(s);
+    if (tr) return tr.r || '';
+    return s.romanHindi || '';
+  }
+  return romanHindiFor(s);
+}
+function displayExplanation(s) {
+  const tr = isCourseRecord(s) ? courseI18n(s) : null;
+  return (tr && tr.e) || s.hindiExplanation || '';
+}
+function displayProfile(s) {
+  return v4GetLanguageProfile(isCourseRecord(s) ? (state.sourceLanguage || 'hi') : sourceLanguageFor(s));
 }
 
 function setModelAudioStatus(button, message) {
@@ -833,13 +864,13 @@ function createCard(sentence, preview = false) {
   const editButton = node.querySelector('.card-edit-button');
   editButton.hidden = preview;
   if (!preview) editButton.addEventListener('click', () => openEditDialog(sentence));
-  const cardProfile = v4GetLanguageProfile(sourceLanguageFor(sentence));
+  const cardProfile = displayProfile(sentence);
   const hindiEl = node.querySelector('.hindi');
-  hindiEl.textContent = sentence.hindiSentence;
+  hindiEl.textContent = displaySource(sentence);
   hindiEl.setAttribute('lang', cardProfile.locale);
   const hindiSpeak = node.querySelector('.hindi-speak-button');
-  hindiSpeak.addEventListener('click', () => speakHindi(sentence.hindiSentence, hindiSpeak, cardProfile.locale));
-  const roman = romanHindiFor(sentence);
+  hindiSpeak.addEventListener('click', () => speakHindi(displaySource(sentence), hindiSpeak, cardProfile.locale));
+  const roman = displayRoman(sentence);
   const romanLine = node.querySelector('.roman-hindi');
   romanLine.textContent = roman ? `${cardProfile.romanizationName}: ${roman}` : '';
   romanLine.hidden = !roman;
@@ -849,7 +880,7 @@ function createCard(sentence, preview = false) {
   chineseEl.setAttribute('lang', 'zh-Hant');
   node.querySelector('.pinyin').textContent = sentence.pinyin;
   const explanationEl = node.querySelector('.explanation');
-  explanationEl.textContent = sentence.hindiExplanation || 'No explanation added.';
+  explanationEl.textContent = displayExplanation(sentence) || 'No explanation added.';
   explanationEl.setAttribute('lang', cardProfile.locale);
   const tags = [...new Set(String(sentence.tags || '').split(/[,;|]/).map(t => t.trim().toLowerCase()).filter(Boolean))];
   node.querySelector('.tags').innerHTML = tags.map(tag => `<span class="tag"></span>`).join('');
@@ -1808,7 +1839,7 @@ function renderLessonView() {
     <div class="lesson-header-top"><span class="lesson-num">${lessonLabel(lesson.n)}</span><span class="lesson-topic">${lesson.topic}</span></div>
     <h3 class="lesson-header-zh" lang="zh-Hant">${lesson.zh}</h3>
     <p class="lesson-header-en">${lesson.en}</p>
-    ${goals.map(s => `<div class="lesson-goals"><strong>學習目標</strong><p lang="hi">${escapeHtml(s.hindiExplanation || s.hindiSentence || '')}</p></div>`).join('')}`;
+    ${goals.map(s => { const gp = displayProfile(s); const gt = displayExplanation(s) || displaySource(s); return `<div class="lesson-goals"><strong>學習目標</strong><p lang="${gp.locale}">${escapeHtml(gt)}</p></div>`; }).join('')}`;
 
   const tabs = $('lessonTabs');
   tabs.innerHTML = '';
@@ -1946,18 +1977,18 @@ function createVocabCard(sentence) {
   node.querySelector('.vocab-pinyin').textContent = sentence.pinyin || '';
   const zhuyinEl = node.querySelector('.vocab-zhuyin');
   if (zhuyinEl) zhuyinEl.textContent = meta.zhuyin;
-  const vocabProfile = v4GetLanguageProfile(sourceLanguageFor(sentence));
-  node.querySelector('.vocab-hindi').textContent = sentence.hindiSentence || '';
+  const vocabProfile = displayProfile(sentence);
+  node.querySelector('.vocab-hindi').textContent = displaySource(sentence);
   node.querySelector('.vocab-hindi').setAttribute('lang', vocabProfile.locale);
-  const roman = romanHindiFor(sentence);
+  const roman = displayRoman(sentence);
   const romanEl = node.querySelector('.vocab-roman');
   romanEl.textContent = roman || '';
   romanEl.hidden = !roman;
   romanEl.setAttribute('lang', vocabProfile.locale + '-Latn');
   const exampleEl = node.querySelector('.vocab-example');
-  exampleEl.textContent = sentence.hindiExplanation || '';
-  exampleEl.hidden = !sentence.hindiExplanation;
-  node.querySelector('.vocab-hindi-speak').addEventListener('click', e => speakHindi(sentence.hindiSentence, e.currentTarget, vocabProfile.locale));
+  exampleEl.textContent = displayExplanation(sentence);
+  exampleEl.hidden = !displayExplanation(sentence);
+  node.querySelector('.vocab-hindi-speak').addEventListener('click', e => speakHindi(displaySource(sentence), e.currentTarget, vocabProfile.locale));
   node.querySelector('.vocab-speak').addEventListener('click', e => playSentenceModel(sentence, e.currentTarget));
   node.querySelector('.card-record-button').addEventListener('click', () => toggleCardRecording(node, sentence, false));
   node.querySelector('.card-play-button').addEventListener('click', () => {
@@ -1990,12 +2021,16 @@ function renderGrammarTab(content, recs, lessonNum) {
       <div class="grammar-pinyin"></div>
       <div class="grammar-hindi" lang="hi"></div>
       <div class="grammar-function" lang="hi"></div>`;
+    const grammarProfile = displayProfile(point);
     head.querySelector('.grammar-pattern').textContent = point.chineseSentence || '';
     head.querySelector('.grammar-pinyin').textContent = point.pinyin || '';
-    head.querySelector('.grammar-hindi').textContent = point.hindiSentence || '';
+    const grammarHindiEl = head.querySelector('.grammar-hindi');
+    grammarHindiEl.textContent = displaySource(point);
+    grammarHindiEl.setAttribute('lang', grammarProfile.locale);
     const funcEl = head.querySelector('.grammar-function');
-    funcEl.textContent = point.hindiExplanation || '';
-    funcEl.hidden = !point.hindiExplanation;
+    funcEl.textContent = displayExplanation(point);
+    funcEl.hidden = !displayExplanation(point);
+    funcEl.setAttribute('lang', grammarProfile.locale);
     block.appendChild(head);
     examples.forEach(s => block.appendChild(createCard(s)));
     content.appendChild(block);
@@ -2013,11 +2048,15 @@ function renderInfoTab(content, recs, tabName) {
       <p class="info-hi" lang="hi"></p>
       <p class="info-explain" lang="hi"></p>
       <div class="info-actions"><button type="button" class="icon-button info-edit" aria-label="Edit" title="Edit">✏️</button></div>`;
+    const infoProfile = displayProfile(s);
     card.querySelector('.info-zh').textContent = s.chineseSentence || '';
-    card.querySelector('.info-hi').textContent = s.hindiSentence || '';
+    const infoHiEl = card.querySelector('.info-hi');
+    infoHiEl.textContent = displaySource(s);
+    infoHiEl.setAttribute('lang', infoProfile.locale);
     const explainEl = card.querySelector('.info-explain');
-    explainEl.textContent = s.hindiExplanation || '';
-    explainEl.hidden = !s.hindiExplanation;
+    explainEl.textContent = displayExplanation(s);
+    explainEl.hidden = !displayExplanation(s);
+    explainEl.setAttribute('lang', infoProfile.locale);
     card.querySelector('.info-edit').addEventListener('click', () => openEditDialog(s));
     content.appendChild(card);
   });
@@ -2113,6 +2152,7 @@ async function playNextTextLine() {
 
 /* ---- 內容包匯入 ---- */
 let packRecordsCache = [];
+let packTranslationMode = false; /* 翻譯包：只寫入 i18n.{lang}，不動印地語原文 */
 function splitPackRecords(text) {
   return String(text || '').split(/^===RECORD===$/m).map(s => s.trim()).filter(s => s && !s.startsWith('#'));
 }
@@ -2129,6 +2169,11 @@ async function loadPackPreview() {
     const text = await file.text();
     const records = splitPackRecords(text);
     if (!records.length) throw new Error('檔案中沒有找到記錄');
+    if (records.some(r => /(^|\n)TRANSLATION_LANG:/.test(r))) {
+      await loadTranslationPreview(records);
+      return;
+    }
+    packTranslationMode = false;
     const lessonKey = String(parsePaste(records[0]).lesson || '');
     const updateMode = $('importUpdateCheckbox').checked;
     const lessonNum = Number(lessonKey) || 0;
@@ -2168,6 +2213,68 @@ async function loadPackPreview() {
     info.textContent = `讀取失敗：${err.message}。`;
   }
 }
+/* ---- 翻譯包：課程多語言翻譯匯入 ----
+   記錄格式：
+     LESSON / SECTION / CHINESE / SPEAKER / EXPLANATION（比對鍵用，EXPLANATION 為原文印地語解說）
+     TRANSLATION_LANG / T_SOURCE / T_ROMAN / T_EXPL（要寫入的翻譯）
+   只對已存在的課程記錄做 batch.update({ 'i18n.{lang}': {...} })，不新增、不動原文。 */
+const TRANSLATION_LABELS = ['LESSON', 'SECTION', 'CHINESE', 'SPEAKER', 'EXPLANATION', 'TRANSLATION_LANG', 'T_SOURCE', 'T_ROMAN', 'T_EXPL'];
+function parseTranslationRecord(r) {
+  const out = {};
+  const labelAlt = TRANSLATION_LABELS.join('|');
+  TRANSLATION_LABELS.forEach(label => {
+    const m = String(r).match(new RegExp('^' + label + ':\\s*([\\s\\S]*?)(?=\\n(?:' + labelAlt + '):|\\s*$)', 'm'));
+    out[label] = m ? m[1].trim() : '';
+  });
+  return out;
+}
+async function loadTranslationPreview(records) {
+  const info = $('packInfo');
+  const importButton = $('packImportButton');
+  importButton.disabled = true;
+  packRecordsCache = [];
+  packTranslationMode = true;
+  const matchKey = (lesson, section, chinese, speaker, expl) =>
+    [lesson, section, chinese, speaker, expl].join('‖');
+  const byLesson = new Map();
+  records.forEach(r => {
+    const t = parseTranslationRecord(r);
+    if (!t.CHINESE || !t.TRANSLATION_LANG) return;
+    const lesson = String(t.LESSON || '').trim();
+    if (!byLesson.has(lesson)) byLesson.set(lesson, []);
+    byLesson.get(lesson).push(t);
+  });
+  const items = [];
+  let matched = 0, skipped = 0;
+  for (const [lesson, list] of byLesson) {
+    const existingByKey = new Map();
+    const existingByChinese = new Map();
+    lessonRecords(lesson).forEach(s => {
+      const m = courseMeta(s);
+      existingByKey.set(matchKey(m.lesson, m.section, (s.chineseSentence || '').trim(), m.speaker, (s.hindiExplanation || '').trim()), s);
+      const ck = (s.chineseSentence || '').trim();
+      if (ck && !existingByChinese.has(ck)) existingByChinese.set(ck, s);
+    });
+    list.forEach(t => {
+      const ck = t.CHINESE.trim();
+      const old = existingByKey.get(matchKey(lesson, t.SECTION.trim(), ck, t.SPEAKER.trim(), t.EXPLANATION.trim()))
+        || existingByChinese.get(ck);
+      if (!old) { skipped += 1; return; }
+      items.push({
+        translation: true,
+        oldRecordId: old.recordId,
+        lang: t.TRANSLATION_LANG.trim(),
+        s: t.T_SOURCE, r: t.T_ROMAN, e: t.T_EXPL,
+      });
+      matched += 1;
+    });
+  }
+  packRecordsCache = items;
+  const langs = [...new Set(items.map(i => i.lang))];
+  const lessons = [...byLesson.keys()].filter(Boolean).sort();
+  info.textContent = `翻譯包：${matched} 組翻譯（${lessons.length} 課：${lessons.join('、')}；${langs.length} 語：${langs.join('、')}），只寫入各語言翻譯欄位、不動印地語原文${skipped ? `；${skipped} 組找不到對應句子（略過）` : ''}。`;
+  importButton.disabled = items.length === 0;
+}
 /* 內容包批次匯入：整包一次寫入 Firestore。
    更新模式＝原地 update（保留 recordId、錄音、建立時間），不再建新刪舊。 */
 async function importPackRecords() {
@@ -2179,6 +2286,7 @@ async function importPackRecords() {
     return;
   }
   if (!packRecordsCache.length) { progress.textContent = '沒有可匯入的記錄。'; return; }
+  if (packTranslationMode) { await importTranslationRecords(); return; }
   const button = $('packImportButton');
   button.disabled = true;
   const total = packRecordsCache.length;
@@ -2229,7 +2337,45 @@ async function importPackRecords() {
   } catch (err) {
     progress.textContent = `匯入失敗：${(err && err.message) || '未知錯誤'}。請重整後再試。`;
   }
+}
+async function importTranslationRecords() {
+  const progress = $('importProgress');
+  const button = $('packImportButton');
+  try {
+    requireApprovedAccess();
+  } catch (err) {
+    progress.textContent = (err && err.message) || '請先用 Google 登入。';
+    return;
+  }
   button.disabled = true;
+  const total = packRecordsCache.length;
+  let done = 0;
+  progress.textContent = `翻譯寫入中 0/${total}…`;
+  try {
+    requireApprovedAccess();
+    const BATCH_LIMIT = 450; /* Firestore 每批上限 500 */
+    let batch = fbDb.batch();
+    let ops = 0;
+    for (const item of packRecordsCache) {
+      const field = {};
+      field['i18n.' + item.lang] = { s: item.s || '', r: item.r || '', e: item.e || '', updatedAt: new Date().toISOString() };
+      batch.update(fbDb.collection(SENTENCES_COL).doc(item.oldRecordId), field);
+      ops += 1; done += 1;
+      if (done % 200 === 0) progress.textContent = `翻譯寫入中 ${done}/${total}…`;
+      if (ops >= BATCH_LIMIT) { await batch.commit(); batch = fbDb.batch(); ops = 0; }
+    }
+    if (ops) await batch.commit();
+    await reloadSentences();
+    courseMetaCache.clear();
+    renderSentences();
+    renderCourse();
+    packRecordsCache = [];
+    packTranslationMode = false;
+    progress.textContent = `完成：寫入 ${done} 組翻譯。`;
+  } catch (err) {
+    progress.textContent = `匯入失敗：${(err && err.message) || '未知錯誤'}。請重整後再試。`;
+  }
+  button.disabled = false;
 }
 
 /* Course UI wiring */
