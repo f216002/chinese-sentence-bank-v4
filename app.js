@@ -884,6 +884,14 @@ function createCard(sentence, preview = false) {
   const explanationEl = node.querySelector('.explanation');
   explanationEl.textContent = displayExplanation(sentence) || 'No explanation added.';
   explanationEl.setAttribute('lang', cardProfile.locale);
+  /* 解說區標題跟隨顯示語言（模板預設寫 "Hindi explanation"）。 */
+  const explSummary = node.querySelector('details summary');
+  if (explSummary) {
+    const plusSpan = explSummary.querySelector('span');
+    explSummary.textContent = cardProfile.name + ' explanation ';
+    if (plusSpan) explSummary.appendChild(plusSpan);
+  }
+  hindiSpeak.setAttribute('aria-label', 'Play ' + cardProfile.name + ' pronunciation');
   const tags = [...new Set(String(sentence.tags || '').split(/[,;|]/).map(t => t.trim().toLowerCase()).filter(Boolean))];
   node.querySelector('.tags').innerHTML = tags.map(tag => `<span class="tag"></span>`).join('');
   node.querySelectorAll('.tag').forEach((el, i) => { el.textContent = tags[i]; });
