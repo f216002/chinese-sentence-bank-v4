@@ -129,6 +129,30 @@ var V4_LANGUAGE_PROFILES = {
     romanizationName: 'Romanization',
     requiresRomanization: false,
     legacyLabels: ['ENGLISH']
+  },
+  de: {
+    code: 'de',
+    name: 'German',
+    nativeName: 'Deutsch',
+    locale: 'de-DE',
+    region: 'Germany',
+    inputHelp: 'German or Chinese sentence',
+    inputPlaceholder: 'Gib hier einen deutschen Satz ein.\nor: 請在這裡輸入中文句子。',
+    romanizationName: 'Romanization',
+    requiresRomanization: false,
+    legacyLabels: ['GERMAN']
+  },
+  my: {
+    code: 'my',
+    name: 'Burmese',
+    nativeName: 'မြန်မာ',
+    locale: 'my-MM',
+    region: 'Myanmar',
+    inputHelp: 'Burmese or Chinese sentence',
+    inputPlaceholder: 'မြန်မာစာကြောင်းတစ်ကြောင်း ထည့်ပါ။\nor: 請在這裡輸入中文句子。',
+    romanizationName: 'Burmese Romanization',
+    requiresRomanization: true,
+    legacyLabels: ['BURMESE']
   }
 };
 
