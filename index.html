@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260926-4">
+  <link rel="stylesheet" href="styles.css?v=20260926-5">
 </head>
 <body>
   <a class="skip-link" href="#sentenceGrid">Skip to sentence bank</a>
@@ -25,6 +25,10 @@
       <span><strong id="bankName">My Chinese Sentence Bank</strong><small id="ownerName">A personal language notebook</small></span>
     </a>
     <div class="topbar-actions">
+      <label class="topbar-lang" title="Students' first language">
+        <span aria-hidden="true">🌐</span>
+        <select id="v4TopbarLanguage" aria-label="Students' first language"></select>
+      </label>
       <button class="icon-button refresh-button" id="refreshButton" type="button" aria-label="Refresh sentence bank" title="Refresh">↻</button>
       <div class="v4-auth" id="v4Auth">
         <div class="v4-account" id="v4TeacherAccount" hidden>
@@ -345,7 +349,7 @@
   <script src="v4-auth.js?v=20260926-6"></script>
   <script src="v4-access.js?v=20260926-2"></script>
   <script src="v4-language-config.js?v=20260926-1"></script>
-  <script src="app.js?v=20260926-6"></script>
+  <script src="app.js?v=20260926-7"></script>
 </body>
 </html>
 
