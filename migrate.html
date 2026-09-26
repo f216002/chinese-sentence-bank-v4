@@ -123,7 +123,7 @@
 
   $('migrateBtn').addEventListener('click', async () => {
     if (!scanData) return;
-    if (!confirm(`確定遷移 ${scanData.personal.length + scanData.supplement.length} 筆到 v4_teachers/${uid}/sentences 嗎？`)) return;
+    // （掃描頁已做筆數檢查，此處不再彈確認框，避免自動化流程被原生對話框卡住）
     $('migrateBtn').disabled = true;
     const targets = [...scanData.personal, ...scanData.supplement];
     const BATCH_LIMIT = 400;
