@@ -44,6 +44,7 @@ function docToSentence(id, d) {
   const audioPath = d.audioPath || '';
   return {
     recordId: id,
+    sourceLanguage: d.sourceLanguage || 'hi',
     hindiSentence: d.hindiSentence || '',
     chineseSentence: d.chineseSentence || '',
     pinyin: d.pinyin || '',
@@ -66,6 +67,7 @@ function docToSentence(id, d) {
 /* UI fields -> Firestore document data for a new sentence. */
 function sentenceDocData(fields) {
   return {
+    sourceLanguage: fields.sourceLanguage || 'hi',
     hindiSentence: fields.hindiSentence || '',
     chineseSentence: fields.chineseSentence || '',
     pinyin: fields.pinyin || '',
@@ -130,39 +132,9 @@ function defaultSettings() {
 }
 const SAMPLE = `HINDI:\nमुझे बैंक से पैसे निकालने हैं।\n\nCHINESE:\n我要去銀行領錢。\n\nPINYIN:\nWǒ yào qù yínháng lǐng qián.\n\nROMAN:\nMujhe bank se paise nikaalne hain.\n\nEXPLANATION:\n我要 (wǒ yào) का अर्थ है “मैं ... करना चाहता/चाहती हूँ।”\n去 (qù) का अर्थ “जाना” है।\n銀行 (yínháng) का अर्थ “बैंक” है।\n領錢 (lǐng qián) का अर्थ बैंक से पैसे निकालना है।\n中文語序 (Zhōngwén yǔxù): 主語 (zhǔyǔ) + 要 (yào) + 去 (qù) + 地點 (dìdiǎn) + 動作 (dòngzuò)。\n\nCATEGORY:\nBank`;
 const AI_PROMPT = `You are a Taiwanese Mandarin teacher for a Hindi-speaking beginner. Convert the Hindi sentence below into natural Traditional Chinese used in Taiwan.\n\nHINDI SENTENCE:\n[Paste one Hindi sentence here]\n\nReturn ONLY the following labelled sections. Do not add an introduction or conclusion. Keep every label exactly as written and do not add Markdown symbols such as ** around the labels.\n\nHINDI:\n[Repeat the original Hindi sentence]\n\nCHINESE:\n[One natural Traditional Chinese sentence used in Taiwan]\n\nPINYIN:\n[Hanyu Pinyin with tone marks for the complete Chinese sentence]\n\nEXPLANATION:\n[Explain every Chinese word and the grammar in clear Hindi. Whenever any Chinese character, word, phrase, or example appears, immediately add its pinyin in parentheses. Use Traditional Chinese only.]\n\nCATEGORY:\n[Choose exactly one: Daily Life, School, Home, Restaurant, Shopping, Bank, Hospital, Travel, Train & Bus, Airport, Work, Friends, Other]\n\nTAGS:\n[Three to five short English keywords separated by commas]\n\nAI SOURCE:\n[Write ChatGPT or Gemini]`;
-const AI_PROMPT_TEMPLATE = `Role Persona: You are a professional Chinese language teacher whose native language is Hindi. Your students are beginners from India learning Chinese. Conduct all teaching, guidance, and explanations in warm, friendly, and professional Hindi throughout.
 
-Core Task: If I provide Hindi or Romanized Hindi, translate it into natural spoken Traditional Chinese as used in Taiwan. If I provide Chinese, translate it into natural Hindi. Then explain its vocabulary and grammatical structure entirely in Hindi.
 
-Formatting and Output Guidelines: Return exactly the seven section headers below in this order. Put every header on its own line exactly as written, without Markdown symbols such as ** or #. Do not omit any section.
-
-HINDI:
-Present the original Hindi sentence in full. If the input is Romanized Hindi, convert it into correct Devanagari Hindi.
-
-CHINESE:
-Provide an accurate, authentic Traditional Chinese translation using Traditional Chinese characters exclusively.
-
-PINYIN:
-Provide the complete Hanyu Pinyin with correct tone marks and punctuation.
-
-ROMAN:
-Provide the complete Romanized transliteration in Latin script for the Hindi sentence.
-
-EXPLANATION:
-Use Hindi throughout to explain the complete meaning, each important word, useful phrases, measure words, word order and overall grammar in detail. Whenever a Chinese word, character, phrase or example is mentioned, include the Traditional Chinese, Pinyin and Hindi meaning together in this format: 漢字 (pīnyīn) - Hindi explanation. Never show Chinese in the explanation without pinyin.
-
-CATEGORY:
-Choose exactly one: Daily Life, School, Home, Restaurant, Shopping, Bank, Hospital, Travel, Train & Bus, Airport, Work, Friends, Other
-
-TAGS:
-Provide 3 to 6 short English search keywords separated by commas.
-
-Do not add an introduction, conclusion, note or any additional section.
-
-Sentence to be explained:
-{{STUDENT_SENTENCE}}`;
-
-const state = { sentences: [], categories: [], selectedCategories: new Set(), settings: {}, preview: null };
+const state = { sentences: [], categories: [], selectedCategories: new Set(), settings: {}, preview: null, sourceLanguage: 'hi' };
 const $ = (id) => document.getElementById(id);
 const sentenceModelAudio = new Audio();
 const teacherAudioCache = new Map();
@@ -174,13 +146,15 @@ let pendingModelSave = null;
 let pendingDeleteSentence = null;
 let pendingEditSentence = null;
 
+/* Multilingual paste parser (ported from V3). Accepts the language-neutral
+   SOURCE / ROMANIZATION labels plus every legacy per-language label, so old
+   Hindi pastes keep working. Horizontal whitespace only around labels: an
+   empty ROMANIZATION section must not swallow the next line's label. */
 function parsePaste(text) {
-  const labels = ['HINDI', 'CHINESE', 'PINYIN', 'ROMAN', 'EXPLANATION', 'CATEGORY', 'TAGS', 'AI SOURCE', 'LESSON', 'SECTION', 'SPEAKER', 'POS', 'ZHUYIN'];
+  const labels = ['SOURCE', 'HINDI', 'TAMIL', 'THAI', 'KHMER', 'VIETNAMESE', 'INDONESIAN', 'NEPALI', 'BENGALI', 'BANGLA', 'SPANISH', 'ENGLISH', 'CHINESE', 'PINYIN', 'ROMANIZATION', 'ROMAN', 'EXPLANATION', 'CATEGORY', 'TAGS', 'AI SOURCE', 'LESSON', 'SECTION', 'SPEAKER', 'POS', 'ZHUYIN'];
   const found = {};
-  /* The whitespace after a label excludes newlines: an empty-valued label must
-     not swallow the line break, otherwise the next line's label is missed and
-     its text becomes this field's value. */
-  const pattern = new RegExp(`(?:^|\\n)\\s*(?:\\*\\*)?\\s*(${labels.join('|')})[ \\t]*:?[ \\t]*(?:\\*\\*)?[ \\t]*:?[ \\t]*`, 'gi');
+  const horizontalSpace = '[^\\S\\r\\n]*';
+  const pattern = new RegExp(`(?:^|\\r?\\n)${horizontalSpace}(?:\\*\\*)?${horizontalSpace}(${labels.join('|')})${horizontalSpace}:?${horizontalSpace}(?:\\*\\*)?${horizontalSpace}:?${horizontalSpace}`, 'gi');
   const matches = [...text.matchAll(pattern)];
   matches.forEach((match, index) => {
     const key = match[1].toUpperCase();
@@ -188,9 +162,14 @@ function parsePaste(text) {
     const end = index + 1 < matches.length ? matches[index + 1].index : text.length;
     found[key] = text.slice(start, end).trim();
   });
+  const profile = v4GetLanguageProfile(state.sourceLanguage);
+  const legacySource = profile.legacyLabels.map(label => found[label]).find(Boolean) || '';
+  const sourceSentence = found.SOURCE || legacySource || found.HINDI || found.TAMIL || found.THAI || found.KHMER || found.VIETNAMESE || found.INDONESIAN || found.NEPALI || found.BENGALI || found.BANGLA || found.SPANISH || found.ENGLISH || '';
+  const romanization = found.ROMANIZATION || found.ROMAN || '';
   return {
-    hindiSentence: found.HINDI || '', chineseSentence: found.CHINESE || '',
-    pinyin: found.PINYIN || '', romanHindi: found.ROMAN || '', hindiExplanation: found.EXPLANATION || '',
+    sourceLanguage: profile.code,
+    hindiSentence: sourceSentence, chineseSentence: found.CHINESE || '',
+    pinyin: found.PINYIN || '', romanHindi: romanization, hindiExplanation: found.EXPLANATION || '',
     category: found.CATEGORY || 'Other', tags: found.TAGS || '',
     aiSource: found['AI SOURCE'] || 'ChatGPT / Gemini', originalPaste: text,
     lesson: found.LESSON || '', section: found.SECTION || '', speaker: found.SPEAKER || '',
@@ -198,14 +177,38 @@ function parsePaste(text) {
   };
 }
 
+/* Currently selected student mother tongue. Falls back to Hindi. */
+function v4Profile() {
+  return v4GetLanguageProfile(state.sourceLanguage);
+}
+
+function sourceLanguageFor(sentence) {
+  return (sentence && sentence.sourceLanguage) || 'hi';
+}
+
+/* Apply a language profile to the prompt builder UI and remember it. */
+function applyV4LanguageProfile(code) {
+  const profile = v4GetLanguageProfile(code);
+  state.sourceLanguage = profile.code;
+  try { localStorage.setItem('v4SourceLanguage', profile.code); } catch (_) {}
+  const select = $('v4SourceLanguage');
+  if (select) select.value = profile.code;
+  if ($('promptInputLabel')) $('promptInputLabel').textContent = profile.inputHelp;
+  if ($('promptSentence')) $('promptSentence').placeholder = profile.inputPlaceholder;
+  if ($('generatedPrompt')) $('generatedPrompt').value = '';
+  if ($('generatedPromptPanel')) $('generatedPromptPanel').classList.add('hidden');
+  if ($('promptMessage')) $('promptMessage').textContent = '';
+}
+
 function buildPrompt() {
   const sentence = $('promptSentence').value.trim();
+  const profile = v4Profile();
   if (!sentence) {
-    $('promptMessage').textContent = 'Type one Hindi, Romanized Hindi, or Chinese sentence first.';
+    $('promptMessage').textContent = `Type one ${profile.name} or Chinese sentence first.`;
     $('promptSentence').focus();
     return '';
   }
-  const prompt = AI_PROMPT_TEMPLATE.replace('{{STUDENT_SENTENCE}}', sentence);
+  const prompt = v4BuildLanguagePrompt(profile, sentence);
   $('generatedPrompt').value = prompt;
   $('generatedPromptPanel').classList.remove('hidden');
   $('promptMessage').textContent = '';
@@ -660,6 +663,13 @@ async function submitDeleteSentence() {
 function openEditDialog(sentence) {
   if (!sentence.recordId) return;
   pendingEditSentence = sentence;
+  const editProfile = v4GetLanguageProfile(sourceLanguageFor(sentence));
+  if ($('editHindiLabel')) $('editHindiLabel').textContent = editProfile.name + ' sentence';
+  if ($('editRomanLabel')) $('editRomanLabel').textContent = editProfile.romanizationName;
+  if ($('editExplanationLabel')) $('editExplanationLabel').textContent = editProfile.name + ' explanation';
+  $('editHindi').setAttribute('lang', editProfile.locale);
+  $('editRoman').setAttribute('lang', editProfile.locale + '-Latn');
+  $('editExplanation').setAttribute('lang', editProfile.locale);
   $('editHindi').value = sentence.hindiSentence || '';
   $('editChinese').value = sentence.chineseSentence || '';
   $('editPinyin').value = sentence.pinyin || '';
@@ -714,7 +724,7 @@ function updateEditWarnings() {
   }
   if (hindi) {
     const hindiDupe = state.sentences.find(s => s.recordId !== excludeId && (s.hindiSentence || '').trim() === hindi && (s.chineseSentence || '').trim() !== chinese);
-    if (hindiDupe) warnings.push(`The same Hindi sentence already exists with a different Chinese translation${hindiDupe.recordId ? ` (${hindiDupe.recordId})` : ''}. Check which version is correct before saving.`);
+    if (hindiDupe) warnings.push(`The same ${parsedProfile.name} sentence already exists with a different Chinese translation${hindiDupe.recordId ? ` (${hindiDupe.recordId})` : ''}. Check which version is correct before saving.`);
   }
   if (!warnings.length) { box.classList.add('hidden'); box.innerHTML = ''; return; }
   box.classList.remove('hidden');
@@ -752,14 +762,18 @@ function buildEditedPaste() {
 async function submitEdit() {
   if (!pendingEditSentence) { $('editDialog').close(); return; }
   const original = pendingEditSentence;
+  const editSaveProfile = v4GetLanguageProfile(sourceLanguageFor(original));
   const edited = {
+    sourceLanguage: editSaveProfile.code,
     hindiSentence: $('editHindi').value.trim(),
     chineseSentence: $('editChinese').value.trim(),
     pinyin: $('editPinyin').value.trim(),
     romanHindi: $('editRoman').value.trim(),
     hindiExplanation: $('editExplanation').value.trim(),
   };
-  const missing = [['Hindi', edited.hindiSentence], ['Chinese', edited.chineseSentence], ['Pinyin', edited.pinyin], ['Roman', edited.romanHindi], ['Explanation', edited.hindiExplanation]]
+  const editRequired = [[editSaveProfile.name, edited.hindiSentence], ['Chinese', edited.chineseSentence], ['Pinyin', edited.pinyin], ['Explanation', edited.hindiExplanation]];
+  if (editSaveProfile.requiresRomanization) editRequired.splice(3, 0, [editSaveProfile.romanizationName, edited.romanHindi]);
+  const missing = editRequired
     .filter(([, value]) => !value).map(([label]) => label);
   if (missing.length) { $('editMessage').textContent = `Please fill in: ${missing.join(', ')}.`; return; }
   const exactDupe = state.sentences.find(s => s.recordId !== original.recordId && (s.chineseSentence || '').trim() === edited.chineseSentence);
@@ -819,23 +833,24 @@ function createCard(sentence, preview = false) {
   const editButton = node.querySelector('.card-edit-button');
   editButton.hidden = preview;
   if (!preview) editButton.addEventListener('click', () => openEditDialog(sentence));
+  const cardProfile = v4GetLanguageProfile(sourceLanguageFor(sentence));
   const hindiEl = node.querySelector('.hindi');
   hindiEl.textContent = sentence.hindiSentence;
-  hindiEl.setAttribute('lang', 'hi');
+  hindiEl.setAttribute('lang', cardProfile.locale);
   const hindiSpeak = node.querySelector('.hindi-speak-button');
-  hindiSpeak.addEventListener('click', () => speakHindi(sentence.hindiSentence, hindiSpeak));
+  hindiSpeak.addEventListener('click', () => speakHindi(sentence.hindiSentence, hindiSpeak, cardProfile.locale));
   const roman = romanHindiFor(sentence);
   const romanLine = node.querySelector('.roman-hindi');
-  romanLine.textContent = roman ? `Roman Hindi: ${roman}` : '';
+  romanLine.textContent = roman ? `${cardProfile.romanizationName}: ${roman}` : '';
   romanLine.hidden = !roman;
-  romanLine.setAttribute('lang', 'hi-Latn');
+  romanLine.setAttribute('lang', cardProfile.locale + '-Latn');
   const chineseEl = node.querySelector('.chinese');
   chineseEl.textContent = sentence.chineseSentence;
   chineseEl.setAttribute('lang', 'zh-Hant');
   node.querySelector('.pinyin').textContent = sentence.pinyin;
   const explanationEl = node.querySelector('.explanation');
   explanationEl.textContent = sentence.hindiExplanation || 'No explanation added.';
-  explanationEl.setAttribute('lang', 'hi');
+  explanationEl.setAttribute('lang', cardProfile.locale);
   const tags = [...new Set(String(sentence.tags || '').split(/[,;|]/).map(t => t.trim().toLowerCase()).filter(Boolean))];
   node.querySelector('.tags').innerHTML = tags.map(tag => `<span class="tag"></span>`).join('');
   node.querySelectorAll('.tag').forEach((el, i) => { el.textContent = tags[i]; });
@@ -867,14 +882,17 @@ function speakChinese(text, button) {
   speechSynthesis.speak(utterance);
 }
 
-function speakHindi(text, button) {
+function speakHindi(text, button, locale) {
   if (!('speechSynthesis' in window)) return alert('Speech is not supported in this browser. Please try Chrome, Edge or Safari.');
   speechSynthesis.cancel();
+  const targetLocale = locale || 'hi-IN';
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'hi-IN';
+  utterance.lang = targetLocale;
   utterance.rate = 0.85;
   const voices = speechSynthesis.getVoices();
-  utterance.voice = voices.find(v => v.lang.toLowerCase() === 'hi-in') || voices.find(v => v.lang.toLowerCase().startsWith('hi')) || null;
+  const target = targetLocale.toLowerCase();
+  const prefix = target.split('-')[0];
+  utterance.voice = voices.find(v => v.lang.toLowerCase() === target) || voices.find(v => v.lang.toLowerCase().startsWith(prefix)) || null;
   utterance.onstart = () => button.classList.add('speaking');
   utterance.onend = utterance.onerror = () => button.classList.remove('speaking');
   speechSynthesis.speak(utterance);
@@ -1304,7 +1322,10 @@ function handlePreview() {
   if (!text) { $('parseMessage').textContent = 'Paste an AI answer first.'; return; }
   if (text !== pastedText) $('pasteInput').value = text;
   const parsed = parsePaste(text);
-  const missing = [['Hindi',parsed.hindiSentence],['Chinese',parsed.chineseSentence],['Pinyin',parsed.pinyin],['Roman',parsed.romanHindi],['Explanation',parsed.hindiExplanation]].filter(([,v]) => !v).map(([k]) => k);
+  const parsedProfile = v4GetLanguageProfile(parsed.sourceLanguage);
+  const requiredFields = [[parsedProfile.name,parsed.hindiSentence],['Chinese',parsed.chineseSentence],['Pinyin',parsed.pinyin],['Explanation',parsed.hindiExplanation]];
+  if (parsedProfile.requiresRomanization) requiredFields.splice(3, 0, [parsedProfile.romanizationName,parsed.romanHindi]);
+  const missing = requiredFields.filter(([,v]) => !v).map(([k]) => k);
   if (missing.length) { $('parseMessage').textContent = `Please add these labelled parts: ${missing.join(', ')}.`; return; }
   /* Duplicate check: only block if the same Chinese sentence already exists in the
      SAME location (same lesson supplement, or My Sentence Bank). A sentence in a
@@ -1329,7 +1350,7 @@ function handlePreview() {
   /* Pinyin quality check. */
   const pinyinIssues = validatePinyin(parsed.pinyin);
   const warnings = [];
-  if (hindiDupe) warnings.push(`The same Hindi sentence already exists with a different Chinese translation${hindiDupe.recordId ? ` (${hindiDupe.recordId})` : ''}. Check which version is correct before saving.`);
+  if (hindiDupe) warnings.push(`The same ${parsedProfile.name} sentence already exists with a different Chinese translation${hindiDupe.recordId ? ` (${hindiDupe.recordId})` : ''}. Check which version is correct before saving.`);
   pinyinIssues.slice(0, 8).forEach(issue => warnings.push(`Pinyin: ${issue}.`));
   if (pinyinIssues.length > 8) warnings.push(`…and ${pinyinIssues.length - 8} more pinyin issues.`);
   if (!/^[A-ZĀÁǍÀĒÉĚÈĪÍǏÌŌÓǑÒŪÚǓÙǕǗǙǛ]/.test(parsed.pinyin.trim())) warnings.push('Pinyin: the first syllable usually starts with a capital letter.');
@@ -1511,6 +1532,14 @@ $('refreshButton').addEventListener('click', () => {
   window.location.reload();
 });
 $('generatePrompt').addEventListener('click', buildPrompt);
+/* Students' first language: restore the teacher's last choice, default Hindi. */
+(function initV4LanguageSelector() {
+  let saved = 'hi';
+  try { saved = localStorage.getItem('v4SourceLanguage') || 'hi'; } catch (_) {}
+  applyV4LanguageProfile(saved);
+  const select = $('v4SourceLanguage');
+  if (select) select.addEventListener('change', () => applyV4LanguageProfile(select.value));
+})();
 $('clearPrompt').addEventListener('click', () => {
   $('promptSentence').value = '';
   $('generatedPrompt').value = '';
@@ -1917,16 +1946,18 @@ function createVocabCard(sentence) {
   node.querySelector('.vocab-pinyin').textContent = sentence.pinyin || '';
   const zhuyinEl = node.querySelector('.vocab-zhuyin');
   if (zhuyinEl) zhuyinEl.textContent = meta.zhuyin;
+  const vocabProfile = v4GetLanguageProfile(sourceLanguageFor(sentence));
   node.querySelector('.vocab-hindi').textContent = sentence.hindiSentence || '';
+  node.querySelector('.vocab-hindi').setAttribute('lang', vocabProfile.locale);
   const roman = romanHindiFor(sentence);
   const romanEl = node.querySelector('.vocab-roman');
   romanEl.textContent = roman || '';
   romanEl.hidden = !roman;
-  romanEl.setAttribute('lang', 'hi-Latn');
+  romanEl.setAttribute('lang', vocabProfile.locale + '-Latn');
   const exampleEl = node.querySelector('.vocab-example');
   exampleEl.textContent = sentence.hindiExplanation || '';
   exampleEl.hidden = !sentence.hindiExplanation;
-  node.querySelector('.vocab-hindi-speak').addEventListener('click', e => speakHindi(sentence.hindiSentence, e.currentTarget));
+  node.querySelector('.vocab-hindi-speak').addEventListener('click', e => speakHindi(sentence.hindiSentence, e.currentTarget, vocabProfile.locale));
   node.querySelector('.vocab-speak').addEventListener('click', e => playSentenceModel(sentence, e.currentTarget));
   node.querySelector('.card-record-button').addEventListener('click', () => toggleCardRecording(node, sentence, false));
   node.querySelector('.card-play-button').addEventListener('click', () => {
