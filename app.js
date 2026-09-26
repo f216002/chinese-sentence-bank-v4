@@ -194,6 +194,8 @@ function applyV4LanguageProfile(code) {
   try { localStorage.setItem('v4SourceLanguage', profile.code); } catch (_) {}
   const select = $('v4SourceLanguage');
   if (select) select.value = profile.code;
+  const topSelect = $('v4TopbarLanguage');
+  if (topSelect) topSelect.value = profile.code;
   if ($('promptInputLabel')) $('promptInputLabel').textContent = profile.inputHelp;
   if ($('promptSentence')) $('promptSentence').placeholder = profile.inputPlaceholder;
   if ($('generatedPrompt')) $('generatedPrompt').value = '';
@@ -1567,6 +1569,18 @@ $('generatePrompt').addEventListener('click', buildPrompt);
 (function initV4LanguageSelector() {
   let saved = 'hi';
   try { saved = localStorage.getItem('v4SourceLanguage') || 'hi'; } catch (_) {}
+  /* Topbar quick switcher: build options from the shared language profiles. */
+  const topSelect = $('v4TopbarLanguage');
+  if (topSelect && typeof V4_LANGUAGE_PROFILES === 'object') {
+    Object.keys(V4_LANGUAGE_PROFILES).forEach(code => {
+      const p = V4_LANGUAGE_PROFILES[code];
+      const opt = document.createElement('option');
+      opt.value = p.code;
+      opt.textContent = (p.nativeName ? p.nativeName + ' · ' : '') + p.name;
+      topSelect.appendChild(opt);
+    });
+    topSelect.addEventListener('change', () => applyV4LanguageProfile(topSelect.value));
+  }
   applyV4LanguageProfile(saved);
   const select = $('v4SourceLanguage');
   if (select) select.addEventListener('change', () => applyV4LanguageProfile(select.value));
