@@ -189,3 +189,6 @@
 @media(max-width:700px){.v4-account span{display:none}.v4-auth-button{padding:8px 10px;font-size:12px}}
 .language-profile-field{display:grid;gap:7px;max-width:520px;margin:0 0 22px}
 .language-profile-field select{min-height:48px;border:1px solid var(--line);border-radius:9px;background:white;padding:0 14px;color:var(--ink);font-size:1rem}
+.topbar-lang{display:flex;align-items:center;gap:6px;border:1px solid var(--line);background:white;border-radius:999px;padding:0 8px 0 12px;height:42px;cursor:pointer;font-size:16px}
+.topbar-lang select{border:0;background:transparent;height:100%;width:auto;max-width:132px;padding:0 2px;font-size:14px;font-weight:700;cursor:pointer;text-overflow:ellipsis}
+@media(max-width:700px){.topbar-lang{height:38px;padding-left:9px}.topbar-lang select{max-width:88px;font-size:13px}}
