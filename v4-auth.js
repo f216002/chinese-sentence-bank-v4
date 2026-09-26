@@ -123,6 +123,8 @@
   }
 
   window.V4_AUTH = Object.freeze({ ready: false, user: null });
+  /* 【暫時模式】用 LOCAL persistence，讓跳轉登入的中間狀態在跨站跳轉後仍保留。 */
+  auth.setPersistence(window.firebase.auth.Auth.Persistence.LOCAL).catch(function () {});
   /* 【暫時模式】處理跳轉登入返回的結果；onAuthStateChanged 會接著發布登入狀態。 */
   auth.getRedirectResult().catch(function (error) {
     var code = (error && error.code) || '';
