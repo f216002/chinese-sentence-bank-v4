@@ -1,15 +1,9 @@
 /* ---- Firebase backend (V4 independent site) ----
    Project: my-chinese-sentence-bank-v3 (same project, isolated data).
    V4 data lives under v4_-prefixed collections/paths so it never
-   collides with v2 or v3 data. Reads are public; writes need anonymous auth. */
-const firebaseConfig = {
-  apiKey: "AIzaSyChpInXumwIWaOrR4cU8KhNm1NK5-RdgQw",
-  authDomain: "my-chinese-sentence-bank-v3.firebaseapp.com",
-  projectId: "my-chinese-sentence-bank-v3",
-  storageBucket: "my-chinese-sentence-bank-v3.firebasestorage.app",
-  messagingSenderId: "178850974896",
-  appId: "1:178850974896:web:f1d40b2ed4e7218b553f75"
-};
+   collides with v2 or v3 data. Reads are public; writes need an approved
+   teacher (Google sign-in + admin approval). The Firebase app is
+   initialized by v4-auth.js (window.V4_FIREBASE_CONFIG); reused here. */
 /* One-time migration still talks to the retired Apps Script backend. */
 const OLD_API_URL = 'https://script.google.com/macros/s/AKfycbw9trkW9RNCRSwWou_51Q-FP6aL7Lp8sy3zizSG83fzN1Urtd3ZiMc47RUfHDBTIMJfDw/exec';
 const SENTENCES_COL = 'v4_sentences';
@@ -21,7 +15,9 @@ let fbDb = null, fbAuth = null, fbStorage = null, fbFieldValue = null;
 let firebaseInitError = '';
 try {
   if (!window.firebase) throw new Error('Firebase SDK failed to load.');
-  window.firebase.initializeApp(firebaseConfig);
+  if (!window.firebase.apps.length) {
+    window.firebase.initializeApp(window.V4_FIREBASE_CONFIG || {});
+  }
   fbDb = window.firebase.firestore();
   fbAuth = window.firebase.auth();
   fbStorage = window.firebase.storage();
@@ -30,20 +26,12 @@ try {
   firebaseInitError = (err && err.message) || String(err);
 }
 
-let authReadyPromise = null;
-function ensureAuth() {
-  if (firebaseInitError) return Promise.reject(new Error(firebaseInitError));
-  if (!authReadyPromise) {
-    authReadyPromise = fbAuth.signInAnonymously().then(cred => cred.user).catch(err => {
-      authReadyPromise = null;
-      const code = (err && err.code) || '';
-      if (code === 'auth/operation-not-allowed' || code === 'auth/admin-restricted-operation') {
-        throw new Error('Anonymous sign-in is disabled. In the Firebase console, open Authentication → Sign-in method and enable Anonymous.');
-      }
-      throw err;
-    });
-  }
-  return authReadyPromise;
+/* 寫入前檢查：必須是已核准的老師（Google 登入＋管理員核准）。
+   未通過時丟出中文錯誤，由各呼叫端顯示在對話框訊息區。 */
+function requireApprovedAccess() {
+  if (firebaseInitError) throw new Error(firebaseInitError);
+  if (window.v4RequireApproved) return window.v4RequireApproved();
+  throw new Error('登入功能尚未就緒，請重新整理頁面。');
 }
 
 const serverTimestamp = () => fbFieldValue.serverTimestamp();
@@ -593,24 +581,19 @@ function openAudioPinDialog(sentence, node) {
   const recording = recordingForSentence(sentence);
   if (!recording || !sentence.recordId) return;
   pendingModelSave = {sentence, node, recording};
-  try { $('audioPinInput').value = localStorage.getItem('csbSubmissionPinV4') || ''; } catch (_) {}
   $('audioSaveMessage').textContent = '';
   $('audioPinDialog').showModal();
-  setTimeout(() => $('audioPinInput').focus(), 50);
 }
 
 async function submitTeacherAudio() {
-  const pin = $('audioPinInput').value.trim();
-  if (!pin) { $('audioSaveMessage').textContent = 'Enter the teacher PIN.'; return; }
   if (!pendingModelSave) { $('audioPinDialog').close(); return; }
   const {sentence, recording} = pendingModelSave;
   const button = $('confirmAudioSave');
   button.disabled = true;
   $('audioSaveMessage').textContent = 'Uploading the teacher recording…';
-  try { localStorage.setItem('csbSubmissionPinV4', pin); } catch (_) {}
 
   try {
-    await ensureAuth();
+    requireApprovedAccess();
     const mime = recording.mimeType || 'audio/webm';
     const ext = mime.includes('mp4') ? 'm4a' : 'webm';
     const path = `${AUDIO_PREFIX}${sentence.recordId}.${ext}`;
@@ -638,26 +621,21 @@ function openDeleteDialog(sentence) {
   pendingDeleteSentence = sentence;
   $('deleteSentenceText').textContent = sentence.chineseSentence || sentence.hindiSentence || 'Untitled sentence';
   $('deleteRecordId').textContent = sentence.recordId;
-  try { $('deletePinInput').value = localStorage.getItem('csbSubmissionPinV4') || ''; } catch (_) {}
   $('deleteMessage').textContent = '';
   $('confirmDelete').disabled = false;
   $('deleteDialog').showModal();
-  setTimeout(() => $('deletePinInput').focus(), 50);
 }
 
 async function submitDeleteSentence() {
-  const pin = $('deletePinInput').value.trim();
-  if (!pin) { $('deleteMessage').textContent = 'Enter the teacher PIN.'; return; }
   if (!pendingDeleteSentence) { $('deleteDialog').close(); return; }
 
   const sentence = pendingDeleteSentence;
   const button = $('confirmDelete');
   button.disabled = true;
   $('deleteMessage').textContent = 'Deleting sentence…';
-  try { localStorage.setItem('csbSubmissionPinV4', pin); } catch (_) {}
 
   try {
-    await ensureAuth();
+    requireApprovedAccess();
     if (sentence.audioPath) {
       try { await fbStorage.ref(sentence.audioPath).delete(); } catch (_) { /* already gone */ }
     }
@@ -700,7 +678,6 @@ function openEditDialog(sentence) {
   $('editRecordNote').textContent = `Editing record ${sentence.recordId}. Changes update this record in place; any teacher recording stays attached.`;
   const hasAudio = !!(sentence.standardAudioUrl || teacherAudioCache.get(sentence.recordId) || recordingForSentence(sentence));
   $('editAudioNote').classList.toggle('hidden', !hasAudio);
-  try { $('editPinInput').value = localStorage.getItem('csbSubmissionPinV4') || ''; } catch (_) {}
   $('editMessage').textContent = '';
   $('confirmEdit').disabled = false;
   $('confirmEdit').textContent = 'Save changes';
@@ -773,8 +750,6 @@ function buildEditedPaste() {
 /* Edit sentence: Firebase supports true in-place updates, so editing keeps the
    same recordId and any attached teacher recording. */
 async function submitEdit() {
-  const pin = $('editPinInput').value.trim();
-  if (!pin) { $('editMessage').textContent = 'Enter the teacher PIN.'; return; }
   if (!pendingEditSentence) { $('editDialog').close(); return; }
   const original = pendingEditSentence;
   const edited = {
@@ -793,7 +768,6 @@ async function submitEdit() {
   const button = $('confirmEdit');
   button.disabled = true;
   $('editMessage').textContent = 'Saving changes…';
-  try { localStorage.setItem('csbSubmissionPinV4', pin); } catch (_) {}
 
   const content = buildEditedPaste();
   const data = sentenceDocData({
@@ -807,7 +781,7 @@ async function submitEdit() {
   });
 
   try {
-    await ensureAuth();
+    requireApprovedAccess();
     /* 原地更新：保留 recordId、建立時間與錄音，只換內容欄位。 */
     const { createdAt, audioPath, audioMime, favorite, ...contentFields } = data;
     await fbDb.collection(SENTENCES_COL).doc(original.recordId).update(contentFields);
@@ -1435,22 +1409,23 @@ function describeCacheAge(savedAt) {
   return hours < 24 ? hours + ' h ago' : Math.round(hours / 24) + ' d ago';
 }
 
-function openPinDialog() {
+/* 儲存句子：先檢查老師身分（Google 登入＋管理員核准），通過才寫入。 */
+function trySaveSentence() {
   if (!state.preview) return;
-  try { $('pinInput').value = localStorage.getItem('csbSubmissionPinV4') || ''; } catch (_) {}
+  try {
+    requireApprovedAccess();
+  } catch (err) {
+    $('saveMessage').textContent = (err && err.message) || '請先用 Google 登入。';
+    return;
+  }
   $('saveMessage').textContent = '';
-  $('pinDialog').showModal();
-  setTimeout(() => $('pinInput').focus(), 50);
+  submitSentence();
 }
 
 async function submitSentence() {
-  const pin = $('pinInput').value.trim();
-  if (!pin) { $('saveMessage').textContent = 'Enter the submission PIN.'; return; }
-  if (!state.preview) { $('pinDialog').close(); return; }
-  if ($('rememberPin').checked) { try { localStorage.setItem('csbSubmissionPinV4', pin); } catch (_) {} }
-  else { try { localStorage.removeItem('csbSubmissionPinV4'); } catch (_) {} }
+  if (!state.preview) return;
 
-  $('confirmSave').disabled = true;
+  $('saveButton').disabled = true;
   $('saveMessage').textContent = 'Saving sentence…';
   const submitted = { ...state.preview };
 
@@ -1466,17 +1441,17 @@ async function submitSentence() {
   }
 
   try {
-    await ensureAuth();
+    requireApprovedAccess();
     await fbDb.collection(SENTENCES_COL).add(sentenceDocData(submitted));
     await reloadSentences();
     renderSentences();
     if (activeLesson > 0) { courseMetaCache.clear(); renderCourse(); }
     $('saveMessage').textContent = activeLesson > 0 ? `已儲存至${lessonShortLabel(activeLesson)}「補充」。` : 'Saved successfully!';
-    $('confirmSave').disabled = false;
+    $('saveButton').disabled = false;
     $('pasteInput').value = ''; $('previewPanel').classList.add('hidden');
-    setTimeout(() => { $('pinDialog').close(); if (activeLesson > 0) { $('courseSection').scrollIntoView({behavior:'smooth'}); } else { $('libraryTitle').scrollIntoView({behavior:'smooth'}); } }, 800);
+    setTimeout(() => { if (activeLesson > 0) { $('courseSection').scrollIntoView({behavior:'smooth'}); } else { $('libraryTitle').scrollIntoView({behavior:'smooth'}); } }, 800);
   } catch (err) {
-    $('confirmSave').disabled = false;
+    $('saveButton').disabled = false;
     $('saveMessage').textContent = `Save failed: ${(err && err.message) || 'Unknown error.'}`;
   }
 }
@@ -1497,8 +1472,6 @@ async function loadBank(attempt = 1) {
     ]);
     const sentences = sortSentencesBySeq(snap.docs.map(d => docToSentence(d.id, d.data())));
     const settings = settingsSnap.exists ? { ...defaultSettings(), ...settingsSnap.data() } : defaultSettings();
-    /* Start anonymous auth in the background so writes are ready when needed. */
-    ensureAuth().catch(err => console.warn('Anonymous sign-in failed:', err && err.message));
     receiveBank({ success: true, settings, sentences });
   } catch (err) {
     handleBankFailure(attempt, MAX_ATTEMPTS, `Could not reach Firebase: ${(err && err.message) || 'unknown error'}.`);
@@ -1598,18 +1571,12 @@ $('copyPrompt').addEventListener('click', async () => {
 });
 $('closeHelp').addEventListener('click', () => $('helpDialog').close());
 $('helpDialog').addEventListener('click', e => { if (e.target === $('helpDialog')) $('helpDialog').close(); });
-$('saveButton').addEventListener('click', openPinDialog);
-$('confirmSave').addEventListener('click', submitSentence);
-$('pinInput').addEventListener('keydown', e => { if (e.key === 'Enter') submitSentence(); });
-$('closePin').addEventListener('click', () => $('pinDialog').close());
+$('saveButton').addEventListener('click', trySaveSentence);
 $('confirmAudioSave').addEventListener('click', submitTeacherAudio);
-$('audioPinInput').addEventListener('keydown', e => { if (e.key === 'Enter') submitTeacherAudio(); });
 $('closeAudioPin').addEventListener('click', () => { pendingModelSave = null; $('audioPinDialog').close(); });
 $('confirmDelete').addEventListener('click', submitDeleteSentence);
-$('deletePinInput').addEventListener('keydown', e => { if (e.key === 'Enter') submitDeleteSentence(); });
 $('closeDelete').addEventListener('click', () => { pendingDeleteSentence = null; $('deleteDialog').close(); });
 $('confirmEdit').addEventListener('click', submitEdit);
-$('editPinInput').addEventListener('keydown', e => { if (e.key === 'Enter') submitEdit(); });
 $('closeEdit').addEventListener('click', () => { pendingEditSentence = null; $('confirmEdit').textContent = 'Save changes'; $('editDialog').close(); });
 ['editHindi', 'editChinese', 'editPinyin', 'editRoman', 'editExplanation'].forEach(id => $(id).addEventListener('input', updateEditWarnings));
 initPronunciationLab();
@@ -1711,9 +1678,33 @@ const COURSE_TABS = ['課文', '生詞', '語法', '練習', '文化', '補充']
 const COURSE_PACK_LESSONS = [101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 601, 602, 603, 604, 605, 606, 607, 608, 609, 610];
 const courseState = { lesson: 0, tab: '課文' };
 
+/* 課程解鎖＝老師審核通過（Google 登入＋管理員核准），取代舊的 PIN。 */
 function isCourseUnlocked() {
-  try { return sessionStorage.getItem('csbCourseUnlocked') === '1'; } catch (_) { return false; }
+  return !!(window.V4_ACCESS && window.V4_ACCESS.status === 'approved');
 }
+
+/* 依審核狀態更新課程鎖定區的說明文字。 */
+function updateCourseLockMessage() {
+  const msg = $('courseLockMessage');
+  if (!msg) return;
+  const status = (window.V4_ACCESS && window.V4_ACCESS.status) || 'checking';
+  const map = {
+    checking: '正在確認登入狀態…',
+    'signed-out': '請先用右上角「使用 Google 登入」。管理員核准後，課程會自動解鎖。',
+    pending: '已送出老師申請，等待管理員核准。核准後重新整理頁面即可解鎖課程。',
+    rejected: '申請未通過，請聯繫管理員。',
+    suspended: '帳號目前暫停使用，請聯繫管理員。',
+    error: '身分確認失敗，請重新整理頁面再試。',
+    approved: ''
+  };
+  msg.textContent = map[status] || '';
+}
+
+/* 登入狀態變化時重繪課程區（解鎖／上鎖即時反應）。 */
+window.addEventListener('v4-access-changed', () => {
+  updateCourseLockMessage();
+  if (typeof renderCourse === 'function') renderCourse();
+});
 
 function lessonRecords(n) {
   const key = String(n);
@@ -1725,24 +1716,12 @@ function renderCourse() {
   if (!lock || !body) return;
   if (!isCourseUnlocked()) {
     lock.classList.remove('hidden'); body.classList.add('hidden');
+    updateCourseLockMessage();
     return;
   }
   lock.classList.add('hidden'); body.classList.remove('hidden');
   if (courseState.lesson > 0) renderLessonView();
   else renderLessonGrid();
-}
-
-function unlockCourse() {
-  const pin = $('coursePinInput').value.trim();
-  const msg = $('courseLockMessage');
-  if (!pin) { msg.textContent = '請輸入老師 PIN。'; return; }
-  /* 以這次輸入的 PIN 為準並記住，不再比對殘留的舊值（舊邏輯會因 localStorage 殘留舊 PIN 而永久鎖死）。 */
-  try {
-    localStorage.setItem('csbSubmissionPinV4', pin);
-    sessionStorage.setItem('csbCourseUnlocked', '1');
-  } catch (_) {}
-  msg.textContent = '';
-  renderCourse();
 }
 
 function renderLessonGrid() {
@@ -2161,7 +2140,6 @@ async function loadPackPreview() {
     const fresh = items.length - updates;
     const lessonLabelText = lessonKey ? lessonLabel(Number(lessonKey)) : '內容包';
     info.textContent = `${lessonLabelText}：${records.length} 條記錄，${fresh} 條新增${updates ? `，${updates} 條更新（取代舊記錄）` : ''}。`;
-    try { $('importPinInput').value = localStorage.getItem('csbSubmissionPinV4') || ''; } catch (_) {}
     importButton.disabled = items.length === 0;
   } catch (err) {
     info.textContent = `讀取失敗：${err.message}。`;
@@ -2170,18 +2148,21 @@ async function loadPackPreview() {
 /* 內容包批次匯入：整包一次寫入 Firestore。
    更新模式＝原地 update（保留 recordId、錄音、建立時間），不再建新刪舊。 */
 async function importPackRecords() {
-  const pin = $('importPinInput').value.trim();
   const progress = $('importProgress');
-  if (!pin) { progress.textContent = '請輸入老師 PIN。'; return; }
+  try {
+    requireApprovedAccess();
+  } catch (err) {
+    progress.textContent = (err && err.message) || '請先用 Google 登入。';
+    return;
+  }
   if (!packRecordsCache.length) { progress.textContent = '沒有可匯入的記錄。'; return; }
-  try { localStorage.setItem('csbSubmissionPinV4', pin); } catch (_) {}
   const button = $('packImportButton');
   button.disabled = true;
   const total = packRecordsCache.length;
   let added = 0, updated = 0;
   progress.textContent = `批次寫入中 0/${total}…`;
   try {
-    await ensureAuth();
+    requireApprovedAccess();
     const BATCH_LIMIT = 450; /* Firestore 每批上限 500 */
     let batch = fbDb.batch();
     let ops = 0;
@@ -2229,8 +2210,6 @@ async function importPackRecords() {
 }
 
 /* Course UI wiring */
-$('courseUnlockButton').addEventListener('click', unlockCourse);
-$('coursePinInput').addEventListener('keydown', e => { if (e.key === 'Enter') unlockCourse(); });
 $('lessonBackButton').addEventListener('click', () => { courseState.lesson = 0; renderLessonGrid(); $('courseSection').scrollIntoView({ behavior: 'smooth' }); });
 $('packLoadButton').addEventListener('click', loadPackPreview);
 $('packImportButton').addEventListener('click', importPackRecords);
