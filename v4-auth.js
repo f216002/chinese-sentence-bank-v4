@@ -128,6 +128,11 @@
 
   window.V4_AUTH = Object.freeze({ ready: false, user: null });
   auth.onAuthStateChanged(function (user) {
+    if (user && user.isAnonymous) {
+      /* 舊版的匿名登入已退役：清掉殘留的匿名 session，回到未登入狀態。 */
+      auth.signOut();
+      return;
+    }
     if (user) showSignedIn(user); else showSignedOut();
     publishAuthState(user);
   });
