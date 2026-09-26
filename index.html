@@ -26,7 +26,6 @@
     </a>
     <div class="topbar-actions">
       <button class="icon-button refresh-button" id="refreshButton" type="button" aria-label="Refresh sentence bank" title="Refresh">↻</button>
-      <button class="icon-button" id="helpButton" type="button" aria-label="Show paste format help" title="Help">?</button>
       <div class="v4-auth" id="v4Auth">
         <div class="v4-account" id="v4TeacherAccount" hidden>
           <img id="v4AccountPhoto" alt="">
@@ -253,31 +252,6 @@
     </section>
   </main>
 
-  <dialog id="helpDialog">
-    <button class="dialog-close" id="closeHelp" aria-label="Close help">×</button>
-    <span class="step">PASTE GUIDE</span>
-    <h2>Use one prompt every time</h2>
-    <p>Copy our standard prompt into ChatGPT or Gemini, replace the Hindi sentence, and send it.</p>
-    <button class="primary-button copy-prompt" id="copyPrompt" type="button">Copy AI prompt</button>
-    <p class="format-note">The parser also accepts common Markdown labels such as <code>**Chinese:**</code>.</p>
-    <pre>HINDI:
-[Hindi sentence]
-
-CHINESE:
-[Traditional Chinese sentence]
-
-PINYIN:
-[Pinyin with tone marks]
-
-ROMAN:
-[Romanized Hindi in Latin script]
-
-EXPLANATION:
-[Hindi explanation; add pinyin after every Chinese word]
-
-CATEGORY:
-[One category]</pre>
-  </dialog>
 
   <dialog id="audioPinDialog">
     <button class="dialog-close" id="closeAudioPin" aria-label="Close teacher recording window">×</button>
@@ -363,6 +337,6 @@ CATEGORY:
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
   <script src="v4-auth.js?v=20260926-3"></script>
   <script src="v4-access.js?v=20260926-2"></script>
-  <script src="app.js?v=20260926-2"></script>
+  <script src="app.js?v=20260926-3"></script>
 </body>
 </html>
