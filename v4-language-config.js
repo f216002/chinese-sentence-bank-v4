@@ -153,6 +153,30 @@ var V4_LANGUAGE_PROFILES = {
     romanizationName: 'Burmese Romanization',
     requiresRomanization: true,
     legacyLabels: ['BURMESE']
+  },
+  ko: {
+    code: 'ko',
+    name: 'Korean',
+    nativeName: '한국어',
+    locale: 'ko-KR',
+    region: 'Korea',
+    inputHelp: 'Korean or Chinese sentence',
+    inputPlaceholder: '여기에 한국어 문장을 입력하세요.\nor: 請在這裡輸入中文句子。',
+    romanizationName: 'Korean Romanization',
+    requiresRomanization: true,
+    legacyLabels: ['KOREAN']
+  },
+  ja: {
+    code: 'ja',
+    name: 'Japanese',
+    nativeName: '日本語',
+    locale: 'ja-JP',
+    region: 'Japan',
+    inputHelp: 'Japanese or Chinese sentence',
+    inputPlaceholder: 'ここに日本語の文を入力してください。\nor: 請在這裡輸入中文句子。',
+    romanizationName: 'Japanese Romanization',
+    requiresRomanization: true,
+    legacyLabels: ['JAPANESE']
   }
 };
 
