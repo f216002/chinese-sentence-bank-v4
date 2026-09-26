@@ -1,5 +1,6 @@
 /* ---- V4 Google 登入（移植自 V3，獨立運作） ----
-   V4 部署於 GitHub Pages，一律使用彈出視窗登入（signInWithPopup）。
+   【暫時模式】為配合自動化匯入，暫用整頁跳轉登入（signInWithRedirect），
+   匯入完成後改回彈出視窗（signInWithPopup）。
    Firebase app 由此檔初始化（window.V4_FIREBASE_CONFIG），app.js 沿用。
    登入狀態發布到 window.V4_AUTH，並觸發 v4-auth-changed 事件。 */
 (function () {
@@ -96,23 +97,17 @@
   if (signInButton) {
     signInButton.addEventListener('click', function () {
       signInButton.disabled = true;
-      setAuthMessage('正在開啟 Google 登入…');
-      auth.signInWithPopup(provider).catch(function (error) {
+      setAuthMessage('正在前往 Google 登入…');
+      /* 【暫時模式】整頁跳轉登入，同一分頁完成。 */
+      auth.signInWithRedirect(provider).catch(function (error) {
         var code = (error && error.code) || '';
-        if (code === 'auth/popup-blocked') {
-          setAuthMessage('彈出視窗被阻擋，請允許本網站的彈出視窗後再試一次。', true);
-        } else if (code === 'auth/popup-closed-by-user') {
-          setAuthMessage('已關閉 Google 登入視窗。');
-        } else if (code === 'auth/cancelled-popup-request') {
-          setAuthMessage('登入被中斷，請再按一次登入。');
-        } else if (code === 'auth/unauthorized-domain') {
+        if (code === 'auth/unauthorized-domain') {
           setAuthMessage('此網域尚未在 Firebase 授權，請聯繫管理員。', true);
         } else if (code === 'auth/operation-not-supported-in-this-environment') {
           setAuthMessage('請用 Safari 或 Chrome 直接開啟本網站再登入。', true);
         } else {
           setAuthMessage('Google 登入失敗：' + ((error && error.message) || code), true);
         }
-      }).finally(function () {
         if (!auth.currentUser) signInButton.disabled = false;
       });
     });
@@ -128,6 +123,12 @@
   }
 
   window.V4_AUTH = Object.freeze({ ready: false, user: null });
+  /* 【暫時模式】處理跳轉登入返回的結果；onAuthStateChanged 會接著發布登入狀態。 */
+  auth.getRedirectResult().catch(function (error) {
+    var code = (error && error.code) || '';
+    setAuthMessage('Google 登入失敗：' + ((error && error.message) || code), true);
+    if (signInButton) signInButton.disabled = false;
+  });
   auth.onAuthStateChanged(function (user) {
     if (user && user.isAnonymous) {
       /* 舊版的匿名登入已退役：清掉殘留的匿名 session，回到未登入狀態。 */
@@ -138,3 +139,4 @@
     publishAuthState(user);
   });
 })();
+
