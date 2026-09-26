@@ -11,6 +11,45 @@ const META_COL = 'v4_meta';
 const SETTINGS_DOC = 'settings';
 const AUDIO_PREFIX = 'v4_audio/';
 
+/* ---- Per-teacher data isolation（2026-09-26） ----
+   v4_sentences：共版課程（第一～六冊），所有人可讀；寫入只有管理員能做，
+     且僅限內容包／翻譯包匯入。日常的編輯／刪除／錄音，連管理員也只寫個人覆寫層。
+   v4_teachers/{uid}/sentences：每位老師的個人句庫＋他自己加的「補充」，只有本人（與管理員）能讀寫。
+   v4_teachers/{uid}/overrides：任何人（含管理員）對共版課程的個人覆寫（編輯／刪除／錄音），
+     doc ID＝共版文件 ID，{deleted:true} 表示該老師自己隱藏此句，其他欄位表示覆寫內容。
+     只影響該老師自己的畫面。 */
+const TEACHER_COL = 'v4_teachers';
+const TEACHER_SENTENCES_SUB = 'sentences';
+const TEACHER_OVERRIDES_SUB = 'overrides';
+
+function currentTeacherUid() {
+  const a = window.V4_ACCESS;
+  return (a && a.user && a.user.uid) || '';
+}
+function isV4AdminUser() {
+  return !!(window.V4_ACCESS && window.V4_ACCESS.isAdmin);
+}
+function teacherSentencesRef(uid) {
+  return fbDb.collection(TEACHER_COL).doc(uid).collection(TEACHER_SENTENCES_SUB);
+}
+function teacherOverridesRef(uid) {
+  return fbDb.collection(TEACHER_COL).doc(uid).collection(TEACHER_OVERRIDES_SUB);
+}
+/* 內容包／翻譯包匯入：只有管理員能寫共版課程。 */
+function requireAdminAccess() {
+  const me = requireApprovedAccess();
+  if (!isV4AdminUser()) throw new Error('只有管理員可以執行此操作。');
+  return me;
+}
+/* 補充記錄：有 seq 且 tags 含「補充」。 */
+function isSupplementData(d) {
+  return !!d && d.seq != null && /補充/.test(String(d.tags || ''));
+}
+/* 個人錄音路徑：v4_audio/{uid}/{recordId}.{ext} */
+function teacherAudioPath(uid, recordId, ext) {
+  return `${AUDIO_PREFIX}${uid}/${recordId}.${ext}`;
+}
+
 let fbDb = null, fbAuth = null, fbStorage = null, fbFieldValue = null;
 let firebaseInitError = '';
 try {
@@ -38,11 +77,13 @@ const serverTimestamp = () => fbFieldValue.serverTimestamp();
 
 /* Firestore document -> sentence object used by the UI.
    recordId is the Firestore document id (old Sheet Record IDs are kept as
-   document ids during migration, so existing links keep working). */
-function docToSentence(id, d) {
+   document ids during migration, so existing links keep working).
+   _owner: 'shared' = 共版課程；uid 字串 = 該老師個人命名空間的文件。 */
+function docToSentence(id, d, owner) {
   d = d || {};
   const audioPath = d.audioPath || '';
   return {
+    _owner: owner || 'shared',
     recordId: id,
     sourceLanguage: d.sourceLanguage || 'hi',
     hindiSentence: d.hindiSentence || '',
@@ -83,6 +124,8 @@ function sentenceDocData(fields) {
     audioMime: '',
     /* 課程內容包順序號：課號 × 100000 ＋ 包內序號；非課程記錄為 null。 */
     seq: (fields.seq == null ? null : fields.seq),
+    /* 個人命名空間文件的擁有人 uid；共版課程為空字串。 */
+    ownerUid: fields.ownerUid || '',
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
   };
@@ -105,11 +148,84 @@ function sortSentencesBySeq(list) {
   return list;
 }
 
-async function reloadSentences() {
+/* 覆寫層 doc 不參與合併的鍵。 */
+const OVERLAY_SKIP_KEYS = { deleted: 1, updatedAt: 1, ownerUid: 1 };
+function applyOverlay(sentence, overlay) {
+  if (!overlay) return sentence;
+  Object.keys(overlay).forEach(k => {
+    if (!OVERLAY_SKIP_KEYS[k]) sentence[k] = overlay[k];
+  });
+  sentence._hasOverlay = true;
+  return sentence;
+}
+
+/* 統一載入：共版課程（套用老師個人覆寫）＋老師個人命名空間（個人句庫＋補充）。
+   未登入或無權限時只載入共版課程。 */
+async function fetchAllSentences() {
+  const uid = currentTeacherUid();
   const snap = await fbDb.collection(SENTENCES_COL).get();
-  state.sentences = sortSentencesBySeq(snap.docs.map(d => docToSentence(d.id, d.data())));
+  let personalDocs = [];
+  const overlayMap = new Map();
+  if (uid) {
+    try {
+      const [psnap, osnap] = await Promise.all([
+        teacherSentencesRef(uid).get(),
+        teacherOverridesRef(uid).get(),
+      ]);
+      personalDocs = psnap.docs;
+      osnap.docs.forEach(d => overlayMap.set(d.id, d.data() || {}));
+    } catch (err) {
+      /* 尚未核准或無權限：只顯示共版內容，不擋整頁。 */
+      console.warn('Personal layer unavailable:', (err && err.message) || err);
+    }
+  }
+  const list = [];
+  snap.docs.forEach(d => {
+    const data = d.data() || {};
+    /* 防禦：共版集合若殘留補充記錄（應已遷移），跳過不顯示。 */
+    if (isSupplementData(data)) return;
+    const ov = overlayMap.get(d.id);
+    if (ov && ov.deleted) return; /* 該老師個人刪除的共版句子 */
+    list.push(applyOverlay(docToSentence(d.id, data, 'shared'), ov));
+  });
+  personalDocs.forEach(d => list.push(docToSentence(d.id, d.data(), uid)));
+  return sortSentencesBySeq(list);
+}
+
+async function reloadSentences() {
+  state.sentences = await fetchAllSentences();
+  personalLayerUid = currentTeacherUid();
   $('sentenceCount').textContent = state.sentences.length;
   saveBankCache();
+}
+
+/* 目前已載入個人層的 uid（''＝未載入）。登入／登出／換帳號時重載。 */
+let personalLayerUid = null;
+/* 等待 v4-access 就緒（登入狀態確認完成），最多等 15 秒。 */
+function whenAccessReady() {
+  return new Promise(resolve => {
+    const done = () => resolve(window.V4_ACCESS || {});
+    const a = window.V4_ACCESS;
+    if (a && a.ready) return done();
+    const h = () => {
+      const b = window.V4_ACCESS;
+      if (b && b.ready) { window.removeEventListener('v4-access-changed', h); done(); }
+    };
+    window.addEventListener('v4-access-changed', h);
+    setTimeout(() => { window.removeEventListener('v4-access-changed', h); done(); }, 15000);
+  });
+}
+/* 登入狀態變化時重載個人層（只在 uid 變化時真正重載）。 */
+async function refreshPersonalLayer() {
+  const uid = currentTeacherUid();
+  if (uid === personalLayerUid) return;
+  try {
+    await reloadSentences();
+    renderSentences();
+    renderCourse();
+  } catch (err) {
+    console.warn('refreshPersonalLayer failed:', (err && err.message) || err);
+  }
 }
 
 /* 課程某課下一個順序號（手動新增補充句子用）。 */
@@ -629,16 +745,21 @@ async function submitTeacherAudio() {
   $('audioSaveMessage').textContent = 'Uploading the teacher recording…';
 
   try {
-    requireApprovedAccess();
+    const me = requireApprovedAccess();
+    const uid = me.uid;
     const mime = recording.mimeType || 'audio/webm';
     const ext = mime.includes('mp4') ? 'm4a' : 'webm';
-    const path = `${AUDIO_PREFIX}${sentence.recordId}.${ext}`;
+    /* 個人句子→該老師個人音檔區；共版課程錄音→錄音者自己的個人音檔區＋個人覆寫層
+       （管理員也一樣，只影響自己的畫面；共版錄音的變更走內容包）。 */
+    const isPersonal = sentence._owner && sentence._owner !== 'shared';
+    const path = teacherAudioPath(isPersonal ? sentence._owner : uid, sentence.recordId, ext);
     await fbStorage.ref(path).put(recording.blob, { contentType: mime });
-    await fbDb.collection(SENTENCES_COL).doc(sentence.recordId).update({
-      audioPath: path,
-      audioMime: mime,
-      updatedAt: serverTimestamp(),
-    });
+    const audioFields = { audioPath: path, audioMime: mime, updatedAt: serverTimestamp() };
+    if (isPersonal) {
+      await teacherSentencesRef(sentence._owner).doc(sentence.recordId).update(audioFields);
+    } else {
+      await teacherOverridesRef(uid).doc(sentence.recordId).set(audioFields, { merge: true });
+    }
     const saved = state.sentences.find(row => row.recordId === sentence.recordId);
     if (saved) { saved.audioPath = path; saved.audioMime = mime; saved.standardAudioUrl = path; }
     teacherAudioCache.delete(sentence.recordId);
@@ -671,12 +792,24 @@ async function submitDeleteSentence() {
   $('deleteMessage').textContent = 'Deleting sentence…';
 
   try {
-    requireApprovedAccess();
-    if (sentence.audioPath) {
-      try { await fbStorage.ref(sentence.audioPath).delete(); } catch (_) { /* already gone */ }
+    const me = requireApprovedAccess();
+    const uid = me.uid;
+    const isPersonal = sentence._owner && sentence._owner !== 'shared';
+    const audioPath = sentence.audioPath || '';
+    /* 錄音檔：只刪自己錄在個人區的（v4_audio/{uid}/ 開頭）；
+       共用錄音永遠不刪，以免影響其他老師。 */
+    const ownAudio = isPersonal || audioPath.indexOf(`${AUDIO_PREFIX}${uid}/`) === 0;
+    if (audioPath && ownAudio) {
+      try { await fbStorage.ref(audioPath).delete(); } catch (_) { /* already gone */ }
     }
     teacherAudioCache.delete(sentence.recordId);
-    await fbDb.collection(SENTENCES_COL).doc(sentence.recordId).delete();
+    if (isPersonal) {
+      await teacherSentencesRef(sentence._owner).doc(sentence.recordId).delete();
+    } else {
+      /* 任何人刪除共版課程句子（含管理員）：只在個人覆寫層標記，不影響他人。 */
+      await teacherOverridesRef(uid).doc(sentence.recordId)
+        .set({ deleted: true, updatedAt: serverTimestamp() }, { merge: true });
+    }
     state.sentences = state.sentences.filter(row => row.recordId !== sentence.recordId);
     $('sentenceCount').textContent = state.sentences.length;
     renderSentences();
@@ -828,10 +961,19 @@ async function submitEdit() {
   });
 
   try {
-    requireApprovedAccess();
+    const me = requireApprovedAccess();
+    const uid = me.uid;
     /* 原地更新：保留 recordId、建立時間與錄音，只換內容欄位。 */
     const { createdAt, audioPath, audioMime, favorite, ...contentFields } = data;
-    await fbDb.collection(SENTENCES_COL).doc(original.recordId).update(contentFields);
+    const isPersonal = original._owner && original._owner !== 'shared';
+    if (isPersonal) {
+      await teacherSentencesRef(original._owner).doc(original.recordId).update(contentFields);
+    } else {
+      /* 任何人編輯共版課程句子（含管理員）：寫入個人覆寫層，只影響自己的畫面。
+         共版內容的變更走內容包／翻譯包匯入（管理員專用）。 */
+      await teacherOverridesRef(uid).doc(original.recordId)
+        .set({ ...contentFields, updatedAt: serverTimestamp() }, { merge: true });
+    }
     await reloadSentences();
     courseMetaCache.clear();
     renderSentences();
@@ -1447,18 +1589,25 @@ function showApiError(message, canRetry) {
 }
 
 /* Last successful bank data, kept on this device as an offline fallback. */
-const BANK_CACHE_KEY = 'csbCachedBankV4';
+/* 快取按老師帳號隔離：不同帳號不共用快取，避免 A 的個人句子出現在 B 的離線快取。 */
+function bankCacheKey() {
+  const uid = (typeof personalLayerUid === 'string' && personalLayerUid)
+    ? personalLayerUid
+    : (currentTeacherUid() || 'anon');
+  return 'csbCachedBankV4:' + uid;
+}
 function saveBankCache() {
   try {
-    localStorage.setItem(BANK_CACHE_KEY, JSON.stringify({
+    localStorage.setItem(bankCacheKey(), JSON.stringify({
       settings: state.settings, sentences: state.sentences,
       categories: state.categories, savedAt: Date.now()
     }));
+    try { localStorage.removeItem('csbCachedBankV4'); } catch (_) {} /* 清掉舊版共用快取 */
   } catch (_) {}
 }
 function loadBankCache() {
   try {
-    const data = JSON.parse(localStorage.getItem(BANK_CACHE_KEY));
+    const data = JSON.parse(localStorage.getItem(bankCacheKey()));
     if (!data || !Array.isArray(data.sentences)) return null;
     return data;
   } catch (_) { return null; }
@@ -1503,8 +1652,10 @@ async function submitSentence() {
   }
 
   try {
-    requireApprovedAccess();
-    await fbDb.collection(SENTENCES_COL).add(sentenceDocData(submitted));
+    const me = requireApprovedAccess();
+    const uid = me.uid;
+    /* 個人句庫與課程「補充」一律寫入該老師的個人命名空間，不影響其他老師。 */
+    await teacherSentencesRef(uid).add(sentenceDocData({ ...submitted, ownerUid: uid }));
     await reloadSentences();
     renderSentences();
     if (activeLesson > 0) { courseMetaCache.clear(); renderCourse(); }
@@ -1528,13 +1679,15 @@ async function loadBank(attempt = 1) {
     return;
   }
   try {
-    const [snap, settingsSnap] = await Promise.all([
-      fbDb.collection(SENTENCES_COL).get(),
+    const [sentences, settingsSnap] = await Promise.all([
+      fetchAllSentences(),
       fbDb.collection(META_COL).doc(SETTINGS_DOC).get(),
     ]);
-    const sentences = sortSentencesBySeq(snap.docs.map(d => docToSentence(d.id, d.data())));
+    personalLayerUid = currentTeacherUid();
     const settings = settingsSnap.exists ? { ...defaultSettings(), ...settingsSnap.data() } : defaultSettings();
     receiveBank({ success: true, settings, sentences });
+    /* 登入狀態就緒後若 uid 與載入時不同（例如 auth 較慢），再疊加個人層。 */
+    whenAccessReady().then(() => refreshPersonalLayer());
   } catch (err) {
     handleBankFailure(attempt, MAX_ATTEMPTS, `Could not reach Firebase: ${(err && err.message) || 'unknown error'}.`);
   }
@@ -1774,10 +1927,11 @@ function updateCourseLockMessage() {
   msg.textContent = map[status] || '';
 }
 
-/* 登入狀態變化時重繪課程區（解鎖／上鎖即時反應）。 */
+/* 登入狀態變化時重繪課程區（解鎖／上鎖即時反應），並重載個人資料層。 */
 window.addEventListener('v4-access-changed', () => {
   updateCourseLockMessage();
   if (typeof renderCourse === 'function') renderCourse();
+  if (typeof refreshPersonalLayer === 'function') refreshPersonalLayer();
 });
 
 function lessonRecords(n) {
@@ -2302,7 +2456,7 @@ async function loadTranslationPreview(records) {
 async function importPackRecords() {
   const progress = $('importProgress');
   try {
-    requireApprovedAccess();
+    requireAdminAccess();
   } catch (err) {
     progress.textContent = (err && err.message) || '請先用 Google 登入。';
     return;
@@ -2315,7 +2469,7 @@ async function importPackRecords() {
   let added = 0, updated = 0;
   progress.textContent = `批次寫入中 0/${total}…`;
   try {
-    requireApprovedAccess();
+    requireAdminAccess();
     const BATCH_LIMIT = 450; /* Firestore 每批上限 500 */
     let batch = fbDb.batch();
     let ops = 0;
@@ -2364,7 +2518,7 @@ async function importTranslationRecords() {
   const progress = $('importProgress');
   const button = $('packImportButton');
   try {
-    requireApprovedAccess();
+    requireAdminAccess();
   } catch (err) {
     progress.textContent = (err && err.message) || '請先用 Google 登入。';
     return;
@@ -2374,7 +2528,7 @@ async function importTranslationRecords() {
   let done = 0;
   progress.textContent = `翻譯寫入中 0/${total}…`;
   try {
-    requireApprovedAccess();
+    requireAdminAccess();
     const BATCH_LIMIT = 450; /* Firestore 每批上限 500 */
     let batch = fbDb.batch();
     let ops = 0;
