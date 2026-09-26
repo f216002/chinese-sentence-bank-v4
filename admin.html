@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>後台審核 · My Chinese Sentence Bank（V4）</title>
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif; background: #f6f3ec; color: #2b2620; }
+    .admin-topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 20px; background: #fffdf8; border-bottom: 1px solid #e5ddcd; position: sticky; top: 0; z-index: 10; }
+    .admin-topbar h1 { font-size: 1.05rem; margin: 0; }
+    .admin-topbar h1 small { display: block; font-size: .75rem; color: #8a7f6a; font-weight: normal; }
+    .admin-topbar .row { display: flex; align-items: center; gap: 10px; }
+    #adminAccount { font-size: .8rem; color: #6b5f4c; }
+    main { max-width: 1080px; margin: 0 auto; padding: 24px 16px 64px; }
+    button { font: inherit; cursor: pointer; border-radius: 10px; border: 1px solid #d8cdb4; background: #fff; padding: 8px 14px; }
+    button.primary { background: #b3541e; border-color: #b3541e; color: #fff; }
+    button.danger { background: #b3261e; border-color: #b3261e; color: #fff; }
+    button.warn { background: #8a6d1c; border-color: #8a6d1c; color: #fff; }
+    button.ghost { background: transparent; }
+    button:disabled { opacity: .5; cursor: not-allowed; }
+    .panel { background: #fffdf8; border: 1px solid #e5ddcd; border-radius: 16px; padding: 28px; }
+    .blocked { text-align: center; }
+    .blocked h2 { margin-top: 0; }
+    .tabs { display: flex; gap: 8px; margin: 0 0 16px; }
+    .tabs button.active { background: #2b2620; color: #fff; border-color: #2b2620; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #efe8d8; vertical-align: top; }
+    th { font-size: .75rem; color: #8a7f6a; letter-spacing: .05em; }
+    .mono { font-family: ui-monospace, monospace; font-size: .78rem; color: #6b5f4c; word-break: break-all; }
+    .cell-main { font-weight: 600; }
+    .cell-sub { font-size: .8rem; color: #8a7f6a; }
+    .actions { white-space: nowrap; }
+    .actions button { padding: 6px 10px; font-size: .82rem; margin-right: 6px; }
+    .status-badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: .78rem; }
+    .status-badge.pending { background: #fdf0d5; color: #8a6d1c; }
+    .status-badge.approved { background: #dff0d8; color: #2e6b2e; }
+    .status-badge.rejected { background: #fbe3e1; color: #a1261f; }
+    .status-badge.suspended { background: #eee; color: #666; }
+    .empty { text-align: center; color: #8a7f6a; padding: 28px 0; }
+    .count { font-size: .82rem; color: #8a7f6a; margin: 8px 0 0; }
+    .back-link { display: inline-block; margin-top: 20px; color: #b3541e; }
+    #toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: #2b2620; color: #fff; padding: 10px 18px; border-radius: 999px; font-size: .88rem; z-index: 50; }
+    #toast.error { background: #a1261f; }
+    .modal { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 40; }
+    .modal[hidden] { display: none; }
+    .modal-card { background: #fffdf8; border-radius: 16px; padding: 24px; max-width: 420px; width: 100%; }
+    .modal-card h2 { margin: 0 0 8px; font-size: 1.1rem; }
+    .modal-card textarea { width: 100%; min-height: 90px; font: inherit; padding: 10px; border-radius: 10px; border: 1px solid #d8cdb4; margin: 8px 0 16px; }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 10px; }
+  </style>
+</head>
+<body>
+  <header class="admin-topbar">
+    <h1>後台審核<small>My Chinese Sentence Bank · V4（獨立站）</small></h1>
+    <div class="row">
+      <span id="adminAccount"></span>
+      <button type="button" id="adminSignIn" class="primary">管理員登入</button>
+      <button type="button" id="adminSignOut">登出</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel blocked" id="adminBlocked">
+      <h2>需要管理員身分</h2>
+      <p id="blockedMessage">請先用管理員 Google 帳號登入。</p>
+      <p><a class="back-link" href="index.html">← 回句庫首頁</a></p>
+    </section>
+
+    <section id="adminApp" hidden>
+      <div class="tabs" id="adminTabs" role="tablist" aria-label="審核分頁">
+        <button type="button" data-tab="requests" class="active">待審核申請</button>
+        <button type="button" data-tab="teachers">核准教師名單</button>
+      </div>
+
+      <div id="tabRequests" class="panel">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>申請人</th><th>UID</th><th>申請時間</th><th>狀態</th><th>操作</th></tr></thead>
+            <tbody id="requestsTableBody"></tbody>
+          </table>
+        </div>
+        <p class="empty" id="requestsEmpty">目前沒有申請。</p>
+        <p class="count" id="requestCount"></p>
+      </div>
+
+      <div id="tabTeachers" class="panel" hidden>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>教師</th><th>UID</th><th>核准時間</th><th>狀態</th><th>操作</th></tr></thead>
+            <tbody id="teachersTableBody"></tbody>
+          </table>
+        </div>
+        <p class="empty" id="teachersEmpty">核准名單是空的。</p>
+        <p class="count" id="teacherCount"></p>
+      </div>
+
+      <p><a class="back-link" href="index.html">← 回句庫首頁</a></p>
+    </section>
+  </main>
+
+  <div class="modal" id="rejectModal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="rejectTitle">
+      <h2 id="rejectTitle">拒絕申請</h2>
+      <p>可留給申請人的備註（選填）：</p>
+      <textarea id="rejectNote" placeholder="例如：請先來信說明身分…"></textarea>
+      <div class="modal-actions">
+        <button type="button" id="rejectCancel" class="ghost">取消</button>
+        <button type="button" id="rejectConfirm" class="danger">確認拒絕</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" hidden role="status"></div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="v4-auth.js?v=20260926-1"></script>
+  <script src="v4-admin.js?v=20260926-1"></script>
+</body>
+</html>
