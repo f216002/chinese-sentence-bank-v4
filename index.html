@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260926-2">
+  <link rel="stylesheet" href="styles.css?v=20260926-3">
 </head>
 <body>
   <a class="skip-link" href="#sentenceGrid">Skip to sentence bank</a>
@@ -162,10 +162,25 @@
       <div class="section-heading">
         <div><span class="step">01</span><h2 id="promptBuilderTitle">Create your AI prompt</h2></div>
       </div>
-      <p class="section-note">Type one Hindi, Romanized Hindi, or Chinese sentence. The AI will translate in either direction and include Roman Hindi.</p>
+      <p class="section-note">Choose your students' first language, then type one sentence. The AI will translate in either direction.</p>
+      <label class="language-profile-field" for="v4SourceLanguage">
+        <span class="field-label">Students' first language</span>
+        <select id="v4SourceLanguage">
+          <option value="hi">हिन्दी · Hindi</option>
+          <option value="ta">தமிழ் · Tamil</option>
+          <option value="th">ไทย · Thai</option>
+          <option value="km">ខ្មែរ · Khmer</option>
+          <option value="vi">Tiếng Việt · Vietnamese</option>
+          <option value="id">Bahasa Indonesia · Indonesian</option>
+          <option value="ne">नेपाली · Nepali</option>
+          <option value="bn">বাংলা · Bengali</option>
+          <option value="es">Español · Spanish</option>
+          <option value="en">English</option>
+        </select>
+      </label>
       <div class="prompt-input-row">
         <label class="prompt-sentence-field">
-          <span class="field-label">Hindi, Roman Hindi, or Chinese sentence</span>
+          <span class="field-label" id="promptInputLabel">Hindi, Romanized Hindi, or Chinese sentence</span>
           <textarea id="promptSentence" rows="3" placeholder="क्योंकि तुमने अभी देना नहीं सीखा।&#10;Kyonki tumne abhi dena nahin seekha.&#10;or: 因為你還沒學會給予。"></textarea>
         </label>
         <div class="prompt-generate-actions">
@@ -282,11 +297,11 @@
     <p class="edit-note" id="editRecordNote"></p>
     <p class="edit-audio-note hidden" id="editAudioNote">This sentence has a saved teacher recording. It stays attached after editing.</p>
     <div class="edit-fields">
-      <label class="edit-field">Hindi sentence<textarea id="editHindi" lang="hi" rows="2"></textarea></label>
+      <label class="edit-field"><span id="editHindiLabel">Hindi sentence</span><textarea id="editHindi" lang="hi" rows="2"></textarea></label>
       <label class="edit-field">Chinese sentence<input id="editChinese" lang="zh-Hant" autocomplete="off"></label>
       <label class="edit-field">Pinyin<input id="editPinyin" autocomplete="off"></label>
-      <label class="edit-field">Roman Hindi<input id="editRoman" lang="hi-Latn" autocomplete="off"></label>
-      <label class="edit-field">Hindi explanation<textarea id="editExplanation" lang="hi" rows="2"></textarea></label>
+      <label class="edit-field"><span id="editRomanLabel">Roman Hindi</span><input id="editRoman" lang="hi-Latn" autocomplete="off"></label>
+      <label class="edit-field"><span id="editExplanationLabel">Hindi explanation</span><textarea id="editExplanation" lang="hi" rows="2"></textarea></label>
       <div class="edit-row">
         <label class="edit-field">Category<input id="editCategory" list="editCategoryList" autocomplete="off"></label>
         <label class="edit-field">Tags<input id="editTags" autocomplete="off" placeholder="comma, separated"></label>
@@ -337,6 +352,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
   <script src="v4-auth.js?v=20260926-3"></script>
   <script src="v4-access.js?v=20260926-2"></script>
-  <script src="app.js?v=20260926-3"></script>
+  <script src="v4-language-config.js?v=20260926-1"></script>
+  <script src="app.js?v=20260926-4"></script>
 </body>
 </html>
