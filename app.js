@@ -1,7 +1,7 @@
-/* ---- Firebase backend (replaces Google Sheets + Apps Script) ----
-   Project: my-chinese-sentence-bank-v3 (shared with the v3 site).
-   v2 data lives under v2_-prefixed collections/paths so it never
-   collides with v3 data. Reads are public; writes need anonymous auth. */
+/* ---- Firebase backend (V4 independent site) ----
+   Project: my-chinese-sentence-bank-v3 (same project, isolated data).
+   V4 data lives under v4_-prefixed collections/paths so it never
+   collides with v2 or v3 data. Reads are public; writes need anonymous auth. */
 const firebaseConfig = {
   apiKey: "AIzaSyChpInXumwIWaOrR4cU8KhNm1NK5-RdgQw",
   authDomain: "my-chinese-sentence-bank-v3.firebaseapp.com",
@@ -12,10 +12,10 @@ const firebaseConfig = {
 };
 /* One-time migration still talks to the retired Apps Script backend. */
 const OLD_API_URL = 'https://script.google.com/macros/s/AKfycbw9trkW9RNCRSwWou_51Q-FP6aL7Lp8sy3zizSG83fzN1Urtd3ZiMc47RUfHDBTIMJfDw/exec';
-const SENTENCES_COL = 'v2_sentences';
-const META_COL = 'v2_meta';
+const SENTENCES_COL = 'v4_sentences';
+const META_COL = 'v4_meta';
 const SETTINGS_DOC = 'settings';
-const AUDIO_PREFIX = 'v2_audio/';
+const AUDIO_PREFIX = 'v4_audio/';
 
 let fbDb = null, fbAuth = null, fbStorage = null, fbFieldValue = null;
 let firebaseInitError = '';
@@ -593,7 +593,7 @@ function openAudioPinDialog(sentence, node) {
   const recording = recordingForSentence(sentence);
   if (!recording || !sentence.recordId) return;
   pendingModelSave = {sentence, node, recording};
-  try { $('audioPinInput').value = localStorage.getItem('csbSubmissionPin') || ''; } catch (_) {}
+  try { $('audioPinInput').value = localStorage.getItem('csbSubmissionPinV4') || ''; } catch (_) {}
   $('audioSaveMessage').textContent = '';
   $('audioPinDialog').showModal();
   setTimeout(() => $('audioPinInput').focus(), 50);
@@ -607,7 +607,7 @@ async function submitTeacherAudio() {
   const button = $('confirmAudioSave');
   button.disabled = true;
   $('audioSaveMessage').textContent = 'Uploading the teacher recording…';
-  try { localStorage.setItem('csbSubmissionPin', pin); } catch (_) {}
+  try { localStorage.setItem('csbSubmissionPinV4', pin); } catch (_) {}
 
   try {
     await ensureAuth();
@@ -638,7 +638,7 @@ function openDeleteDialog(sentence) {
   pendingDeleteSentence = sentence;
   $('deleteSentenceText').textContent = sentence.chineseSentence || sentence.hindiSentence || 'Untitled sentence';
   $('deleteRecordId').textContent = sentence.recordId;
-  try { $('deletePinInput').value = localStorage.getItem('csbSubmissionPin') || ''; } catch (_) {}
+  try { $('deletePinInput').value = localStorage.getItem('csbSubmissionPinV4') || ''; } catch (_) {}
   $('deleteMessage').textContent = '';
   $('confirmDelete').disabled = false;
   $('deleteDialog').showModal();
@@ -654,7 +654,7 @@ async function submitDeleteSentence() {
   const button = $('confirmDelete');
   button.disabled = true;
   $('deleteMessage').textContent = 'Deleting sentence…';
-  try { localStorage.setItem('csbSubmissionPin', pin); } catch (_) {}
+  try { localStorage.setItem('csbSubmissionPinV4', pin); } catch (_) {}
 
   try {
     await ensureAuth();
@@ -700,7 +700,7 @@ function openEditDialog(sentence) {
   $('editRecordNote').textContent = `Editing record ${sentence.recordId}. Changes update this record in place; any teacher recording stays attached.`;
   const hasAudio = !!(sentence.standardAudioUrl || teacherAudioCache.get(sentence.recordId) || recordingForSentence(sentence));
   $('editAudioNote').classList.toggle('hidden', !hasAudio);
-  try { $('editPinInput').value = localStorage.getItem('csbSubmissionPin') || ''; } catch (_) {}
+  try { $('editPinInput').value = localStorage.getItem('csbSubmissionPinV4') || ''; } catch (_) {}
   $('editMessage').textContent = '';
   $('confirmEdit').disabled = false;
   $('confirmEdit').textContent = 'Save changes';
@@ -793,7 +793,7 @@ async function submitEdit() {
   const button = $('confirmEdit');
   button.disabled = true;
   $('editMessage').textContent = 'Saving changes…';
-  try { localStorage.setItem('csbSubmissionPin', pin); } catch (_) {}
+  try { localStorage.setItem('csbSubmissionPinV4', pin); } catch (_) {}
 
   const content = buildEditedPaste();
   const data = sentenceDocData({
@@ -1411,7 +1411,7 @@ function showApiError(message, canRetry) {
 }
 
 /* Last successful bank data, kept on this device as an offline fallback. */
-const BANK_CACHE_KEY = 'csbCachedBank';
+const BANK_CACHE_KEY = 'csbCachedBankV4';
 function saveBankCache() {
   try {
     localStorage.setItem(BANK_CACHE_KEY, JSON.stringify({
@@ -1437,7 +1437,7 @@ function describeCacheAge(savedAt) {
 
 function openPinDialog() {
   if (!state.preview) return;
-  try { $('pinInput').value = localStorage.getItem('csbSubmissionPin') || ''; } catch (_) {}
+  try { $('pinInput').value = localStorage.getItem('csbSubmissionPinV4') || ''; } catch (_) {}
   $('saveMessage').textContent = '';
   $('pinDialog').showModal();
   setTimeout(() => $('pinInput').focus(), 50);
@@ -1447,8 +1447,8 @@ async function submitSentence() {
   const pin = $('pinInput').value.trim();
   if (!pin) { $('saveMessage').textContent = 'Enter the submission PIN.'; return; }
   if (!state.preview) { $('pinDialog').close(); return; }
-  if ($('rememberPin').checked) { try { localStorage.setItem('csbSubmissionPin', pin); } catch (_) {} }
-  else { try { localStorage.removeItem('csbSubmissionPin'); } catch (_) {} }
+  if ($('rememberPin').checked) { try { localStorage.setItem('csbSubmissionPinV4', pin); } catch (_) {} }
+  else { try { localStorage.removeItem('csbSubmissionPinV4'); } catch (_) {} }
 
   $('confirmSave').disabled = true;
   $('saveMessage').textContent = 'Saving sentence…';
@@ -1738,7 +1738,7 @@ function unlockCourse() {
   if (!pin) { msg.textContent = '請輸入老師 PIN。'; return; }
   /* 以這次輸入的 PIN 為準並記住，不再比對殘留的舊值（舊邏輯會因 localStorage 殘留舊 PIN 而永久鎖死）。 */
   try {
-    localStorage.setItem('csbSubmissionPin', pin);
+    localStorage.setItem('csbSubmissionPinV4', pin);
     sessionStorage.setItem('csbCourseUnlocked', '1');
   } catch (_) {}
   msg.textContent = '';
@@ -2161,7 +2161,7 @@ async function loadPackPreview() {
     const fresh = items.length - updates;
     const lessonLabelText = lessonKey ? lessonLabel(Number(lessonKey)) : '內容包';
     info.textContent = `${lessonLabelText}：${records.length} 條記錄，${fresh} 條新增${updates ? `，${updates} 條更新（取代舊記錄）` : ''}。`;
-    try { $('importPinInput').value = localStorage.getItem('csbSubmissionPin') || ''; } catch (_) {}
+    try { $('importPinInput').value = localStorage.getItem('csbSubmissionPinV4') || ''; } catch (_) {}
     importButton.disabled = items.length === 0;
   } catch (err) {
     info.textContent = `讀取失敗：${err.message}。`;
@@ -2174,7 +2174,7 @@ async function importPackRecords() {
   const progress = $('importProgress');
   if (!pin) { progress.textContent = '請輸入老師 PIN。'; return; }
   if (!packRecordsCache.length) { progress.textContent = '沒有可匯入的記錄。'; return; }
-  try { localStorage.setItem('csbSubmissionPin', pin); } catch (_) {}
+  try { localStorage.setItem('csbSubmissionPinV4', pin); } catch (_) {}
   const button = $('packImportButton');
   button.disabled = true;
   const total = packRecordsCache.length;
