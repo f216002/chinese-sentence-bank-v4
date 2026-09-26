@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>V4 資料遷移（一次性）</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+  .hidden { display: none !important; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: 14px; }
+  th, td { border: 1px solid #ccc; padding: 6px 8px; text-align: left; }
+  th { background: #f0f0f0; }
+  button { padding: 10px 20px; font-size: 16px; margin: 8px 8px 8px 0; cursor: pointer; }
+  #migrateBtn { background: #c00; color: #fff; border: none; }
+  #migrateBtn:disabled { background: #999; cursor: not-allowed; }
+  #log { white-space: pre-wrap; background: #f7f7f7; padding: 1rem; border: 1px solid #ddd; min-height: 120px; }
+  .warn { color: #c00; font-weight: bold; }
+</style>
+</head>
+<body>
+<h1>V4 個人資料遷移（一次性工具）</h1>
+<p>把 <code>v4_sentences</code> 裡的個人句子（無 seq）與課程「補充」（tags 含「補充」）
+搬到管理員的個人命名空間 <code>v4_teachers/{uid}/sentences</code>（保留原文件 ID 與錄音）。共版課程完全不動。</p>
+
+<div id="loginArea">
+  <p id="authMsg">檢查登入狀態…</p>
+  <button id="loginBtn" class="hidden">用 Google 登入</button>
+</div>
+
+<div id="mainArea" class="hidden">
+  <p>已登入：<span id="userEmail"></span>（<span id="userUid"></span>）</p>
+  <button id="scanBtn">1. 掃描並分類</button>
+  <button id="migrateBtn" disabled>2. 開始遷移</button>
+  <div id="result"></div>
+  <h3>執行紀錄</h3>
+  <div id="log"></div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="v4-auth.js?v=20260926-6"></script>
+<script>
+(function () {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const logEl = $('log');
+  function log(msg) { logEl.textContent += msg + '\n'; }
+
+  const ADMIN_EMAIL = (window.V4_ADMIN_EMAIL || 'f216002@gmail.com').toLowerCase();
+  let db = null, uid = null, scanData = null;
+
+  try {
+    if (!window.firebase.apps.length) window.firebase.initializeApp(window.V4_FIREBASE_CONFIG || {});
+    db = window.firebase.firestore();
+  } catch (e) { $('authMsg').textContent = 'Firebase 初始化失敗：' + e.message; return; }
+
+  const auth = window.firebase.auth();
+  $('loginBtn').addEventListener('click', () => {
+    const provider = new window.firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider).catch(e => { $('authMsg').textContent = '登入失敗：' + e.message; });
+  });
+
+  auth.onAuthStateChanged(user => {
+    if (!user) {
+      $('authMsg').textContent = '尚未登入。';
+      $('loginBtn').classList.remove('hidden');
+      $('mainArea').classList.add('hidden');
+      return;
+    }
+    if (String(user.email || '').toLowerCase() !== ADMIN_EMAIL) {
+      $('authMsg').textContent = '此工具僅限管理員（' + ADMIN_EMAIL + '）。目前登入：' + user.email;
+      $('loginBtn').classList.add('hidden');
+      return;
+    }
+    uid = user.uid;
+    $('loginArea').classList.add('hidden');
+    $('mainArea').classList.remove('hidden');
+    $('userEmail').textContent = user.email;
+    $('userUid').textContent = uid;
+    log('管理員已登入，uid=' + uid);
+  });
+
+  function classify(data) {
+    if (data.seq == null) return 'personal';
+    if (/補充/.test(String(data.tags || ''))) return 'supplement';
+    return 'canonical';
+  }
+
+  $('scanBtn').addEventListener('click', async () => {
+    $('scanBtn').disabled = true;
+    log('掃描 v4_sentences …');
+    try {
+      const snap = await db.collection('v4_sentences').get();
+      const groups = { canonical: [], personal: [], supplement: [] };
+      snap.docs.forEach(d => groups[classify(d.data() || {})].push({ id: d.id, data: d.data() || {} }));
+      scanData = groups;
+      log(`共 ${snap.size} 筆：共版 ${groups.canonical.length}／個人 ${groups.personal.length}／補充 ${groups.supplement.length}`);
+      const rows = [...groups.personal, ...groups.supplement].map(({ id, data }) => {
+        const created = data.createdAt && data.createdAt.toDate ? data.createdAt.toDate().toLocaleString() : '';
+        return `<tr><td>${id}</td><td>${escapeHtml(data.chineseSentence || '')}</td>` +
+          `<td>${data.seq == null ? '個人' : '補充'}</td><td>${created}</td>` +
+          `<td>${data.audioPath ? '有錄音' : ''}</td></tr>`;
+      }).join('');
+      $('result').innerHTML =
+        `<p>共版課程：<b>${groups.canonical.length}</b> 筆（不動）</p>` +
+        `<p>要遷移：<b>${groups.personal.length + groups.supplement.length}</b> 筆</p>` +
+        (rows ? `<table><tr><th>ID</th><th>中文</th><th>類型</th><th>建立時間</th><th>錄音</th></tr>${rows}</table>` : '<p>沒有要遷移的資料。</p>');
+      if (groups.personal.length + groups.supplement.length > 50) {
+        $('result').innerHTML += '<p class="warn">要遷移的筆數超過 50，請先確認再繼續。</p>';
+      } else {
+        $('migrateBtn').disabled = false;
+      }
+    } catch (e) {
+      log('掃描失敗：' + e.message);
+      $('scanBtn').disabled = false;
+    }
+  });
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  $('migrateBtn').addEventListener('click', async () => {
+    if (!scanData) return;
+    if (!confirm(`確定遷移 ${scanData.personal.length + scanData.supplement.length} 筆到 v4_teachers/${uid}/sentences 嗎？`)) return;
+    $('migrateBtn').disabled = true;
+    const targets = [...scanData.personal, ...scanData.supplement];
+    const BATCH_LIMIT = 400;
+    try {
+      // 1. 複製到個人命名空間（保留原 ID，加上 ownerUid）
+      let batch = db.batch(), ops = 0, copied = 0;
+      for (const { id, data } of targets) {
+        const ref = db.collection('v4_teachers').doc(uid).collection('sentences').doc(id);
+        batch.set(ref, { ...data, ownerUid: uid });
+        ops++; copied++;
+        if (ops >= BATCH_LIMIT) { await batch.commit(); batch = db.batch(); ops = 0; }
+        if (copied % 10 === 0) log(`複製中 ${copied}/${targets.length}…`);
+      }
+      if (ops) await batch.commit();
+      log(`複製完成：${copied} 筆 → v4_teachers/${uid}/sentences`);
+      // 2. 從共用集合刪除
+      batch = db.batch(); ops = 0; let deleted = 0;
+      for (const { id } of targets) {
+        batch.delete(db.collection('v4_sentences').doc(id));
+        ops++; deleted++;
+        if (ops >= BATCH_LIMIT) { await batch.commit(); batch = db.batch(); ops = 0; }
+      }
+      if (ops) await batch.commit();
+      log(`刪除完成：${deleted} 筆已從 v4_sentences 移除`);
+      // 3. 驗證
+      const [v4snap, psnap] = await Promise.all([
+        db.collection('v4_sentences').get(),
+        db.collection('v4_teachers').doc(uid).collection('sentences').get(),
+      ]);
+      let leftover = 0;
+      v4snap.docs.forEach(d => { if (classify(d.data() || {}) !== 'canonical') leftover++; });
+      log(`驗證：v4_sentences 剩 ${v4snap.size} 筆（殘留非共版 ${leftover} 筆）；個人命名空間 ${psnap.size} 筆。`);
+      log(leftover === 0 && psnap.size === targets.length ? '✅ 遷移成功' : '⚠️ 筆數不符，請檢查');
+    } catch (e) {
+      log('遷移失敗：' + e.message);
+    }
+  });
+})();
+</script>
+</body>
+</html>
