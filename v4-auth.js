@@ -90,6 +90,7 @@
       if (user.photoURL) { accountPhoto.src = user.photoURL; accountPhoto.alt = ''; }
       else { accountPhoto.removeAttribute('src'); }
     }
+    setAuthMessage('');
   }
 
   if (signInButton) {
