@@ -55,7 +55,8 @@
   };
 
   async function resolveAccess(user) {
-    if (!user) { publishAccess(null, 'signed-out', false); return; }
+    /* 未登入或殘留的匿名 session：一律視為未登入（匿名登入已退役）。 */
+    if (!user || user.isAnonymous) { publishAccess(null, 'signed-out', false); return; }
     publishAccess(user, 'checking', false);
 
     /* 管理員本人：不經審核，直接通過。 */
