@@ -187,3 +187,5 @@
 .v4-auth-message.error{color:var(--red)}
 .course-lock-note{margin-top:10px}
 @media(max-width:700px){.v4-account span{display:none}.v4-auth-button{padding:8px 10px;font-size:12px}}
+.language-profile-field{display:grid;gap:7px;max-width:520px;margin:0 0 22px}
+.language-profile-field select{min-height:48px;border:1px solid var(--line);border-radius:9px;background:white;padding:0 14px;color:var(--ink);font-size:1rem}
