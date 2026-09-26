@@ -176,3 +176,14 @@
 .vocab-grid{grid-template-columns:1fr 1fr}
 .course-pin-field input{width:100%}
 }
+.v4-auth{display:flex;align-items:center;gap:8px;margin-left:4px}
+.v4-account{display:flex;align-items:center;gap:8px}
+.v4-account img{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff}
+.v4-account span{display:flex;flex-direction:column;line-height:1.2}
+.v4-account strong{font-size:13px}
+.v4-account small{font-size:11px;color:var(--muted)}
+.v4-auth-button{padding:9px 14px;font-size:13px;white-space:nowrap;text-decoration:none}
+.v4-auth-message{max-width:1120px;margin:0 auto;padding:8px 20px 0;font-size:13px;color:var(--muted);min-height:0}
+.v4-auth-message.error{color:var(--red)}
+.course-lock-note{margin-top:10px}
+@media(max-width:700px){.v4-account span{display:none}.v4-auth-button{padding:8px 10px;font-size:12px}}
