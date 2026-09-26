@@ -1,0 +1,100 @@
+/* ---- V4 老師審核狀態（移植自 V3，集合獨立） ----
+   使用 v4_accessRequests（申請）與 v4_approvedTeachers（核准名單），
+   與 V3 的 accessRequests / approvedTeachers 完全隔離。
+   狀態發布到 window.V4_ACCESS，並觸發 v4-access-changed 事件。
+   狀態：checking / signed-out / pending / approved / rejected / suspended / error */
+(function () {
+  'use strict';
+
+  var db = null;
+  var auth = null;
+  try {
+    if (!window.firebase || !window.firebase.apps.length) throw new Error('Firebase 尚未初始化。');
+    db = window.firebase.firestore();
+    auth = window.firebase.auth();
+  } catch (err) {
+    window.V4_ACCESS = Object.freeze({ ready: false, status: 'error', user: null, isAdmin: false });
+    return;
+  }
+
+  function requestDoc(uid) { return db.collection('v4_accessRequests').doc(uid); }
+
+  function isAdminUser(user) {
+    return !!user && String(user.email || '').toLowerCase() === String(window.V4_ADMIN_EMAIL || '').toLowerCase();
+  }
+
+  function publishAccess(user, status, isAdmin) {
+    window.V4_ACCESS = Object.freeze({
+      ready: status !== 'checking',
+      status: status,
+      user: user ? Object.freeze({
+        uid: user.uid,
+        displayName: user.displayName || '',
+        email: user.email || '',
+        photoURL: user.photoURL || ''
+      }) : null,
+      isAdmin: !!isAdmin
+    });
+    window.dispatchEvent(new CustomEvent('v4-access-changed', { detail: window.V4_ACCESS }));
+  }
+
+  /* app.js 的寫入入口：一律先過這一關，未核准就擋下並丟出中文訊息。 */
+  window.v4RequireApproved = function () {
+    var a = window.V4_ACCESS;
+    if (!a || !a.ready) throw new Error('登入狀態確認中，請稍候再試。');
+    if (a.status !== 'approved') {
+      if (a.status === 'signed-out') throw new Error('請先用 Google 登入。');
+      if (a.status === 'pending') throw new Error('老師申請審核中，管理員核准後即可使用。');
+      if (a.status === 'rejected') throw new Error('申請未通過，請聯繫管理員。');
+      if (a.status === 'suspended') throw new Error('帳號目前暫停使用，請聯繫管理員。');
+      throw new Error('身分確認失敗，請重新整理頁面再試。');
+    }
+    var user = auth.currentUser;
+    if (!user) throw new Error('請先用 Google 登入。');
+    return user;
+  };
+
+  async function resolveAccess(user) {
+    if (!user) { publishAccess(null, 'signed-out', false); return; }
+    publishAccess(user, 'checking', false);
+
+    /* 管理員本人：不經審核，直接通過。 */
+    if (isAdminUser(user)) { publishAccess(user, 'approved', true); return; }
+
+    var approvalSnap = await db.collection('v4_approvedTeachers').doc(user.uid).get();
+    if (approvalSnap.exists) {
+      var data = approvalSnap.data() || {};
+      if (data.active === true) { publishAccess(user, 'approved', false); return; }
+      publishAccess(user, data.status || 'suspended', false);
+      return;
+    }
+
+    /* 沒有核准記錄：查看或建立申請。 */
+    var reqRef = requestDoc(user.uid);
+    var reqSnap = await reqRef.get();
+    var status = 'pending';
+    if (reqSnap.exists) {
+      status = (reqSnap.data() || {}).status || 'pending';
+    } else {
+      await reqRef.set({
+        uid: user.uid,
+        email: user.email || '',
+        displayName: user.displayName || '',
+        photoURL: user.photoURL || '',
+        status: 'pending',
+        requestedAt: window.firebase.firestore.FieldValue.serverTimestamp(),
+        updatedAt: window.firebase.firestore.FieldValue.serverTimestamp()
+      });
+    }
+    publishAccess(user, status, false);
+  }
+
+  window.V4_ACCESS = Object.freeze({ ready: false, status: 'checking', user: null, isAdmin: false });
+
+  auth.onAuthStateChanged(function (user) {
+    resolveAccess(user).catch(function (error) {
+      console.error('V4 access check failed:', error);
+      publishAccess(user, 'error', isAdminUser(user));
+    });
+  });
+})();
