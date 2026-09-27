@@ -1068,10 +1068,64 @@ function speakChinese(text, button) {
   speechSynthesis.speak(utterance);
 }
 
+/* V4 cloud voices: these 7 languages go through the synthesizeV4Source
+   Cloud Function (Azure Speech, shared cross-teacher cache, 30 new
+   voices per teacher per day). Every other language uses the browser's
+   built-in speechSynthesis, which costs nothing. */
+const V4_AZURE_LOCALES = new Set(['km-KH', 'th-TH', 'vi-VN', 'ne-NP', 'ta-IN', 'bn-BD', 'my-MM']);
+const v4CloudAudioCache = new Map(); /* locale + '\n' + text -> data URL */
+let v4SynthesizeFn = null;
+let v4ActiveCloudAudio = null;
+
 function speakHindi(text, button, locale) {
+  const targetLocale = locale || 'hi-IN';
+  if (V4_AZURE_LOCALES.has(targetLocale)) {
+    speakWithAzure(text, button, targetLocale);
+    return;
+  }
+  speakHindiBrowser(text, button, targetLocale);
+}
+
+async function speakWithAzure(text, button, targetLocale) {
+  const cacheKey = targetLocale + '\n' + text;
+  button.classList.add('speaking');
+  button.disabled = true;
+  try {
+    let dataUrl = v4CloudAudioCache.get(cacheKey);
+    if (!dataUrl) {
+      if (!v4SynthesizeFn) {
+        v4SynthesizeFn = firebase.app().functions('us-east1').httpsCallable('synthesizeV4Source', { timeout: 60000 });
+      }
+      const res = await v4SynthesizeFn({ locale: targetLocale, text });
+      const data = (res && res.data) || {};
+      if (!data.audioBase64) throw new Error('empty audio');
+      dataUrl = 'data:' + (data.contentType || 'audio/mpeg') + ';base64,' + data.audioBase64;
+      v4CloudAudioCache.set(cacheKey, dataUrl);
+    }
+    try { speechSynthesis.cancel(); } catch (_) {}
+    if (v4ActiveCloudAudio) { try { v4ActiveCloudAudio.pause(); } catch (_) {} }
+    const audio = new Audio(dataUrl);
+    v4ActiveCloudAudio = audio;
+    const done = () => { button.classList.remove('speaking'); button.disabled = false; };
+    audio.onended = done;
+    audio.onerror = () => { done(); alert('雲端語音播放失敗，請再試一次。'); };
+    await audio.play();
+  } catch (err) {
+    button.classList.remove('speaking');
+    button.disabled = false;
+    const code = String((err && err.code) || '');
+    const msg = String((err && err.message) || '');
+    if (code.includes('unauthenticated')) alert('雲端語音需要先登入 Google。');
+    else if (code.includes('permission-denied')) alert('雲端語音需要老師審核通過後才能使用。');
+    else if (code.includes('resource-exhausted')) alert('今天的雲端新語音額度（30 句）已用完，之前產生過的句子仍可播放。');
+    else if (code.includes('aborted')) alert('這句的語音正在準備中，請稍後再點一次播放。');
+    else { console.error('Azure TTS error', err); alert('雲端語音暫時無法使用：' + (msg || '請稍後再試')); }
+  }
+}
+
+function speakHindiBrowser(text, button, targetLocale) {
   if (!('speechSynthesis' in window)) return alert('Speech is not supported in this browser. Please try Chrome, Edge or Safari.');
   speechSynthesis.cancel();
-  const targetLocale = locale || 'hi-IN';
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = targetLocale;
   utterance.rate = 0.85;
