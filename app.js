@@ -2486,8 +2486,13 @@ const TRANSLATION_LABELS = ['LESSON', 'SECTION', 'CHINESE', 'SPEAKER', 'EXPLANAT
 function parseTranslationRecord(r) {
   const out = {};
   const labelAlt = TRANSLATION_LABELS.join('|');
+  /* v20260928: 值可跨行（來源 SECTION 偶有內嵌換行，如「生詞\n\n# SECTION: 易混淆語詞」）。
+     舊寫法 (?=\n(?:labels):|\s*$) 會在第一個 \n 處截斷（\s*$ 在多行模式下可匹配行尾），
+     導致多行錨點退回中文備援配對、撞到同課同中文句時寫錯位置。
+     新寫法要求下一個標籤必須在行首（\n^），結尾改用 (?![\s\S])（字串真正結尾），
+     單行記錄行為與舊版完全一致（已用 node 實證）。 */
   TRANSLATION_LABELS.forEach(label => {
-    const m = String(r).match(new RegExp('^' + label + ':\\s*([\\s\\S]*?)(?=\\n(?:' + labelAlt + '):|\\s*$)', 'm'));
+    const m = String(r).match(new RegExp('^' + label + ':\\s*([\\s\\S]*?)(?=\\n^(?:' + labelAlt + '):|(?![\\s\\S]))', 'm'));
     out[label] = m ? m[1].trim() : '';
   });
   return out;
