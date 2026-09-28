@@ -156,6 +156,15 @@ function applyOverlay(sentence, overlay) {
     if (!OVERLAY_SKIP_KEYS[k]) sentence[k] = overlay[k];
   });
   sentence._hasOverlay = true;
+  /* 衍生欄位重算：覆寫層若帶了老師自己的錄音（audioPath），必須同步到
+     standardAudioUrl。播放鍵／下載鍵／錄音狀態判斷都只看 standardAudioUrl，
+     而它在 docToSentence 時是從共版層算出來的；不重算的話，頁面重整後老師
+     在共版卡片上的錄音就會失效（播放退回瀏覽器發音、下載鍵隱藏）。 */
+  if (sentence.audioPath) {
+    sentence.standardAudioUrl = sentence.audioPath;
+  } else if (Object.prototype.hasOwnProperty.call(overlay, 'audioPath')) {
+    sentence.standardAudioUrl = '';
+  }
   return sentence;
 }
 
