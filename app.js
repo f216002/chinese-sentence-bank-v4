@@ -871,9 +871,9 @@ function openEditDialog(sentence) {
   if (!sentence.recordId) return;
   pendingEditSentence = sentence;
   const editProfile = v4GetLanguageProfile(sourceLanguageFor(sentence));
-  if ($('editHindiLabel')) $('editHindiLabel').textContent = editProfile.name + ' sentence';
-  if ($('editRomanLabel')) $('editRomanLabel').textContent = editProfile.romanizationName;
-  if ($('editExplanationLabel')) $('editExplanationLabel').textContent = editProfile.name + ' explanation';
+  if ($('editHindiLabel')) setBilingualText($('editHindiLabel'), (editProfile.nameZh || editProfile.name) + '句子', editProfile.name + ' sentence');
+  if ($('editRomanLabel')) setBilingualText($('editRomanLabel'), (editProfile.nameZh || editProfile.name) + '羅馬拼音', editProfile.romanizationName);
+  if ($('editExplanationLabel')) setBilingualText($('editExplanationLabel'), (editProfile.nameZh || editProfile.name) + '解說', editProfile.name + ' explanation');
   $('editHindi').setAttribute('lang', editProfile.locale);
   $('editRoman').setAttribute('lang', editProfile.locale + '-Latn');
   $('editExplanation').setAttribute('lang', editProfile.locale);
@@ -1070,9 +1070,8 @@ function createCard(sentence, preview = false) {
   /* 解說區標題跟隨顯示語言（模板預設寫 "Hindi explanation"）。 */
   const explSummary = node.querySelector('details summary');
   if (explSummary) {
-    const plusSpan = explSummary.querySelector('span');
-    explSummary.textContent = cardProfile.name + ' explanation ';
-    if (plusSpan) explSummary.appendChild(plusSpan);
+    const nameZh = cardProfile.nameZh || cardProfile.name;
+    explSummary.innerHTML = escapeHtml(nameZh) + '解說 <span class="en-sub">' + escapeHtml(cardProfile.name) + ' explanation</span> <span>＋</span>';
   }
   hindiSpeak.setAttribute('aria-label', 'Play ' + cardProfile.name + ' pronunciation');
   const tags = [...new Set(String(sentence.tags || '').split(/[,;|]/).map(t => t.trim().toLowerCase()).filter(Boolean))];
@@ -2266,6 +2265,7 @@ function createVocabCard(sentence) {
   exampleEl.textContent = displayExplanation(sentence);
   exampleEl.hidden = !displayExplanation(sentence);
   node.querySelector('.vocab-hindi-speak').addEventListener('click', e => speakHindi(displaySource(sentence), e.currentTarget, vocabProfile.locale));
+  node.querySelector('.vocab-hindi-speak').setAttribute('aria-label', 'Play ' + vocabProfile.name + ' pronunciation');
   node.querySelector('.vocab-speak').addEventListener('click', e => playSentenceModel(sentence, e.currentTarget));
   const vocabDl = node.querySelector('.vocab-download');
   vocabDl.hidden = !sentence.standardAudioUrl;
