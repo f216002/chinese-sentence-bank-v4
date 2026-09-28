@@ -2170,10 +2170,17 @@ function renderLessonView() {
 
   const header = $('lessonHeader');
   const goals = bySection['目標'] || [];
+  /* 課程標題譯句：取第一筆「目標」記錄的翻譯（displaySource／displayRoman，無翻譯退印地語），顯示在英文標題下方。 */
+  const g0 = goals[0];
+  const g0p = g0 ? displayProfile(g0) : null;
+  const titleT = g0 ? displaySource(g0) : '';
+  const titleR = g0 ? displayRoman(g0) : '';
   header.innerHTML = `
     <div class="lesson-header-top"><span class="lesson-num">${lessonLabel(lesson.n)}</span><span class="lesson-topic">${lesson.topic}</span></div>
     <h3 class="lesson-header-zh" lang="zh-Hant">${lesson.zh}</h3>
     <p class="lesson-header-en">${lesson.en}</p>
+    ${titleT ? `<p class="lesson-header-i18n" lang="${g0p.locale}">${escapeHtml(titleT)}</p>` : ''}
+    ${titleR ? `<p class="lesson-header-roman">${escapeHtml(titleR)}</p>` : ''}
     ${goals.map(s => { const gp = displayProfile(s); const gt = displayExplanation(s) || displaySource(s); return `<div class="lesson-goals"><strong>學習目標 <span class="en-sub">Learning goals</span></strong><p lang="${gp.locale}">${escapeHtml(gt)}</p></div>`; }).join('')}`;
 
   const tabs = $('lessonTabs');
