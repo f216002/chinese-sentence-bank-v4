@@ -219,6 +219,36 @@ var V4_LANGUAGE_PROFILES = {
     romanizationName: 'Japanese Romanization',
     requiresRomanization: true,
     legacyLabels: ['JAPANESE']
+  },
+  si: {
+    code: 'si',
+    name: 'Sinhala',
+    nameZh: '僧伽羅文',
+    toneGloss: ['අම්මා', 'කංසා', 'අශ්වයා', 'බනිනවා'],
+    nativeName: 'සිංහල',
+    locale: 'si-LK',
+    region: 'Sri Lanka',
+    inputHelp: 'Sinhala or Chinese sentence',
+    inputHelpZh: '僧伽羅文或中文句子',
+    inputPlaceholder: 'මෙහි සිංහල වාක්‍යයක් ඇතුළත් කරන්න。\nor: 請在這裡輸入中文句子。',
+    romanizationName: 'Sinhala Romanization',
+    requiresRomanization: true,
+    legacyLabels: ['SINHALA']
+  },
+  fa: {
+    code: 'fa',
+    name: 'Persian',
+    nameZh: '波斯文',
+    toneGloss: ['مادر', 'شاهدانه', 'اسب', 'سرزنش'],
+    nativeName: 'فارسی',
+    locale: 'fa-IR',
+    region: 'Iran',
+    inputHelp: 'Persian or Chinese sentence',
+    inputHelpZh: '波斯文或中文句子',
+    inputPlaceholder: 'یک جمله فارسی در اینجا وارد کنید。\nor: 請在這裡輸入中文句子。',
+    romanizationName: 'Persian Romanization',
+    requiresRomanization: true,
+    legacyLabels: ['PERSIAN', 'FARSI']
   }
 };
 
