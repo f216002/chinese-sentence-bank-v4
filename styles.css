@@ -128,7 +128,9 @@
 .lesson-header{margin-bottom:20px}
 .lesson-header-top{display:flex;align-items:center;gap:10px}
 .lesson-header-zh{font-family:"Noto Sans TC",sans-serif;font-size:clamp(26px,4vw,36px);margin:8px 0 4px}
-.lesson-header-en{color:var(--muted);margin:0 0 14px}
+.lesson-header-en{color:var(--muted);margin:0 0 6px}
+.lesson-header-i18n{font-size:clamp(19px,2.8vw,25px);font-weight:600;margin:6px 0 2px;line-height:1.6}
+.lesson-header-roman{color:var(--muted);margin:0 0 12px;font-size:14px}
 .lesson-goals{background:#e8f2ed;border-radius:12px;padding:16px 20px;margin-top:12px}
 .lesson-goals strong{color:var(--teal)}
 .lesson-goals p{margin:8px 0 0;line-height:1.7;font-family:"Noto Sans Devanagari","DM Sans",sans-serif}
