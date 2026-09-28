@@ -1155,11 +1155,11 @@ function speakChinese(text, button) {
   speechSynthesis.speak(utterance);
 }
 
-/* V4 cloud voices: these 7 languages go through the synthesizeV4Source
+/* V4 cloud voices: these 9 languages go through the synthesizeV4Source
    Cloud Function (Azure Speech, shared cross-teacher cache, 30 new
    voices per teacher per day). Every other language uses the browser's
    built-in speechSynthesis, which costs nothing. */
-const V4_AZURE_LOCALES = new Set(['km-KH', 'th-TH', 'vi-VN', 'ne-NP', 'ta-IN', 'bn-BD', 'my-MM']);
+const V4_AZURE_LOCALES = new Set(['km-KH', 'th-TH', 'vi-VN', 'ne-NP', 'ta-IN', 'bn-BD', 'my-MM', 'si-LK', 'fa-IR']);
 const v4CloudAudioCache = new Map(); /* locale + '\n' + text -> data URL */
 let v4SynthesizeFn = null;
 let v4ActiveCloudAudio = null;
