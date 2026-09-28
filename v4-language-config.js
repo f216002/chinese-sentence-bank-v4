@@ -13,6 +13,7 @@ var V4_LANGUAGE_PROFILES = {
   hi: {
     code: 'hi',
     name: 'Hindi',
+    nameZh: '印地文',
     nativeName: 'हिन्दी',
     locale: 'hi-IN',
     region: 'India',
@@ -26,6 +27,7 @@ var V4_LANGUAGE_PROFILES = {
   ta: {
     code: 'ta',
     name: 'Tamil',
+    nameZh: '坦米爾文',
     nativeName: 'தமிழ்',
     locale: 'ta-IN',
     region: 'India and Sri Lanka',
@@ -39,6 +41,7 @@ var V4_LANGUAGE_PROFILES = {
   th: {
     code: 'th',
     name: 'Thai',
+    nameZh: '泰文',
     nativeName: 'ไทย',
     locale: 'th-TH',
     region: 'Thailand',
@@ -52,6 +55,7 @@ var V4_LANGUAGE_PROFILES = {
   km: {
     code: 'km',
     name: 'Khmer',
+    nameZh: '高棉文',
     nativeName: 'ខ្មែរ',
     locale: 'km-KH',
     region: 'Cambodia',
@@ -65,6 +69,7 @@ var V4_LANGUAGE_PROFILES = {
   vi: {
     code: 'vi',
     name: 'Vietnamese',
+    nameZh: '越南文',
     nativeName: 'Tiếng Việt',
     locale: 'vi-VN',
     region: 'Vietnam',
@@ -78,6 +83,7 @@ var V4_LANGUAGE_PROFILES = {
   id: {
     code: 'id',
     name: 'Indonesian',
+    nameZh: '印尼文',
     nativeName: 'Bahasa Indonesia',
     locale: 'id-ID',
     region: 'Indonesia',
@@ -91,6 +97,7 @@ var V4_LANGUAGE_PROFILES = {
   ne: {
     code: 'ne',
     name: 'Nepali',
+    nameZh: '尼泊爾文',
     nativeName: 'नेपाली',
     locale: 'ne-NP',
     region: 'Nepal',
@@ -104,6 +111,7 @@ var V4_LANGUAGE_PROFILES = {
   bn: {
     code: 'bn',
     name: 'Bengali',
+    nameZh: '孟加拉文',
     nativeName: 'বাংলা',
     locale: 'bn-BD',
     region: 'Bangladesh and India',
@@ -117,6 +125,7 @@ var V4_LANGUAGE_PROFILES = {
   es: {
     code: 'es',
     name: 'Spanish',
+    nameZh: '西班牙文',
     nativeName: 'Español',
     locale: 'es-ES',
     region: 'Spanish-speaking regions',
@@ -130,6 +139,7 @@ var V4_LANGUAGE_PROFILES = {
   en: {
     code: 'en',
     name: 'English',
+    nameZh: '英文',
     nativeName: 'English',
     locale: 'en-US',
     region: 'International',
@@ -143,6 +153,7 @@ var V4_LANGUAGE_PROFILES = {
   de: {
     code: 'de',
     name: 'German',
+    nameZh: '德文',
     nativeName: 'Deutsch',
     locale: 'de-DE',
     region: 'Germany',
@@ -156,6 +167,7 @@ var V4_LANGUAGE_PROFILES = {
   my: {
     code: 'my',
     name: 'Burmese',
+    nameZh: '緬甸文',
     nativeName: 'မြန်မာ',
     locale: 'my-MM',
     region: 'Myanmar',
@@ -169,6 +181,7 @@ var V4_LANGUAGE_PROFILES = {
   ko: {
     code: 'ko',
     name: 'Korean',
+    nameZh: '韓文',
     nativeName: '한국어',
     locale: 'ko-KR',
     region: 'Korea',
@@ -182,6 +195,7 @@ var V4_LANGUAGE_PROFILES = {
   ja: {
     code: 'ja',
     name: 'Japanese',
+    nameZh: '日文',
     nativeName: '日本語',
     locale: 'ja-JP',
     region: 'Japan',
