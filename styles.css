@@ -107,6 +107,7 @@
 .course{padding-top:72px}
 .course-vol{font-size:.55em;color:var(--muted);font-weight:500}
 .course-lock{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;background:#e8f2ed;border-radius:12px;padding:20px}
+.course-lock-main{width:100%;margin:0;color:var(--red);font-weight:700}
 .course-pin-field{display:grid;gap:7px;font-weight:700;font-size:14px}
 .course-pin-field input{width:220px;padding:0 14px}
 .course-lock-note{width:100%;margin:0;color:var(--red);font-size:14px;min-height:20px}
