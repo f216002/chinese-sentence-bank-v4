@@ -22,12 +22,12 @@
   <header class="topbar">
     <a class="brand" href="#top" aria-label="中文句子庫首頁">
       <span class="brand-mark" aria-hidden="true">句</span>
-      <span><strong id="bankName">我的中文句子庫 <span class="en-sub">My Chinese Sentence Bank</span></strong><small id="ownerName">個人語言筆記本 <span class="en-sub">A personal language notebook</span></small></span>
+      <span><strong id="bankName">我的中文句子庫 <span class="en-sub">My Chinese Sentence Bank</span></strong><small id="ownerName" class="hidden"></small></span>
     </a>
     <div class="topbar-actions">
-      <label class="topbar-lang" title="學生的第一語言 (Students' first language)">
+      <label class="topbar-lang" title="學生的母語 (Students' native language)">
         <span aria-hidden="true">🌐</span>
-        <select id="v4TopbarLanguage" aria-label="學生的第一語言"></select>
+        <select id="v4TopbarLanguage" aria-label="學生的母語"></select>
       </label>
       <button class="icon-button refresh-button" id="refreshButton" type="button" aria-label="重新整理句庫" title="重新整理 (Refresh)">↻</button>
       <div class="v4-auth" id="v4Auth">
@@ -91,7 +91,7 @@
         <div><span class="step">01</span><h2 id="promptBuilderTitle">建立 AI 提示詞 <span class="en-sub">Create your AI prompt</span></h2></div>
       </div>
       <label class="language-profile-field" for="v4SourceLanguage">
-        <span class="field-label">學生的第一語言 <span class="en-sub">Students' first language</span></span>
+        <span class="field-label">學生的母語 <span class="en-sub">Students' native language</span></span>
         <select id="v4SourceLanguage">
           <option value="hi">हिन्दी · Hindi</option>
           <option value="ta">தமிழ் · Tamil</option>
@@ -352,7 +352,7 @@
   <script src="v4-auth.js?v=20260926-6"></script>
   <script src="v4-access.js?v=20260926-2"></script>
   <script src="v4-language-config.js?v=20260928-1"></script>
-  <script src="app.js?v=20260928-5"></script>
+  <script src="app.js?v=20260928-6"></script>
 </body>
 </html>
 
