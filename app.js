@@ -407,7 +407,7 @@ function romanHindiFor(sentence) {
 }
 
 /* ---- 課程多語言顯示（V4 第二階段） ----
-   課程記錄（seq != null）跟著老師在「Students' first language」選的語言顯示：
+   課程記錄（seq != null）跟著老師在「Students' native language」選的語言顯示：
    有 i18n 翻譯就用翻譯，沒有就退回印地語原文。個人句庫句子不受影響。 */
 function isCourseRecord(s) { return !!(s && s.seq != null); }
 function courseI18n(s) {
@@ -1658,8 +1658,8 @@ function receiveBank(data) {
   state.categories = String(state.settings.categories || '').split(',').map(s => s.trim()).filter(Boolean);
   if (state.settings.bankName && state.settings.bankName !== 'My Chinese Sentence Bank') { $('bankName').textContent = state.settings.bankName; document.title = state.settings.bankName; }
   else { setBilingualText($('bankName'), '我的中文句子庫', 'My Chinese Sentence Bank'); document.title = '我的中文句子庫 My Chinese Sentence Bank'; }
-  if (state.settings.ownerName && state.settings.ownerName !== 'Your Name') $('ownerName').textContent = `Made for ${state.settings.ownerName}`;
-  else setBilingualText($('ownerName'), '個人語言筆記本', 'A personal language notebook');
+  if (state.settings.ownerName && state.settings.ownerName !== 'Your Name') { $('ownerName').textContent = `Made for ${state.settings.ownerName}`; $('ownerName').classList.remove('hidden'); }
+  else $('ownerName').classList.add('hidden');
   $('sentenceCount').textContent = state.sentences.length; $('categoryCount').textContent = state.categories.length;
   $('apiStatus').className = 'live-status ready'; $('apiStatus').innerHTML = '<i></i> Firebase 已連線 <span class="en-sub">Firebase connected</span>';
   renderFilters(); renderSentences(); renderCourse();
@@ -1825,7 +1825,7 @@ $('refreshButton').addEventListener('click', () => {
   window.location.reload();
 });
 $('generatePrompt').addEventListener('click', buildPrompt);
-/* Students' first language: restore the teacher's last choice, default Hindi. */
+/* Students' native language: restore the teacher's last choice, default Hindi. */
 (function initV4LanguageSelector() {
   let saved = 'hi';
   try { saved = localStorage.getItem('v4SourceLanguage') || 'hi'; } catch (_) {}
