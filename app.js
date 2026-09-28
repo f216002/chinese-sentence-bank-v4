@@ -851,6 +851,7 @@ async function submitTeacherAudio() {
     if (saved) { saved.audioPath = path; saved.audioMime = mime; saved.standardAudioUrl = path; }
     teacherAudioCache.delete(sentence.recordId);
     renderSentences();
+    try { if (typeof renderCourse === 'function') renderCourse(); } catch (_) {} /* 課程課文分頁也要即時重繪，否則下載鍵要等重整才出現 */
     setBilingualText($('audioSaveMessage'), '老師錄音已儲存！示範按鈕現在會播放你的聲音。', 'Teacher recording saved! The model button now uses your voice.');
     button.disabled = false;
     setTimeout(() => $('audioPinDialog').close(), 1300);
