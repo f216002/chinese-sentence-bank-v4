@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260928-8">
+  <link rel="stylesheet" href="styles.css?v=20260928-9">
 </head>
 <body>
   <a class="skip-link" href="#sentenceGrid">跳到句子庫 <span class="en-sub">Skip to sentence bank</span></a>
@@ -35,7 +35,7 @@
           <img id="v4AccountPhoto" alt="">
           <span><strong id="v4AccountName"></strong><small id="v4AccountEmail"></small></span>
         </div>
-        <button class="secondary-button v4-auth-button" id="v4GoogleSignIn" type="button">使用 Google 登入</button>
+        <button class="secondary-button v4-auth-button" id="v4GoogleSignIn" type="button">使用 Google 登入 <span class="en-sub">Google sign-in</span></button>
         <button class="secondary-button v4-auth-button" id="v4GoogleSignOut" type="button" hidden>登出</button>
         <a class="secondary-button v4-auth-button" id="v4AdminButton" href="admin.html" hidden>後台審核</a>
       </div>
@@ -59,7 +59,7 @@
 
     <section class="course" id="courseSection" aria-label="課程">
       <div class="course-lock" id="courseLock">
-        <p class="course-lock-main">課程內容僅供核准老師使用。請先用右上角的「使用 Google 登入」，管理員核准後即自動解鎖。</p>
+        <p class="course-lock-main">課程內容僅供核准老師使用。請先用右上角的「使用 Google 登入」，管理員核准後即自動解鎖。 <span class="en-sub">Course content is for approved teachers only. Sign in with Google (top right); access unlocks automatically after admin approval.</span></p>
         <p class="course-lock-note" id="courseLockMessage" aria-live="polite">正在確認登入狀態…</p>
       </div>
       <div id="courseBody" class="hidden">
@@ -145,7 +145,7 @@
       </div>
       <div id="previewCard"></div>
       <div class="save-row">
-        <p>儲存需要老師身分：請先用 Google 登入，管理員核准後即可新增句子。</p>
+        <p>儲存需要老師身分：請先用 Google 登入，管理員核准後即可新增句子。 <span class="en-sub">Saving requires a teacher account: sign in with Google first; you can add sentences after admin approval.</span></p>
         <button class="primary-button" id="saveButton" type="button">存到我的句庫 <span class="en-sub">Save to my bank</span></button>
         <div class="parse-message" id="saveMessage" role="status" aria-live="polite"></div>
       </div>
@@ -163,7 +163,7 @@
           <label class="keyword-field"><span class="keyword-label">B</span><span class="sr-only">第二個關鍵字</span><input id="keywordB" type="search" placeholder="第二個關鍵字 (Second keyword)"></label>
           <label class="operator-field"><span class="sr-only">關鍵字 B 和 C 之間的運算子</span><select id="operatorBC"><option value="AND">且 (AND)</option><option value="OR">或 (OR)</option></select></label>
           <label class="keyword-field"><span class="keyword-label">C</span><span class="sr-only">第三個關鍵字</span><input id="keywordC" type="search" placeholder="第三個關鍵字 (Third keyword)"></label>
-          <small class="search-help">搜尋印地文、中文、拼音、解說、主題和標籤。由左至右計算。 <span class="en-sub">Searches Hindi, Chinese, pinyin, explanations, topics and tags. Calculated left to right.</span></small>
+          <small class="search-help" id="searchHelp">搜尋印地文、中文、拼音、解說、主題和標籤。由左至右計算。 <span class="en-sub">Searches Hindi, Chinese, pinyin, explanations, topics and tags. Calculated left to right.</span></small>
         </div>
         <div class="topic-picker" id="topicPicker">
           <button class="topic-toggle" id="topicToggle" type="button" aria-expanded="false" aria-controls="topicMenu">
@@ -179,7 +179,7 @@
         <div class="loading-card">載入句子中… <span class="en-sub">Loading your sentences…</span></div>
       </div>
       <div class="empty-state hidden" id="emptyState">
-        <span aria-hidden="true">空</span><h3>沒有符合的句子 <span class="en-sub">No matching sentences</span></h3><p>試試其他關鍵字或分類。 <span class="en-sub">Try another keyword or category.</span></p>
+        <span aria-hidden="true">空</span><h3 id="emptyStateTitle">沒有符合的句子 <span class="en-sub">No matching sentences</span></h3><p id="emptyStateHint">試試其他關鍵字或分類。 <span class="en-sub">Try another keyword or category.</span></p>
       </div>
     </section>
     <section class="pronunciation-lab" id="pronunciationLab" aria-labelledby="pronunciationTitle">
@@ -200,14 +200,14 @@
             <h3>一個音節，四個走向。 <span class="en-sub">One syllable. Four directions.</span></h3>
             <p>聽聽 <strong>mā、má、mǎ、mà</strong>。發音都是 <em>ma</em> 開頭，但聲調改變了意思。 <span class="en-sub">Listen to mā, má, mǎ, mà. The sound begins with ma, but the tone changes the meaning.</span></p>
           </div>
-          <p class="hindi-help">एक ही ध्वनि <strong>ma</strong> के चार अलग स्वर और चार अलग अर्थ हो सकते हैं। पहले सुनें, फिर बोलें और अपनी आवाज़ की रेखा देखें।</p>
+          <p class="lab-help">同一個音 <strong>ma</strong>，用四種聲調可以變出四個不同的意思。先聽聽看，再錄下自己的聲音比一比。 <span class="en-sub">The same syllable <strong>ma</strong> carries four different meanings in the four tones. Listen first, then record your own voice and compare.</span></p>
         </div>
 
         <div class="tone-grid" id="toneGrid">
-          <article class="tone-card" data-tone="1" data-text="媽"><span class="tone-number">1</span><svg viewBox="0 0 120 62" aria-label="High flat tone"><path d="M12 15 L108 15"/></svg><strong>mā</strong><b>媽</b><small>mother · माँ</small><div class="tone-audio-actions"><button type="button" class="tone-audio" data-audio="audio/tones/ma-tone-1-once.mp3">▶ 播放一次 <span class="en-sub">Once</span></button><button type="button" class="tone-audio" data-audio="audio/tones/ma-tone-1-slow-3x.mp3">🐢 慢速×3 <span class="en-sub">Slow ×3</span></button><button type="button" class="tone-audio" data-audio="audio/tones/ma-tone-1-sentence.mp3">💬 例句 <span class="en-sub">Sentence</span></button></div></article>
-          <article class="tone-card" data-tone="2" data-text="麻"><span class="tone-number">2</span><svg viewBox="0 0 120 62" aria-label="Rising tone"><path d="M12 50 L108 12"/></svg><strong>má</strong><b>麻</b><small>hemp · सन</small><div class="tone-audio-actions"><button type="button" class="tone-audio" data-audio="audio/tones/ma-tone-2-once.mp3">▶ 播放一次 <span class="en-sub">Once</span></button><button type="button" class="tone-audio" data-audio="audio/tones/ma-tone-2-slow-3x.mp3">🐢 慢速×3 <span class="en-sub">Slow ×3</span></button><button type="button" class="tone-audio" data-audio="audio/tones/ma-tone-2-sentence.mp3">💬 例句 <span class="en-sub">Sentence</span></button></div></article>
-          <article class="tone-card" data-tone="3" data-text="馬"><span class="tone-number">3</span><svg viewBox="0 0 120 62" aria-label="Falling then rising tone"><path d="M12 24 Q58 67 108 18"/></svg><strong>mǎ</strong><b>馬</b><small>horse · घोड़ा</small><div class="tone-audio-actions"><button type="button" class="tone-audio" data-audio="audio/tones/ma-tone-3-once.mp3">▶ 播放一次 <span class="en-sub">Once</span></button><button type="button" class="tone-audio" data-audio="audio/tones/ma-tone-3-slow-3x.mp3">🐢 慢速×3 <span class="en-sub">Slow ×3</span></button><button type="button" class="tone-audio" data-audio="audio/tones/ma-tone-3-sentence.mp3">💬 例句 <span class="en-sub">Sentence</span></button></div></article>
-          <article class="tone-card" data-tone="4" data-text="罵"><span class="tone-number">4</span><svg viewBox="0 0 120 62" aria-label="Falling tone"><path d="M12 12 L108 54"/></svg><strong>mà</strong><b>罵</b><small>scold · डाँटना</small><div class="tone-audio-actions"><button type="button" class="tone-audio" data-audio="audio/tones/ma-tone-4-once.mp3">▶ 播放一次 <span class="en-sub">Once</span></button><button type="button" class="tone-audio" data-audio="audio/tones/ma-tone-4-slow-3x.mp3">🐢 慢速×3 <span class="en-sub">Slow ×3</span></button><button type="button" class="tone-audio" data-audio="audio/tones/ma-tone-4-sentence.mp3">💬 例句 <span class="en-sub">Sentence</span></button></div></article>
+          <article class="tone-card" data-tone="1" data-text="媽"><span class="tone-number">1</span><svg viewBox="0 0 120 62" aria-label="High flat tone"><path d="M12 15 L108 15"/></svg><strong>mā</strong><b>媽</b><small id="toneGloss1">mother · माँ</small><div class="tone-audio-actions"><button type="button" class="tone-audio" data-audio="audio/tones/ma-tone-1-once.mp3">▶ 播放一次 <span class="en-sub">Once</span></button><button type="button" class="tone-audio" data-audio="audio/tones/ma-tone-1-slow-3x.mp3">🐢 慢速×3 <span class="en-sub">Slow ×3</span></button><button type="button" class="tone-audio" data-audio="audio/tones/ma-tone-1-sentence.mp3">💬 例句 <span class="en-sub">Sentence</span></button></div></article>
+          <article class="tone-card" data-tone="2" data-text="麻"><span class="tone-number">2</span><svg viewBox="0 0 120 62" aria-label="Rising tone"><path d="M12 50 L108 12"/></svg><strong>má</strong><b>麻</b><small id="toneGloss2">hemp · सन</small><div class="tone-audio-actions"><button type="button" class="tone-audio" data-audio="audio/tones/ma-tone-2-once.mp3">▶ 播放一次 <span class="en-sub">Once</span></button><button type="button" class="tone-audio" data-audio="audio/tones/ma-tone-2-slow-3x.mp3">🐢 慢速×3 <span class="en-sub">Slow ×3</span></button><button type="button" class="tone-audio" data-audio="audio/tones/ma-tone-2-sentence.mp3">💬 例句 <span class="en-sub">Sentence</span></button></div></article>
+          <article class="tone-card" data-tone="3" data-text="馬"><span class="tone-number">3</span><svg viewBox="0 0 120 62" aria-label="Falling then rising tone"><path d="M12 24 Q58 67 108 18"/></svg><strong>mǎ</strong><b>馬</b><small id="toneGloss3">horse · घोड़ा</small><div class="tone-audio-actions"><button type="button" class="tone-audio" data-audio="audio/tones/ma-tone-3-once.mp3">▶ 播放一次 <span class="en-sub">Once</span></button><button type="button" class="tone-audio" data-audio="audio/tones/ma-tone-3-slow-3x.mp3">🐢 慢速×3 <span class="en-sub">Slow ×3</span></button><button type="button" class="tone-audio" data-audio="audio/tones/ma-tone-3-sentence.mp3">💬 例句 <span class="en-sub">Sentence</span></button></div></article>
+          <article class="tone-card" data-tone="4" data-text="罵"><span class="tone-number">4</span><svg viewBox="0 0 120 62" aria-label="Falling tone"><path d="M12 12 L108 54"/></svg><strong>mà</strong><b>罵</b><small id="toneGloss4">scold · डाँटना</small><div class="tone-audio-actions"><button type="button" class="tone-audio" data-audio="audio/tones/ma-tone-4-once.mp3">▶ 播放一次 <span class="en-sub">Once</span></button><button type="button" class="tone-audio" data-audio="audio/tones/ma-tone-4-slow-3x.mp3">🐢 慢速×3 <span class="en-sub">Slow ×3</span></button><button type="button" class="tone-audio" data-audio="audio/tones/ma-tone-4-sentence.mp3">💬 例句 <span class="en-sub">Sentence</span></button></div></article>
         </div>
 
         <div class="record-practice">
@@ -220,7 +220,7 @@
           </div>
           <div class="pitch-panel">
             <div class="pitch-heading"><strong>你的聲調走勢 <span class="en-sub">Your tone movement</span></strong><span id="recordingStatus" role="status" aria-live="polite">選擇聲調並錄下你的聲音。 <span class="en-sub">Choose a tone and record your voice.</span></span></div>
-            <canvas id="pitchCanvas" width="760" height="240" aria-label="Reference tone curve and recorded pitch curve"></canvas>
+            <canvas id="pitchCanvas" width="760" height="240" aria-label="標準聲調曲線與錄音音高曲線 (Reference tone curve and recorded pitch curve)"></canvas>
             <div class="pitch-legend"><span><i class="reference-line"></i>參考方向 <span class="en-sub">Reference direction</span></span><span><i class="student-line"></i>你的聲音 <span class="en-sub">Your voice</span></span></div>
             <p class="pitch-note">這個圖表是學習參考，不是考試分數。試著讓你的紅線和綠線往同一個方向走。 <span class="en-sub">This graph is a learning guide, not an exam score. Try to make your red line move in the same direction as the green line.</span></p>
           </div>
@@ -231,7 +231,7 @@
       <div class="lab-panel hidden" id="homophonePractice" role="tabpanel" aria-labelledby="homophoneTab">
         <div class="lab-intro-grid">
           <div><span class="lab-kicker">同音不同字 <span class="en-sub">SAME SOUND DIFFERENT MEANING</span></span><h3>聽整個詞，不只聽音節。 <span class="en-sub">Listen to the word, not only the syllable.</span></h3><p>很多字可以有相同的拼音和聲調。詞語和句子告訴我們哪個意思正確。 <span class="en-sub">Many characters can share the same Pinyin and tone. The word and sentence tell us which meaning is correct.</span></p></div>
-          <p class="hindi-help">एक ही उच्चारण के कई चीनी अक्षर हो सकते हैं। सही अर्थ समझने के लिए पूरा शब्द और वाक्य देखें।</p>
+          <p class="lab-help">同一個發音可能對應好幾個不同的中文字。要看懂真正的意思，請看完整的詞和句子。 <span class="en-sub">The same pronunciation can map to different Chinese characters. Read the whole word and sentence to get the meaning.</span></p>
         </div>
         <div class="sound-selector" role="group" aria-label="選擇同音字家族">
           <button type="button" class="sound-chip active" data-sound="shi4">shì</button>
@@ -290,7 +290,7 @@
       <label class="edit-field"><span id="editExplanationLabel">印地文解說 <span class="en-sub">Hindi explanation</span></span><textarea id="editExplanation" lang="hi" rows="2"></textarea></label>
       <div class="edit-row">
         <label class="edit-field">分類 <span class="en-sub">Category</span><input id="editCategory" list="editCategoryList" autocomplete="off"></label>
-        <label class="edit-field">標籤 <span class="en-sub">Tags</span><input id="editTags" autocomplete="off" placeholder="comma, separated"></label>
+        <label class="edit-field">標籤 <span class="en-sub">Tags</span><input id="editTags" autocomplete="off" placeholder="標籤，用逗號分隔 (tags, comma-separated)"></label>
       </div>
       <label class="edit-field">AI 來源 <span class="en-sub">AI source</span><input id="editAiSource" autocomplete="off"></label>
     </div>
@@ -304,7 +304,7 @@
     <div class="footer-inner">
       <div class="footer-about">
         <strong>我的中文句子庫 <span class="en-sub">My Chinese Sentence Bank</span></strong>
-        <p>給印地語初學者學繁體中文（台灣國語）的免費學習筆記本。老師功能需要 Google 登入及管理員核准。 <span class="en-sub">A free learning notebook for Hindi-speaking beginners studying Traditional Chinese (Taiwanese Mandarin). Teacher features require Google sign-in and admin approval.</span></p>
+        <p id="footerAbout">給印地語初學者學繁體中文（台灣國語）的免費學習筆記本。老師功能需要 Google 登入及管理員核准。 <span class="en-sub">A free learning notebook for Hindi-speaking beginners studying Traditional Chinese (Taiwanese Mandarin). Teacher features require Google sign-in and admin approval.</span></p>
       </div>
       <div class="footer-links">
         <span>為課堂教學而建：Google Sheets + GitHub Pages。 <span class="en-sub">Built for classroom teaching with Google Sheets + GitHub Pages.</span></span>
@@ -316,9 +316,9 @@
   <template id="cardTemplate">
     <article class="sentence-card">
       <div class="card-top"><span class="category-pill"></span><div class="card-admin"><span class="record-id"></span><button class="card-edit-button" type="button" aria-label="編輯句子" title="編輯句子 (Edit sentence)">編輯 <span class="en-sub">Edit</span></button><button class="card-delete-button" type="button" aria-label="刪除句子" title="刪除句子 (Delete sentence)">刪除 <span class="en-sub">Delete</span></button></div></div>
-      <div class="hindi-row"><p class="hindi"></p><button class="hindi-speak-button" type="button" aria-label="播放印地語發音">▶</button></div>
+      <div class="hindi-row"><p class="hindi"></p><button class="hindi-speak-button" type="button" aria-label="播放來源語言發音 (Play source pronunciation)">▶</button></div>
       <p class="roman-hindi"></p>
-      <div class="chinese-row"><h3 class="chinese"></h3><span class="chinese-actions"><button class="speak-button" type="button" aria-label="播放台灣國語發音">▶</button><button class="download-button" type="button" hidden aria-label="下載老師錄音" title="下載老師錄音 (Download teacher recording)">⤓</button></span></div>
+      <div class="chinese-row"><h3 class="chinese"></h3><span class="chinese-actions"><button class="speak-button" type="button" aria-label="播放中文發音 (Play Chinese pronunciation)">▶</button><button class="download-button" type="button" hidden aria-label="下載老師錄音" title="下載老師錄音 (Download teacher recording)">⤓</button></span></div>
       <p class="pinyin"></p>
       <div class="sentence-audio-practice" aria-label="發音練習">
         <button class="card-record-button" type="button">● 錄我的聲音 <span class="en-sub">Record my voice</span></button>
@@ -338,8 +338,8 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-functions-compat.js"></script>
   <script src="v4-auth.js?v=20260926-6"></script>
   <script src="v4-access.js?v=20260926-2"></script>
-  <script src="v4-language-config.js?v=20260928-2"></script>
-  <script src="app.js?v=20260928-8"></script>
+  <script src="v4-language-config.js?v=20260928-3"></script>
+  <script src="app.js?v=20260928-9"></script>
 </body>
 </html>
 
