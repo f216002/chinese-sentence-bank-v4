@@ -2128,13 +2128,17 @@ function renderLessonGrid() {
     }
     const recs = lessonRecords(lesson.n);
     const hasPack = COURSE_PACK_LESSONS.includes(lesson.n);
+    /* 卡片第二行跟著「學生的母語」顯示標題譯句（取第一筆「目標」記錄，無翻譯退印地語；無記錄時沿用英文標題）。 */
+    const titleRec = recs.find(s => (courseMeta(s).section || '') === '目標');
+    const titleT = titleRec ? (displaySource(titleRec) || lesson.en) : lesson.en;
+    const titleLang = titleRec ? displayProfile(titleRec).locale : 'en';
     const card = document.createElement('button');
     card.type = 'button';
     card.className = 'lesson-card' + (recs.length ? '' : ' lesson-card-empty');
     card.innerHTML = `
       <span class="lesson-num">${lessonLabel(lesson.n)}</span>
       <span class="lesson-zh" lang="zh-Hant">${lesson.zh}</span>
-      <span class="lesson-en">${lesson.en}</span>
+      <span class="lesson-i18n" lang="${titleLang}">${escapeHtml(titleT)}</span>
       <span class="lesson-topic">${lesson.topic}</span>
       <span class="lesson-status">${recs.length ? `已匯入 ${recs.length} 條 <span class="en-sub">${recs.length} imported</span>` : (hasPack ? '尚未匯入' : '準備中')}</span>`;
     card.setAttribute('aria-label', `${lessonLabel(lesson.n)} ${lesson.zh}`);
