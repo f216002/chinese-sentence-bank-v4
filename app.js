@@ -2801,4 +2801,7 @@ async function importTranslationRecords() {
 
 /* Course UI wiring */
 $('lessonBackButton').addEventListener('click', () => { courseState.lesson = 0; renderLessonGrid(); $('courseSection').scrollIntoView({ behavior: 'smooth' }); });
+$('packLoadButton').addEventListener('click', loadPackPreview);
+$('packImportButton').addEventListener('click', importPackRecords);
+$('importUpdateCheckbox').addEventListener('change', () => { if ($('packFileInput').files.length) loadPackPreview(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && textPlay.playing) stopTextPlay(); });
