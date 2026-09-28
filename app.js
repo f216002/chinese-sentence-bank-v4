@@ -180,15 +180,17 @@ async function fetchAllSentences() {
     }
   }
   const list = [];
+  const hiddenShared = [];
   snap.docs.forEach(d => {
     const data = d.data() || {};
     /* 防禦：共版集合若殘留補充記錄（應已遷移），跳過不顯示。 */
     if (isSupplementData(data)) return;
     const ov = overlayMap.get(d.id);
-    if (ov && ov.deleted) return; /* 該老師個人刪除的共版句子 */
+    if (ov && ov.deleted) { hiddenShared.push(docToSentence(d.id, data, 'shared')); return; } /* 該老師個人隱藏的共版句子 */
     list.push(applyOverlay(docToSentence(d.id, data, 'shared'), ov));
   });
   personalDocs.forEach(d => list.push(docToSentence(d.id, d.data(), uid)));
+  state.hiddenShared = sortSentencesBySeq(hiddenShared);
   return sortSentencesBySeq(list);
 }
 
@@ -251,9 +253,12 @@ const SAMPLE = `HINDI:\nमुझे बैंक से पैसे निक�
 const AI_PROMPT = `You are a Taiwanese Mandarin teacher for a Hindi-speaking beginner. Convert the Hindi sentence below into natural Traditional Chinese used in Taiwan.\n\nHINDI SENTENCE:\n[Paste one Hindi sentence here]\n\nReturn ONLY the following labelled sections. Do not add an introduction or conclusion. Keep every label exactly as written and do not add Markdown symbols such as ** around the labels.\n\nHINDI:\n[Repeat the original Hindi sentence]\n\nCHINESE:\n[One natural Traditional Chinese sentence used in Taiwan]\n\nPINYIN:\n[Hanyu Pinyin with tone marks for the complete Chinese sentence]\n\nEXPLANATION:\n[Explain every Chinese word and the grammar in clear Hindi. Whenever any Chinese character, word, phrase, or example appears, immediately add its pinyin in parentheses. Use Traditional Chinese only.]\n\nCATEGORY:\n[Choose exactly one: Daily Life, School, Home, Restaurant, Shopping, Bank, Hospital, Travel, Train & Bus, Airport, Work, Friends, Other]\n\nTAGS:\n[Three to five short English keywords separated by commas]\n\nAI SOURCE:\n[Write ChatGPT or Gemini]`;
 
 
-const state = { sentences: [], categories: [], selectedCategories: new Set(), settings: {}, preview: null, sourceLanguage: 'hi' };
+const state = { sentences: [], hiddenShared: [], categories: [], selectedCategories: new Set(), settings: {}, preview: null, sourceLanguage: 'hi' };
 const $ = (id) => document.getElementById(id);
 /* Bilingual UI helper: Chinese (primary) + English (secondary, smaller). */
+/* 中文為主的雙語無障礙標籤，例如：播放德文發音 (Play German pronunciation) */
+function bilingualLabel(zh, en) { return en ? `${zh} (${en})` : zh; }
+
 function setBilingualText(el, zh, en) {
   if (!el) return;
   el.innerHTML = '';
@@ -332,13 +337,45 @@ function applyV4LanguageProfile(code) {
   if ($('promptMessage')) $('promptMessage').textContent = '';
   /* 課程跟著老師選的語言即時切換。 */
   try { if (typeof renderCourse === 'function' && $('courseSection')) renderCourse(); } catch (_) {}
+  /* 句庫搜尋結果裡的課程卡片標籤也要跟著換語言。 */
+  try { if (typeof renderSentences === 'function' && $('sentenceGrid')) renderSentences(); } catch (_) {}
+  renderToneGlosses();
+  updateSearchHelp();
+  updateFooterAbout();
+}
+
+/* 發音實驗室四聲卡片的母語對照跟隨語言切換（英文對照保留）。 */
+function renderToneGlosses() {
+  const profile = v4Profile();
+  const gloss = profile.toneGloss || [];
+  const enGloss = ['mother', 'hemp', 'horse', 'scold'];
+  for (let i = 1; i <= 4; i++) {
+    const el = $('toneGloss' + i);
+    if (el) el.textContent = enGloss[i - 1] + ' · ' + (gloss[i - 1] || enGloss[i - 1]);
+  }
+}
+
+/* 句庫搜尋提示跟隨語言切換。 */
+function updateSearchHelp() {
+  const profile = v4Profile();
+  setBilingualText($('searchHelp'),
+    `搜尋${profile.nameZh || profile.name}、中文、拼音、解說、主題和標籤。由左至右計算。`,
+    `Searches ${profile.name}, Chinese, pinyin, explanations, topics and tags. Calculated left to right.`);
+}
+
+/* 頁尾介紹跟隨語言切換。 */
+function updateFooterAbout() {
+  const profile = v4Profile();
+  setBilingualText($('footerAbout'),
+    `給${profile.nameZh || profile.name}初學者學繁體中文（台灣國語）的免費學習筆記本。老師功能需要 Google 登入及管理員核准。`,
+    `A free learning notebook for ${profile.name}-speaking beginners studying Traditional Chinese (Taiwanese Mandarin). Teacher features require Google sign-in and admin approval.`);
 }
 
 function buildPrompt() {
   const sentence = $('promptSentence').value.trim();
   const profile = v4Profile();
   if (!sentence) {
-    $('promptMessage').textContent = `Type one ${profile.name} or Chinese sentence first.`;
+    setBilingualText($('promptMessage'), `請先輸入一句${profile.nameZh || profile.name}或中文句子。`, `Type one ${profile.name} or Chinese sentence first.`);
     $('promptSentence').focus();
     return '';
   }
@@ -810,7 +847,7 @@ async function submitTeacherAudio() {
     setTimeout(() => $('audioPinDialog').close(), 1300);
   } catch (err) {
     button.disabled = false;
-    $('audioSaveMessage').textContent = `Save failed: ${(err && err.message) || 'Unknown error.'}`;
+    setBilingualText($('audioSaveMessage'), `老師錄音儲存失敗：${(err && err.message) || '未知錯誤。'}`, `Save failed: ${(err && err.message) || 'Unknown error.'}`);
   }
 }
 
@@ -860,7 +897,7 @@ async function submitDeleteSentence() {
     setTimeout(() => $('deleteDialog').close(), 650);
   } catch (err) {
     button.disabled = false;
-    $('deleteMessage').textContent = `Delete failed: ${(err && err.message) || 'Unknown error.'}`;
+    setBilingualText($('deleteMessage'), `刪除失敗：${(err && err.message) || '未知錯誤。'}`, `Delete failed: ${(err && err.message) || 'Unknown error.'}`);
   }
 }
 
@@ -892,7 +929,7 @@ function openEditDialog(sentence) {
     option.value = c;
     list.appendChild(option);
   });
-  $('editRecordNote').textContent = `Editing record ${sentence.recordId}. Changes update this record in place; any teacher recording stays attached.`;
+  setBilingualText($('editRecordNote'), `正在編輯記錄 ${sentence.recordId}。變更會直接更新這筆記錄；老師錄音會保留。`, `Editing record ${sentence.recordId}. Changes update this record in place; any teacher recording stays attached.`);
   const hasAudio = !!(sentence.standardAudioUrl || teacherAudioCache.get(sentence.recordId) || recordingForSentence(sentence));
   $('editAudioNote').classList.toggle('hidden', !hasAudio);
   $('editMessage').textContent = '';
@@ -910,7 +947,7 @@ function goToAiFlowForSupp(lessonNum) {
   const target = document.getElementById('createPrompt');
   if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   const msg = $('promptMessage');
-  if (msg) msg.textContent = `為${lessonShortLabel(lessonNum)}新增補充句子：請在下方輸入句子並完成 AI 流程，儲存後會自動歸入該課「補充」分頁。`;
+  if (msg) setBilingualText(msg, `為${lessonShortLabel(lessonNum)}新增補充句子：請在下方輸入句子並完成 AI 流程，儲存後會自動歸入該課「補充」分頁。`, `Adding a supplementary sentence for ${lessonShortLabel(lessonNum)}: type the sentence below and complete the AI flow. It will be filed under this lesson\u2019s \u201cSupplement\u201d tab after saving.`);
   setTimeout(() => { const ta = $('promptSentence'); if (ta) ta.focus({ preventScroll: true }); }, 650);
 }
 
@@ -982,9 +1019,9 @@ async function submitEdit() {
   if (editSaveProfile.requiresRomanization) editRequired.splice(3, 0, [editSaveProfile.romanizationName, edited.romanHindi]);
   const missing = editRequired
     .filter(([, value]) => !value).map(([label]) => label);
-  if (missing.length) { $('editMessage').textContent = `Please fill in: ${missing.join(', ')}.`; return; }
+  if (missing.length) { setBilingualText($('editMessage'), `請補填：${missing.join('、')}。`, `Please fill in: ${missing.join(', ')}.`); return; }
   const exactDupe = state.sentences.find(s => s.recordId !== original.recordId && (s.chineseSentence || '').trim() === edited.chineseSentence);
-  if (exactDupe) { $('editMessage').textContent = `Blocked: this Chinese sentence already exists as record ${exactDupe.recordId || 'another record'}.`; return; }
+  if (exactDupe) { setBilingualText($('editMessage'), `已擋下：這個中文句子已存在（記錄 ${exactDupe.recordId || '另一筆記錄'}）。`, `Blocked: this Chinese sentence already exists as record ${exactDupe.recordId || 'another record'}.`); return; }
 
   const button = $('confirmEdit');
   button.disabled = true;
@@ -1024,7 +1061,7 @@ async function submitEdit() {
     setTimeout(() => $('editDialog').close(), 700);
   } catch (err) {
     button.disabled = false;
-    $('editMessage').textContent = `Save failed: ${(err && err.message) || 'Unknown error.'}`;
+    setBilingualText($('editMessage'), `儲存失敗：${(err && err.message) || '未知錯誤。'}`, `Save failed: ${(err && err.message) || 'Unknown error.'}`);
   }
 }
 
@@ -1073,12 +1110,12 @@ function createCard(sentence, preview = false) {
     const nameZh = cardProfile.nameZh || cardProfile.name;
     explSummary.innerHTML = escapeHtml(nameZh) + '解說 <span class="en-sub">' + escapeHtml(cardProfile.name) + ' explanation</span> <span>＋</span>';
   }
-  hindiSpeak.setAttribute('aria-label', 'Play ' + cardProfile.name + ' pronunciation');
+  hindiSpeak.setAttribute('aria-label', bilingualLabel(`播放${cardProfile.nameZh || cardProfile.name}發音`, `Play ${cardProfile.name} pronunciation`));
   const tags = [...new Set(String(sentence.tags || '').split(/[,;|]/).map(t => t.trim().toLowerCase()).filter(Boolean))];
   node.querySelector('.tags').innerHTML = tags.map(tag => `<span class="tag"></span>`).join('');
   node.querySelectorAll('.tag').forEach((el, i) => { el.textContent = tags[i]; });
   const speak = node.querySelector('.speak-button');
-  speak.title = sentence.standardAudioUrl ? 'Play teacher model voice' : 'Play browser voice';
+  speak.title = sentence.standardAudioUrl ? '老師示範發音 (Play teacher model voice)' : '瀏覽器發音 (Play browser voice)';
   speak.addEventListener('click', () => playSentenceModel(sentence, speak));
   const dlButton = node.querySelector('.download-button');
   dlButton.hidden = !sentence.standardAudioUrl;
@@ -1369,7 +1406,7 @@ function renderHomophones(key='shi4') {
 
 function updateQuizProgress() {
   const total = contextQuestions.length;
-  $('quizProgress').textContent = `Question ${(quizIndex % total) + 1} of ${total} · Score ${quizCorrect}/${quizAnswered}`;
+  setBilingualText($('quizProgress'), `第 ${(quizIndex % total) + 1} 題，共 ${total} 題 · 得分 ${quizCorrect}/${quizAnswered}`, `Question ${(quizIndex % total) + 1} of ${total} · Score ${quizCorrect}/${quizAnswered}`);
 }
 function renderQuiz() {
   const q=contextQuestions[quizIndex%contextQuestions.length]; $('quizQuestion').textContent=q.sentence; $('quizPinyin').textContent=q.pinyin;
@@ -1379,7 +1416,7 @@ function renderQuiz() {
     b.classList.add(right?'correct':'wrong');
     if(!right)[...mount.children].find(x=>x.textContent===q.answer)?.classList.add('correct');
     quizAnswered += 1; if (right) quizCorrect += 1; updateQuizProgress();
-    $('quizFeedback').textContent=right?`Correct. ${q.explain}`:`Try to read the complete word. ${q.explain}`;
+    setBilingualText($('quizFeedback'), `${right ? '答對了。' : '試著讀出完整的詞。'}${q.explain || ''}`, `${right ? 'Correct. ' : 'Try to read the complete word. '}${q.explain || ''}`);
     speakLabText(q.sentence.replace('＿＿',q.answer),document.createElement('button'));
   });mount.append(b);});
 }
@@ -1528,8 +1565,17 @@ function renderSentences() {
 
   const grid = $('sentenceGrid'); grid.innerHTML = '';
   visible.forEach(s => grid.appendChild(createCard(s)));
-  $('resultCount').textContent = `${visible.length} shown`;
+  setBilingualText($('resultCount'), `${visible.length} 句`, `${visible.length} shown`);
   $('emptyState').classList.toggle('hidden', visible.length > 0);
+  if (!visible.length) {
+    if (searching) {
+      setBilingualText($('emptyStateTitle'), '沒有符合的句子', 'No matching sentences');
+      setBilingualText($('emptyStateHint'), '試試其他關鍵字或分類。', 'Try another keyword or category.');
+    } else {
+      setBilingualText($('emptyStateTitle'), '這裡還沒有句子', 'No sentences here yet');
+      setBilingualText($('emptyStateHint'), '用上面的 AI 流程新增第一句；登入後你新增的句子會顯示在這裡。', 'Use the AI flow above to add your first sentence. Sentences you add after signing in appear here.');
+    }
+  }
 }
 
 /* Pinyin quality check: every syllable must be a real Hanyu Pinyin syllable
@@ -1606,7 +1652,7 @@ function handlePreview() {
   const requiredFields = [[parsedProfile.name,parsed.hindiSentence],['Chinese',parsed.chineseSentence],['Pinyin',parsed.pinyin],['Explanation',parsed.hindiExplanation]];
   if (parsedProfile.requiresRomanization) requiredFields.splice(3, 0, [parsedProfile.romanizationName,parsed.romanHindi]);
   const missing = requiredFields.filter(([,v]) => !v).map(([k]) => k);
-  if (missing.length) { $('parseMessage').textContent = `Please add these labelled parts: ${missing.join(', ')}.`; return; }
+  if (missing.length) { setBilingualText($('parseMessage'), `請補上這些標記段落：${missing.join('、')}。`, `Please add these labelled parts: ${missing.join(', ')}.`); return; }
   /* Duplicate check: only block if the same Chinese sentence already exists in the
      SAME location (same lesson supplement, or My Sentence Bank). A sentence in a
      lesson supplement does not block adding it to My Sentence Bank, and vice versa. */
@@ -1657,7 +1703,7 @@ function receiveBank(data) {
   state.categories = String(state.settings.categories || '').split(',').map(s => s.trim()).filter(Boolean);
   if (state.settings.bankName && state.settings.bankName !== 'My Chinese Sentence Bank') { $('bankName').textContent = state.settings.bankName; document.title = state.settings.bankName; }
   else { setBilingualText($('bankName'), '我的中文句子庫', 'My Chinese Sentence Bank'); document.title = '我的中文句子庫 My Chinese Sentence Bank'; }
-  if (state.settings.ownerName && state.settings.ownerName !== 'Your Name') { $('ownerName').textContent = `Made for ${state.settings.ownerName}`; $('ownerName').classList.remove('hidden'); }
+  if (state.settings.ownerName && state.settings.ownerName !== 'Your Name') { setBilingualText($('ownerName'), `為 ${state.settings.ownerName} 製作`, `Made for ${state.settings.ownerName}`); $('ownerName').classList.remove('hidden'); }
   else $('ownerName').classList.add('hidden');
   $('sentenceCount').textContent = state.sentences.length; $('categoryCount').textContent = state.categories.length;
   $('apiStatus').className = 'live-status ready'; $('apiStatus').innerHTML = '<i></i> Firebase 已連線 <span class="en-sub">Firebase connected</span>';
@@ -1757,13 +1803,14 @@ async function submitSentence() {
     await reloadSentences();
     renderSentences();
     if (activeLesson > 0) { courseMetaCache.clear(); renderCourse(); }
-    $('saveMessage').textContent = activeLesson > 0 ? `已儲存至${lessonShortLabel(activeLesson)}「補充」。` : 'Saved successfully!';
+    if (activeLesson > 0) setBilingualText($('saveMessage'), `已儲存至${lessonShortLabel(activeLesson)}「補充」。`, `Saved to ${lessonShortLabel(activeLesson)} supplement.`);
+    else setBilingualText($('saveMessage'), '儲存成功！', 'Saved successfully!');
     $('saveButton').disabled = false;
     $('pasteInput').value = ''; $('previewPanel').classList.add('hidden');
     setTimeout(() => { if (activeLesson > 0) { $('courseSection').scrollIntoView({behavior:'smooth'}); } else { $('libraryTitle').scrollIntoView({behavior:'smooth'}); } }, 800);
   } catch (err) {
     $('saveButton').disabled = false;
-    $('saveMessage').textContent = `Save failed: ${(err && err.message) || 'Unknown error.'}`;
+    setBilingualText($('saveMessage'), `儲存失敗：${(err && err.message) || '未知錯誤。'}`, `Save failed: ${(err && err.message) || 'Unknown error.'}`);
   }
 }
 
@@ -2000,6 +2047,8 @@ const COURSE_LESSONS = [
   { n: 610, zh: '智慧與能力', en: 'Wisdom and Ability', topic: '智慧' }
 ];
 const COURSE_TABS = ['課文', '生詞', '語法', '練習', '文化', '補充'];
+/* 分頁籤顯示用英文（內部 key 保持中文）。 */
+const COURSE_TAB_EN = { '課文': 'Text', '生詞': 'Vocabulary', '語法': 'Grammar', '練習': 'Practice', '文化': 'Culture', '補充': 'Supplement' };
 const COURSE_PACK_LESSONS = [101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 601, 602, 603, 604, 605, 606, 607, 608, 609, 610];
 const courseState = { lesson: 0, tab: '課文' };
 
@@ -2014,16 +2063,17 @@ function updateCourseLockMessage() {
   if (!msg) return;
   const status = (window.V4_ACCESS && window.V4_ACCESS.status) || 'checking';
   const map = {
-    checking: '正在確認登入狀態…',
-    'signed-out': '',
-    pending: '已送出老師申請，等待管理員核准。核准後重新整理頁面即可解鎖課程。',
-    rejected: '申請未通過，請聯繫管理員。',
-    suspended: '帳號目前暫停使用，請聯繫管理員。',
-    error: '身分確認失敗，請重新整理頁面再試。',
-    approved: ''
+    checking: ['正在確認登入狀態…', 'Checking sign-in status…'],
+    'signed-out': ['', ''],
+    pending: ['已送出老師申請，等待管理員核准。核准後重新整理頁面即可解鎖課程。', 'Teacher application submitted, waiting for admin approval. Refresh the page after approval to unlock the course.'],
+    rejected: ['申請未通過，請聯繫管理員。', 'Application was not approved. Please contact the administrator.'],
+    suspended: ['帳號目前暫停使用，請聯繫管理員。', 'This account is currently suspended. Please contact the administrator.'],
+    error: ['身分確認失敗，請重新整理頁面再試。', 'Identity check failed. Please refresh the page and try again.'],
+    approved: ['', '']
   };
-  msg.textContent = map[status] || '';
-  msg.style.display = msg.textContent ? '' : 'none';
+  const pair = map[status] || ['', ''];
+  setBilingualText(msg, pair[0], pair[1]);
+  msg.style.display = (pair[0] || pair[1]) ? '' : 'none';
 }
 
 /* 登入狀態變化時重繪課程區（解鎖／上鎖即時反應），並重載個人資料層。 */
@@ -2076,13 +2126,13 @@ function renderLessonGrid() {
       <span class="lesson-zh" lang="zh-Hant">${lesson.zh}</span>
       <span class="lesson-en">${lesson.en}</span>
       <span class="lesson-topic">${lesson.topic}</span>
-      <span class="lesson-status">${recs.length ? `已匯入 ${recs.length} 條` : (hasPack ? '尚未匯入' : '準備中')}</span>`;
+      <span class="lesson-status">${recs.length ? `已匯入 ${recs.length} 條 <span class="en-sub">${recs.length} imported</span>` : (hasPack ? '尚未匯入' : '準備中')}</span>`;
     card.setAttribute('aria-label', `${lessonLabel(lesson.n)} ${lesson.zh}`);
     if (recs.length) {
       card.addEventListener('click', () => { courseState.lesson = lesson.n; courseState.tab = '課文'; renderLessonView(); });
     } else {
       card.disabled = true;
-      card.title = hasPack ? '課程匯入中，請稍等30秒' : '內容準備中';
+      card.title = hasPack ? '課程匯入中，請稍等30秒 (Importing, please wait 30 seconds)' : '內容準備中 (Content coming soon)';
     }
     grid.appendChild(card);
   });
@@ -2114,7 +2164,7 @@ function renderLessonView() {
     <div class="lesson-header-top"><span class="lesson-num">${lessonLabel(lesson.n)}</span><span class="lesson-topic">${lesson.topic}</span></div>
     <h3 class="lesson-header-zh" lang="zh-Hant">${lesson.zh}</h3>
     <p class="lesson-header-en">${lesson.en}</p>
-    ${goals.map(s => { const gp = displayProfile(s); const gt = displayExplanation(s) || displaySource(s); return `<div class="lesson-goals"><strong>學習目標</strong><p lang="${gp.locale}">${escapeHtml(gt)}</p></div>`; }).join('')}`;
+    ${goals.map(s => { const gp = displayProfile(s); const gt = displayExplanation(s) || displaySource(s); return `<div class="lesson-goals"><strong>學習目標 <span class="en-sub">Learning goals</span></strong><p lang="${gp.locale}">${escapeHtml(gt)}</p></div>`; }).join('')}`;
 
   const tabs = $('lessonTabs');
   tabs.innerHTML = '';
@@ -2125,7 +2175,7 @@ function renderLessonView() {
     button.className = 'lesson-tab' + (courseState.tab === tab ? ' active' : '');
     button.setAttribute('role', 'tab');
     button.setAttribute('aria-selected', courseState.tab === tab ? 'true' : 'false');
-    button.textContent = `${tab}${count ? ` ${count}` : ''}`;
+    setBilingualText(button, `${tab}${count ? ` ${count}` : ''}`, `${COURSE_TAB_EN[tab] || tab}${count ? ` ${count}` : ''}`);
     button.addEventListener('click', () => { courseState.tab = tab; renderLessonView(); });
     tabs.appendChild(button);
   });
@@ -2134,15 +2184,61 @@ function renderLessonView() {
   content.innerHTML = '';
   const tabRecs = bySection[courseState.tab] || [];
   /* 補充分頁永遠顯示：即使還沒有內容，老師也要能按「新增」。 */
-  if (courseState.tab === '補充') { renderSuppTab(content, tabRecs, n); return; }
+  if (courseState.tab === '補充') { renderSuppTab(content, tabRecs, n); renderHiddenRestore(content, n); return; }
   if (!tabRecs.length) {
-    content.innerHTML = '<div class="loading-card">這個單元還沒有內容。</div>';
+    content.innerHTML = '<div class="loading-card" id="lessonEmptyNote"></div>';
+    setBilingualText($('lessonEmptyNote'), '這個單元還沒有內容。', 'No content in this section yet.');
+    renderHiddenRestore(content, n);
     return;
   }
   if (courseState.tab === '課文') renderTextTab(content, tabRecs);
   else if (courseState.tab === '生詞') renderVocabTab(content, tabRecs);
   else if (courseState.tab === '語法') renderGrammarTab(content, tabRecs, n);
   else renderInfoTab(content, tabRecs, courseState.tab);
+  renderHiddenRestore(content, n);
+}
+
+/* ---- 已隱藏的共版卡片：老師可自行恢復顯示 ---- */
+function renderHiddenRestore(content, lessonNum) {
+  const uid = currentTeacherUid();
+  if (!uid) return;
+  const hidden = (state.hiddenShared || []).filter(s => courseMeta(s).lesson === String(lessonNum));
+  if (!hidden.length) return;
+  const box = document.createElement('details');
+  box.className = 'hidden-restore';
+  const summary = document.createElement('summary');
+  setBilingualText(summary, `已隱藏 ${hidden.length} 張卡片（只對你隱藏，點開可恢復）`, `${hidden.length} hidden card${hidden.length > 1 ? 's' : ''} (hidden for you only — open to restore)`);
+  box.appendChild(summary);
+  hidden.forEach(s => {
+    const row = document.createElement('div');
+    row.className = 'hidden-restore-row';
+    const label = document.createElement('span');
+    label.textContent = s.chineseSentence || s.recordId || '';
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'secondary-button';
+    setBilingualText(btn, '恢復顯示', 'Restore');
+    btn.addEventListener('click', () => restoreHiddenCard(s.recordId, btn));
+    row.appendChild(label);
+    row.appendChild(btn);
+    box.appendChild(row);
+  });
+  content.appendChild(box);
+}
+
+async function restoreHiddenCard(sharedId, button) {
+  const uid = currentTeacherUid();
+  if (!uid || !sharedId) return;
+  button.disabled = true;
+  try {
+    /* 只清除 deleted 旗標，保留老師的其他覆寫（如編輯內容）。 */
+    await teacherOverridesRef(uid).doc(sharedId).update({ deleted: fbFieldValue.delete(), updatedAt: serverTimestamp() });
+    await reloadSentences();
+    renderCourse();
+  } catch (err) {
+    button.disabled = false;
+    setBilingualText(button, '恢復失敗，請重試', `Restore failed: ${(err && err.message) || 'Unknown error.'}`);
+  }
 }
 
 function escapeHtml(text) {
@@ -2183,7 +2279,8 @@ function renderTextTab(content, recs) {
     playButton.type = 'button';
     playButton.className = 'secondary-button text-play-button';
     playButton.textContent = '▶ 連播';
-    playButton.setAttribute('aria-label', `連播${groupName}`);
+    playButton.setAttribute('aria-label', bilingualLabel(`連播${groupName}`, `Play ${groupName}`));
+    playButton.title = '連播全部 (Play all)';
     playButton.addEventListener('click', () => playTextGroup(lines, playButton));
     head.appendChild(title); head.appendChild(playButton);
     section.appendChild(head);
@@ -2241,10 +2338,10 @@ function createVocabCard(sentence) {
     <div class="vocab-roman"></div>
     <div class="vocab-example"></div>
     <div class="vocab-actions">
-      <button type="button" class="icon-button vocab-speak" aria-label="Play Chinese" title="Play Chinese">🔊</button>
-      <button type="button" class="icon-button vocab-download" aria-label="Download recording" title="Download recording" hidden>⤓</button>
-      <button type="button" class="icon-button card-record-button" aria-label="Record your voice" title="Record">🎙</button>
-      <button type="button" class="icon-button card-play-button" aria-label="Play your recording" title="Play recording">▶</button>
+      <button type="button" class="icon-button vocab-speak" aria-label="播放中文發音 (Play Chinese)" title="播放中文發音 (Play Chinese)">🔊</button>
+      <button type="button" class="icon-button vocab-download" aria-label="下載老師錄音 (Download recording)" title="下載老師錄音 (Download recording)" hidden>⤓</button>
+      <button type="button" class="icon-button card-record-button" aria-label="錄下你的聲音 (Record your voice)" title="錄音 (Record)">🎙</button>
+      <button type="button" class="icon-button card-play-button" aria-label="播放我的錄音 (Play my recording)" title="播放錄音 (Play recording)">▶</button>
       <button type="button" class="icon-button card-save-model-button" aria-label="Save as teacher model" title="Save as teacher model">💾</button>
       <button type="button" class="icon-button vocab-edit" aria-label="Edit" title="Edit">✏️</button>
     </div>
@@ -2265,7 +2362,7 @@ function createVocabCard(sentence) {
   exampleEl.textContent = displayExplanation(sentence);
   exampleEl.hidden = !displayExplanation(sentence);
   node.querySelector('.vocab-hindi-speak').addEventListener('click', e => speakHindi(displaySource(sentence), e.currentTarget, vocabProfile.locale));
-  node.querySelector('.vocab-hindi-speak').setAttribute('aria-label', 'Play ' + vocabProfile.name + ' pronunciation');
+  node.querySelector('.vocab-hindi-speak').setAttribute('aria-label', bilingualLabel(`播放${vocabProfile.nameZh || vocabProfile.name}發音`, `Play ${vocabProfile.name} pronunciation`));
   node.querySelector('.vocab-speak').addEventListener('click', e => playSentenceModel(sentence, e.currentTarget));
   const vocabDl = node.querySelector('.vocab-download');
   vocabDl.hidden = !sentence.standardAudioUrl;
@@ -2323,11 +2420,11 @@ function renderInfoTab(content, recs, tabName) {
     const card = document.createElement('div');
     card.className = 'info-card';
     card.innerHTML = `
-      <div class="info-kicker">${tabName}</div>
+      <div class="info-kicker">${tabName} <span class="en-sub">${COURSE_TAB_EN[tabName] || ''}</span></div>
       <h4 class="info-zh" lang="zh-Hant"></h4>
       <p class="info-hi" lang="hi"></p>
       <p class="info-explain" lang="hi"></p>
-      <div class="info-actions"><button type="button" class="icon-button info-edit" aria-label="Edit" title="Edit">✏️</button></div>`;
+      <div class="info-actions"><button type="button" class="icon-button info-edit" aria-label="編輯 (Edit)" title="編輯 (Edit)">✏️</button></div>`;
     const infoProfile = displayProfile(s);
     card.querySelector('.info-zh').textContent = s.chineseSentence || '';
     const infoHiEl = card.querySelector('.info-hi');
@@ -2348,11 +2445,11 @@ function renderSuppTab(content, recs, lessonNum) {
   bar.className = 'supp-bar';
   const hint = document.createElement('p');
   hint.className = 'supp-hint';
-  hint.textContent = '老師針對本課補充的句子：課堂上臨時加的例句、學生問到的句子，都可以記在這裡，跟著本課走。按右方按鈕前往上方的 AI 新增流程，完成後句子會自動歸入本課「補充」。';
+  setBilingualText(hint, '老師針對本課補充的句子：課堂上臨時加的例句、學生問到的句子，都可以記在這裡，跟著本課走。按右方按鈕前往上方的 AI 新增流程，完成後句子會自動歸入本課「補充」。', 'Sentences you add for this lesson: examples added in class or questions from students can be noted here and stay with this lesson. Use the button on the right to go to the AI flow above; finished sentences are automatically filed under this lesson\u2019s \u201cSupplement\u201d tab.');
   const addButton = document.createElement('button');
   addButton.type = 'button';
   addButton.className = 'primary-button';
-  addButton.textContent = '＋ 新增補充句子';
+  setBilingualText(addButton, '＋ 新增補充句子', '＋ Add a supplementary sentence');
   addButton.addEventListener('click', () => goToAiFlowForSupp(lessonNum));
   bar.appendChild(hint);
   bar.appendChild(addButton);
@@ -2360,7 +2457,7 @@ function renderSuppTab(content, recs, lessonNum) {
   if (!recs.length) {
     const empty = document.createElement('div');
     empty.className = 'loading-card';
-    empty.textContent = '還沒有補充內容，按上面按鈕新增第一句。';
+    setBilingualText(empty, '還沒有補充內容，按上面按鈕新增第一句。', 'No supplementary content yet. Use the button above to add the first sentence.');
     content.appendChild(empty);
     return;
   }
@@ -2386,6 +2483,7 @@ function stopTextPlay() {
   document.querySelectorAll('.text-play-button.text-playing').forEach(b => {
     b.classList.remove('text-playing');
     b.textContent = '▶ 連播';
+    b.title = '連播全部 (Play all)';
   });
 }
 async function fetchTeacherAudioUrl(sentence) {
@@ -2433,6 +2531,7 @@ function playTextGroup(lines, button) {
   textPlay = { playing: true, queue: lines.slice(), index: 0 };
   button.classList.add('text-playing');
   button.textContent = '⏹ 停止';
+  button.title = '停止 (Stop)';
   playNextTextLine();
 }
 async function playNextTextLine() {
