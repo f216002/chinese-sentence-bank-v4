@@ -2016,7 +2016,7 @@ function updateCourseLockMessage() {
   const status = (window.V4_ACCESS && window.V4_ACCESS.status) || 'checking';
   const map = {
     checking: '正在確認登入狀態…',
-    'signed-out': '請先用右上角「使用 Google 登入」。管理員核准後，課程會自動解鎖。',
+    'signed-out': '',
     pending: '已送出老師申請，等待管理員核准。核准後重新整理頁面即可解鎖課程。',
     rejected: '申請未通過，請聯繫管理員。',
     suspended: '帳號目前暫停使用，請聯繫管理員。',
@@ -2024,6 +2024,7 @@ function updateCourseLockMessage() {
     approved: ''
   };
   msg.textContent = map[status] || '';
+  msg.style.display = msg.textContent ? '' : 'none';
 }
 
 /* 登入狀態變化時重繪課程區（解鎖／上鎖即時反應），並重載個人資料層。 */
