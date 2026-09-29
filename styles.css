@@ -218,6 +218,7 @@ button .en-sub { pointer-events: none; }
 /* 中文歌曲區：MV 播放器＋歌詞卡片 */
 .song-video-wrap{margin:0 0 28px}
 .song-video-wrap video{width:100%;max-width:960px;display:block;border-radius:14px;background:#000;box-shadow:0 8px 28px rgba(34,50,47,.12)}
+.song-youtube{width:100%;max-width:960px;aspect-ratio:16/9;display:block;border:0;border-radius:14px;box-shadow:0 8px 28px rgba(34,50,47,.12)}
 .song-lyrics{margin-top:8px}
 .lyric-card .chinese{margin-top:14px}
 /* 首頁兩大選項卡 */
