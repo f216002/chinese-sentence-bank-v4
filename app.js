@@ -2263,9 +2263,19 @@ async function renderSongView(songId) {
     </div>`).join('');
   content.innerHTML = `
     <div class="song-video-wrap">
-      <video controls playsinline preload="metadata" src="${videoUrl}" aria-label="${escapeHtml(song.title)} MV"></video>
+      <video id="songVideo" controls playsinline preload="metadata" src="${videoUrl}" aria-label="${escapeHtml(song.title)} MV"></video>
+      <div class="song-video-actions">
+        <button class="secondary-button" id="songFullscreenBtn" type="button">⛶ 全螢幕播放 <span class="en-sub">Fullscreen</span></button>
+      </div>
     </div>
     <div class="sentence-grid song-lyrics">${lyricCards}</div>`;
+  $('songFullscreenBtn').addEventListener('click', () => {
+    const v = $('songVideo');
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (v.requestFullscreen) v.requestFullscreen();
+    else if (v.webkitEnterFullscreen) v.webkitEnterFullscreen();
+    else if (v.webkitRequestFullscreen) v.webkitRequestFullscreen();
+  });
 }
 
 function renderLessonView() {
