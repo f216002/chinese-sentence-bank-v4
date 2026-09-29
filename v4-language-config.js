@@ -233,11 +233,7 @@ var V4_LANGUAGE_PROFILES = {
     inputPlaceholder: 'මෙහි සිංහල වාක්‍යයක් ඇතුළත් කරන්න。\nor: 請在這裡輸入中文句子。',
     romanizationName: 'Sinhala Romanization',
     requiresRomanization: true,
-    legacyLabels: ['SINHALA'],
-    azureVoices: [
-      { id: 'si-LK-ThiliniNeural', name: 'Thilini', genderZh: '女聲', genderEn: 'Female' },
-      { id: 'si-LK-SameeraNeural', name: 'Sameera', genderZh: '男聲', genderEn: 'Male' }
-    ]
+    legacyLabels: ['SINHALA']
   },
   fa: {
     code: 'fa',
@@ -252,11 +248,7 @@ var V4_LANGUAGE_PROFILES = {
     inputPlaceholder: 'یک جمله فارسی در اینجا وارد کنید。\nor: 請在這裡輸入中文句子。',
     romanizationName: 'Persian Romanization',
     requiresRomanization: true,
-    legacyLabels: ['PERSIAN', 'FARSI'],
-    azureVoices: [
-      { id: 'fa-IR-DilaraNeural', name: 'Dilara', genderZh: '女聲', genderEn: 'Female' },
-      { id: 'fa-IR-FaridNeural', name: 'Farid', genderZh: '男聲', genderEn: 'Male' }
-    ]
+    legacyLabels: ['PERSIAN', 'FARSI']
   }
 };
 
