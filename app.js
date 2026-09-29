@@ -2069,19 +2069,21 @@ const COURSE_PACK_LESSONS = [101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 1
 
 /* ---- 中文歌曲（V4 歌曲區）：自製 MV＋逐句歌詞教學 ----
    影片在 Firebase Storage 的 songs/ 下（公開讀取），歌詞去重後內嵌。
-   踏浪「請你們歇歇腳呀,暫時停下來」重複出現，只保留一筆。 */
+   踏浪「請你們歇歇腳呀,暫時停下來」重複出現，只保留一筆。
+   每句歌詞為完整句子物件（含拼音＋16 語翻譯＋解說），用 createCard() 渲染，
+   與課文句子卡功能完全相同（發音、錄音、語言切換皆可用）。 */
 const V4_SONGS = [
   {
     id: 'buyuge',
     title: '捕魚歌',
     videoType: 'storage',
     videoPath: 'songs/捕魚歌.mp4',
-    lyrics: [
-      '白浪滔滔我不怕',
-      '掌起舵兒往前划',
-      '撒網下水到漁家啊',
-      '捕條大魚笑哈哈',
-      '嗨喲一喲一喲哼嗨喲',
+    lines: [
+      { zh: '白浪滔滔我不怕', py: 'bái làng tāo tāo wǒ bù pà' },
+      { zh: '掌起舵兒往前划', py: 'zhǎng qǐ duò er wǎng qián huá' },
+      { zh: '撒網下水到漁家啊', py: 'sā wǎng xià shuǐ dào yú jiā a' },
+      { zh: '捕條大魚笑哈哈', py: 'bǔ tiáo dà yú xiào hā hā' },
+      { zh: '嗨喲一喲一喲哼嗨喲', py: 'hāi yō yī yō yī yō hēng hāi yō' },
     ],
   },
   {
@@ -2089,15 +2091,15 @@ const V4_SONGS = [
     title: '蘭花草',
     videoType: 'storage',
     videoPath: 'songs/蘭花草.mp4',
-    lyrics: [
-      '我從山中來，帶著蘭花草；',
-      '種在小園中，希望花開早。',
-      '一日看三回，看得花時過；',
-      '蘭花卻依然，苞也無一個？',
-      '轉眼秋天到，移蘭入暖房；',
-      '朝朝頻顧惜、夜夜不相忘。',
-      '期待春花開，能將宿願償；',
-      '滿庭花簇簇，開得許多香。',
+    lines: [
+      { zh: '我從山中來，帶著蘭花草；', py: 'wǒ cóng shān zhōng lái, dài zhe lán huā cǎo;' },
+      { zh: '種在小園中，希望花開早。', py: 'zhòng zài xiǎo yuán zhōng, xī wàng huā kāi zǎo.' },
+      { zh: '一日看三回，看得花時過；', py: 'yī rì kàn sān huí, kàn de huā shí guò;' },
+      { zh: '蘭花卻依然，苞也無一個？', py: 'lán huā què yī rán, bāo yě wú yī gè?' },
+      { zh: '轉眼秋天到，移蘭入暖房；', py: 'zhuǎn yǎn qiū tiān dào, yí lán rù nuǎn fáng;' },
+      { zh: '朝朝頻顧惜、夜夜不相忘。', py: 'zhāo zhāo pín gù xī, yè yè bù xiāng wàng.' },
+      { zh: '期待春花開，能將宿願償；', py: 'qī dài chūn huā kāi, néng jiāng sù yuàn cháng;' },
+      { zh: '滿庭花簇簇，開得許多香。', py: 'mǎn tíng huā cù cù, kāi de xǔ duō xiāng.' },
     ],
   },
   {
@@ -2105,17 +2107,42 @@ const V4_SONGS = [
     title: '踏浪',
     videoType: 'storage',
     videoPath: 'songs/踏浪.mp4',
-    lyrics: [
-      '小小的一片雲呀,慢慢地走過來',
-      '請你們歇歇腳呀,暫時停下來',
-      '山上的山花兒開呀,我才到山上來',
-      '原來嘛你也是上山看那山花兒開',
-      '小小的一陣風呀慢慢地走過來',
-      '海上的浪花開呀我才到海邊來',
-      '原來嘛你也愛浪花才到海邊來',
+    lines: [
+      { zh: '小小的一片雲呀,慢慢地走過來', py: 'xiǎo xiǎo de yī piàn yún ya, màn màn de zǒu guò lái' },
+      { zh: '請你們歇歇腳呀,暫時停下來', py: 'qǐng nǐ men xiē xie jiǎo ya, zàn shí tíng xià lái' },
+      { zh: '山上的山花兒開呀,我才到山上來', py: 'shān shàng de shān huā er kāi ya, wǒ cái dào shān shàng lái' },
+      { zh: '原來嘛你也是上山看那山花兒開', py: 'yuán lái ma nǐ yě shì shàng shān kàn nà shān huā er kāi' },
+      { zh: '小小的一陣風呀慢慢地走過來', py: 'xiǎo xiǎo de yī zhèn fēng ya màn màn de zǒu guò lái' },
+      { zh: '海上的浪花開呀我才到海邊來', py: 'hǎi shàng de làng huā kāi ya wǒ cái dào hǎi biān lái' },
+      { zh: '原來嘛你也愛浪花才到海邊來', py: 'yuán lái ma nǐ yě ài làng huā cái dào hǎi biān lái' },
     ],
   },
 ];
+
+/* 合併歌曲翻譯：v4-songs-i18n.js 的 V4_SONGS_I18N 寫入各行 line.i18n。 */
+if (typeof V4_SONGS_I18N !== 'undefined') {
+  V4_SONGS.forEach(song => {
+    const arr = V4_SONGS_I18N[song.id];
+    if (!arr) return;
+    song.lines.forEach((line, i) => { if (arr[i]) line.i18n = arr[i]; });
+  });
+}
+
+/* 歌詞行轉句子物件：供 createCard() 使用（非課程記錄，不進搜尋）。 */
+function songLineToSentence(song, line, idx) {
+  return {
+    chineseSentence: line.zh,
+    pinyin: line.py,
+    hindiSentence: (line.i18n && line.i18n.hi && line.i18n.hi.s) || '',
+    romanHindi: (line.i18n && line.i18n.hi && line.i18n.hi.r) || '',
+    hindiExplanation: (line.i18n && line.i18n.hi && line.i18n.hi.e) || '',
+    i18n: line.i18n || {},
+    category: '歌曲',
+    tags: `中文歌曲,${song.title}`,
+    recordId: `song-${song.id}-${idx + 1}`,
+    seq: null,
+  };
+}
 
 const courseState = { lesson: 0, tab: '課文', song: null };
 
@@ -2186,7 +2213,7 @@ function renderLessonGrid() {
     card.innerHTML = `
       <span class="lesson-num">🎵 <span class="en-sub">Song</span></span>
       <span class="lesson-zh" lang="zh-Hant">${escapeHtml(song.title)}</span>
-      <span class="lesson-topic">${song.lyrics.length} 句歌詞 <span class="en-sub">${song.lyrics.length} lines</span></span>`;
+      <span class="lesson-topic">${song.lines.length} 句歌詞 <span class="en-sub">${song.lines.length} lines</span></span>`;
     card.setAttribute('aria-label', `中文歌曲 ${song.title}`);
     card.addEventListener('click', () => { courseState.song = song.id; courseState.lesson = 0; renderCourse(); $('courseSection').scrollIntoView({ behavior: 'smooth' }); });
     grid.appendChild(card);
@@ -2256,19 +2283,20 @@ async function renderSongView(songId) {
     content.innerHTML = '<p class="section-note">影片載入失敗，請檢查網路後重整。 <span class="en-sub">Video failed to load.</span></p>';
     return;
   }
-  const lyricCards = song.lyrics.map((line, i) => `
-    <div class="sentence-card lyric-card">
-      <div class="card-top"><span class="category-pill">${i + 1}</span></div>
-      <p class="chinese" lang="zh-Hant">${escapeHtml(line)}</p>
-    </div>`).join('');
+  const lyricsGrid = document.createElement('div');
+  lyricsGrid.className = 'sentence-grid song-lyrics';
+  song.lines.forEach((line, i) => {
+    const s = songLineToSentence(song, line, i);
+    lyricsGrid.appendChild(createCard(s, true));
+  });
   content.innerHTML = `
     <div class="song-video-wrap">
       <video id="songVideo" controls playsinline preload="metadata" src="${videoUrl}" aria-label="${escapeHtml(song.title)} MV"></video>
       <div class="song-video-actions">
         <button class="secondary-button" id="songFullscreenBtn" type="button">⛶ 全螢幕播放 <span class="en-sub">Fullscreen</span></button>
       </div>
-    </div>
-    <div class="sentence-grid song-lyrics">${lyricCards}</div>`;
+    </div>`;
+  content.appendChild(lyricsGrid);
   $('songFullscreenBtn').addEventListener('click', () => {
     const v = $('songVideo');
     if (document.fullscreenElement) { document.exitFullscreen(); return; }
