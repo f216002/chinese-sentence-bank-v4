@@ -2117,6 +2117,185 @@ const V4_SONGS = [
       { zh: '原來嘛你也愛浪花才到海邊來', py: 'yuán lái ma nǐ yě ài làng huā cái dào hǎi biān lái' },
     ],
   },
+  {
+    id: 'yuer',
+    title: '魚兒魚兒水中游',
+    videoType: 'youtube',
+    youtubeId: 'IVj3zU6WnwQ',
+    lines: [
+      { zh: '魚兒魚兒水中游，', py: 'yú er yú er shuǐ zhōng yóu,' },
+      { zh: '游來游去樂悠悠。', py: 'yóu lái yóu qù lè yōu yōu.' },
+      { zh: '倦了臥水草，', py: 'juàn le wò shuǐ cǎo,' },
+      { zh: '餓了覓小蟲。', py: 'è le mì xiǎo chóng.' },
+      { zh: '樂悠悠，樂悠悠，', py: 'lè yōu yōu, lè yōu yōu,' },
+      { zh: '水晶世界真自由。', py: 'shuǐ jīng shì jiè zhēn zì yóu.' },
+    ],
+  },
+  {
+    id: 'woniu',
+    title: '蝸牛與黃鸝鳥',
+    videoType: 'youtube',
+    youtubeId: 'hnkDF7ZsKJg',
+    lines: [
+      { zh: '阿門 阿前 一棵葡萄樹', py: 'ā mén ā qián yī kē pú táo shù' },
+      { zh: '阿嫩 阿嫩 綠的剛發芽', py: 'ā nèn ā nèn lǜ de gāng fā yá' },
+      { zh: '蝸牛背著那重重的殼', py: 'wō niú bēi zhe nà zhòng zhòng de ké' },
+      { zh: '一步一步地往上爬', py: 'yī bù yī bù de wǎng shàng pá' },
+      { zh: '阿樹 阿上 兩隻黃鸝鳥', py: 'ā shù ā shàng liǎng zhī huáng lí niǎo' },
+      { zh: '阿嘻 阿嘻哈哈 在笑它', py: 'ā xī ā xī hā hā zài xiào tā' },
+      { zh: '葡萄成熟還早地很呀', py: 'pú táo chéng shú hái zǎo de hěn ya' },
+      { zh: '現在上來要幹什麼', py: 'xiàn zài shàng lái yào gàn shén me' },
+      { zh: '阿黃 阿黃鸝鳥 不要笑', py: 'ā huáng ā huáng lí niǎo bù yào xiào' },
+      { zh: '等我爬上它就成熟了', py: 'děng wǒ pá shàng tā jiù chéng shú le' },
+    ],
+  },
+  {
+    id: 'zhuaniqiu',
+    title: '抓泥鰍',
+    videoType: 'youtube',
+    youtubeId: '7j2tm3gEvYc',
+    lines: [
+      { zh: '池塘的水滿了,雨也停了', py: 'chí táng de shuǐ mǎn le, yǔ yě tíng le' },
+      { zh: '田邊的稀泥裡到處是泥鰍', py: 'tián biān de xī ní lǐ dào chù shì ní qiū' },
+      { zh: '天天我等著你,等著你捉泥鰍', py: 'tiān tiān wǒ děng zhe nǐ, děng zhe nǐ zhuō ní qiū' },
+      { zh: '大哥哥好不好咱們去捉泥鰍?', py: 'dà gē ge hǎo bù hǎo zán men qù zhuō ní qiū?' },
+      { zh: '小牛的哥哥帶著他捉泥鰍', py: 'xiǎo niú de gē ge dài zhe tā zhuō ní qiū' },
+    ],
+  },
+  {
+    id: 'xiaolaoshu',
+    title: '小老鼠',
+    videoType: 'youtube',
+    youtubeId: '7gQIYMhmCXY',
+    lines: [
+      { zh: '小老鼠，上燈台', py: 'xiǎo lǎo shǔ, shàng dēng tái' },
+      { zh: '偷油吃，下不來', py: 'tōu yóu chī, xià bù lái' },
+      { zh: '喵喵喵，貓來了', py: 'miāo miāo miāo, māo lái le' },
+      { zh: '嘰哩咕嚕滾下來', py: 'jī lī gū lū gǔn xià lái' },
+    ],
+  },
+  {
+    id: 'liangzhilaohu',
+    title: '兩隻老虎',
+    videoType: 'youtube',
+    youtubeId: 'kUh93CKtkmI',
+    lines: [
+      { zh: '兩隻老虎，兩隻老虎，', py: 'liǎng zhī lǎo hǔ, liǎng zhī lǎo hǔ,' },
+      { zh: '跑得快，跑得快，', py: 'pǎo de kuài, pǎo de kuài,' },
+      { zh: '一隻沒有耳朵，一隻沒有尾巴，', py: 'yī zhī méi yǒu ěr duo, yī zhī méi yǒu wěi ba,' },
+      { zh: '真奇怪！真奇怪！', py: 'zhēn qí guài! zhēn qí guài!' },
+    ],
+  },
+  {
+    id: 'xiaoxingxing',
+    title: '小星星',
+    videoType: 'youtube',
+    youtubeId: '8_lmeiVtRnU',
+    lines: [
+      { zh: '一閃一閃亮晶晶,滿天都是小星星', py: 'yī shǎn yī shǎn liàng jīng jīng, mǎn tiān dōu shì xiǎo xīng xing' },
+      { zh: '掛在天上放光明,好像許多小眼睛', py: 'guà zài tiān shàng fàng guāng míng, hǎo xiàng xǔ duō xiǎo yǎn jing' },
+    ],
+  },
+  {
+    id: 'zaofeiji',
+    title: '造飛機',
+    videoType: 'youtube',
+    youtubeId: 'eFt5haezIEc',
+    lines: [
+      { zh: '造飛機，造飛機，來到青草地', py: 'zào fēi jī, zào fēi jī, lái dào qīng cǎo dì' },
+      { zh: '蹲下去，蹲下去，我做推進器', py: 'dūn xià qù, dūn xià qù, wǒ zuò tuī jìn qì' },
+      { zh: '蹲下去，蹲下去，你做飛機翼', py: 'dūn xià qù, dūn xià qù, nǐ zuò fēi jī yì' },
+      { zh: '彎著腰，彎著腰，飛機做得奇', py: 'wān zhe yāo, wān zhe yāo, fēi jī zuò de qí' },
+      { zh: '飛上去，飛上去，飛到白雲裡', py: 'fēi shàng qù, fēi shàng qù, fēi dào bái yún lǐ' },
+    ],
+  },
+  {
+    id: 'molihua',
+    title: '茉莉花',
+    videoType: 'youtube',
+    youtubeId: 'n66vlWaV6rQ',
+    lines: [
+      { zh: '好一朵美麗的茉莉花，', py: 'hǎo yī duǒ měi lì de mò lì huā,' },
+      { zh: '芬芳美麗滿枝椏，', py: 'fēn fāng měi lì mǎn zhī yā,' },
+      { zh: '又白又香人人誇，', py: 'yòu bái yòu xiāng rén rén kuā,' },
+      { zh: '讓我來將你摘下，送給別人家，', py: 'ràng wǒ lái jiāng nǐ zhāi xià, sòng gěi bié rén jiā,' },
+      { zh: '茉莉花啊茉莉花。', py: 'mò lì huā a mò lì huā.' },
+    ],
+  },
+  {
+    id: 'wodejia',
+    title: '我的家',
+    videoType: 'youtube',
+    youtubeId: 'A9Y9Lqq9Fag',
+    lines: [
+      { zh: '我家門前有小河，後面有山坡；', py: 'wǒ jiā mén qián yǒu xiǎo hé, hòu miàn yǒu shān pō;' },
+      { zh: '山坡上面野花多，野花紅似火。', py: 'shān pō shàng miàn yě huā duō, yě huā hóng sì huǒ.' },
+      { zh: '小河裡，有白鵝，', py: 'xiǎo hé lǐ, yǒu bái é,' },
+      { zh: '鵝兒戲綠波；', py: 'é er xì lǜ bō;' },
+      { zh: '戲弄綠波，鵝兒快樂，', py: 'xì nòng lǜ bō, é er kuài lè,' },
+      { zh: '昂首唱清歌。', py: 'áng shǒu chàng qīng gē.' },
+    ],
+  },
+  {
+    id: 'poshuige',
+    title: '潑水歌',
+    videoType: 'youtube',
+    youtubeId: 'GnXGAjbWk78',
+    lines: [
+      { zh: '昨天我打從你門前過,你正提著水桶往外潑', py: 'zuó tiān wǒ dǎ cóng nǐ mén qián guò, nǐ zhèng tí zhe shuǐ tǒng wǎng wài pō' },
+      { zh: '潑在我的皮鞋上,路上的行人笑呵呵呵', py: 'pō zài wǒ de pí xié shàng, lù shàng de xíng rén xiào hē hē hē' },
+      { zh: '你什麼話也沒有對我說', py: 'nǐ shén me huà yě méi yǒu duì wǒ shuō' },
+      { zh: '你只是瞇著眼睛望著我', py: 'nǐ zhǐ shì mī zhe yǎn jing wàng zhe wǒ' },
+      { zh: '嚕啦啦 嚕啦啦 嚕啦嚕拉勒', py: 'lū lā lā lū lā lā lū lā lū lā lè' },
+      { zh: '嚕啦 嚕啦 嚕啦 嚕啦嚕啦勒', py: 'lū lā lū lā lū lā lū lā lū lā lè' },
+      { zh: '嚕啦 嚕啦 嚕啦勒', py: 'lū lā lū lā lū lā lè' },
+    ],
+  },
+  {
+    id: 'nixiaoqilai',
+    title: '你笑起來真好看',
+    videoType: 'youtube',
+    youtubeId: 'oS9kCw-TTs8',
+    lines: [
+      { zh: '想去遠方的山川', py: 'xiǎng qù yuǎn fāng de shān chuān' },
+      { zh: '想去海邊看海鷗', py: 'xiǎng qù hǎi biān kàn hǎi ōu' },
+      { zh: '不管風雨有多少', py: 'bù guǎn fēng yǔ yǒu duō shǎo' },
+      { zh: '有你就足夠', py: 'yǒu nǐ jiù zú gòu' },
+      { zh: '喜歡看你的嘴角', py: 'xǐ huān kàn nǐ de zuǐ jiǎo' },
+      { zh: '喜歡看你的眉梢', py: 'xǐ huān kàn nǐ de méi shāo' },
+      { zh: '白雲掛在那藍天', py: 'bái yún guà zài nà lán tiān' },
+      { zh: '像你的微笑', py: 'xiàng nǐ de wēi xiào' },
+      { zh: '你笑起來真好看', py: 'nǐ xiào qǐ lái zhēn hǎo kàn' },
+      { zh: '像春天的花一樣', py: 'xiàng chūn tiān de huā yī yàng' },
+      { zh: '把所有的煩惱所有的憂愁', py: 'bǎ suǒ yǒu de fán nǎo suǒ yǒu de yōu chóu' },
+      { zh: '統統都吹散', py: 'tǒng tǒng dōu chuī sàn' },
+      { zh: '像夏天的陽光', py: 'xiàng xià tiān de yáng guāng' },
+      { zh: '整個世界全部的時光', py: 'zhěng gè shì jiè quán bù de shí guāng' },
+      { zh: '美得像畫卷', py: 'měi de xiàng huà juàn' },
+    ],
+  },
+  {
+    id: 'tingwoshuo',
+    title: '聽我說謝謝你',
+    videoType: 'youtube',
+    youtubeId: '8JqTMsTWngM',
+    lines: [
+      { zh: '送給你小心心', py: 'sòng gěi nǐ xiǎo xīn xīn' },
+      { zh: '送你花一朵', py: 'sòng nǐ huā yī duǒ' },
+      { zh: '你在我生命中,太多的感動', py: 'nǐ zài wǒ shēng mìng zhōng, tài duō de gǎn dòng' },
+      { zh: '你是我的天使,一路指引我', py: 'nǐ shì wǒ de tiān shǐ, yī lù zhǐ yǐn wǒ' },
+      { zh: '無論歲月變幻,愛你唱成歌', py: 'wú lùn suì yuè biàn huàn, ài nǐ chàng chéng gē' },
+      { zh: '聽我說謝謝你', py: 'tīng wǒ shuō xiè xie nǐ' },
+      { zh: '因為有你,溫暖了四季', py: 'yīn wèi yǒu nǐ, wēn nuǎn le sì jì' },
+      { zh: '謝謝你!', py: 'xiè xie nǐ!' },
+      { zh: '感謝有你', py: 'gǎn xiè yǒu nǐ' },
+      { zh: '世界更美麗', py: 'shì jiè gèng měi lì' },
+      { zh: '我要謝謝你', py: 'wǒ yào xiè xie nǐ' },
+      { zh: '因為有你', py: 'yīn wèi yǒu nǐ' },
+      { zh: '愛常在心底', py: 'ài cháng zài xīn dǐ' },
+      { zh: '把幸福傳遞', py: 'bǎ xìng fú chuán dì' },
+    ],
+  },
 ];
 
 /* 合併歌曲翻譯：v4-songs-i18n.js 的 V4_SONGS_I18N 寫入各行 line.i18n。 */
@@ -2338,25 +2517,33 @@ async function renderSongView(songId) {
   $('lessonTabs').innerHTML = '';
   const content = $('lessonContent');
   content.innerHTML = '<p class="section-note">影片載入中… <span class="en-sub">Loading video…</span></p>';
-  /* Storage 公開讀取：用 SDK 取下載網址（自動處理中文檔名編碼）。 */
-  let videoUrl = '';
-  try {
-    const ref = firebase.storage().ref(song.videoPath);
-    videoUrl = await ref.getDownloadURL();
-  } catch (e) {
-    content.innerHTML = '<p class="section-note">影片載入失敗，請檢查網路後重整。 <span class="en-sub">Video failed to load.</span></p>';
-    return;
-  }
   const lyricsGrid = document.createElement('div');
   lyricsGrid.className = 'sentence-grid song-lyrics';
   song.lines.forEach((line, i) => {
     const s = songLineToSentence(song, line, i);
     lyricsGrid.appendChild(createCard(s, true));
   });
-  content.innerHTML = `
-    <div class="song-video-wrap">
-      <video id="songVideo" controls playsinline preload="metadata" src="${videoUrl}" aria-label="${escapeHtml(song.title)} MV"></video>
-    </div>`;
+  /* YouTube 歌曲：用 iframe 嵌入；Storage 歌曲：用 SDK 取下載網址播 HTML5 video。 */
+  if (song.videoType === 'youtube' && song.youtubeId) {
+    content.innerHTML = `
+      <div class="song-video-wrap">
+        <iframe class="song-youtube" src="https://www.youtube.com/embed/${song.youtubeId}" title="${escapeHtml(song.title)}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>`;
+  } else {
+    /* Storage 公開讀取：用 SDK 取下載網址（自動處理中文檔名編碼）。 */
+    let videoUrl = '';
+    try {
+      const ref = firebase.storage().ref(song.videoPath);
+      videoUrl = await ref.getDownloadURL();
+    } catch (e) {
+      content.innerHTML = '<p class="section-note">影片載入失敗，請檢查網路後重整。 <span class="en-sub">Video failed to load.</span></p>';
+      return;
+    }
+    content.innerHTML = `
+      <div class="song-video-wrap">
+        <video id="songVideo" controls playsinline preload="metadata" src="${videoUrl}" aria-label="${escapeHtml(song.title)} MV"></video>
+      </div>`;
+  }
   content.appendChild(lyricsGrid);
 }
 
