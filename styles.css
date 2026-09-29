@@ -220,4 +220,9 @@ button .en-sub { pointer-events: none; }
 .song-video-wrap video{width:100%;max-width:960px;display:block;border-radius:14px;background:#000;box-shadow:0 8px 28px rgba(34,50,47,.12)}
 .song-lyrics{margin-top:8px}
 .lyric-card .chinese{margin-top:14px}
-.song-video-actions{margin-top:12px}
+/* 首頁兩大選項卡 */
+.home-option-card{align-items:center;text-align:center;justify-items:center;padding:44px 22px;gap:10px}
+.home-option-card:hover:not(:disabled){transform:translateY(-4px)}
+.home-option-icon{font-size:56px;line-height:1}
+.home-option-zh{font-size:30px;font-weight:700}
+.grid-back-row{grid-column:1/-1;margin-bottom:4px}
