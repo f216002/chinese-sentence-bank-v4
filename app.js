@@ -351,7 +351,6 @@ function applyV4LanguageProfile(code) {
   renderToneGlosses();
   updateSearchHelp();
   updateFooterAbout();
-  updateAzureVoicePicker();
 }
 
 /* 發音實驗室四聲卡片的母語對照跟隨語言切換（英文對照保留）。 */
@@ -1164,50 +1163,9 @@ function speakChinese(text, button) {
    picks one in the topbar voice selector and the choice is remembered
    per language. */
 const V4_AZURE_LOCALES = new Set(['km-KH', 'th-TH', 'vi-VN', 'ne-NP', 'ta-IN', 'bn-BD', 'my-MM', 'si-LK', 'fa-IR']);
-const v4CloudAudioCache = new Map(); /* locale + '\n' + voice + '\n' + text -> data URL */
+const v4CloudAudioCache = new Map(); /* locale + '\n' + text -> data URL */
 let v4SynthesizeFn = null;
 let v4ActiveCloudAudio = null;
-
-/* Azure voice choices for a locale, or null when the language has only
-   one cloud voice (the function then uses its default). */
-function v4AzureVoicesForLocale(targetLocale) {
-  try {
-    const code = Object.keys(V4_LANGUAGE_PROFILES).find(c => (V4_LANGUAGE_PROFILES[c].locale || '') === targetLocale);
-    const list = code && V4_LANGUAGE_PROFILES[code].azureVoices;
-    return (Array.isArray(list) && list.length > 1) ? list : null;
-  } catch (_) { return null; }
-}
-
-/* The teacher's preferred voice id for a locale; '' means "function default". */
-function v4PreferredAzureVoice(targetLocale) {
-  const list = v4AzureVoicesForLocale(targetLocale);
-  if (!list) return '';
-  let saved = '';
-  try { saved = localStorage.getItem('v4AzureVoice:' + targetLocale) || ''; } catch (_) {}
-  if (list.some(v => v.id === saved)) return saved;
-  return list[0].id;
-}
-
-/* Topbar voice selector: only visible when the current student language
-   offers more than one Azure voice (Sinhala, Persian). */
-function updateAzureVoicePicker() {
-  const label = $('v4AzureVoiceLabel');
-  const select = $('v4AzureVoice');
-  if (!label || !select) return;
-  const profile = v4Profile();
-  const list = (profile && Array.isArray(profile.azureVoices) && profile.azureVoices.length > 1) ? profile.azureVoices : null;
-  if (!list) { label.classList.add('hidden'); return; }
-  label.classList.remove('hidden');
-  const current = v4PreferredAzureVoice(profile.locale);
-  select.textContent = '';
-  list.forEach(v => {
-    const opt = document.createElement('option');
-    opt.value = v.id;
-    opt.textContent = v.name + '・' + v.genderZh + ' (' + v.genderEn + ')';
-    select.appendChild(opt);
-  });
-  select.value = current;
-}
 
 function speakHindi(text, button, locale) {
   const targetLocale = locale || 'hi-IN';
@@ -1219,8 +1177,7 @@ function speakHindi(text, button, locale) {
 }
 
 async function speakWithAzure(text, button, targetLocale) {
-  const voice = v4PreferredAzureVoice(targetLocale);
-  const cacheKey = targetLocale + '\n' + voice + '\n' + text;
+  const cacheKey = targetLocale + '\n' + text;
   button.classList.add('speaking');
   button.disabled = true;
   try {
@@ -1229,7 +1186,7 @@ async function speakWithAzure(text, button, targetLocale) {
       if (!v4SynthesizeFn) {
         v4SynthesizeFn = firebase.app().functions('us-east1').httpsCallable('synthesizeV4Source', { timeout: 60000 });
       }
-      const res = await v4SynthesizeFn({ locale: targetLocale, text, voice: voice || undefined });
+      const res = await v4SynthesizeFn({ locale: targetLocale, text });
       const data = (res && res.data) || {};
       if (!data.audioBase64) throw new Error('empty audio');
       dataUrl = 'data:' + (data.contentType || 'audio/mpeg') + ';base64,' + data.audioBase64;
@@ -1943,12 +1900,6 @@ $('generatePrompt').addEventListener('click', buildPrompt);
     });
     topSelect.addEventListener('change', () => applyV4LanguageProfile(topSelect.value));
   }
-  /* Cloud voice choice (Sinhala/Persian female/male): remembered per language. */
-  const voiceSelect = $('v4AzureVoice');
-  if (voiceSelect) voiceSelect.addEventListener('change', () => {
-    const profile = v4Profile();
-    try { localStorage.setItem('v4AzureVoice:' + profile.locale, voiceSelect.value); } catch (_) {}
-  });
   applyV4LanguageProfile(saved);
   const select = $('v4SourceLanguage');
   if (select) select.addEventListener('change', () => applyV4LanguageProfile(select.value));
