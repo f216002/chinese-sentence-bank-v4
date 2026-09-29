@@ -2140,7 +2140,8 @@ function songLineToSentence(song, line, idx) {
     category: '歌曲',
     tags: `中文歌曲,${song.title}`,
     recordId: `song-${song.id}-${idx + 1}`,
-    seq: null,
+    /* seq: 0 讓 isCourseRecord() 判為 true，語言切換才會讀 i18n；歌詞物件即時產生、不進 bank，無副作用。 */
+    seq: 0,
   };
 }
 
