@@ -1513,9 +1513,12 @@ function courseMeta(sentence) {
   const key = sentence.recordId || sentence.originalPaste || '';
   if (courseMetaCache.has(key)) return courseMetaCache.get(key);
   const parsed = parsePaste(sentence.originalPaste || '');
+  /* section 只取第一行：少數目標記錄的原始貼文夾帶 "# SECTION: ..." 註解行
+     （如 509/510/607/609/610），不清除會導致 === '目標' 比對失敗、
+     卡片與內頁標題退回英文。 */
   const meta = {
     lesson: String(parsed.lesson || '').trim(),
-    section: String(parsed.section || '').trim(),
+    section: String(parsed.section || '').split('\n')[0].trim(),
     speaker: String(parsed.speaker || '').trim(),
     pos: String(parsed.pos || '').trim(),
     zhuyin: String(parsed.zhuyin || '').trim()
