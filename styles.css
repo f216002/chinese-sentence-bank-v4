@@ -227,3 +227,6 @@ button .en-sub { pointer-events: none; }
 .home-option-icon{font-size:56px;line-height:1}
 .home-option-zh{font-size:30px;font-weight:700}
 .grid-back-row{grid-column:1/-1;margin-bottom:4px}
+
+/* 波斯文 RTL：譯句與解說由右至左排版 */
+.hindi:lang(fa),.explanation:lang(fa),.lesson-i18n:lang(fa),.lesson-header-i18n:lang(fa){direction:rtl;text-align:right}
