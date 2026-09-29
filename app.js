@@ -2145,7 +2145,7 @@ function songLineToSentence(song, line, idx) {
   };
 }
 
-const courseState = { lesson: 0, tab: '課文', song: null };
+const courseState = { lesson: 0, tab: '課文', song: null, page: 'home' };
 
 /* 課程解鎖＝老師審核通過（Google 登入＋管理員核准），取代舊的 PIN。 */
 function isCourseUnlocked() {
@@ -2194,40 +2194,71 @@ function renderCourse() {
   lock.classList.add('hidden'); body.classList.remove('hidden');
   if (courseState.song) renderSongView(courseState.song);
   else if (courseState.lesson > 0) renderLessonView();
-  else renderLessonGrid();
+  else if (courseState.page === 'books') renderBooksGrid();
+  else if (courseState.page === 'songs') renderSongsGrid();
+  else renderCourseHome();
 }
 
-function renderLessonGrid() {
+/* 首頁：兩大選項——中文課本 / 中文歌曲。 */
+function renderCourseHome() {
   $('lessonView').classList.add('hidden');
   const grid = $('lessonGrid');
   grid.classList.remove('hidden');
   grid.innerHTML = '';
-  /* 中文歌曲區：放在第一冊上方，一首一首的中文歌。 */
-  const songDivider = document.createElement('div');
-  songDivider.className = 'book-divider';
-  songDivider.textContent = '中文歌曲';
-  grid.appendChild(songDivider);
-  V4_SONGS.forEach(song => {
+  const bookCount = COURSE_LESSONS.length;
+  const songCount = V4_SONGS.length;
+  const songLines = V4_SONGS.reduce((n, s) => n + s.lines.length, 0);
+  const homeOpts = [
+    { page: 'books', icon: '📚', zh: '中文課本', en: 'Textbooks', desc: `${bookCount} 課 <span class="en-sub">${bookCount} lessons</span>`, aria: '中文課本，六冊課程' },
+    { page: 'songs', icon: '🎵', zh: '中文歌曲', en: 'Songs', desc: `${songCount} 首歌曲 · ${songLines} 句歌詞 <span class="en-sub">${songCount} songs</span>`, aria: '中文歌曲' },
+  ];
+  homeOpts.forEach(opt => {
     const card = document.createElement('button');
     card.type = 'button';
-    card.className = 'lesson-card';
+    card.className = 'lesson-card home-option-card';
     card.innerHTML = `
-      <span class="lesson-num">🎵 <span class="en-sub">Song</span></span>
-      <span class="lesson-zh" lang="zh-Hant">${escapeHtml(song.title)}</span>
-      <span class="lesson-topic">${song.lines.length} 句歌詞 <span class="en-sub">${song.lines.length} lines</span></span>`;
-    card.setAttribute('aria-label', `中文歌曲 ${song.title}`);
-    card.addEventListener('click', () => { courseState.song = song.id; courseState.lesson = 0; renderCourse(); $('courseSection').scrollIntoView({ behavior: 'smooth' }); });
+      <span class="home-option-icon">${opt.icon}</span>
+      <span class="home-option-zh" lang="zh-Hant">${opt.zh} <span class="en-sub">${opt.en}</span></span>
+      <span class="lesson-topic">${opt.desc}</span>`;
+    card.setAttribute('aria-label', opt.aria);
+    card.addEventListener('click', () => { courseState.page = opt.page; renderCourse(); $('courseSection').scrollIntoView({ behavior: 'smooth' }); });
     grid.appendChild(card);
   });
+}
+
+/* 回首頁按鈕（課本頁／歌曲頁共用）。 */
+function makeHomeBackButton() {
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'secondary-button grid-back-button';
+  setBilingualText(btn, '← 回首頁', '← Home');
+  btn.addEventListener('click', () => { courseState.page = 'home'; renderCourse(); $('courseSection').scrollIntoView({ behavior: 'smooth' }); });
+  const row = document.createElement('div');
+  row.className = 'grid-back-row';
+  row.appendChild(btn);
+  return row;
+}
+
+/* 中文課本頁：六冊課程卡（歌曲區已移至中文歌曲頁）。 */
+function renderBooksGrid() {
+  $('lessonView').classList.add('hidden');
+  const grid = $('lessonGrid');
+  grid.classList.remove('hidden');
+  grid.innerHTML = '';
+  grid.appendChild(makeHomeBackButton());
+  const divider = document.createElement('div');
+  divider.className = 'book-divider';
+  divider.textContent = '中文課本';
+  grid.appendChild(divider);
   let lastBook = 0;
   COURSE_LESSONS.forEach(lesson => {
     const bk = bookOf(lesson.n);
     if (bk !== lastBook) {
       lastBook = bk;
-      const divider = document.createElement('div');
-      divider.className = 'book-divider';
-      divider.textContent = bookTitle(lesson.n);
-      grid.appendChild(divider);
+      const bookDivider = document.createElement('div');
+      bookDivider.className = 'book-divider';
+      bookDivider.textContent = bookTitle(lesson.n);
+      grid.appendChild(bookDivider);
     }
     const recs = lessonRecords(lesson.n);
     const hasPack = COURSE_PACK_LESSONS.includes(lesson.n);
@@ -2246,7 +2277,7 @@ function renderLessonGrid() {
       <span class="lesson-status">${recs.length ? `已匯入 ${recs.length} 條 <span class="en-sub">${recs.length} imported</span>` : (hasPack ? '尚未匯入' : '準備中')}</span>`;
     card.setAttribute('aria-label', `${lessonLabel(lesson.n)} ${lesson.zh}`);
     if (recs.length) {
-      card.addEventListener('click', () => { courseState.lesson = lesson.n; courseState.tab = '課文'; renderLessonView(); });
+      card.addEventListener('click', () => { courseState.lesson = lesson.n; courseState.tab = '課文'; courseState.page = 'books'; renderLessonView(); });
     } else {
       card.disabled = true;
       card.title = hasPack ? '課程匯入中，請稍等30秒 (Importing, please wait 30 seconds)' : '內容準備中 (Content coming soon)';
@@ -2255,8 +2286,40 @@ function renderLessonGrid() {
   });
 }
 
+/* 中文歌曲頁：歌曲卡。 */
+function renderSongsGrid() {
+  $('lessonView').classList.add('hidden');
+  const grid = $('lessonGrid');
+  grid.classList.remove('hidden');
+  grid.innerHTML = '';
+  grid.appendChild(makeHomeBackButton());
+  const songDivider = document.createElement('div');
+  songDivider.className = 'book-divider';
+  songDivider.textContent = '中文歌曲';
+  grid.appendChild(songDivider);
+  V4_SONGS.forEach(song => {
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'lesson-card';
+    card.innerHTML = `
+      <span class="lesson-num">🎵 <span class="en-sub">Song</span></span>
+      <span class="lesson-zh" lang="zh-Hant">${escapeHtml(song.title)}</span>
+      <span class="lesson-topic">${song.lines.length} 句歌詞 <span class="en-sub">${song.lines.length} lines</span></span>`;
+    card.setAttribute('aria-label', `中文歌曲 ${song.title}`);
+    card.addEventListener('click', () => { courseState.song = song.id; courseState.lesson = 0; courseState.page = 'songs'; renderCourse(); $('courseSection').scrollIntoView({ behavior: 'smooth' }); });
+    grid.appendChild(card);
+  });
+}
+
+/* 相容舊調用：清掉 song/lesson 後回到目前所在層級的總覽。 */
+function renderLessonGrid() {
+  courseState.song = null;
+  courseState.lesson = 0;
+  renderCourse();
+}
+
 function openLesson(n) {
-  courseState.lesson = n; courseState.tab = '課文';
+  courseState.lesson = n; courseState.tab = '課文'; courseState.page = 'books';
   renderLessonView();
   $('courseSection').scrollIntoView({ behavior: 'smooth' });
 }
@@ -2293,18 +2356,8 @@ async function renderSongView(songId) {
   content.innerHTML = `
     <div class="song-video-wrap">
       <video id="songVideo" controls playsinline preload="metadata" src="${videoUrl}" aria-label="${escapeHtml(song.title)} MV"></video>
-      <div class="song-video-actions">
-        <button class="secondary-button" id="songFullscreenBtn" type="button">⛶ 全螢幕播放 <span class="en-sub">Fullscreen</span></button>
-      </div>
     </div>`;
   content.appendChild(lyricsGrid);
-  $('songFullscreenBtn').addEventListener('click', () => {
-    const v = $('songVideo');
-    if (document.fullscreenElement) { document.exitFullscreen(); return; }
-    if (v.requestFullscreen) v.requestFullscreen();
-    else if (v.webkitEnterFullscreen) v.webkitEnterFullscreen();
-    else if (v.webkitRequestFullscreen) v.webkitRequestFullscreen();
-  });
 }
 
 function renderLessonView() {
