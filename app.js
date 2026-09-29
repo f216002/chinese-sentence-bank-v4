@@ -2066,7 +2066,58 @@ const COURSE_TABS = ['課文', '生詞', '語法', '練習', '文化', '補充']
 /* 分頁籤顯示用英文（內部 key 保持中文）。 */
 const COURSE_TAB_EN = { '課文': 'Text', '生詞': 'Vocabulary', '語法': 'Grammar', '練習': 'Practice', '文化': 'Culture', '補充': 'Supplement' };
 const COURSE_PACK_LESSONS = [101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 601, 602, 603, 604, 605, 606, 607, 608, 609, 610];
-const courseState = { lesson: 0, tab: '課文' };
+
+/* ---- 中文歌曲（V4 歌曲區）：自製 MV＋逐句歌詞教學 ----
+   影片在 Firebase Storage 的 songs/ 下（公開讀取），歌詞去重後內嵌。
+   踏浪「請你們歇歇腳呀,暫時停下來」重複出現，只保留一筆。 */
+const V4_SONGS = [
+  {
+    id: 'buyuge',
+    title: '捕魚歌',
+    videoType: 'storage',
+    videoPath: 'songs/捕魚歌.mp4',
+    lyrics: [
+      '白浪滔滔我不怕',
+      '掌起舵兒往前划',
+      '撒網下水到漁家啊',
+      '捕條大魚笑哈哈',
+      '嗨喲一喲一喲哼嗨喲',
+    ],
+  },
+  {
+    id: 'lanhuacao',
+    title: '蘭花草',
+    videoType: 'storage',
+    videoPath: 'songs/蘭花草.mp4',
+    lyrics: [
+      '我從山中來，帶著蘭花草；',
+      '種在小園中，希望花開早。',
+      '一日看三回，看得花時過；',
+      '蘭花卻依然，苞也無一個？',
+      '轉眼秋天到，移蘭入暖房；',
+      '朝朝頻顧惜、夜夜不相忘。',
+      '期待春花開，能將宿願償；',
+      '滿庭花簇簇，開得許多香。',
+    ],
+  },
+  {
+    id: 'talang',
+    title: '踏浪',
+    videoType: 'storage',
+    videoPath: 'songs/踏浪.mp4',
+    lyrics: [
+      '小小的一片雲呀,慢慢地走過來',
+      '請你們歇歇腳呀,暫時停下來',
+      '山上的山花兒開呀,我才到山上來',
+      '原來嘛你也是上山看那山花兒開',
+      '小小的一陣風呀慢慢地走過來',
+      '海上的浪花開呀我才到海邊來',
+      '原來嘛你也愛浪花才到海邊來',
+    ],
+  },
+];
+
+const courseState = { lesson: 0, tab: '課文', song: null };
 
 /* 課程解鎖＝老師審核通過（Google 登入＋管理員核准），取代舊的 PIN。 */
 function isCourseUnlocked() {
@@ -2113,7 +2164,8 @@ function renderCourse() {
     return;
   }
   lock.classList.add('hidden'); body.classList.remove('hidden');
-  if (courseState.lesson > 0) renderLessonView();
+  if (courseState.song) renderSongView(courseState.song);
+  else if (courseState.lesson > 0) renderLessonView();
   else renderLessonGrid();
 }
 
@@ -2122,6 +2174,23 @@ function renderLessonGrid() {
   const grid = $('lessonGrid');
   grid.classList.remove('hidden');
   grid.innerHTML = '';
+  /* 中文歌曲區：放在第一冊上方，一首一首的中文歌。 */
+  const songDivider = document.createElement('div');
+  songDivider.className = 'book-divider';
+  songDivider.textContent = '中文歌曲';
+  grid.appendChild(songDivider);
+  V4_SONGS.forEach(song => {
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'lesson-card';
+    card.innerHTML = `
+      <span class="lesson-num">🎵 <span class="en-sub">Song</span></span>
+      <span class="lesson-zh" lang="zh-Hant">${escapeHtml(song.title)}</span>
+      <span class="lesson-topic">${song.lyrics.length} 句歌詞 <span class="en-sub">${song.lyrics.length} lines</span></span>`;
+    card.setAttribute('aria-label', `中文歌曲 ${song.title}`);
+    card.addEventListener('click', () => { courseState.song = song.id; courseState.lesson = 0; renderCourse(); $('courseSection').scrollIntoView({ behavior: 'smooth' }); });
+    grid.appendChild(card);
+  });
   let lastBook = 0;
   COURSE_LESSONS.forEach(lesson => {
     const bk = bookOf(lesson.n);
@@ -2164,6 +2233,41 @@ function openLesson(n) {
   $('courseSection').scrollIntoView({ behavior: 'smooth' });
 }
 
+/* 歌曲內頁：上方 MV 播放器（可全螢幕）＋下方逐句歌詞卡片。 */
+async function renderSongView(songId) {
+  const song = V4_SONGS.find(s => s.id === songId);
+  if (!song) { courseState.song = null; renderLessonGrid(); return; }
+  $('lessonGrid').classList.add('hidden');
+  const view = $('lessonView');
+  view.classList.remove('hidden');
+  const backBtn = $('lessonBackButton');
+  backBtn.textContent = '← 回歌曲列表';
+  const header = $('lessonHeader');
+  header.innerHTML = `<h3 lang="zh-Hant">🎵 ${escapeHtml(song.title)}</h3>`;
+  $('lessonTabs').innerHTML = '';
+  const content = $('lessonContent');
+  content.innerHTML = '<p class="section-note">影片載入中… <span class="en-sub">Loading video…</span></p>';
+  /* Storage 公開讀取：用 SDK 取下載網址（自動處理中文檔名編碼）。 */
+  let videoUrl = '';
+  try {
+    const ref = firebase.storage().ref(song.videoPath);
+    videoUrl = await ref.getDownloadURL();
+  } catch (e) {
+    content.innerHTML = '<p class="section-note">影片載入失敗，請檢查網路後重整。 <span class="en-sub">Video failed to load.</span></p>';
+    return;
+  }
+  const lyricCards = song.lyrics.map((line, i) => `
+    <div class="sentence-card lyric-card">
+      <div class="card-top"><span class="category-pill">${i + 1}</span></div>
+      <p class="chinese" lang="zh-Hant">${escapeHtml(line)}</p>
+    </div>`).join('');
+  content.innerHTML = `
+    <div class="song-video-wrap">
+      <video controls playsinline preload="metadata" src="${videoUrl}" aria-label="${escapeHtml(song.title)} MV"></video>
+    </div>
+    <div class="sentence-grid song-lyrics">${lyricCards}</div>`;
+}
+
 function renderLessonView() {
   const n = courseState.lesson;
   const lesson = COURSE_LESSONS.find(l => l.n === n);
@@ -2171,6 +2275,7 @@ function renderLessonView() {
   $('lessonGrid').classList.add('hidden');
   const view = $('lessonView');
   view.classList.remove('hidden');
+  $('lessonBackButton').textContent = '← 回課程總覽';
   const recs = lessonRecords(n);
   const bySection = {};
   recs.forEach(s => {
@@ -2817,7 +2922,7 @@ async function importTranslationRecords() {
 }
 
 /* Course UI wiring */
-$('lessonBackButton').addEventListener('click', () => { courseState.lesson = 0; renderLessonGrid(); $('courseSection').scrollIntoView({ behavior: 'smooth' }); });
+$('lessonBackButton').addEventListener('click', () => { courseState.song = null; courseState.lesson = 0; renderLessonGrid(); $('courseSection').scrollIntoView({ behavior: 'smooth' }); });
 $('packLoadButton').addEventListener('click', loadPackPreview);
 $('packImportButton').addEventListener('click', importPackRecords);
 $('importUpdateCheckbox').addEventListener('change', () => { if ($('packFileInput').files.length) loadPackPreview(); });
