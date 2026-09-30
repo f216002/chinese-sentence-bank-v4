@@ -6612,6 +6612,10 @@ async function importTranslationRecords() {
 }
 
 /* Course UI wiring */
-$('lessonBackButton').addEventListener('click', () => { courseState.song = null; courseState.lesson = 0; renderLessonGrid(); $('courseSection').scrollIntoView({ behavior: 'smooth' }); });
+$('lessonBackButton').addEventListener('click', () => {
+  /* 禮節頁面由各自的 onclick 處理返回，避免跳層 */
+  if (courseState.page && courseState.page.startsWith('ritual')) return;
+  courseState.song = null; courseState.lesson = 0; renderLessonGrid(); $('courseSection').scrollIntoView({ behavior: 'smooth' });
+});
 /* 2026-09-29：內容包匯入區塊已刪除（Cheng 確認不再手動上傳內容包），loadPackPreview/importPackRecords 保留為 dead code。 */
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && textPlay.playing) stopTextPlay(); });
