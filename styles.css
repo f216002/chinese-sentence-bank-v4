@@ -230,3 +230,16 @@ button .en-sub { pointer-events: none; }
 
 /* 波斯文 RTL：譯句與解說由右至左排版 */
 .hindi:lang(fa),.explanation:lang(fa),.lesson-i18n:lang(fa),.lesson-header-i18n:lang(fa){direction:rtl;text-align:right}
+
+/* 道場禮節完整版文件：音檔旁按鍵＋dialog 表格 */
+.song-video-wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.ritual-doc-button{border:1px solid var(--line);background:white;border-radius:8px;padding:12px 18px;font-weight:700;cursor:pointer;color:var(--ink);box-shadow:0 4px 14px rgba(34,50,47,.08)}
+.ritual-doc-button:hover{transform:translateY(-1px)}
+#ritualDocDialog{width:min(860px,calc(100% - 32px));max-height:88vh;overflow:auto}
+.ritual-doc-table{width:100%;border-collapse:collapse;margin:18px 0}
+.ritual-doc-table th,.ritual-doc-table td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;text-align:left}
+.ritual-doc-table th{background:#f0ebe0}
+.ritual-doc-seq{text-align:center;color:var(--muted);width:44px}
+.ritual-doc-zh{font-family:"Noto Sans TC",sans-serif;font-size:18px;line-height:1.5}
+.ritual-doc-py{color:var(--red);font-size:14px;margin-top:4px}
+.ritual-doc-empty{color:#aaa}
