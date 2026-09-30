@@ -2534,12 +2534,13 @@ function renderSongsGrid() {
   songDivider.className = 'book-divider';
   songDivider.textContent = '中文歌曲';
   grid.appendChild(songDivider);
-  V4_SONGS.forEach(song => {
+  V4_SONGS.forEach((song, idx) => {
     const card = document.createElement('button');
     card.type = 'button';
-    card.className = 'lesson-card';
+    card.className = 'lesson-card song-card';
     card.innerHTML = `
       <span class="lesson-num">🎵 <span class="en-sub">Song</span></span>
+      <span class="song-seq">${idx + 1}</span>
       <span class="lesson-zh" lang="zh-Hant">${escapeHtml(song.title)}</span>
       <span class="lesson-topic">${song.lines.length} 句歌詞 <span class="en-sub">${song.lines.length} lines</span></span>`;
     card.setAttribute('aria-label', `中文歌曲 ${song.title}`);
