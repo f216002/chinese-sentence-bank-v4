@@ -2220,8 +2220,8 @@ const V4_SONGS = [
   {
     id: 'zhufuge',
     title: '祝福歌',
-    videoType: 'audio',
-    audioPath: 'audio/songs/zhufuge.mp3',
+    videoType: 'youtube',
+    youtubeId: 'k5jV5dcKJvo',
     lines: [
       { zh: '朋友我永遠祝福您！', py: 'péng you wǒ yǒng yuǎn zhù fú nín!' },
       { zh: '朋友我永遠祝福您！', py: 'péng you wǒ yǒng yuǎn zhù fú nín!' },
