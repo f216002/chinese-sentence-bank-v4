@@ -6325,8 +6325,10 @@ async function fetchTeacherAudioUrl(sentence) {
 async function downloadTeacherAudio(sentence, button) {
   const url = await fetchTeacherAudioUrl(sentence);
   if (!url) return;
-  const rawPath = sentence.audioPath || sentence.standardAudioUrl || '';
-  let fileName = String(rawPath).split('/').pop() || `${sentence.recordId || 'recording'}`;
+  // 檔名用中文句子（清理不合法字元，過長截斷）
+  const rawSentence = sentence.chineseSentence || sentence.recordId || 'recording';
+  let baseName = String(rawSentence).replace(/[\\/:*?"<>|]/g, '').trim().slice(0, 50) || 'recording';
+  let fileName = baseName;
   // 根據實際音檔格式修正副檔名（舊檔可能存成.webm但內容是wav）
   try {
     if (button) button.disabled = true;
