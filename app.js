@@ -6327,7 +6327,7 @@ async function downloadTeacherAudio(sentence, button) {
   if (!url) return;
   // 檔名用中文句子（清理不合法字元，過長截斷）
   const rawSentence = sentence.chineseSentence || sentence.recordId || 'recording';
-  let baseName = String(rawSentence).replace(/[\\/:*?"<>|]/g, '').trim().slice(0, 50) || 'recording';
+  let baseName = String(rawSentence).replace(/[\\/:*?"<>|]/g, '').trim().slice(0, 10) || 'recording';
   let fileName = baseName;
   // 根據實際音檔格式修正副檔名（舊檔可能存成.webm但內容是wav）
   try {
