@@ -1966,6 +1966,7 @@ $('confirmDelete').addEventListener('click', submitDeleteSentence);
 $('closeDelete').addEventListener('click', () => { pendingDeleteSentence = null; $('deleteDialog').close(); });
 $('confirmEdit').addEventListener('click', submitEdit);
 $('closeEdit').addEventListener('click', () => { pendingEditSentence = null; setBilingualText($('confirmEdit'), '儲存變更', 'Save changes'); $('editDialog').close(); });
+$('closeRitualDoc').addEventListener('click', () => $('ritualDocDialog').close());
 ['editHindi', 'editChinese', 'editPinyin', 'editRoman', 'editExplanation'].forEach(id => $(id).addEventListener('input', updateEditWarnings));
 initPronunciationLab();
 loadBank();
@@ -2705,6 +2706,124 @@ const V4_RITUALS = [
   },
 ];
 
+/* 參駕／辭駕完整版文件：上執禮＋下執禮左右對照，中文＋拼音（供老師教學／學生練習，可下載） */
+const V4_RITUAL_DOCS = {
+  "canjia": {
+    title: "參駕禮節",
+    docTitle: "參駕禮節（完整版）",
+    steps: [
+      { seq: 1,
+        shang: "作揖，跪", shangPy: "zuò yī, guì",
+        xia: "", xiaPy: "" },
+      { seq: 2,
+        shang: "明明上帝參駕五叩首", shangPy: "míng míng shàng dì cān jià wǔ kòu shǒu",
+        xia: "一叩、再叩、三叩、四叩、五叩首", xiaPy: "yī kòu, zài kòu, sān kòu, sì kòu, wǔ kòu shǒu" },
+      { seq: 3,
+        shang: "諸天神聖三叩首", shangPy: "zhū tiān shén shèng sān kòu shǒu",
+        xia: "一叩、再叩、三叩首", xiaPy: "yī kòu, zài kòu, sān kòu shǒu" },
+      { seq: 4,
+        shang: "彌勒祖師三叩首", shangPy: "mí lè zǔ shī sān kòu shǒu",
+        xia: "一叩、再叩、三叩首", xiaPy: "yī kòu, zài kòu, sān kòu shǒu" },
+      { seq: 5,
+        shang: "南海古佛一叩", shangPy: "nán hǎi gǔ fó yī kòu",
+        xia: "一叩", xiaPy: "yī kòu" },
+      { seq: 6,
+        shang: "活佛師尊一叩", shangPy: "huó fó shī zūn yī kòu",
+        xia: "一叩", xiaPy: "yī kòu" },
+      { seq: 7,
+        shang: "月慧菩薩一叩", shangPy: "yuè huì pú sà yī kòu",
+        xia: "一叩", xiaPy: "yī kòu" },
+      { seq: 8,
+        shang: "師尊一叩", shangPy: "shī zūn yī kòu",
+        xia: "一叩", xiaPy: "yī kòu" },
+      { seq: 9,
+        shang: "師母一叩", shangPy: "shī mǔ yī kòu",
+        xia: "一叩", xiaPy: "yī kòu" },
+      { seq: 10,
+        shang: "點傳師一叩", shangPy: "diǎn chuán shī yī kòu",
+        xia: "一叩", xiaPy: "yī kòu" },
+      { seq: 11,
+        shang: "引保師一叩", shangPy: "yǐn bǎo shī yī kòu",
+        xia: "一叩", xiaPy: "yī kòu" },
+      { seq: 12,
+        shang: "前人大眾一叩首", shangPy: "qián rén dà zhòng yī kòu shǒu",
+        xia: "一叩首", xiaPy: "yī kòu shǒu" },
+      { seq: 13,
+        shang: "起", shangPy: "qǐ",
+        xia: "", xiaPy: "" },
+      { seq: 14,
+        shang: "作揖", shangPy: "zuò yī",
+        xia: "", xiaPy: "" },
+      { seq: 15,
+        shang: "放手鞠躬", shangPy: "fàng shǒu jū gōng",
+        xia: "", xiaPy: "" },
+      { seq: 16,
+        shang: "參駕禮畢", shangPy: "cān jià lǐ bì",
+        xia: "", xiaPy: "" },
+      { seq: 17,
+        shang: "退", shangPy: "tuì",
+        xia: "", xiaPy: "" },
+    ],
+  },
+  "cijia": {
+    title: "辭駕禮節",
+    docTitle: "辭駕禮節（完整版）",
+    steps: [
+      { seq: 1,
+        shang: "作揖，跪", shangPy: "zuò yī, guì",
+        xia: "", xiaPy: "" },
+      { seq: 2,
+        shang: "明明上帝辭駕五叩首", shangPy: "míng míng shàng dì cí jià wǔ kòu shǒu",
+        xia: "一叩、再叩、三叩、四叩、五叩首", xiaPy: "yī kòu, zài kòu, sān kòu, sì kòu, wǔ kòu shǒu" },
+      { seq: 3,
+        shang: "諸天神聖三叩首", shangPy: "zhū tiān shén shèng sān kòu shǒu",
+        xia: "一叩、再叩、三叩首", xiaPy: "yī kòu, zài kòu, sān kòu shǒu" },
+      { seq: 4,
+        shang: "彌勒祖師三叩首", shangPy: "mí lè zǔ shī sān kòu shǒu",
+        xia: "一叩、再叩、三叩首", xiaPy: "yī kòu, zài kòu, sān kòu shǒu" },
+      { seq: 5,
+        shang: "南海古佛一叩", shangPy: "nán hǎi gǔ fó yī kòu",
+        xia: "一叩", xiaPy: "yī kòu" },
+      { seq: 6,
+        shang: "活佛師尊一叩", shangPy: "huó fó shī zūn yī kòu",
+        xia: "一叩", xiaPy: "yī kòu" },
+      { seq: 7,
+        shang: "月慧菩薩一叩", shangPy: "yuè huì pú sà yī kòu",
+        xia: "一叩", xiaPy: "yī kòu" },
+      { seq: 8,
+        shang: "師尊一叩", shangPy: "shī zūn yī kòu",
+        xia: "一叩", xiaPy: "yī kòu" },
+      { seq: 9,
+        shang: "師母一叩", shangPy: "shī mǔ yī kòu",
+        xia: "一叩", xiaPy: "yī kòu" },
+      { seq: 10,
+        shang: "點傳師一叩", shangPy: "diǎn chuán shī yī kòu",
+        xia: "一叩", xiaPy: "yī kòu" },
+      { seq: 11,
+        shang: "引保師一叩", shangPy: "yǐn bǎo shī yī kòu",
+        xia: "一叩", xiaPy: "yī kòu" },
+      { seq: 12,
+        shang: "前人大眾一叩首", shangPy: "qián rén dà zhòng yī kòu shǒu",
+        xia: "一叩首", xiaPy: "yī kòu shǒu" },
+      { seq: 13,
+        shang: "起", shangPy: "qǐ",
+        xia: "", xiaPy: "" },
+      { seq: 14,
+        shang: "作揖", shangPy: "zuò yī",
+        xia: "", xiaPy: "" },
+      { seq: 15,
+        shang: "放手鞠躬", shangPy: "fàng shǒu jū gōng",
+        xia: "", xiaPy: "" },
+      { seq: 16,
+        shang: "辭駕禮畢", shangPy: "cí jià lǐ bì",
+        xia: "", xiaPy: "" },
+      { seq: 17,
+        shang: "退", shangPy: "tuì",
+        xia: "", xiaPy: "" },
+    ],
+  },
+};
+
 /* 道場禮節群組（第二層導覽）：參辭駕禮節含參駕禮、辭駕禮；燒香禮為單一禮節直達。 */
 const V4_RITUAL_GROUPS = [
   { id: 'canjia-cijia', title: '參辭駕禮節', icon: '🙏', rituals: ['canjia', 'cijia'] },
@@ -2851,6 +2970,15 @@ async function renderRitualView(ritualId) {
     audio.src = ritual.audioPath;
     audio.setAttribute('aria-label', `${ritual.title} 朗讀`);
     audioWrap.appendChild(audio);
+    /* 參駕／辭駕：音檔旁加「內容」按鍵，開啟完整版文件（上執禮＋下執禮左右對照，可下載）。 */
+    if (V4_RITUAL_DOCS[ritualId]) {
+      const docBtn = document.createElement('button');
+      docBtn.type = 'button';
+      docBtn.className = 'ritual-doc-button';
+      setBilingualText(docBtn, `📄 ${ritual.title}內容`, `📄 ${ritualId === 'canjia' ? 'Arrival' : 'Farewell'} rite text`);
+      docBtn.addEventListener('click', () => showRitualDoc(ritualId));
+      audioWrap.appendChild(docBtn);
+    }
     content.appendChild(audioWrap);
   } else {
     const note = document.createElement('p');
@@ -2875,6 +3003,105 @@ async function renderRitualView(ritualId) {
     });
     content.appendChild(grid);
   });
+}
+
+/* 參駕／辭駕完整版文件：dialog 顯示上執禮＋下執禮左右對照（中文＋拼音），可下載獨立 HTML。 */
+function showRitualDoc(ritualId) {
+  const doc = V4_RITUAL_DOCS[ritualId];
+  if (!doc) return;
+  const dlg = $('ritualDocDialog');
+  $('ritualDocTitle').textContent = doc.docTitle;
+  const body = $('ritualDocBody');
+  body.innerHTML = '';
+  const table = document.createElement('table');
+  table.className = 'ritual-doc-table';
+  const thead = document.createElement('thead');
+  thead.innerHTML = '<tr><th>序</th><th>上執禮 <span class="en-sub">Leader</span></th><th>下執禮 <span class="en-sub">Assembly</span></th></tr>';
+  table.appendChild(thead);
+  const tbody = document.createElement('tbody');
+  doc.steps.forEach(st => {
+    const tr = document.createElement('tr');
+    const tdSeq = document.createElement('td');
+    tdSeq.className = 'ritual-doc-seq';
+    tdSeq.textContent = st.seq;
+    tr.appendChild(tdSeq);
+    [['shang', 'shangPy'], ['xia', 'xiaPy']].forEach(([zhKey, pyKey]) => {
+      const td = document.createElement('td');
+      td.className = 'ritual-doc-cell';
+      if (st[zhKey]) {
+        const zhDiv = document.createElement('div');
+        zhDiv.className = 'ritual-doc-zh';
+        zhDiv.lang = 'zh-Hant';
+        zhDiv.textContent = st[zhKey];
+        td.appendChild(zhDiv);
+        const pyDiv = document.createElement('div');
+        pyDiv.className = 'ritual-doc-py';
+        pyDiv.textContent = st[pyKey];
+        td.appendChild(pyDiv);
+      } else {
+        td.innerHTML = '<span class="ritual-doc-empty">—</span>';
+      }
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  body.appendChild(table);
+  $('ritualDocDownload').onclick = () => downloadRitualDoc(ritualId);
+  dlg.showModal();
+}
+
+/* 下載完整版文件為獨立 HTML（可列印、中文＋拼音、上下執禮左右對照）。 */
+function downloadRitualDoc(ritualId) {
+  const doc = V4_RITUAL_DOCS[ritualId];
+  if (!doc) return;
+  const rows = doc.steps.map(st => {
+    const shangCell = st.shang
+      ? `<div class="zh">${escapeHtml(st.shang)}</div><div class="py">${escapeHtml(st.shangPy)}</div>`
+      : '<span class="empty">—</span>';
+    const xiaCell = st.xia
+      ? `<div class="zh">${escapeHtml(st.xia)}</div><div class="py">${escapeHtml(st.xiaPy)}</div>`
+      : '<span class="empty">—</span>';
+    return `<tr><td class="seq">${st.seq}</td><td>${shangCell}</td><td>${xiaCell}</td></tr>`;
+  }).join('\n');
+  const html = `<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${escapeHtml(doc.docTitle)}</title>
+<style>
+body{font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;max-width:900px;margin:0 auto;padding:32px 20px;color:#222}
+h1{text-align:center;font-size:26px;margin-bottom:8px}
+p.note{text-align:center;color:#666;font-size:13px;margin-bottom:24px}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid #bbb;padding:10px 12px;vertical-align:top;text-align:left}
+th{background:#f0ebe0}
+td.seq{text-align:center;width:44px;color:#666}
+.zh{font-size:18px;line-height:1.5}
+.py{color:#c0392b;font-size:14px;margin-top:4px}
+.empty{color:#aaa}
+@media print{body{padding:0} p.note{display:none}}
+</style>
+</head>
+<body>
+<h1>${escapeHtml(doc.docTitle)}</h1>
+<p class="note">上執禮・下執禮左右對照｜一行中文、一行拼音｜供老師教學、學生練習使用</p>
+<table>
+<thead><tr><th>序</th><th>上執禮</th><th>下執禮</th></tr></thead>
+<tbody>
+${rows}
+</tbody>
+</table>
+</body>
+</html>`;
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${ritualId}-rite-full.html`;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
 }
 
 function renderLessonView() {
