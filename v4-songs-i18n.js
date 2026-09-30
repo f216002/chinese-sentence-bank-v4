@@ -9876,4 +9876,335 @@ const V4_SONGS_I18N = {
       }
     }
   ]
+,
+  huanyingge: [
+    {
+      hi: {
+        s: "आपसे मिलकर सचमुच बहुत खुशी हुई।",
+        r: "Āpse milkar sachmuch bahut khushī huī.",
+        e: "真正＝真的、確實；高興＝開心、喜悅；見到您＝見到您（敬語「您」表示尊敬）。"
+      },
+      en: {
+        s: "So truly happy to see you.",
+        r: "",
+        e: "真正＝真的、確實；高興＝開心、喜悅；見到您＝見到您（敬語「您」表示尊敬）。"
+      },
+      ta: {
+        s: "உங்களைச் சந்தித்ததில் உண்மையிலேயே மிகவும் மகிழ்ச்சி.",
+        r: "uṅkaḷaic cantittatil uṇmaiyilēyē mikavum makiḻcci.",
+        e: "真正＝真的、確實；高興＝開心、喜悅；見到您＝見到您（敬語「您」表示尊敬）。"
+      },
+      th: {
+        s: "ดีใจจริง ๆ ที่ได้พบคุณ",
+        r: "dichai ching ching thi dai phop khun",
+        e: "真正＝真的、確實；高興＝開心、喜悅；見到您＝見到您（敬語「您」表示尊敬）。"
+      },
+      km: {
+        s: "ពិតជារីករាយណាស់ដែលបានជួបអ្នក",
+        r: "pɨt ciə riəkreay nah dael baan cuəp neak",
+        e: "真正＝真的、確實；高興＝開心、喜悅；見到您＝見到您（敬語「您」表示尊敬）。"
+      },
+      vi: {
+        s: "Thật sự rất vui khi được gặp bạn.",
+        r: "",
+        e: "真正＝真的、確實；高興＝開心、喜悅；見到您＝見到您（敬語「您」表示尊敬）。"
+      },
+      id: {
+        s: "Sungguh senang bisa bertemu dengan Anda.",
+        r: "",
+        e: "真正＝真的、確實；高興＝開心、喜悅；見到您＝見到您（敬語「您」表示尊敬）。"
+      },
+      ne: {
+        s: "तपाईंलाई भेटेर साँच्चै धेरै खुसी लाग्यो।",
+        r: "Tapāīṁlāī bheṭera sāccai dherai khusī lāgyo.",
+        e: "真正＝真的、確實；高興＝開心、喜悅；見到您＝見到您（敬語「您」表示尊敬）。"
+      },
+      bn: {
+        s: "আপনাকে দেখে সত্যিই খুব খুশি।",
+        r: "Āpnāke dekhe satyi-i khub khushi.",
+        e: "真正＝真的、確實；高興＝開心、喜悅；見到您＝見到您（敬語「您」表示尊敬）。"
+      },
+      es: {
+        s: "¡Qué alegría verle de verdad!",
+        r: "",
+        e: "真正＝真的、確實；高興＝開心、喜悅；見到您＝見到您（敬語「您」表示尊敬）。"
+      },
+      de: {
+        s: "Wir freuen uns wirklich, Sie zu sehen.",
+        r: "",
+        e: "真正＝真的、確實；高興＝開心、喜悅；見到您＝見到您（敬語「您」表示尊敬）。"
+      },
+      my: {
+        s: "ခင်ဗျားကို တွေ့ရတာ တကယ်ပဲ ဝမ်းသာပါတယ်။",
+        r: "khin-bya-go twe-ya-da ta-ke-be wan-tha-ba-te.",
+        e: "真正＝真的、確實；高興＝開心、喜悅；見到您＝見到您（敬語「您」表示尊敬）。"
+      },
+      ko: {
+        s: "당신을 만나서 정말 기쁩니다.",
+        r: "Dangsin-eul mannaseo jeongmal gippeumnida.",
+        e: "真正＝真的、確實；高興＝開心、喜悅；見到您＝見到您（敬語「您」表示尊敬）。"
+      },
+      ja: {
+        s: "あなたにお会いできて本当に嬉しいです。",
+        r: "Anata ni oai dekite hontō ni ureshii desu.",
+        e: "真正＝真的、確實；高興＝開心、喜悅；見到您＝見到您（敬語「您」表示尊敬）。"
+      },
+      si: {
+        s: "ඔබව දැකීමෙන් ඇත්තටම ගොඩක් සතුටුයි.",
+        r: "Obava dækīmen ættatama goḍak satutui.",
+        e: "真正＝真的、確實；高興＝開心、喜悅；見到您＝見到您（敬語「您」表示尊敬）。"
+      },
+      fa: {
+        s: "از دیدن شما واقعاً خیلی خوشحالم.",
+        r: "Az didan-e shomâ vâqe'an xeili xoshhâlam.",
+        e: "真正＝真的、確實；高興＝開心、喜悅；見到您＝見到您（敬語「您」表示尊敬）。"
+      }
+    },
+    {
+      hi: {
+        s: "पूरे मन की खुशी से आपका स्वागत है।",
+        r: "Pūre man kī khushī se āpkā svāgat hai.",
+        e: "滿心＝心中充滿；歡喜＝歡樂喜悅；歡迎您＝迎接您的到來（敬語）。"
+      },
+      en: {
+        s: "We welcome you with hearts full of joy.",
+        r: "",
+        e: "滿心＝心中充滿；歡喜＝歡樂喜悅；歡迎您＝迎接您的到來（敬語）。"
+      },
+      ta: {
+        s: "மனம் நிறைந்த மகிழ்ச்சியுடன் உங்களை வரவேற்கிறோம்.",
+        r: "maṉam niṟainta makiḻcciyuṭaṉ uṅkaḷai varavēṟkiṟōm.",
+        e: "滿心＝心中充滿；歡喜＝歡樂喜悅；歡迎您＝迎接您的到來（敬語）。"
+      },
+      th: {
+        s: "ยินดีต้อนรับคุณด้วยความยินดีอย่างเต็มเปี่ยม",
+        r: "yindi tonrap khun duai khwam yindi yang tem piam",
+        e: "滿心＝心中充滿；歡喜＝歡樂喜悅；歡迎您＝迎接您的到來（敬語）。"
+      },
+      km: {
+        s: "សូមស្វាគមន៍អ្នកដោយចិត្តរីករាយបំផុត",
+        r: "soum sveakum neak daoy cɨt riəkreay bɑmpʰot",
+        e: "滿心＝心中充滿；歡喜＝歡樂喜悅；歡迎您＝迎接您的到來（敬語）。"
+      },
+      vi: {
+        s: "Chào đón bạn với niềm vui tràn đầy trong lòng.",
+        r: "",
+        e: "滿心＝心中充滿；歡喜＝歡樂喜悅；歡迎您＝迎接您的到來（敬語）。"
+      },
+      id: {
+        s: "Kami menyambut Anda dengan hati yang penuh sukacita.",
+        r: "",
+        e: "滿心＝心中充滿；歡喜＝歡樂喜悅；歡迎您＝迎接您的到來（敬語）。"
+      },
+      ne: {
+        s: "पूर्ण हृदयको खुसीका साथ तपाईंलाई स्वागत छ।",
+        r: "Pūrṇa hṛdayako khusīkā sātha tapāīṁlāī svāgat cha.",
+        e: "滿心＝心中充滿；歡喜＝歡樂喜悅；歡迎您＝迎接您的到來（敬語）。"
+      },
+      bn: {
+        s: "ভরপুর আনন্দের সাথে আপনাকে স্বাগত জানাই।",
+        r: "Bharpur ānandera sāthe āpnāke svāgata jānāi.",
+        e: "滿心＝心中充滿；歡喜＝歡樂喜悅；歡迎您＝迎接您的到來（敬語）。"
+      },
+      es: {
+        s: "¡Le damos la bienvenida con el corazón lleno de alegría!",
+        r: "",
+        e: "滿心＝心中充滿；歡喜＝歡樂喜悅；歡迎您＝迎接您的到來（敬語）。"
+      },
+      de: {
+        s: "Wir heißen Sie von ganzem Herzen willkommen.",
+        r: "",
+        e: "滿心＝心中充滿；歡喜＝歡樂喜悅；歡迎您＝迎接您的到來（敬語）。"
+      },
+      my: {
+        s: "စိတ်နှလုံးအပြည့်နဲ့ ခင်ဗျားကို ကြိုဆိုပါတယ်။",
+        r: "seit-hna-lone a-pye-ne khin-bya-go kyo-so-ba-te.",
+        e: "滿心＝心中充滿；歡喜＝歡樂喜悅；歡迎您＝迎接您的到來（敬語）。"
+      },
+      ko: {
+        s: "마음 가득한 기쁨으로 당신을 환영합니다.",
+        r: "Ma-eum gadeukhan gippeum-euro dangsin-eul hwanyeonghamnida.",
+        e: "滿心＝心中充滿；歡喜＝歡樂喜悅；歡迎您＝迎接您的到來（敬語）。"
+      },
+      ja: {
+        s: "心からの喜びをもってあなたを歓迎します。",
+        r: "Kokoro kara no yorokobi o motte anata o kangei shimasu.",
+        e: "滿心＝心中充滿；歡喜＝歡樂喜悅；歡迎您＝迎接您的到來（敬語）。"
+      },
+      si: {
+        s: "හදවත පිරුණු සතුටින් ඔබව සාදරයෙන් පිළිගනිමු.",
+        r: "Hadavata piruṇa satuṭin obava sādarayen piḷiganimu.",
+        e: "滿心＝心中充滿；歡喜＝歡樂喜悅；歡迎您＝迎接您的到來（敬語）。"
+      },
+      fa: {
+        s: "با دلی سرشار از شادی به شما خوش‌آمد می‌گوییم.",
+        r: "Bâ deli sarshâr az shâdi be shomâ xosh-âmad mi-guyim.",
+        e: "滿心＝心中充滿；歡喜＝歡樂喜悅；歡迎您＝迎接您的到來（敬語）。"
+      }
+    },
+    {
+      hi: {
+        s: "स्वागत है! स्वागत है!",
+        r: "Svāgat hai! Svāgat hai!",
+        e: "歡迎＝迎接來賓的用語；重複兩次表示熱情。"
+      },
+      en: {
+        s: "Welcome! Welcome!",
+        r: "",
+        e: "歡迎＝迎接來賓的用語；重複兩次表示熱情。"
+      },
+      ta: {
+        s: "வருக! வருக!",
+        r: "varuka! varuka!",
+        e: "歡迎＝迎接來賓的用語；重複兩次表示熱情。"
+      },
+      th: {
+        s: "ยินดีต้อนรับ! ยินดีต้อนรับ!",
+        r: "yindi tonrap! yindi tonrap!",
+        e: "歡迎＝迎接來賓的用語；重複兩次表示熱情。"
+      },
+      km: {
+        s: "ស្វាគមន៍! ស្វាគមន៍!",
+        r: "sveakum! sveakum!",
+        e: "歡迎＝迎接來賓的用語；重複兩次表示熱情。"
+      },
+      vi: {
+        s: "Chào mừng! Chào mừng!",
+        r: "",
+        e: "歡迎＝迎接來賓的用語；重複兩次表示熱情。"
+      },
+      id: {
+        s: "Selamat datang! Selamat datang!",
+        r: "",
+        e: "歡迎＝迎接來賓的用語；重複兩次表示熱情。"
+      },
+      ne: {
+        s: "स्वागत छ! स्वागत छ!",
+        r: "Svāgat cha! Svāgat cha!",
+        e: "歡迎＝迎接來賓的用語；重複兩次表示熱情。"
+      },
+      bn: {
+        s: "স্বাগতম! স্বাগতম!",
+        r: "Svāgatam! Svāgatam!",
+        e: "歡迎＝迎接來賓的用語；重複兩次表示熱情。"
+      },
+      es: {
+        s: "¡Bienvenidos! ¡Bienvenidos!",
+        r: "",
+        e: "歡迎＝迎接來賓的用語；重複兩次表示熱情。"
+      },
+      de: {
+        s: "Willkommen! Willkommen!",
+        r: "",
+        e: "歡迎＝迎接來賓的用語；重複兩次表示熱情。"
+      },
+      my: {
+        s: "ကြိုဆိုပါတယ်! ကြိုဆိုပါတယ်!",
+        r: "kyo-so-ba-te! kyo-so-ba-te!",
+        e: "歡迎＝迎接來賓的用語；重複兩次表示熱情。"
+      },
+      ko: {
+        s: "환영합니다! 환영합니다!",
+        r: "Hwanyeonghamnida! Hwanyeonghamnida!",
+        e: "歡迎＝迎接來賓的用語；重複兩次表示熱情。"
+      },
+      ja: {
+        s: "歓迎!歓迎!",
+        r: "Kangei! Kangei!",
+        e: "歡迎＝迎接來賓的用語；重複兩次表示熱情。"
+      },
+      si: {
+        s: "සාදරයෙන් පිළිගනිමු! සාදරයෙන් පිළිගනිමු!",
+        r: "Sādarayen piḷiganimu! Sādarayen piḷiganimu!",
+        e: "歡迎＝迎接來賓的用語；重複兩次表示熱情。"
+      },
+      fa: {
+        s: "خوش آمدید! خوش آمدید!",
+        r: "Xosh âmadid! Xosh âmadid!",
+        e: "歡迎＝迎接來賓的用語；重複兩次表示熱情。"
+      }
+    },
+    {
+      hi: {
+        s: "हम आपका स्वागत करते हैं!",
+        r: "Ham āpkā svāgat karte hain!",
+        e: "我們＝說話者一方；歡迎您＝熱情迎接您的到來。"
+      },
+      en: {
+        s: "We welcome you!",
+        r: "",
+        e: "我們＝說話者一方；歡迎您＝熱情迎接您的到來。"
+      },
+      ta: {
+        s: "நாங்கள் உங்களை வரவேற்கிறோம்!",
+        r: "nāṅkaḷ uṅkaḷai varavēṟkiṟōm!",
+        e: "我們＝說話者一方；歡迎您＝熱情迎接您的到來。"
+      },
+      th: {
+        s: "พวกเรายินดีต้อนรับคุณ!",
+        r: "phuak rao yindi tonrap khun!",
+        e: "我們＝說話者一方；歡迎您＝熱情迎接您的到來。"
+      },
+      km: {
+        s: "យើងខ្ញុំស្វាគមន៍អ្នក!",
+        r: "yeung khɲom sveakum neak!",
+        e: "我們＝說話者一方；歡迎您＝熱情迎接您的到來。"
+      },
+      vi: {
+        s: "Chúng tôi chào đón bạn!",
+        r: "",
+        e: "我們＝說話者一方；歡迎您＝熱情迎接您的到來。"
+      },
+      id: {
+        s: "Kami menyambut Anda!",
+        r: "",
+        e: "我們＝說話者一方；歡迎您＝熱情迎接您的到來。"
+      },
+      ne: {
+        s: "हामी तपाईंलाई स्वागत गर्छौं!",
+        r: "Hāmī tapāīṁlāī svāgat garchauṁ!",
+        e: "我們＝說話者一方；歡迎您＝熱情迎接您的到來。"
+      },
+      bn: {
+        s: "আমরা আপনাকে স্বাগত জানাই!",
+        r: "Āmrā āpnāke svāgata jānāi!",
+        e: "我們＝說話者一方；歡迎您＝熱情迎接您的到來。"
+      },
+      es: {
+        s: "¡Le damos la bienvenida!",
+        r: "",
+        e: "我們＝說話者一方；歡迎您＝熱情迎接您的到來。"
+      },
+      de: {
+        s: "Wir heißen Sie willkommen!",
+        r: "",
+        e: "我們＝說話者一方；歡迎您＝熱情迎接您的到來。"
+      },
+      my: {
+        s: "ကျွန်တော်တို့ ခင်ဗျားကို ကြိုဆိုပါတယ်!",
+        r: "kyan-taw-do khin-bya-go kyo-so-ba-te!",
+        e: "我們＝說話者一方；歡迎您＝熱情迎接您的到來。"
+      },
+      ko: {
+        s: "우리가 당신을 환영합니다!",
+        r: "Uri-ga dangsin-eul hwanyeonghamnida!",
+        e: "我們＝說話者一方；歡迎您＝熱情迎接您的到來。"
+      },
+      ja: {
+        s: "私たちはあなたを歓迎します!",
+        r: "Watashitachi wa anata o kangei shimasu!",
+        e: "我們＝說話者一方；歡迎您＝熱情迎接您的到來。"
+      },
+      si: {
+        s: "අපි ඔබව සාදරයෙන් පිළිගනිමු!",
+        r: "Api obava sādarayen piḷiganimu!",
+        e: "我們＝說話者一方；歡迎您＝熱情迎接您的到來。"
+      },
+      fa: {
+        s: "ما به شما خوش‌آمد می‌گوییم!",
+        r: "Mâ be shomâ xosh-âmad mi-guyim!",
+        e: "我們＝說話者一方；歡迎您＝熱情迎接您的到來。"
+      }
+    }
+  ]
 };
