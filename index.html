@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260929-8">
+  <link rel="stylesheet" href="styles.css?v=20260930-1">
 </head>
 <body>
   <a class="skip-link" href="#sentenceGrid">跳到句子庫 <span class="en-sub">Skip to sentence bank</span></a>
@@ -303,6 +303,17 @@
     <div class="parse-message" id="editMessage" role="status" aria-live="polite"></div>
   </dialog>
 
+  <dialog id="ritualDocDialog">
+    <button class="dialog-close" id="closeRitualDoc" aria-label="關閉文件視窗">×</button>
+    <span class="step">禮節文件 <span class="en-sub">RITUAL DOCUMENT</span></span>
+    <h2 id="ritualDocTitle"></h2>
+    <p class="section-note">上執禮・下執禮左右對照，一行中文、一行拼音，供老師教學、學生練習使用。 <span class="en-sub">Leader and assembly lines side by side, Chinese with pinyin, for teaching and practice.</span></p>
+    <div id="ritualDocBody"></div>
+    <div class="composer-actions">
+      <button class="primary-button" id="ritualDocDownload" type="button">⬇ 下載文件 <span class="en-sub">Download</span></button>
+    </div>
+  </dialog>
+
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-about">
@@ -344,7 +355,7 @@
   <script src="v4-language-config.js?v=20260929-2"></script>
   <script src="v4-songs-i18n.js?v=20260929-3"></script>
   <script src="v4-rituals-i18n.js?v=20260930-1"></script>
-  <script src="app.js?v=20260930-1"></script>
+  <script src="app.js?v=20260930-2"></script>
 </body>
 </html>
 
