@@ -10207,4 +10207,417 @@ const V4_SONGS_I18N = {
       }
     }
   ]
+,
+  zhufuge: [
+    {
+      hi: {
+        s: "दोस्त, मैं सदा आपको आशीर्वाद देता हूँ!",
+        r: "Dost, main sadā āpko āshīrvād detā hū̃!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      en: {
+        s: "Friend, I forever bless you!",
+        r: "",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      ta: {
+        s: "நண்பரே, நான் எப்போதும் உங்களை வாழ்த்துகிறேன்!",
+        r: "Naṇparē, nāṉ eppōtum uṅkaḷai vāḻttukiṟēṉ!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      th: {
+        s: "เพื่อนเอ๋ย ฉันจะอวยพรให้เธอตลอดไป!",
+        r: "Phuean oei, chan cha uai-phon hai thoe talot pai!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      km: {
+        s: "មិត្តសម្លាញ់ ខ្ញុំសូមជូនពរអ្នកជារៀងរហូត!",
+        r: "Mitt samlean khnom soum choun por neak chea reang rohot!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      vi: {
+        s: "Bạn ơi, tôi mãi mãi chúc phúc cho bạn!",
+        r: "",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      id: {
+        s: "Kawan, aku akan selalu memberkatimu!",
+        r: "",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      ne: {
+        s: "साथी, म सधैं तपाईंलाई आशीर्वाद दिन्छु!",
+        r: "Sāthī, ma sadhain tapāī̃lāī āshīrvād dinchu!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      bn: {
+        s: "বন্ধু, আমি চিরকাল আপনাকে আশীর্বাদ করি!",
+        r: "Bondhu, ami chirokal apnake ashirbad kori!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      es: {
+        s: "¡Amigo mío, siempre te bendeciré!",
+        r: "",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      de: {
+        s: "Mein Freund, ich werde Sie für immer segnen!",
+        r: "",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      my: {
+        s: "သူငယ်ချင်း၊ ကျွန်တော် သင့်ကို ထာဝရ ကောင်းချီးပေးပါတယ်!",
+        r: "Su-nge-chin:, kya-nau suing-ko hta-wa-ra kaung:-chi: pei-pa-te!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      ko: {
+        s: "친구여, 저는 당신을 영원히 축복합니다!",
+        r: "Chin-guyeo, jeoneun dangsineul yeong-wonhi chukbokhamnida!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      ja: {
+        s: "友よ、私はあなたを永遠に祝福します！",
+        r: "Tomo yo, watashi wa anata o eien ni shukufuku shimasu!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      si: {
+        s: "මිතුර, මම සදා ඔබව ආශීර්වාද කරමි!",
+        r: "Mithura, mama sadā obava āshīrvāda karami!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      fa: {
+        s: "دوست من، من همیشه برایت دعای خیر می‌کنم!",
+        r: "Dust-e man, man hamishe barāyat do'ā-ye kheir mikonam!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      }
+    },
+    {
+      hi: {
+        s: "दोस्त, मैं सदा आपको आशीर्वाद देता हूँ!",
+        r: "Dost, main sadā āpko āshīrvād detā hū̃!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      en: {
+        s: "Friend, I forever bless you!",
+        r: "",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      ta: {
+        s: "நண்பரே, நான் எப்போதும் உங்களை வாழ்த்துகிறேன்!",
+        r: "Naṇparē, nāṉ eppōtum uṅkaḷai vāḻttukiṟēṉ!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      th: {
+        s: "เพื่อนเอ๋ย ฉันจะอวยพรให้เธอตลอดไป!",
+        r: "Phuean oei, chan cha uai-phon hai thoe talot pai!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      km: {
+        s: "មិត្តសម្លាញ់ ខ្ញុំសូមជូនពរអ្នកជារៀងរហូត!",
+        r: "Mitt samlean khnom soum choun por neak chea reang rohot!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      vi: {
+        s: "Bạn ơi, tôi mãi mãi chúc phúc cho bạn!",
+        r: "",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      id: {
+        s: "Kawan, aku akan selalu memberkatimu!",
+        r: "",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      ne: {
+        s: "साथी, म सधैं तपाईंलाई आशीर्वाद दिन्छु!",
+        r: "Sāthī, ma sadhain tapāī̃lāī āshīrvād dinchu!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      bn: {
+        s: "বন্ধু, আমি চিরকাল আপনাকে আশীর্বাদ করি!",
+        r: "Bondhu, ami chirokal apnake ashirbad kori!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      es: {
+        s: "¡Amigo mío, siempre te bendeciré!",
+        r: "",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      de: {
+        s: "Mein Freund, ich werde Sie für immer segnen!",
+        r: "",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      my: {
+        s: "သူငယ်ချင်း၊ ကျွန်တော် သင့်ကို ထာဝရ ကောင်းချီးပေးပါတယ်!",
+        r: "Su-nge-chin:, kya-nau suing-ko hta-wa-ra kaung:-chi: pei-pa-te!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      ko: {
+        s: "친구여, 저는 당신을 영원히 축복합니다!",
+        r: "Chin-guyeo, jeoneun dangsineul yeong-wonhi chukbokhamnida!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      ja: {
+        s: "友よ、私はあなたを永遠に祝福します！",
+        r: "Tomo yo, watashi wa anata o eien ni shukufuku shimasu!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      si: {
+        s: "මිතුර, මම සදා ඔබව ආශීර්වාද කරමි!",
+        r: "Mithura, mama sadā obava āshīrvāda karami!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      fa: {
+        s: "دوست من، من همیشه برایت دعای خیر می‌کنم!",
+        r: "Dust-e man, man hamishe barāyat do'ā-ye kheir mikonam!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      }
+    },
+    {
+      hi: {
+        s: "आपको स्वास्थ्य की शुभकामनाएँ!",
+        r: "Āpko svāsthya kī shubhkāmnāen!",
+        e: "祝福您健康＝祝願您身體安康；健康＝身體沒有疾病、安好。"
+      },
+      en: {
+        s: "I wish you good health!",
+        r: "",
+        e: "祝福您健康＝祝願您身體安康；健康＝身體沒有疾病、安好。"
+      },
+      ta: {
+        s: "உங்களுக்கு ஆரோக்கியம் உண்டாக வாழ்த்துகிறேன்!",
+        r: "Uṅkaḷukku ārōkkiyam uṇṭāka vāḻttukiṟēṉ!",
+        e: "祝福您健康＝祝願您身體安康；健康＝身體沒有疾病、安好。"
+      },
+      th: {
+        s: "ขอให้เธอมีสุขภาพแข็งแรง!",
+        r: "Kho hai thoe mi sukkhaphap khaeng-raeng!",
+        e: "祝福您健康＝祝願您身體安康；健康＝身體沒有疾病、安好。"
+      },
+      km: {
+        s: "សូមជូនពរអ្នកឲ្យមានសុខភាពល្អ!",
+        r: "Soum choun por neak ao mi sokkheap laor!",
+        e: "祝福您健康＝祝願您身體安康；健康＝身體沒有疾病、安好。"
+      },
+      vi: {
+        s: "Chúc bạn sức khỏe!",
+        r: "",
+        e: "祝福您健康＝祝願您身體安康；健康＝身體沒有疾病、安好。"
+      },
+      id: {
+        s: "Kuberkatimu dengan kesehatan!",
+        r: "",
+        e: "祝福您健康＝祝願您身體安康；健康＝身體沒有疾病、安好。"
+      },
+      ne: {
+        s: "तपाईंलाई स्वास्थ्यको शुभकामना!",
+        r: "Tapāī̃lāī svāsthyako shubhakāmanā!",
+        e: "祝福您健康＝祝願您身體安康；健康＝身體沒有疾病、安好。"
+      },
+      bn: {
+        s: "আপনার সুস্বাস্থ্য কামনা করি!",
+        r: "Apnar susbasthyo kamona kori!",
+        e: "祝福您健康＝祝願您身體安康；健康＝身體沒有疾病、安好。"
+      },
+      es: {
+        s: "¡Te deseo salud!",
+        r: "",
+        e: "祝福您健康＝祝願您身體安康；健康＝身體沒有疾病、安好。"
+      },
+      de: {
+        s: "Ich wünsche Ihnen Gesundheit!",
+        r: "",
+        e: "祝福您健康＝祝願您身體安康；健康＝身體沒有疾病、安好。"
+      },
+      my: {
+        s: "သင့်ကို ကျန်းမာပါစေ ကောင်းချီးပေးပါတယ်!",
+        r: "Suing-ko kyan:-ma-pa-se kaung:-chi: pei-pa-te!",
+        e: "祝福您健康＝祝願您身體安康；健康＝身體沒有疾病、安好。"
+      },
+      ko: {
+        s: "당신의 건강을 축복합니다!",
+        r: "Dangsinui geongangeul chukbokhamnida!",
+        e: "祝福您健康＝祝願您身體安康；健康＝身體沒有疾病、安好。"
+      },
+      ja: {
+        s: "あなたのご健康を祝福します！",
+        r: "Anata no go-kenkō o shukufuku shimasu!",
+        e: "祝福您健康＝祝願您身體安康；健康＝身體沒有疾病、安好。"
+      },
+      si: {
+        s: "ඔබට නිරෝගී සුවය පතමි!",
+        r: "Obata nirōgī suvaya patami!",
+        e: "祝福您健康＝祝願您身體安康；健康＝身體沒有疾病、安好。"
+      },
+      fa: {
+        s: "برایت سلامتی آرزو می‌کنم!",
+        r: "Barāyat salāmati ārezu mikonam!",
+        e: "祝福您健康＝祝願您身體安康；健康＝身體沒有疾病、安好。"
+      }
+    },
+    {
+      hi: {
+        s: "आपको खुशी की शुभकामनाएँ!",
+        r: "Āpko khushī kī shubhkāmnāen!",
+        e: "祝福您快樂＝祝願您心情愉悅；快樂＝開心、喜悅。"
+      },
+      en: {
+        s: "I wish you happiness!",
+        r: "",
+        e: "祝福您快樂＝祝願您心情愉悅；快樂＝開心、喜悅。"
+      },
+      ta: {
+        s: "உங்களுக்கு மகிழ்ச்சி உண்டாக வாழ்த்துகிறேன்!",
+        r: "Uṅkaḷukku makiḻcci uṇṭāka vāḻttukiṟēṉ!",
+        e: "祝福您快樂＝祝願您心情愉悅；快樂＝開心、喜悅。"
+      },
+      th: {
+        s: "ขอให้เธอมีความสุข!",
+        r: "Kho hai thoe mi khwam-suk!",
+        e: "祝福您快樂＝祝願您心情愉悅；快樂＝開心、喜悅。"
+      },
+      km: {
+        s: "សូមជូនពរអ្នកឲ្យមានសុភមង្គល!",
+        r: "Soum choun por neak ao mi sophamongkol!",
+        e: "祝福您快樂＝祝願您心情愉悅；快樂＝開心、喜悅。"
+      },
+      vi: {
+        s: "Chúc bạn hạnh phúc!",
+        r: "",
+        e: "祝福您快樂＝祝願您心情愉悅；快樂＝開心、喜悅。"
+      },
+      id: {
+        s: "Kuberkatimu dengan kebahagiaan!",
+        r: "",
+        e: "祝福您快樂＝祝願您心情愉悅；快樂＝開心、喜悅。"
+      },
+      ne: {
+        s: "तपाईंलाई खुसीको शुभकामना!",
+        r: "Tapāī̃lāī khusīko shubhakāmanā!",
+        e: "祝福您快樂＝祝願您心情愉悅；快樂＝開心、喜悅。"
+      },
+      bn: {
+        s: "আপনার সুখ কামনা করি!",
+        r: "Apnar sukh kamona kori!",
+        e: "祝福您快樂＝祝願您心情愉悅；快樂＝開心、喜悅。"
+      },
+      es: {
+        s: "¡Te deseo felicidad!",
+        r: "",
+        e: "祝福您快樂＝祝願您心情愉悅；快樂＝開心、喜悅。"
+      },
+      de: {
+        s: "Ich wünsche Ihnen Glück!",
+        r: "",
+        e: "祝福您快樂＝祝願您心情愉悅；快樂＝開心、喜悅。"
+      },
+      my: {
+        s: "သင့်ကို ပျော်ရွှင်ပါစေ ကောင်းချီးပေးပါတယ်!",
+        r: "Suing-ko pyau-shwin-pa-se kaung:-chi: pei-pa-te!",
+        e: "祝福您快樂＝祝願您心情愉悅；快樂＝開心、喜悅。"
+      },
+      ko: {
+        s: "당신의 행복을 축복합니다!",
+        r: "Dangsinui haengbogeul chukbokhamnida!",
+        e: "祝福您快樂＝祝願您心情愉悅；快樂＝開心、喜悅。"
+      },
+      ja: {
+        s: "あなたのご多幸を祝福します！",
+        r: "Anata no go-takō o shukufuku shimasu!",
+        e: "祝福您快樂＝祝願您心情愉悅；快樂＝開心、喜悅。"
+      },
+      si: {
+        s: "ඔබට සතුට පතමි!",
+        r: "Obata satuta patami!",
+        e: "祝福您快樂＝祝願您心情愉悅；快樂＝開心、喜悅。"
+      },
+      fa: {
+        s: "برایت شادی آرزو می‌کنم!",
+        r: "Barāyat shādi ārezu mikonam!",
+        e: "祝福您快樂＝祝願您心情愉悅；快樂＝開心、喜悅。"
+      }
+    },
+    {
+      hi: {
+        s: "दोस्त, मैं सदा आपको आशीर्वाद देता हूँ!",
+        r: "Dost, main sadā āpko āshīrvād detā hū̃!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      en: {
+        s: "Friend, I forever bless you!",
+        r: "",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      ta: {
+        s: "நண்பரே, நான் எப்போதும் உங்களை வாழ்த்துகிறேன்!",
+        r: "Naṇparē, nāṉ eppōtum uṅkaḷai vāḻttukiṟēṉ!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      th: {
+        s: "เพื่อนเอ๋ย ฉันจะอวยพรให้เธอตลอดไป!",
+        r: "Phuean oei, chan cha uai-phon hai thoe talot pai!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      km: {
+        s: "មិត្តសម្លាញ់ ខ្ញុំសូមជូនពរអ្នកជារៀងរហូត!",
+        r: "Mitt samlean khnom soum choun por neak chea reang rohot!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      vi: {
+        s: "Bạn ơi, tôi mãi mãi chúc phúc cho bạn!",
+        r: "",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      id: {
+        s: "Kawan, aku akan selalu memberkatimu!",
+        r: "",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      ne: {
+        s: "साथी, म सधैं तपाईंलाई आशीर्वाद दिन्छु!",
+        r: "Sāthī, ma sadhain tapāī̃lāī āshīrvād dinchu!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      bn: {
+        s: "বন্ধু, আমি চিরকাল আপনাকে আশীর্বাদ করি!",
+        r: "Bondhu, ami chirokal apnake ashirbad kori!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      es: {
+        s: "¡Amigo mío, siempre te bendeciré!",
+        r: "",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      de: {
+        s: "Mein Freund, ich werde Sie für immer segnen!",
+        r: "",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      my: {
+        s: "သူငယ်ချင်း၊ ကျွန်တော် သင့်ကို ထာဝရ ကောင်းချီးပေးပါတယ်!",
+        r: "Su-nge-chin:, kya-nau suing-ko hta-wa-ra kaung:-chi: pei-pa-te!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      ko: {
+        s: "친구여, 저는 당신을 영원히 축복합니다!",
+        r: "Chin-guyeo, jeoneun dangsineul yeong-wonhi chukbokhamnida!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      ja: {
+        s: "友よ、私はあなたを永遠に祝福します！",
+        r: "Tomo yo, watashi wa anata o eien ni shukufuku shimasu!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      si: {
+        s: "මිතුර, මම සදා ඔබව ආශීර්වාද කරමි!",
+        r: "Mithura, mama sadā obava āshīrvāda karami!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      },
+      fa: {
+        s: "دوست من، من همیشه برایت دعای خیر می‌کنم!",
+        r: "Dust-e man, man hamishe barāyat do'ā-ye kheir mikonam!",
+        e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
+      }
+    }
+  ]
 };
