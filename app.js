@@ -2324,7 +2324,7 @@ function songLineToSentence(song, line, idx) {
   };
 }
 
-const courseState = { lesson: 0, tab: '課文', song: null, page: 'home' };
+const courseState = { lesson: 0, tab: '課文', song: null, ritual: null, ritualGroup: null, page: 'home' };
 
 /* 課程解鎖＝老師審核通過（Google 登入＋管理員核准），取代舊的 PIN。 */
 function isCourseUnlocked() {
@@ -2372,9 +2372,12 @@ function renderCourse() {
   }
   lock.classList.add('hidden'); body.classList.remove('hidden');
   if (courseState.song) renderSongView(courseState.song);
+  else if (courseState.ritual) renderRitualView(courseState.ritual);
   else if (courseState.lesson > 0) renderLessonView();
   else if (courseState.page === 'books') renderBooksGrid();
   else if (courseState.page === 'songs') renderSongsGrid();
+  else if (courseState.page === 'rituals') renderRitualsGrid();
+  else if (courseState.page === 'ritual-group') renderRitualGroupView(courseState.ritualGroup);
   else renderCourseHome();
 }
 
@@ -2387,9 +2390,12 @@ function renderCourseHome() {
   const bookCount = COURSE_LESSONS.length;
   const songCount = V4_SONGS.length;
   const songLines = V4_SONGS.reduce((n, s) => n + s.lines.length, 0);
+  const ritualCount = V4_RITUALS.length;
+  const ritualLines = V4_RITUALS.reduce((n, r) => n + r.sections.reduce((m, s) => m + s.lines.length, 0), 0);
   const homeOpts = [
     { page: 'books', icon: '📚', zh: '中文課本', en: 'Textbooks', desc: `${bookCount} 課 <span class="en-sub">${bookCount} lessons</span>`, aria: '中文課本，六冊課程' },
     { page: 'songs', icon: '🎵', zh: '中文歌曲', en: 'Songs', desc: `${songCount} 首歌曲 · ${songLines} 句歌詞 <span class="en-sub">${songCount} songs</span>`, aria: '中文歌曲' },
+    { page: 'rituals', icon: '🙏', zh: '道場禮節', en: 'Rituals', desc: `${ritualCount} 套禮節 · ${ritualLines} 句 <span class="en-sub">${ritualCount} rituals</span>`, aria: '道場禮節' },
   ];
   homeOpts.forEach(opt => {
     const card = document.createElement('button');
@@ -2493,6 +2499,8 @@ function renderSongsGrid() {
 /* 相容舊調用：清掉 song/lesson 後回到目前所在層級的總覽。 */
 function renderLessonGrid() {
   courseState.song = null;
+  courseState.ritual = null;
+  courseState.ritualGroup = null;
   courseState.lesson = 0;
   renderCourse();
 }
@@ -2545,6 +2553,328 @@ async function renderSongView(songId) {
       </div>`;
   }
   content.appendChild(lyricsGrid);
+}
+
+/* V4 道場禮節（AI 校對草稿，待老師審定）
+   結構：V4_RITUALS 為禮節陣列；每禮節含 sections（段落），每段含 lines。
+   參駕禮／辭駕禮：單一段落，附 Meta 0.8x 全程朗讀音檔（audio/rituals/）。
+   燒香禮：五段落（叩首／愿懺文／懇求／叩首／禮畢），音檔待老師錄製。
+   16 語翻譯在 v4-rituals-i18n.js 的 V4_RITUALS_I18N，key 為禮節 id，順序與 lines 扁平展開一致。 */
+const V4_RITUALS = [
+  {
+    id: "canjia",
+    title: "參駕禮",
+    groupId: "canjia-cijia",
+    groupTitle: "參辭駕禮節",
+    audioPath: "audio/rituals/canjia.mp3",
+    sections: [
+      {
+        title: null,
+        lines: [
+          { zh: "作揖，跪", py: "zuò yī, guì" },
+          { zh: "明明上帝參駕五叩首", py: "míng míng shàng dì cān jià wǔ kòu shǒu" },
+          { zh: "諸天神聖三叩首", py: "zhū tiān shén shèng sān kòu shǒu" },
+          { zh: "彌勒祖師三叩首", py: "mí lè zǔ shī sān kòu shǒu" },
+          { zh: "南海古佛一叩", py: "nán hǎi gǔ fó yī kòu" },
+          { zh: "活佛師尊一叩", py: "huó fó shī zūn yī kòu" },
+          { zh: "月慧菩薩一叩", py: "yuè huì pú sà yī kòu" },
+          { zh: "師尊一叩", py: "shī zūn yī kòu" },
+          { zh: "師母一叩", py: "shī mǔ yī kòu" },
+          { zh: "點傳師一叩", py: "diǎn chuán shī yī kòu" },
+          { zh: "引保師一叩", py: "yǐn bǎo shī yī kòu" },
+          { zh: "前人大眾一叩首", py: "qián rén dà zhòng yī kòu shǒu" },
+          { zh: "起", py: "qǐ" },
+          { zh: "作揖", py: "zuò yī" },
+          { zh: "放手鞠躬", py: "fàng shǒu jū gōng" },
+          { zh: "參駕禮畢", py: "cān jià lǐ bì" },
+          { zh: "退", py: "tuì" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "cijia",
+    title: "辭駕禮",
+    groupId: "canjia-cijia",
+    groupTitle: "參辭駕禮節",
+    audioPath: "audio/rituals/cijia.mp3",
+    sections: [
+      {
+        title: null,
+        lines: [
+          { zh: "作揖，跪", py: "zuò yī, guì" },
+          { zh: "明明上帝辭駕五叩首", py: "míng míng shàng dì cí jià wǔ kòu shǒu" },
+          { zh: "諸天神聖三叩首", py: "zhū tiān shén shèng sān kòu shǒu" },
+          { zh: "彌勒祖師三叩首", py: "mí lè zǔ shī sān kòu shǒu" },
+          { zh: "南海古佛一叩", py: "nán hǎi gǔ fó yī kòu" },
+          { zh: "活佛師尊一叩", py: "huó fó shī zūn yī kòu" },
+          { zh: "月慧菩薩一叩", py: "yuè huì pú sà yī kòu" },
+          { zh: "師尊一叩", py: "shī zūn yī kòu" },
+          { zh: "師母一叩", py: "shī mǔ yī kòu" },
+          { zh: "點傳師一叩", py: "diǎn chuán shī yī kòu" },
+          { zh: "引保師一叩", py: "yǐn bǎo shī yī kòu" },
+          { zh: "前人大眾一叩首", py: "qián rén dà zhòng yī kòu shǒu" },
+          { zh: "起", py: "qǐ" },
+          { zh: "作揖", py: "zuò yī" },
+          { zh: "放手鞠躬", py: "fàng shǒu jū gōng" },
+          { zh: "辭駕禮畢", py: "cí jià lǐ bì" },
+          { zh: "退", py: "tuì" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "shaoxiang",
+    title: "燒香禮",
+    groupId: null,
+    groupTitle: null,
+    audioPath: null,
+    sections: [
+      {
+        title: "叩首",
+        lines: [
+          { zh: "作揖，跪", py: "zuò yī, guì" },
+          { zh: "明明上帝 十叩首", py: "míng míng shàng dì shí kòu shǒu" },
+          { zh: "天地君親師 五叩首", py: "tiān dì jūn qīn shī wǔ kòu shǒu" },
+          { zh: "諸天神聖 五叩首", py: "zhū tiān shén shèng wǔ kòu shǒu" },
+          { zh: "彌勒祖師 五叩首", py: "mí lè zǔ shī wǔ kòu shǒu" },
+          { zh: "南海古佛 五叩首", py: "nán hǎi gǔ fó wǔ kòu shǒu" },
+          { zh: "各教聖人 五叩首", py: "gè jiào shèng rén wǔ kòu shǒu" },
+          { zh: "活佛師尊 五叩首", py: "huó fó shī zūn wǔ kòu shǒu" },
+          { zh: "月慧菩薩 五叩首", py: "yuè huì pú sà wǔ kòu shǒu" },
+          { zh: "各位法律主 五叩首", py: "gè wèi fǎ lǜ zhǔ wǔ kòu shǒu" },
+          { zh: "長生大帝 五叩首", py: "zhǎng shēng dà dì wǔ kòu shǒu" },
+          { zh: "灶君 三叩首", py: "zào jūn sān kòu shǒu" },
+          { zh: "師尊 三叩首", py: "shī zūn sān kòu shǒu" },
+          { zh: "師母 三叩首", py: "shī mǔ sān kòu shǒu" },
+          { zh: "鎮殿元帥 三叩首", py: "zhèn diàn yuán shuài sān kòu shǒu" },
+          { zh: "鎮殿將軍 三叩首", py: "zhèn diàn jiāng jūn sān kòu shǒu" },
+          { zh: "教化菩薩 三叩首", py: "jiào huà pú sà sān kòu shǒu" },
+          { zh: "各位大仙 三叩首", py: "gè wèi dà xiān sān kòu shǒu" },
+          { zh: "道長 一叩", py: "dào zhǎng yī kòu" },
+          { zh: "前人 一叩", py: "qián rén yī kòu" },
+          { zh: "點傳師 一叩", py: "diǎn chuán shī yī kòu" },
+          { zh: "引保師 一叩", py: "yǐn bǎo shī yī kòu" },
+          { zh: "自己祖先 一叩首", py: "zì jǐ zǔ xiān yī kòu shǒu" },
+        ],
+      },
+      {
+        title: "愿懺文",
+        lines: [
+          { zh: "（乾）餘蘊（姓名）", py: "(qián) yú yùn (xìng míng)" },
+          { zh: "（坤）信士", py: "(kūn) xìn shì" },
+          { zh: "虔心跪在", py: "qián xīn guì zài" },
+          { zh: "明明上帝蓮下，幸受真傳，三叩首", py: "míng míng shàng dì lián xià, xìng shòu zhēn chuán, sān kòu shǒu" },
+          { zh: "彌勒祖師，妙法無邊，護庇眾生", py: "mí lè zǔ shī, miào fǎ wú biān, hù bì zhòng shēng" },
+          { zh: "懺悔佛前，改過自新，", py: "chàn huǐ fó qián, gǎi guò zì xīn," },
+          { zh: "同註天盤，三叩首", py: "tóng zhù tiān pán, sān kòu shǒu" },
+          { zh: "凡係佛堂，顛倒錯亂", py: "fán xì fó táng, diān dào cuò luàn" },
+          { zh: "望祈祖師，赦罪容寬，十叩首", py: "wàng qí zǔ shī, shè zuì róng kuān, shí kòu shǒu" },
+          { zh: "南無阿彌十佛天元，十叩首", py: "nán wú ā mí shí fó tiān yuán, shí kòu shǒu" },
+        ],
+      },
+      {
+        title: "懇求",
+        lines: [
+          { zh: "起，作揖，跪，懇求", py: "qǐ, zuò yī, guì, kěn qiú" },
+          { zh: "老母大開宏恩，祖師宏慈，師尊，母親老大人，大恩大德多普照", py: "lǎo mǔ dà kāi hóng ēn, zǔ shī hóng cí, shī zūn, mǔ qīn lǎo dà rén, dà ēn dà dé duō pǔ zhào" },
+          { zh: "院長大人慈悲，免去一切，考魔災劫，", py: "yuàn zhǎng dà rén cí bēi, miǎn qù yī qiè, kǎo mó zāi jié," },
+          { zh: "並求諸天神聖慈悲，特別加靈，撥機顯化，", py: "bìng qiú zhū tiān shén shèng cí bēi, tè bié jiā líng, bō jī xiǎn huà," },
+          { zh: "以搭幫助，大道宏展！一百叩首", py: "yǐ dā bāng zhù, dà dào hóng zhǎn! yì bǎi kòu shǒu" },
+        ],
+      },
+      {
+        title: "叩首",
+        lines: [
+          { zh: "金公祖師 五叩首", py: "jīn gōng zǔ shī wǔ kòu shǒu" },
+          { zh: "天然古佛 五叩首", py: "tiān rán gǔ fó wǔ kòu shǒu" },
+          { zh: "中華聖母 五叩首", py: "zhōng huá shèng mǔ wǔ kòu shǒu" },
+          { zh: "院長大人 三叩首", py: "yuàn zhǎng dà rén sān kòu shǒu" },
+          { zh: "潘道長 三叩首", py: "pān dào zhǎng sān kòu shǒu" },
+          { zh: "妙極大帝 三叩首", py: "miào jí dà dì sān kòu shǒu" },
+          { zh: "各位先賢 三叩首", py: "gè wèi xiān xián sān kòu shǒu" },
+        ],
+      },
+      {
+        title: "禮畢",
+        lines: [
+          { zh: "起，作揖，放手鞠躬，早香／午香／晚香，禮畢，退！", py: "qǐ, zuò yī, fàng shǒu jū gōng, zǎo xiāng / wǔ xiāng / wǎn xiāng, lǐ bì, tuì!" },
+        ],
+      },
+    ],
+  },
+];
+
+/* 道場禮節群組（第二層導覽）：參辭駕禮節含參駕禮、辭駕禮；燒香禮為單一禮節直達。 */
+const V4_RITUAL_GROUPS = [
+  { id: 'canjia-cijia', title: '參辭駕禮節', icon: '🙏', rituals: ['canjia', 'cijia'] },
+  { id: 'shaoxiang', title: '燒香禮', icon: '🕯️', rituals: ['shaoxiang'], direct: true },
+];
+
+/* 合併禮節翻譯：v4-rituals-i18n.js 的 V4_RITUALS_I18N 寫入各行 line.i18n（依 sections 扁平順序）。 */
+if (typeof V4_RITUALS_I18N !== 'undefined') {
+  V4_RITUALS.forEach(ritual => {
+    const arr = V4_RITUALS_I18N[ritual.id];
+    if (!arr) return;
+    let idx = 0;
+    ritual.sections.forEach(sec => {
+      sec.lines.forEach(line => { if (arr[idx]) line.i18n = arr[idx]; idx++; });
+    });
+  });
+}
+
+/* 禮節行轉句子物件：供 createCard() 使用（非課程記錄，不進搜尋）。 */
+function ritualLineToSentence(ritual, line, idx) {
+  return {
+    chineseSentence: line.zh,
+    pinyin: line.py,
+    hindiSentence: (line.i18n && line.i18n.hi && line.i18n.hi.s) || '',
+    romanHindi: (line.i18n && line.i18n.hi && line.i18n.hi.r) || '',
+    hindiExplanation: (line.i18n && line.i18n.hi && line.i18n.hi.e) || '',
+    i18n: line.i18n || {},
+    category: '禮節',
+    tags: `道場禮節,${ritual.title}`,
+    recordId: `ritual-${ritual.id}-${idx + 1}`,
+    /* seq: 0 讓 isCourseRecord() 判為 true，語言切換才會讀 i18n；物件即時產生、不進 bank，無副作用。 */
+    seq: 0,
+  };
+}
+
+/* 道場禮節首頁：群組卡（參辭駕禮節／燒香禮）。 */
+function renderRitualsGrid() {
+  $('lessonView').classList.add('hidden');
+  const grid = $('lessonGrid');
+  grid.classList.remove('hidden');
+  grid.innerHTML = '';
+  grid.appendChild(makeHomeBackButton());
+  const divider = document.createElement('div');
+  divider.className = 'book-divider';
+  divider.textContent = '道場禮節';
+  grid.appendChild(divider);
+  V4_RITUAL_GROUPS.forEach(group => {
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'lesson-card';
+    const ritualCount = group.direct ? 1 : group.rituals.length;
+    const lineCount = group.rituals.reduce((n, rid) => {
+      const r = V4_RITUALS.find(x => x.id === rid);
+      return n + (r ? r.sections.reduce((m, s) => m + s.lines.length, 0) : 0);
+    }, 0);
+    card.innerHTML = `
+      <span class="lesson-num">${group.icon} <span class="en-sub">Ritual</span></span>
+      <span class="lesson-zh" lang="zh-Hant">${escapeHtml(group.title)}</span>
+      <span class="lesson-topic">${lineCount} 句 <span class="en-sub">${lineCount} lines</span></span>`;
+    card.setAttribute('aria-label', `道場禮節 ${group.title}`);
+    card.addEventListener('click', () => {
+      courseState.lesson = 0; courseState.song = null;
+      if (group.direct) {
+        courseState.ritual = group.rituals[0]; courseState.ritualGroup = null; courseState.page = 'ritual';
+      } else {
+        courseState.ritual = null; courseState.ritualGroup = group.id; courseState.page = 'ritual-group';
+      }
+      renderCourse(); $('courseSection').scrollIntoView({ behavior: 'smooth' });
+    });
+    grid.appendChild(card);
+  });
+}
+
+/* 參辭駕禮節：參駕禮／辭駕禮兩張卡。 */
+function renderRitualGroupView(groupId) {
+  const group = V4_RITUAL_GROUPS.find(g => g.id === groupId);
+  if (!group) { courseState.page = 'rituals'; renderCourse(); return; }
+  $('lessonView').classList.add('hidden');
+  const grid = $('lessonGrid');
+  grid.classList.remove('hidden');
+  grid.innerHTML = '';
+  const backBtn = document.createElement('button');
+  backBtn.type = 'button';
+  backBtn.className = 'secondary-button grid-back-button';
+  setBilingualText(backBtn, '← 回道場禮節', '← Rituals');
+  backBtn.addEventListener('click', () => { courseState.page = 'rituals'; courseState.ritualGroup = null; renderCourse(); });
+  const backRow = document.createElement('div');
+  backRow.className = 'grid-back-row';
+  backRow.appendChild(backBtn);
+  grid.appendChild(backRow);
+  const divider = document.createElement('div');
+  divider.className = 'book-divider';
+  divider.textContent = group.title;
+  grid.appendChild(divider);
+  group.rituals.forEach(rid => {
+    const ritual = V4_RITUALS.find(r => r.id === rid);
+    if (!ritual) return;
+    const lineCount = ritual.sections.reduce((n, s) => n + s.lines.length, 0);
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'lesson-card';
+    card.innerHTML = `
+      <span class="lesson-num">🙏 <span class="en-sub">Ritual</span></span>
+      <span class="lesson-zh" lang="zh-Hant">${escapeHtml(ritual.title)}</span>
+      <span class="lesson-topic">${lineCount} 句 <span class="en-sub">${lineCount} lines</span></span>`;
+    card.setAttribute('aria-label', `${group.title} ${ritual.title}`);
+    card.addEventListener('click', () => {
+      courseState.ritual = rid; courseState.page = 'ritual'; courseState.lesson = 0; courseState.song = null;
+      renderCourse(); $('courseSection').scrollIntoView({ behavior: 'smooth' });
+    });
+    grid.appendChild(card);
+  });
+}
+
+/* 禮節內頁：上方音檔播放器（參辭駕禮）或錄音準備中（燒香禮）＋下方逐句卡片。 */
+async function renderRitualView(ritualId) {
+  const ritual = V4_RITUALS.find(r => r.id === ritualId);
+  if (!ritual) { courseState.ritual = null; courseState.page = 'rituals'; renderCourse(); return; }
+  $('lessonGrid').classList.add('hidden');
+  const view = $('lessonView');
+  view.classList.remove('hidden');
+  const backBtn = $('lessonBackButton');
+  const backTarget = ritual.groupId ? 'ritual-group' : 'rituals';
+  const backLabel = ritual.groupId ? `← 回${ritual.groupTitle}` : '← 回道場禮節';
+  setBilingualText(backBtn, backLabel, backTarget === 'ritual-group' ? '← Back' : '← Rituals');
+  backBtn.onclick = () => {
+    courseState.ritual = null;
+    courseState.page = backTarget;
+    renderCourse(); $('courseSection').scrollIntoView({ behavior: 'smooth' });
+  };
+  const header = $('lessonHeader');
+  header.innerHTML = `<h3 lang="zh-Hant">🙏 ${escapeHtml(ritual.title)}</h3>`;
+  $('lessonTabs').innerHTML = '';
+  const content = $('lessonContent');
+  content.innerHTML = '';
+  /* 音檔：參辭駕禮用 repo 內 MP3；燒香禮尚無錄音。 */
+  if (ritual.audioPath) {
+    const audioWrap = document.createElement('div');
+    audioWrap.className = 'song-video-wrap';
+    const audio = document.createElement('audio');
+    audio.id = 'ritualAudio';
+    audio.controls = true;
+    audio.preload = 'metadata';
+    audio.src = ritual.audioPath;
+    audio.setAttribute('aria-label', `${ritual.title} 朗讀`);
+    audioWrap.appendChild(audio);
+    content.appendChild(audioWrap);
+  } else {
+    const note = document.createElement('p');
+    note.className = 'section-note';
+    setBilingualText(note, '🎙️ 錄音準備中，敬請期待', '🎙️ Audio coming soon');
+    content.appendChild(note);
+  }
+  let globalIdx = 0;
+  ritual.sections.forEach(sec => {
+    if (sec.title) {
+      const secDivider = document.createElement('div');
+      secDivider.className = 'book-divider';
+      secDivider.textContent = sec.title;
+      content.appendChild(secDivider);
+    }
+    const grid = document.createElement('div');
+    grid.className = 'sentence-grid song-lyrics';
+    sec.lines.forEach(line => {
+      const s = ritualLineToSentence(ritual, line, globalIdx);
+      grid.appendChild(createCard(s, true));
+      globalIdx++;
+    });
+    content.appendChild(grid);
+  });
 }
 
 function renderLessonView() {
