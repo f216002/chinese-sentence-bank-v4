@@ -2297,6 +2297,31 @@ const V4_SONGS = [
       { zh: '把幸福傳遞', py: 'bǎ xìng fú chuán dì' },
     ],
   },
+  {
+    id: 'youai',
+    title: '有愛',
+    videoType: 'youtube',
+    youtubeId: 'cqv_yBLwmjw',
+    lines: [
+      { zh: '有愛勇敢跨出來', py: 'yǒu ài yǒng gǎn kuà chū lái' },
+      { zh: '有愛大家一起來', py: 'yǒu ài dà jiā yì qǐ lái' },
+      { zh: '有愛深入自明白', py: 'yǒu ài shēn rù zì míng bái' },
+      { zh: '有愛投入是應該', py: 'yǒu ài tóu rù shì yīng gāi' },
+      { zh: '成己成人切磋揣', py: 'chéng jǐ chéng rén qiē cuō chuǎi' },
+      { zh: '達己達人步步邁', py: 'dá jǐ dá rén bù bù mài' },
+      { zh: '有愛沒有災', py: 'yǒu ài méi yǒu zāi' },
+      { zh: '有愛無傷害', py: 'yǒu ài wú shāng hài' },
+      { zh: '有愛化陰霾', py: 'yǒu ài huà yīn mái' },
+      { zh: '人生路撥雲見日開', py: 'rén shēng lù bō yún jiàn rì kāi' },
+      { zh: '修道路活躍通四海', py: 'xiū dào lù huó yuè tōng sì hǎi' },
+      { zh: '暢達無阻礙', py: 'chàng dá wú zǔ ài' },
+      { zh: '醍醐得灌溉', py: 'tí hú dé guàn gài' },
+      { zh: '法喜滿胸懷', py: 'fǎ xǐ mǎn xiōng huái' },
+      { zh: '吉祥如意栽', py: 'jí xiáng rú yì zāi' },
+      { zh: '萬事平安泰', py: 'wàn shì píng ān tài' },
+      { zh: '天人共喝采', py: 'tiān rén gòng hè cǎi' },
+    ],
+  },
 ];
 
 /* 合併歌曲翻譯：v4-songs-i18n.js 的 V4_SONGS_I18N 寫入各行 line.i18n。 */
