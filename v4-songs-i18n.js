@@ -8479,4 +8479,1401 @@ const V4_SONGS_I18N = {
       }
     }
   ]
+,
+  youai: [
+    {
+      hi: {
+        s: "प्रेम के साथ साहसपूर्वक आगे बढ़ो",
+        r: "prem ke sāth sāhaspūrvak āge baṛho",
+        e: "有愛＝懷著愛心；跨出來＝勇敢地踏出第一步。"
+      },
+      en: {
+        s: "With love, bravely step forward",
+        r: "",
+        e: "有愛＝懷著愛心；跨出來＝勇敢地踏出第一步。"
+      },
+      ta: {
+        s: "அன்புடன் தைரியமாக முன்னேறு",
+        r: "aṉputaṉ tairiyamāka muṉṉēṟu",
+        e: "有愛＝懷著愛心；跨出來＝勇敢地踏出第一步。"
+      },
+      th: {
+        s: "ด้วยความรัก ก้าวไปข้างหน้าอย่างกล้าหาญ",
+        r: "duai khwam rak kao pai khang na yang klahan",
+        e: "有愛＝懷著愛心；跨出來＝勇敢地踏出第一步。"
+      },
+      km: {
+        s: "ដោយក្តីស្រឡាញ់ ដើរទៅមុខដោយក្លាហាន",
+        r: "daoy kdei sralanh daer tov muk daoy klahan",
+        e: "有愛＝懷著愛心；跨出來＝勇敢地踏出第一步。"
+      },
+      vi: {
+        s: "Với tình yêu, hãy dũng cảm bước tới",
+        r: "",
+        e: "有愛＝懷著愛心；跨出來＝勇敢地踏出第一步。"
+      },
+      id: {
+        s: "Dengan cinta, melangkahlah dengan berani",
+        r: "",
+        e: "有愛＝懷著愛心；跨出來＝勇敢地踏出第一步。"
+      },
+      ne: {
+        s: "मायाका साथ साहसपूर्वक अघि बढ",
+        r: "māyākā sāth sāhaspūrvak aghi baḍha",
+        e: "有愛＝懷著愛心；跨出來＝勇敢地踏出第一步。"
+      },
+      bn: {
+        s: "ভালোবাসা নিয়ে সাহসের সঙ্গে এগিয়ে যাও",
+        r: "bhālobāsā niẏe sāhaser saṅge egiẏe yāo",
+        e: "有愛＝懷著愛心；跨出來＝勇敢地踏出第一步。"
+      },
+      es: {
+        s: "Con amor, avanza con valentía",
+        r: "",
+        e: "有愛＝懷著愛心；跨出來＝勇敢地踏出第一步。"
+      },
+      de: {
+        s: "Mit Liebe, tritt mutig voran",
+        r: "",
+        e: "有愛＝懷著愛心；跨出來＝勇敢地踏出第一步。"
+      },
+      my: {
+        s: "ချစ်ခြင်းမေတ္တာဖြင့် ရဲရဲဝံ့ဝံ့ ရှေ့သို့လှမ်းပါ",
+        r: "chit-chin-myitta-phyint ye-ye-wun-wun she-tho-hlan-ba",
+        e: "有愛＝懷著愛心；跨出來＝勇敢地踏出第一步。"
+      },
+      ko: {
+        s: "사랑으로 용감하게 앞으로 나아가라",
+        r: "sarangeuro yonggamhage apeuro naagara",
+        e: "有愛＝懷著愛心；跨出來＝勇敢地踏出第一步。"
+      },
+      ja: {
+        s: "愛をもって勇敢に前へ進もう",
+        r: "ai o motte yūkan ni mae e susumō",
+        e: "有愛＝懷著愛心；跨出來＝勇敢地踏出第一步。"
+      },
+      si: {
+        s: "ආදරයෙන් නිර්භීතව ඉදිරියට යන්න",
+        r: "ādarayen nirbhītava idiriyaṭa yanna",
+        e: "有愛＝懷著愛心；跨出來＝勇敢地踏出第一步。"
+      },
+      fa: {
+        s: "با عشق، شجاعانه قدم پیش بگذار",
+        r: "bā eshq, shojā'āne qadam pish begzār",
+        e: "有愛＝懷著愛心；跨出來＝勇敢地踏出第一步。"
+      }
+    },
+    {
+      hi: {
+        s: "प्रेम के साथ सब लोग मिलकर आओ",
+        r: "prem ke sāth sab log milkar āo",
+        e: "有愛＝懷著愛心；大家一起來＝眾人一同參與、同行。"
+      },
+      en: {
+        s: "With love, everyone come together",
+        r: "",
+        e: "有愛＝懷著愛心；大家一起來＝眾人一同參與、同行。"
+      },
+      ta: {
+        s: "அன்புடன் அனைவரும் ஒன்று சேருங்கள்",
+        r: "aṉputaṉ aṉaivarum oṉṟu cērṅkaḷ",
+        e: "有愛＝懷著愛心；大家一起來＝眾人一同參與、同行。"
+      },
+      th: {
+        s: "ด้วยความรัก ทุกคนมาร่วมกัน",
+        r: "duai khwam rak thuk khon ma ruam kan",
+        e: "有愛＝懷著愛心；大家一起來＝眾人一同參與、同行。"
+      },
+      km: {
+        s: "ដោយក្តីស្រឡាញ់ អ្នកទាំងអស់គ្នាមកជួបជុំគ្នា",
+        r: "daoy kdei sralanh neak teang os knea mok chuop chum knea",
+        e: "有愛＝懷著愛心；大家一起來＝眾人一同參與、同行。"
+      },
+      vi: {
+        s: "Với tình yêu, mọi người cùng đến",
+        r: "",
+        e: "有愛＝懷著愛心；大家一起來＝眾人一同參與、同行。"
+      },
+      id: {
+        s: "Dengan cinta, marilah semua bersama-sama",
+        r: "",
+        e: "有愛＝懷著愛心；大家一起來＝眾人一同參與、同行。"
+      },
+      ne: {
+        s: "मायाका साथ सबैजना सँगै आऊ",
+        r: "māyākā sāth sabaijanā saṅgai āū",
+        e: "有愛＝懷著愛心；大家一起來＝眾人一同參與、同行。"
+      },
+      bn: {
+        s: "ভালোবাসা নিয়ে সবাই একসঙ্গে এসো",
+        r: "bhālobāsā niẏe sabāi ekasaṅge eso",
+        e: "有愛＝懷著愛心；大家一起來＝眾人一同參與、同行。"
+      },
+      es: {
+        s: "Con amor, vengan todos juntos",
+        r: "",
+        e: "有愛＝懷著愛心；大家一起來＝眾人一同參與、同行。"
+      },
+      de: {
+        s: "Mit Liebe, kommt alle zusammen",
+        r: "",
+        e: "有愛＝懷著愛心；大家一起來＝眾人一同參與、同行。"
+      },
+      my: {
+        s: "ချစ်ခြင်းမေတ္တာဖြင့် အားလုံးအတူတကွ လာကြပါ",
+        r: "chit-chin-myitta-phyint a-lon-a-tu-ta-kwa la-kya-ba",
+        e: "有愛＝懷著愛心；大家一起來＝眾人一同參與、同行。"
+      },
+      ko: {
+        s: "사랑으로 모두 함께 오라",
+        r: "sarangeuro modu hamkke ora",
+        e: "有愛＝懷著愛心；大家一起來＝眾人一同參與、同行。"
+      },
+      ja: {
+        s: "愛をもって皆で共に来よう",
+        r: "ai o motte mina de tomo ni koyō",
+        e: "有愛＝懷著愛心；大家一起來＝眾人一同參與、同行。"
+      },
+      si: {
+        s: "ආදරයෙන් සැවොම එක්ව එන්න",
+        r: "ādarayen sævoma ekva enna",
+        e: "有愛＝懷著愛心；大家一起來＝眾人一同參與、同行。"
+      },
+      fa: {
+        s: "با عشق، همگی با هم بیایید",
+        r: "bā eshq, hamegi bā ham biāyid",
+        e: "有愛＝懷著愛心；大家一起來＝眾人一同參與、同行。"
+      }
+    },
+    {
+      hi: {
+        s: "प्रेम के साथ स्वयं को गहराई से जानो",
+        r: "prem ke sāth svayaṁ ko gahrāī se jāno",
+        e: "深入＝深入內心；自明白＝自己明白道理、覺悟。"
+      },
+      en: {
+        s: "With love, deeply understand oneself",
+        r: "",
+        e: "深入＝深入內心；自明白＝自己明白道理、覺悟。"
+      },
+      ta: {
+        s: "அன்புடன் தன்னை ஆழமாக அறிந்துகொள்",
+        r: "aṉputaṉ taṉṉai āḻamāka aṟintukoḷ",
+        e: "深入＝深入內心；自明白＝自己明白道理、覺悟。"
+      },
+      th: {
+        s: "ด้วยความรัก เข้าใจตนเองอย่างลึกซึ้ง",
+        r: "duai khwam rak khaochai ton eng yang luek sueng",
+        e: "深入＝深入內心；自明白＝自己明白道理、覺悟。"
+      },
+      km: {
+        s: "ដោយក្តីស្រឡាញ់ ស្គាល់ខ្លួនឯងយ៉ាងជ្រាលជ្រៅ",
+        r: "daoy kdei sralanh skoal khluon eng yeang chral chrov",
+        e: "深入＝深入內心；自明白＝自己明白道理、覺悟。"
+      },
+      vi: {
+        s: "Với tình yêu, thấu hiểu chính mình một cách sâu sắc",
+        r: "",
+        e: "深入＝深入內心；自明白＝自己明白道理、覺悟。"
+      },
+      id: {
+        s: "Dengan cinta, pahami dirimu secara mendalam",
+        r: "",
+        e: "深入＝深入內心；自明白＝自己明白道理、覺悟。"
+      },
+      ne: {
+        s: "मायाका साथ आफूलाई गहिरोसँग बुझ",
+        r: "māyākā sāth āphūlāī gahirosaṅga bujha",
+        e: "深入＝深入內心；自明白＝自己明白道理、覺悟。"
+      },
+      bn: {
+        s: "ভালোবাসা নিয়ে নিজেকে গভীরভাবে জানো",
+        r: "bhālobāsā niẏe nijeke gabhīrabhābe jāno",
+        e: "深入＝深入內心；自明白＝自己明白道理、覺悟。"
+      },
+      es: {
+        s: "Con amor, conócete a ti mismo profundamente",
+        r: "",
+        e: "深入＝深入內心；自明白＝自己明白道理、覺悟。"
+      },
+      de: {
+        s: "Mit Liebe, erkenne dich selbst in der Tiefe",
+        r: "",
+        e: "深入＝深入內心；自明白＝自己明白道理、覺悟。"
+      },
+      my: {
+        s: "ချစ်ခြင်းမေတ္တာဖြင့် မိမိကိုယ်ကို နက်နက်ရှိုင်းရှိုင်း သိပါ",
+        r: "chit-chin-myitta-phyint mi-mi-ko-ko net-net-shein-shein thi-ba",
+        e: "深入＝深入內心；自明白＝自己明白道理、覺悟。"
+      },
+      ko: {
+        s: "사랑으로 자신을 깊이 깨달으라",
+        r: "sarangeuro jasineul gipi kkaedareura",
+        e: "深入＝深入內心；自明白＝自己明白道理、覺悟。"
+      },
+      ja: {
+        s: "愛をもって自分を深く知ろう",
+        r: "ai o motte jibun o fukaku shirō",
+        e: "深入＝深入內心；自明白＝自己明白道理、覺悟。"
+      },
+      si: {
+        s: "ආදරයෙන් ඔබව ගැඹුරින් හඳුනාගන්න",
+        r: "ādarayen obava gæmburin handunāganna",
+        e: "深入＝深入內心；自明白＝自己明白道理、覺悟。"
+      },
+      fa: {
+        s: "با عشق، خود را ژرف بشناس",
+        r: "bā eshq, khod rā zharf beshenās",
+        e: "深入＝深入內心；自明白＝自己明白道理、覺悟。"
+      }
+    },
+    {
+      hi: {
+        s: "प्रेम के साथ समर्पण करना ही उचित है",
+        r: "prem ke sāth samarpaṇ karnā hī ucit hai",
+        e: "投入＝全心全意付出；是應該＝理所當然、責無旁貸。"
+      },
+      en: {
+        s: "With love, devotion is what we should do",
+        r: "",
+        e: "投入＝全心全意付出；是應該＝理所當然、責無旁貸。"
+      },
+      ta: {
+        s: "அன்புடன் அர்ப்பணிப்பது சரியானதே",
+        r: "aṉputaṉ arppaṇippatai cariyāṉatē",
+        e: "投入＝全心全意付出；是應該＝理所當然、責無旁貸。"
+      },
+      th: {
+        s: "ด้วยความรัก การทุ่มเทนั้นถูกต้องแล้ว",
+        r: "duai khwam rak kan thum the nan thuk tong laeo",
+        e: "投入＝全心全意付出；是應該＝理所當然、責無旁貸。"
+      },
+      km: {
+        s: "ដោយក្តីស្រឡាញ់ ការប្តេជ្ញាចិត្តគឺជារឿងត្រឹមត្រូវ",
+        r: "daoy kdei sralanh kar pdach chet keu chea reuang treum trov",
+        e: "投入＝全心全意付出；是應該＝理所當然、責無旁貸。"
+      },
+      vi: {
+        s: "Với tình yêu, sự cống hiến là điều đúng đắn",
+        r: "",
+        e: "投入＝全心全意付出；是應該＝理所當然、責無旁貸。"
+      },
+      id: {
+        s: "Dengan cinta, pengabdian adalah hal yang benar",
+        r: "",
+        e: "投入＝全心全意付出；是應該＝理所當然、責無旁貸。"
+      },
+      ne: {
+        s: "मायाका साथ समर्पण गर्नु नै उचित हो",
+        r: "māyākā sāth samarpaṇ garnu nai ucit ho",
+        e: "投入＝全心全意付出；是應該＝理所當然、責無旁貸。"
+      },
+      bn: {
+        s: "ভালোবাসা নিয়ে নিবেদন করাই উচিত",
+        r: "bhālobāsā niẏe nibedan karāi ucit",
+        e: "投入＝全心全意付出；是應該＝理所當然、責無旁貸。"
+      },
+      es: {
+        s: "Con amor, la entrega es lo correcto",
+        r: "",
+        e: "投入＝全心全意付出；是應該＝理所當然、責無旁貸。"
+      },
+      de: {
+        s: "Mit Liebe ist Hingabe das Richtige",
+        r: "",
+        e: "投入＝全心全意付出；是應該＝理所當然、責無旁貸。"
+      },
+      my: {
+        s: "ချစ်ခြင်းမေတ္တာဖြင့် အပ်နှံခြင်းသည် မှန်ကန်ပါသည်",
+        r: "chit-chin-myitta-phyint ap-hnan-chin-thi hman-kan-ba-thi",
+        e: "投入＝全心全意付出；是應該＝理所當然、責無旁貸。"
+      },
+      ko: {
+        s: "사랑으로 헌신함이 마땅하다",
+        r: "sarangeuro heonsinhami mattanghada",
+        e: "投入＝全心全意付出；是應該＝理所當然、責無旁貸。"
+      },
+      ja: {
+        s: "愛をもって捧げることは正しい",
+        r: "ai o motte sasageru koto wa tadashii",
+        e: "投入＝全心全意付出；是應該＝理所當然、責無旁貸。"
+      },
+      si: {
+        s: "ආදරයෙන් කැපවීම නිවැරදියි",
+        r: "ādarayen kæpavīma niværadiyi",
+        e: "投入＝全心全意付出；是應該＝理所當然、責無旁貸。"
+      },
+      fa: {
+        s: "با عشق، ایثار کردن درست است",
+        r: "bā eshq, isār kardan dorost ast",
+        e: "投入＝全心全意付出；是應該＝理所當然、責無旁貸。"
+      }
+    },
+    {
+      hi: {
+        s: "परस्पर सीख से स्वयं को और दूसरों को सिद्ध करो",
+        r: "paraspar sīkh se svayaṁ ko aur dūsroṁ ko siddh karo",
+        e: "成己＝成就自己；成人＝成就他人；切磋揣＝互相琢磨、學習。"
+      },
+      en: {
+        s: "Perfecting self and others through mutual encouragement",
+        r: "",
+        e: "成己＝成就自己；成人＝成就他人；切磋揣＝互相琢磨、學習。"
+      },
+      ta: {
+        s: "ஒருவருக்கொருவர் கற்று தன்னையும் பிறரையும் நிறைவு செய்",
+        r: "oruvarukkoruvar kaṟṟu taṉṉaiyum piṟaraiyum niṟaivu cey",
+        e: "成己＝成就自己；成人＝成就他人；切磋揣＝互相琢磨、學習。"
+      },
+      th: {
+        s: "เรียนรู้ซึ่งกันและกัน เพื่อพัฒนาตนและผู้อื่นให้สมบูรณ์",
+        r: "rianru sueng kan lae kan phuea phatthana ton lae phu uen hai sombun",
+        e: "成己＝成就自己；成人＝成就他人；切磋揣＝互相琢磨、學習。"
+      },
+      km: {
+        s: "រៀនសូត្រពីគ្នាទៅវិញទៅមក ដើម្បីល្អឥតខ្ចោះខ្លួនឯងនិងអ្នកដទៃ",
+        r: "rien sot pi knea tov vinh tov mok daembi lea it khchoh khluon eng ning neak dtei",
+        e: "成己＝成就自己；成人＝成就他人；切磋揣＝互相琢磨、學習。"
+      },
+      vi: {
+        s: "Học hỏi lẫn nhau để hoàn thiện mình và hoàn thiện người",
+        r: "",
+        e: "成己＝成就自己；成人＝成就他人；切磋揣＝互相琢磨、學習。"
+      },
+      id: {
+        s: "Saling belajar untuk menyempurnakan diri dan sesama",
+        r: "",
+        e: "成己＝成就自己；成人＝成就他人；切磋揣＝互相琢磨、學習。"
+      },
+      ne: {
+        s: "एक-अर्काबाट सिकेर आफूलाई र अरूलाई सिद्ध गर",
+        r: "ek-arkābāṭa sikera āphūlāī ra arūlāī siddha gara",
+        e: "成己＝成就自己；成人＝成就他人；切磋揣＝互相琢磨、學習。"
+      },
+      bn: {
+        s: "পরস্পর শিখে নিজেকে ও অন্যকে সিদ্ধ করো",
+        r: "paraspar śikhe nijeke o anẏake siddha karo",
+        e: "成己＝成就自己；成人＝成就他人；切磋揣＝互相琢磨、學習。"
+      },
+      es: {
+        s: "Aprendiendo unos de otros para perfeccionarnos a nosotros y a los demás",
+        r: "",
+        e: "成己＝成就自己；成人＝成就他人；切磋揣＝互相琢磨、學習。"
+      },
+      de: {
+        s: "Voneinander lernend, uns selbst und andere vervollkommnen",
+        r: "",
+        e: "成己＝成就自己；成人＝成就他人；切磋揣＝互相琢磨、學習。"
+      },
+      my: {
+        s: "အချင်းချင်း သင်ယူ၍ မိမိနှင့်သူတစ်ပါးကို ပြည့်စုံစေပါ",
+        r: "a-chin-chin thin-yu-ywe mi-mi-hnin-thu-ta-ba-ko pyi-son-se-ba",
+        e: "成己＝成就自己；成人＝成就他人；切磋揣＝互相琢磨、學習。"
+      },
+      ko: {
+        s: "서로 배우며 자신과 남을 완성하라",
+        r: "seoro baeumyeo jasin-gwa nameul wanseonghara",
+        e: "成己＝成就自己；成人＝成就他人；切磋揣＝互相琢磨、學習。"
+      },
+      ja: {
+        s: "互いに学び合い自分と他人を完成させよう",
+        r: "tagai ni manabiai jibun to tanin o kansei saseyō",
+        e: "成己＝成就自己；成人＝成就他人；切磋揣＝互相琢磨、學習。"
+      },
+      si: {
+        s: "එකිනෙකාගෙන් ඉගෙනගෙන ඔබවත් අනුන්වත් සම්පූර්ණ කරන්න",
+        r: "ekinekāgen igenagena obavat anunvat sampūrṇa karanna",
+        e: "成己＝成就自己；成人＝成就他人；切磋揣＝互相琢磨、學習。"
+      },
+      fa: {
+        s: "با آموختن از یکدیگر، خود و دیگران را به کمال برسان",
+        r: "bā āmukhtan az yekdigar, khod va digarān rā be kamāl beresān",
+        e: "成己＝成就自己；成人＝成就他人；切磋揣＝互相琢磨、學習。"
+      }
+    },
+    {
+      hi: {
+        s: "कदम-कदम पर स्वयं को और दूसरों को सफल बनाओ",
+        r: "kadam-kadam par svayaṁ ko aur dūsroṁ ko saphal banāo",
+        e: "達己＝使自己通達；達人＝使他人通達；步步邁＝一步一步向前邁進。"
+      },
+      en: {
+        s: "Fulfilling self and others, step by step",
+        r: "",
+        e: "達己＝使自己通達；達人＝使他人通達；步步邁＝一步一步向前邁進。"
+      },
+      ta: {
+        s: "படிப்படியாக தன்னையும் பிறரையும் நிறைவேற்று",
+        r: "paṭippaṭiyāka taṉṉaiyum piṟaraiyum niṟaivēṟṟu",
+        e: "達己＝使自己通達；達人＝使他人通達；步步邁＝一步一步向前邁進。"
+      },
+      th: {
+        s: "ทีละก้าว พัฒนาตนและผู้อื่นให้สำเร็จ",
+        r: "thila kao phatthana ton lae phu uen hai samret",
+        e: "達己＝使自己通達；達人＝使他人通達；步步邁＝一步一步向前邁進。"
+      },
+      km: {
+        s: "មួយជំហានម្តង សម្រេចខ្លួនឯងនិងអ្នកដទៃ",
+        r: "muoy chomhean mteang samreach khluon eng ning neak dtei",
+        e: "達己＝使自己通達；達人＝使他人通達；步步邁＝一步一步向前邁進。"
+      },
+      vi: {
+        s: "Từng bước một, thành tựu mình và thành tựu người",
+        r: "",
+        e: "達己＝使自己通達；達人＝使他人通達；步步邁＝一步一步向前邁進。"
+      },
+      id: {
+        s: "Selangkah demi selangkah, sempurnakan diri dan sesama",
+        r: "",
+        e: "達己＝使自己通達；達人＝使他人通達；步步邁＝一步一步向前邁進。"
+      },
+      ne: {
+        s: "पाइलैपाइलामा आफूलाई र अरूलाई सफल बनाऊ",
+        r: "pāilaipāilāmā āphūlāī ra arūlāī saphal banāū",
+        e: "達己＝使自己通達；達人＝使他人通達；步步邁＝一步一步向前邁進。"
+      },
+      bn: {
+        s: "ধাপে ধাপে নিজেকে ও অন্যকে সফল করো",
+        r: "dhāpe dhāpe nijeke o anẏake saphal karo",
+        e: "達己＝使自己通達；達人＝使他人通達；步步邁＝一步一步向前邁進。"
+      },
+      es: {
+        s: "Paso a paso, hazte pleno y haz plenos a los demás",
+        r: "",
+        e: "達己＝使自己通達；達人＝使他人通達；步步邁＝一步一步向前邁進。"
+      },
+      de: {
+        s: "Schritt für Schritt, sich selbst und andere vollenden",
+        r: "",
+        e: "達己＝使自己通達；達人＝使他人通達；步步邁＝一步一步向前邁進。"
+      },
+      my: {
+        s: "တစ်လှမ်းချင်း မိမိနှင့်သူတစ်ပါးကို ပြည့်ဝစေပါ",
+        r: "ta-hlan-chin mi-mi-hnin-thu-ta-ba-ko pyi-wa-se-ba",
+        e: "達己＝使自己通達；達人＝使他人通達；步步邁＝一步一步向前邁進。"
+      },
+      ko: {
+        s: "한 걸음씩 자신과 남을 이루라",
+        r: "han georeumssik jasin-gwa nameul irura",
+        e: "達己＝使自己通達；達人＝使他人通達；步步邁＝一步一步向前邁進。"
+      },
+      ja: {
+        s: "一歩ずつ自分と他人を成就させよう",
+        r: "ippo zutsu jibun to tanin o jōju saseyō",
+        e: "達己＝使自己通達；達人＝使他人通達；步步邁＝一步一步向前邁進。"
+      },
+      si: {
+        s: "පියවරෙන් පියවර ඔබවත් අනුන්වත් සඵල කරන්න",
+        r: "piyavaren piyavara obavat anunvat saphala karanna",
+        e: "達己＝使自己通達；達人＝使他人通達；步步邁＝一步一步向前邁進。"
+      },
+      fa: {
+        s: "گام به گام، خود و دیگران را به کمال برسان",
+        r: "gām be gām, khod va digarān rā be kamāl beresān",
+        e: "達己＝使自己通達；達人＝使他人通達；步步邁＝一步一步向前邁進。"
+      }
+    },
+    {
+      hi: {
+        s: "प्रेम के साथ कोई आपदा नहीं",
+        r: "prem ke sāth koī āpadā nahīṁ",
+        e: "沒有災＝沒有災難禍患。"
+      },
+      en: {
+        s: "With love, no misery",
+        r: "",
+        e: "沒有災＝沒有災難禍患。"
+      },
+      ta: {
+        s: "அன்பிருந்தால் துன்பம் இல்லை",
+        r: "aṉpiruntāl tuṉpam illai",
+        e: "沒有災＝沒有災難禍患。"
+      },
+      th: {
+        s: "มีความรัก ก็ไม่มีภัยพิบัติ",
+        r: "mi khwam rak ko mai mi phai phibat",
+        e: "沒有災＝沒有災難禍患。"
+      },
+      km: {
+        s: "មានក្តីស្រឡាញ់ គ្មានសេចក្តីទុក្ខ",
+        r: "mean kdei sralanh kmean sechkdei tuk",
+        e: "沒有災＝沒有災難禍患。"
+      },
+      vi: {
+        s: "Có tình yêu thì không còn tai ương",
+        r: "",
+        e: "沒有災＝沒有災難禍患。"
+      },
+      id: {
+        s: "Dengan cinta, tak ada bencana",
+        r: "",
+        e: "沒有災＝沒有災難禍患。"
+      },
+      ne: {
+        s: "माया भए कुनै विपत्ति छैन",
+        r: "māyā bhae kunai vipatti chaina",
+        e: "沒有災＝沒有災難禍患。"
+      },
+      bn: {
+        s: "ভালোবাসা থাকলে কোনো বিপদ নেই",
+        r: "bhālobāsā thākle kono bipad nei",
+        e: "沒有災＝沒有災難禍患。"
+      },
+      es: {
+        s: "Con amor, no hay desgracia",
+        r: "",
+        e: "沒有災＝沒有災難禍患。"
+      },
+      de: {
+        s: "Mit Liebe gibt es kein Unglück",
+        r: "",
+        e: "沒有災＝沒有災難禍患。"
+      },
+      my: {
+        s: "ချစ်ခြင်းမေတ္တာရှိလျှင် ဘေးအန္တရာယ် မရှိပါ",
+        r: "chit-chin-myitta-shi-hlyin be-an-taya ma-shi-ba",
+        e: "沒有災＝沒有災難禍患。"
+      },
+      ko: {
+        s: "사랑이 있으면 재앙이 없다",
+        r: "sarangi isseumyeon jaeaengi eopda",
+        e: "沒有災＝沒有災難禍患。"
+      },
+      ja: {
+        s: "愛があれば災いなし",
+        r: "ai ga areba wazawai nashi",
+        e: "沒有災＝沒有災難禍患。"
+      },
+      si: {
+        s: "ආදරය තිබේ නම් විපතක් නැත",
+        r: "ādaraya tibē nam vipatak næta",
+        e: "沒有災＝沒有災難禍患。"
+      },
+      fa: {
+        s: "با عشق، هیچ بلایی نیست",
+        r: "bā eshq, hich balāyi nist",
+        e: "沒有災＝沒有災難禍患。"
+      }
+    },
+    {
+      hi: {
+        s: "प्रेम के साथ कोई हानि नहीं",
+        r: "prem ke sāth koī hāni nahīṁ",
+        e: "無傷害＝沒有人受到傷害。"
+      },
+      en: {
+        s: "With love, no suffering.",
+        r: "",
+        e: "無傷害＝沒有人受到傷害。"
+      },
+      ta: {
+        s: "அன்பிருந்தால் காயம் இல்லை",
+        r: "aṉpiruntāl kāyam illai",
+        e: "無傷害＝沒有人受到傷害。"
+      },
+      th: {
+        s: "มีความรัก ก็ไม่มีความเจ็บปวด",
+        r: "mi khwam rak ko mai mi khwam chep puat",
+        e: "無傷害＝沒有人受到傷害。"
+      },
+      km: {
+        s: "មានក្តីស្រឡាញ់ គ្មានការឈឺចាប់",
+        r: "mean kdei sralanh kmean kar chheu cheap",
+        e: "無傷害＝沒有人受到傷害。"
+      },
+      vi: {
+        s: "Có tình yêu thì không còn đau khổ",
+        r: "",
+        e: "無傷害＝沒有人受到傷害。"
+      },
+      id: {
+        s: "Dengan cinta, tak ada penderitaan",
+        r: "",
+        e: "無傷害＝沒有人受到傷害。"
+      },
+      ne: {
+        s: "माया भए कुनै पीडा छैन",
+        r: "māyā bhae kunai pīḍā chaina",
+        e: "無傷害＝沒有人受到傷害。"
+      },
+      bn: {
+        s: "ভালোবাসা থাকলে কোনো কষ্ট নেই",
+        r: "bhālobāsā thākle kono kaṣṭa nei",
+        e: "無傷害＝沒有人受到傷害。"
+      },
+      es: {
+        s: "Con amor, no hay sufrimiento",
+        r: "",
+        e: "無傷害＝沒有人受到傷害。"
+      },
+      de: {
+        s: "Mit Liebe gibt es kein Leiden",
+        r: "",
+        e: "無傷害＝沒有人受到傷害。"
+      },
+      my: {
+        s: "ချစ်ခြင်းမေတ္တာရှိလျှင် ဒုက္ခ မရှိပါ",
+        r: "chit-chin-myitta-shi-hlyin dukkha ma-shi-ba",
+        e: "無傷害＝沒有人受到傷害。"
+      },
+      ko: {
+        s: "사랑이 있으면 고통이 없다",
+        r: "sarangi isseumyeon gotongi eopda",
+        e: "無傷害＝沒有人受到傷害。"
+      },
+      ja: {
+        s: "愛があれば苦しみなし",
+        r: "ai ga areba kurushimi nashi",
+        e: "無傷害＝沒有人受到傷害。"
+      },
+      si: {
+        s: "ආදරය තිබේ නම් වේදනාවක් නැත",
+        r: "ādaraya tibē nam vēdanāvak næta",
+        e: "無傷害＝沒有人受到傷害。"
+      },
+      fa: {
+        s: "با عشق، هیچ رنجی نیست",
+        r: "bā eshq, hich ranji nist",
+        e: "無傷害＝沒有人受到傷害。"
+      }
+    },
+    {
+      hi: {
+        s: "प्रेम से अंधकार मिट जाता है",
+        r: "prem se andhakār miṭ jātā hai",
+        e: "化＝化解、消除；陰霾＝心中的陰暗與憂愁。"
+      },
+      en: {
+        s: "With love, no darkness.",
+        r: "",
+        e: "化＝化解、消除；陰霾＝心中的陰暗與憂愁。"
+      },
+      ta: {
+        s: "அன்பால் இருள் நீங்கும்",
+        r: "aṉpāl iruḷ nīṅkum",
+        e: "化＝化解、消除；陰霾＝心中的陰暗與憂愁。"
+      },
+      th: {
+        s: "มีความรัก ความมืดก็สลายไป",
+        r: "mi khwam rak khwam muet ko salai pai",
+        e: "化＝化解、消除；陰霾＝心中的陰暗與憂愁。"
+      },
+      km: {
+        s: "មានក្តីស្រឡាញ់ ភាពងងឹតរលាយបាត់",
+        r: "mean kdei sralanh pheap ngonget rolay bat",
+        e: "化＝化解、消除；陰霾＝心中的陰暗與憂愁。"
+      },
+      vi: {
+        s: "Có tình yêu thì bóng tối tan biến",
+        r: "",
+        e: "化＝化解、消除；陰霾＝心中的陰暗與憂愁。"
+      },
+      id: {
+        s: "Dengan cinta, kegelapan sirna",
+        r: "",
+        e: "化＝化解、消除；陰霾＝心中的陰暗與憂愁。"
+      },
+      ne: {
+        s: "मायाले अन्धकार हट्छ",
+        r: "māyāle andhakār haṭcha",
+        e: "化＝化解、消除；陰霾＝心中的陰暗與憂愁。"
+      },
+      bn: {
+        s: "ভালোবাসায় অন্ধকার দূর হয়",
+        r: "bhālobāsāẏ andhakār dūr haẏ",
+        e: "化＝化解、消除；陰霾＝心中的陰暗與憂愁。"
+      },
+      es: {
+        s: "Con amor, la oscuridad se disipa",
+        r: "",
+        e: "化＝化解、消除；陰霾＝心中的陰暗與憂愁。"
+      },
+      de: {
+        s: "Mit Liebe löst sich die Dunkelheit auf",
+        r: "",
+        e: "化＝化解、消除；陰霾＝心中的陰暗與憂愁。"
+      },
+      my: {
+        s: "ချစ်ခြင်းမေတ္တာဖြင့် အမှောင်ကွယ်ပျောက်သွားမည်",
+        r: "chit-chin-myitta-phyint a-hmaun-kwe-pyauk-thwa-myi",
+        e: "化＝化解、消除；陰霾＝心中的陰暗與憂愁。"
+      },
+      ko: {
+        s: "사랑으로 어둠이 걷힌다",
+        r: "sarangeuro eodumi geothinda",
+        e: "化＝化解、消除；陰霾＝心中的陰暗與憂愁。"
+      },
+      ja: {
+        s: "愛があれば闇は晴れる",
+        r: "ai ga areba yami wa hareru",
+        e: "化＝化解、消除；陰霾＝心中的陰暗與憂愁。"
+      },
+      si: {
+        s: "ආදරයෙන් අන්ධකාරය දුරුවේ",
+        r: "ādarayen andhakāraya duruvē",
+        e: "化＝化解、消除；陰霾＝心中的陰暗與憂愁。"
+      },
+      fa: {
+        s: "با عشق، تاریکی زدوده می‌شود",
+        r: "bā eshq, tāriki zodude mishavad",
+        e: "化＝化解、消除；陰霾＝心中的陰暗與憂愁。"
+      }
+    },
+    {
+      hi: {
+        s: "जीवन-पथ उज्ज्वल हो उठेगा",
+        r: "jīvan-path ujjval ho uṭhegā",
+        e: "撥雲見日＝撥開雲霧見到太陽，比喻走出困境、前途光明。"
+      },
+      en: {
+        s: "Our journey will be bright.",
+        r: "",
+        e: "撥雲見日＝撥開雲霧見到太陽，比喻走出困境、前途光明。"
+      },
+      ta: {
+        s: "வாழ்க்கைப் பாதை ஒளிமயமாகும்",
+        r: "vāḻkkaip pātai oḷimayamākum",
+        e: "撥雲見日＝撥開雲霧見到太陽，比喻走出困境、前途光明。"
+      },
+      th: {
+        s: "เส้นทางชีวิตจะสว่างไสว",
+        r: "senthang chiwit cha sawang sawai",
+        e: "撥雲見日＝撥開雲霧見到太陽，比喻走出困境、前途光明。"
+      },
+      km: {
+        s: "ផ្លូវជីវិតនឹងភ្លឺស្វាង",
+        r: "phlov chivit ning phleu svang",
+        e: "撥雲見日＝撥開雲霧見到太陽，比喻走出困境、前途光明。"
+      },
+      vi: {
+        s: "Con đường đời sẽ tươi sáng",
+        r: "",
+        e: "撥雲見日＝撥開雲霧見到太陽，比喻走出困境、前途光明。"
+      },
+      id: {
+        s: "Jalan hidup akan cerah",
+        r: "",
+        e: "撥雲見日＝撥開雲霧見到太陽，比喻走出困境、前途光明。"
+      },
+      ne: {
+        s: "जीवनको बाटो उज्यालो हुनेछ",
+        r: "jīvanko bāṭo ujyālo hunecha",
+        e: "撥雲見日＝撥開雲霧見到太陽，比喻走出困境、前途光明。"
+      },
+      bn: {
+        s: "জীবনের পথ উজ্জ্বল হবে",
+        r: "jībaner path ujjbal habe",
+        e: "撥雲見日＝撥開雲霧見到太陽，比喻走出困境、前途光明。"
+      },
+      es: {
+        s: "Nuestro camino brillará",
+        r: "",
+        e: "撥雲見日＝撥開雲霧見到太陽，比喻走出困境、前途光明。"
+      },
+      de: {
+        s: "Unser Weg wird hell sein",
+        r: "",
+        e: "撥雲見日＝撥開雲霧見到太陽，比喻走出困境、前途光明。"
+      },
+      my: {
+        s: "ဘဝလမ်းသည် တောက်ပလာမည်",
+        r: "ba-wa-lan-thi tauk-pa-la-myi",
+        e: "撥雲見日＝撥開雲霧見到太陽，比喻走出困境、前途光明。"
+      },
+      ko: {
+        s: "인생길이 밝아질 것이다",
+        r: "insaengiri balgajil geosida",
+        e: "撥雲見日＝撥開雲霧見到太陽，比喻走出困境、前途光明。"
+      },
+      ja: {
+        s: "人生の道は明るくなる",
+        r: "jinsei no michi wa akaruku naru",
+        e: "撥雲見日＝撥開雲霧見到太陽，比喻走出困境、前途光明。"
+      },
+      si: {
+        s: "ජීවන මඟ ආලෝකමත් වේ",
+        r: "jīvana maga ālokamat vē",
+        e: "撥雲見日＝撥開雲霧見到太陽，比喻走出困境、前途光明。"
+      },
+      fa: {
+        s: "راه زندگی روشن خواهد شد",
+        r: "rāh-e zendegi roshan khāhad shod",
+        e: "撥雲見日＝撥開雲霧見到太陽，比喻走出困境、前途光明。"
+      }
+    },
+    {
+      hi: {
+        s: "साधना का मार्ग सर्वत्र जीवंत है",
+        r: "sādhanā kā mārg sarvatra jīvaṁt hai",
+        e: "修道＝修行向道；活躍＝充滿活力；通四海＝遍及天下四方。"
+      },
+      en: {
+        s: "Cultivation is in all places.",
+        r: "",
+        e: "修道＝修行向道；活躍＝充滿活力；通四海＝遍及天下四方。"
+      },
+      ta: {
+        s: "தவ வழி எங்கும் உயிர்ப்புடன் இருக்கும்",
+        r: "tava vaḻi eṅkum uyirppuṭaṉ irukkum",
+        e: "修道＝修行向道；活躍＝充滿活力；通四海＝遍及天下四方。"
+      },
+      th: {
+        s: "การบำเพ็ญมีอยู่ทุกหนแห่ง",
+        r: "kan bamphen mi yu thuk hon haeng",
+        e: "修道＝修行向道；活躍＝充滿活力；通四海＝遍及天下四方。"
+      },
+      km: {
+        s: "ការតបស្នងមាននៅគ្រប់ទីកន្លែង",
+        r: "kar topsnong mean nov krob ti kanlaeng",
+        e: "修道＝修行向道；活躍＝充滿活力；通四海＝遍及天下四方。"
+      },
+      vi: {
+        s: "Con đường tu hành hiện hữu khắp mọi nơi",
+        r: "",
+        e: "修道＝修行向道；活躍＝充滿活力；通四海＝遍及天下四方。"
+      },
+      id: {
+        s: "Jalan pembinaan ada di mana-mana",
+        r: "",
+        e: "修道＝修行向道；活躍＝充滿活力；通四海＝遍及天下四方。"
+      },
+      ne: {
+        s: "साधनाको मार्ग सर्वत्र जीवन्त छ",
+        r: "sādhanāko mārga sarvatra jīvanta cha",
+        e: "修道＝修行向道；活躍＝充滿活力；通四海＝遍及天下四方。"
+      },
+      bn: {
+        s: "সাধনার পথ সর্বত্র প্রাণবন্ত",
+        r: "sādhanār path sarbatra prāṇabanta",
+        e: "修道＝修行向道；活躍＝充滿活力；通四海＝遍及天下四方。"
+      },
+      es: {
+        s: "El cultivo está en todas partes",
+        r: "",
+        e: "修道＝修行向道；活躍＝充滿活力；通四海＝遍及天下四方。"
+      },
+      de: {
+        s: "Die Kultivierung ist überall",
+        r: "",
+        e: "修道＝修行向道；活躍＝充滿活力；通四海＝遍及天下四方。"
+      },
+      my: {
+        s: "ကျင့်ကြံခြင်းသည် နေရာတိုင်းတွင် ရှိသည်",
+        r: "kyin-kyan-chin-thi ne-ya-tain-twin shi-thi",
+        e: "修道＝修行向道；活躍＝充滿活力；通四海＝遍及天下四方。"
+      },
+      ko: {
+        s: "수행의 길이 사방에 활기차다",
+        r: "suhaengui giri sabange hwalgichada",
+        e: "修道＝修行向道；活躍＝充滿活力；通四海＝遍及天下四方。"
+      },
+      ja: {
+        s: "修行の道は四方に活きている",
+        r: "shugyō no michi wa shihō ni ikite iru",
+        e: "修道＝修行向道；活躍＝充滿活力；通四海＝遍及天下四方。"
+      },
+      si: {
+        s: "භාවනා මඟ සෑම තැනම සජීවීව පවතී",
+        r: "bhāvanā maga sæma tænama sajīvīva pavatī",
+        e: "修道＝修行向道；活躍＝充滿活力；通四海＝遍及天下四方。"
+      },
+      fa: {
+        s: "راه تزکیه در همه جا زنده است",
+        r: "rāh-e tazkiye dar hame jā zende ast",
+        e: "修道＝修行向道；活躍＝充滿活力；通四海＝遍及天下四方。"
+      }
+    },
+    {
+      hi: {
+        s: "ज्ञान-प्राप्ति में कोई सीमा नहीं",
+        r: "jñān-prāpti meṁ koī sīmā nahīṁ",
+        e: "暢達＝順暢通達；無阻礙＝沒有阻擋。"
+      },
+      en: {
+        s: "Without limit to gain wisdom.",
+        r: "",
+        e: "暢達＝順暢通達；無阻礙＝沒有阻擋。"
+      },
+      ta: {
+        s: "ஞானம் பெற எல்லையில்லை",
+        r: "ñāṉam peṟa ellaiyillai",
+        e: "暢達＝順暢通達；無阻礙＝沒有阻擋。"
+      },
+      th: {
+        s: "การได้รับปัญญาไม่มีขีดจำกัด",
+        r: "kan dai rap panya mai mi khit chamkat",
+        e: "暢達＝順暢通達；無阻礙＝沒有阻擋。"
+      },
+      km: {
+        s: "ការទទួលបានប្រាជ្ញាគ្មានដែនកំណត់",
+        r: "kar totuol ban prachnea kmean daen komnot",
+        e: "暢達＝順暢通達；無阻礙＝沒有阻擋。"
+      },
+      vi: {
+        s: "Đạt được trí tuệ không giới hạn",
+        r: "",
+        e: "暢達＝順暢通達；無阻礙＝沒有阻擋。"
+      },
+      id: {
+        s: "Memperoleh kebijaksanaan tanpa batas",
+        r: "",
+        e: "暢達＝順暢通達；無阻礙＝沒有阻擋。"
+      },
+      ne: {
+        s: "ज्ञान प्राप्त गर्न कुनै सीमा छैन",
+        r: "jñān prāpta garna kunai sīmā chaina",
+        e: "暢達＝順暢通達；無阻礙＝沒有阻擋。"
+      },
+      bn: {
+        s: "জ্ঞান লাভের কোনো সীমা নেই",
+        r: "jñān lābher kono sīmā nei",
+        e: "暢達＝順暢通達；無阻礙＝沒有阻擋。"
+      },
+      es: {
+        s: "Obtener sabiduría no tiene límite",
+        r: "",
+        e: "暢達＝順暢通達；無阻礙＝沒有阻擋。"
+      },
+      de: {
+        s: "Weisheit zu erlangen kennt keine Grenze",
+        r: "",
+        e: "暢達＝順暢通達；無阻礙＝沒有阻擋。"
+      },
+      my: {
+        s: "ပညာရရှိရန် အကန့်အသတ် မရှိပါ",
+        r: "pyin-nya-ya-shi-yan a-kant-a-that ma-shi-ba",
+        e: "暢達＝順暢通達；無阻礙＝沒有阻擋。"
+      },
+      ko: {
+        s: "지혜 얻음에 한계가 없다",
+        r: "jihye eodeume hangyega eopda",
+        e: "暢達＝順暢通達；無阻礙＝沒有阻擋。"
+      },
+      ja: {
+        s: "智慧を得るに限りなし",
+        r: "chie o eru ni kagiri nashi",
+        e: "暢達＝順暢通達；無阻礙＝沒有阻擋。"
+      },
+      si: {
+        s: "ඥානය ලැබීමට සීමාවක් නැත",
+        r: "jñānaya læbīmaṭa sīmāvak næta",
+        e: "暢達＝順暢通達；無阻礙＝沒有阻擋。"
+      },
+      fa: {
+        s: "به دست آوردن حکمت حدی ندارد",
+        r: "be dast āvordan-e hekmat haddi nadārad",
+        e: "暢達＝順暢通達；無阻礙＝沒有阻擋。"
+      }
+    },
+    {
+      hi: {
+        s: "ज्ञान-अमृत से सिंचित हो",
+        r: "jñān-amṛt se siṁcit ho",
+        e: "醍醐＝佛家比喻最高的智慧；灌溉＝滋潤澆灌。"
+      },
+      en: {
+        s: "Nourished by the sweet dew of wisdom",
+        r: "",
+        e: "醍醐＝佛家比喻最高的智慧；灌溉＝滋潤澆灌。"
+      },
+      ta: {
+        s: "ஞான அமிர்தத்தால் நனைந்திடு",
+        r: "ñāṉa amirtattāl naṉaintiṭu",
+        e: "醍醐＝佛家比喻最高的智慧；灌溉＝滋潤澆灌。"
+      },
+      th: {
+        s: "ได้รับการหล่อเลี้ยงด้วยน้ำทิพย์แห่งปัญญา",
+        r: "dai rap kan lo liang duai nam thip haeng panya",
+        e: "醍醐＝佛家比喻最高的智慧；灌溉＝滋潤澆灌。"
+      },
+      km: {
+        s: "បានទទួលការស្រោចស្រពដោយទឹកអម្រឹតនៃប្រាជ្ញា",
+        r: "ban totuol kar srauch srop daoy teuk amreut nei prachnea",
+        e: "醍醐＝佛家比喻最高的智慧；灌溉＝滋潤澆灌。"
+      },
+      vi: {
+        s: "Được tưới tắm bởi cam lồ của trí tuệ",
+        r: "",
+        e: "醍醐＝佛家比喻最高的智慧；灌溉＝滋潤澆灌。"
+      },
+      id: {
+        s: "Disirami oleh embun kebijaksanaan",
+        r: "",
+        e: "醍醐＝佛家比喻最高的智慧；灌溉＝滋潤澆灌。"
+      },
+      ne: {
+        s: "ज्ञान-अमृतले सिञ्चित होऊ",
+        r: "jñān-amṛtale siñcit hoū",
+        e: "醍醐＝佛家比喻最高的智慧；灌溉＝滋潤澆灌。"
+      },
+      bn: {
+        s: "জ্ঞান-অমৃতে সিঞ্চিত হও",
+        r: "jñān-amṛte siñcita haō",
+        e: "醍醐＝佛家比喻最高的智慧；灌溉＝滋潤澆灌。"
+      },
+      es: {
+        s: "Nutrido por el dulce rocío de la sabiduría",
+        r: "",
+        e: "醍醐＝佛家比喻最高的智慧；灌溉＝滋潤澆灌。"
+      },
+      de: {
+        s: "Genährt vom süßen Tau der Weisheit",
+        r: "",
+        e: "醍醐＝佛家比喻最高的智慧；灌溉＝滋潤澆灌。"
+      },
+      my: {
+        s: "ပညာ၏ချိုမြိန်သော နှင်းရည်ဖြင့် စိုစွတ်စေပါ",
+        r: "pyin-nya-ei-chou-myein-thaw hnin-ye-phyint so-sut-se-ba",
+        e: "醍醐＝佛家比喻最高的智慧；灌溉＝滋潤澆灌。"
+      },
+      ko: {
+        s: "지혜의 감로로 적셔지라",
+        r: "jihyeui gamnoro jeoksyeojira",
+        e: "醍醐＝佛家比喻最高的智慧；灌溉＝滋潤澆灌。"
+      },
+      ja: {
+        s: "智慧の甘露に潤されよう",
+        r: "chie no kanro ni uruosareyō",
+        e: "醍醐＝佛家比喻最高的智慧；灌溉＝滋潤澆灌。"
+      },
+      si: {
+        s: "ඥාන අමෘතයෙන් තෙමෙන්න",
+        r: "jñāna amṛtayen temenna",
+        e: "醍醐＝佛家比喻最高的智慧；灌溉＝滋潤澆灌。"
+      },
+      fa: {
+        s: "با شبنم شیرین حکمت سیراب شو",
+        r: "bā shabnam-e shirin-e hekmat sirāb sho",
+        e: "醍醐＝佛家比喻最高的智慧；灌溉＝滋潤澆灌。"
+      }
+    },
+    {
+      hi: {
+        s: "हृदय आनंद से भर जाए",
+        r: "hṛday ānaṁd se bhar jāe",
+        e: "法喜＝修行得道的喜悅；滿胸懷＝充滿心中。"
+      },
+      en: {
+        s: "Chest full of joy.",
+        r: "",
+        e: "法喜＝修行得道的喜悅；滿胸懷＝充滿心中。"
+      },
+      ta: {
+        s: "நெஞ்சம் மகிழ்ச்சியால் நிறையும்",
+        r: "neñcam makiḻcciyāl niṟaiyum",
+        e: "法喜＝修行得道的喜悅；滿胸懷＝充滿心中。"
+      },
+      th: {
+        s: "อกเต็มไปด้วยความปีติยินดี",
+        r: "ok tem pai duai khwam piti yindi",
+        e: "法喜＝修行得道的喜悅；滿胸懷＝充滿心中。"
+      },
+      km: {
+        s: "ទ្រូងពេញដោយសេចក្តីរីករាយ",
+        r: "truong penh daoy sechkdei rik reay",
+        e: "法喜＝修行得道的喜悅；滿胸懷＝充滿心中。"
+      },
+      vi: {
+        s: "Ngực tràn đầy niềm hoan hỷ",
+        r: "",
+        e: "法喜＝修行得道的喜悅；滿胸懷＝充滿心中。"
+      },
+      id: {
+        s: "Dada penuh dengan sukacita",
+        r: "",
+        e: "法喜＝修行得道的喜悅；滿胸懷＝充滿心中。"
+      },
+      ne: {
+        s: "छाती आनन्दले भरियोस्",
+        r: "chātī ānandale bhariyos",
+        e: "法喜＝修行得道的喜悅；滿胸懷＝充滿心中。"
+      },
+      bn: {
+        s: "বুক আনন্দে ভরে উঠুক",
+        r: "buk ānande bhare uṭhuk",
+        e: "法喜＝修行得道的喜悅；滿胸懷＝充滿心中。"
+      },
+      es: {
+        s: "El pecho lleno de alegría",
+        r: "",
+        e: "法喜＝修行得道的喜悅；滿胸懷＝充滿心中。"
+      },
+      de: {
+        s: "Die Brust voll Freude",
+        r: "",
+        e: "法喜＝修行得道的喜悅；滿胸懷＝充滿心中。"
+      },
+      my: {
+        s: "ရင်ဘတ် ဝမ်းမြောက်ခြင်းဖြင့် ပြည့်ပါစေ",
+        r: "yin-bat wan-myauk-chin-phyint pyi-ba-se",
+        e: "法喜＝修行得道的喜悅；滿胸懷＝充滿心中。"
+      },
+      ko: {
+        s: "가슴에 기쁨이 가득하라",
+        r: "gaseume gippeumi gadeukhara",
+        e: "法喜＝修行得道的喜悅；滿胸懷＝充滿心中。"
+      },
+      ja: {
+        s: "胸に法喜が満ちよう",
+        r: "mune ni hōki ga michiyō",
+        e: "法喜＝修行得道的喜悅；滿胸懷＝充滿心中。"
+      },
+      si: {
+        s: "හදවත සතුටින් පිරේවා",
+        r: "hadavata satuṭin pirēvā",
+        e: "法喜＝修行得道的喜悅；滿胸懷＝充滿心中。"
+      },
+      fa: {
+        s: "سینه از شادی لبریز باد",
+        r: "sine az shādi labriz bād",
+        e: "法喜＝修行得道的喜悅；滿胸懷＝充滿心中。"
+      }
+    },
+    {
+      hi: {
+        s: "शुभाशीष और कृपा बोओ",
+        r: "śubhāśīṣ aur kṛpā boo",
+        e: "吉祥如意＝吉利順心；栽＝栽種、培植。"
+      },
+      en: {
+        s: "Blessing and grace.",
+        r: "",
+        e: "吉祥如意＝吉利順心；栽＝栽種、培植。"
+      },
+      ta: {
+        s: "ஆசியும் அருளும் விதைத்திடு",
+        r: "āciyum aruḷum vitaittiṭu",
+        e: "吉祥如意＝吉利順心；栽＝栽種、培植。"
+      },
+      th: {
+        s: "ปลูกฝังพรและความเมตตา",
+        r: "pluk fang phon lae khwam metta",
+        e: "吉祥如意＝吉利順心；栽＝栽種、培植。"
+      },
+      km: {
+        s: "ដាំពរជ័យនិងព្រះគុណ",
+        r: "dam por chey ning preah kun",
+        e: "吉祥如意＝吉利順心；栽＝栽種、培植。"
+      },
+      vi: {
+        s: "Gieo trồng phước lành và ân điển",
+        r: "",
+        e: "吉祥如意＝吉利順心；栽＝栽種、培植。"
+      },
+      id: {
+        s: "Menanam berkah dan karunia",
+        r: "",
+        e: "吉祥如意＝吉利順心；栽＝栽種、培植。"
+      },
+      ne: {
+        s: "शुभाशीष र कृपा रोप",
+        r: "śubhāśīṣ ra kṛpā ropa",
+        e: "吉祥如意＝吉利順心；栽＝栽種、培植。"
+      },
+      bn: {
+        s: "আশীর্বাদ ও কৃপা রোপণ করো",
+        r: "āśīrbād o kṛpā ropaṇ karo",
+        e: "吉祥如意＝吉利順心；栽＝栽種、培植。"
+      },
+      es: {
+        s: "Siembra bendición y gracia",
+        r: "",
+        e: "吉祥如意＝吉利順心；栽＝栽種、培植。"
+      },
+      de: {
+        s: "Pflanze Segen und Gnade",
+        r: "",
+        e: "吉祥如意＝吉利順心；栽＝栽種、培植。"
+      },
+      my: {
+        s: "မင်္ဂလာနှင့် ကျေးဇူးတော်ကို စိုက်ပျိုးပါ",
+        r: "mingala-hnin kyay-zu-taw-ko saik-pyou-ba",
+        e: "吉祥如意＝吉利順心；栽＝栽種、培植。"
+      },
+      ko: {
+        s: "축복과 은혜를 심으라",
+        r: "chukbokgwa eunhyereul simeura",
+        e: "吉祥如意＝吉利順心；栽＝栽種、培植。"
+      },
+      ja: {
+        s: "祝福と恵みを植えよう",
+        r: "shukufuku to megumi o ueyō",
+        e: "吉祥如意＝吉利順心；栽＝栽種、培植。"
+      },
+      si: {
+        s: "ආශීර්වාදයත් අනුග්‍රහයත් රෝපණය කරන්න",
+        r: "āśīrvādayat anugrahayat rōpaṇaya karanna",
+        e: "吉祥如意＝吉利順心；栽＝栽種、培植。"
+      },
+      fa: {
+        s: "برکت و فیض بکار",
+        r: "barakat va feyz bekār",
+        e: "吉祥如意＝吉利順心；栽＝栽種、培植。"
+      }
+    },
+    {
+      hi: {
+        s: "सब कार्य शांति और प्रेम से पूर्ण हों",
+        r: "sab kāry śāṁti aur prem se pūrṇ hoṁ",
+        e: "萬事＝一切事情；平安泰＝平安順遂。"
+      },
+      en: {
+        s: "Love and peace.",
+        r: "",
+        e: "萬事＝一切事情；平安泰＝平安順遂。"
+      },
+      ta: {
+        s: "அனைத்தும் அமைதியும் அன்பும் நிறைந்திருக்கும்",
+        r: "aṉaittum amaitiyum aṉpum niṟaintirukkum",
+        e: "萬事＝一切事情；平安泰＝平安順遂。"
+      },
+      th: {
+        s: "ทุกสิ่งเต็มไปด้วยความรักและความสงบ",
+        r: "thuk sing tem pai duai khwam rak lae khwam sangop",
+        e: "萬事＝一切事情；平安泰＝平安順遂。"
+      },
+      km: {
+        s: "គ្រប់យ៉ាងពេញដោយសេចក្តីស្រឡាញ់និងសន្តិភាព",
+        r: "krob yeang penh daoy sechkdei sralanh ning santipheap",
+        e: "萬事＝一切事情；平安泰＝平安順遂。"
+      },
+      vi: {
+        s: "Mọi sự đều tràn đầy tình yêu và hòa bình",
+        r: "",
+        e: "萬事＝一切事情；平安泰＝平安順遂。"
+      },
+      id: {
+        s: "Segala hal penuh cinta dan damai",
+        r: "",
+        e: "萬事＝一切事情；平安泰＝平安順遂。"
+      },
+      ne: {
+        s: "सबै कुरा प्रेम र शान्तिले भरियोस्",
+        r: "sabai kurā prem ra śāntile bhariyos",
+        e: "萬事＝一切事情；平安泰＝平安順遂。"
+      },
+      bn: {
+        s: "সবকিছু ভালোবাসা ও শান্তিতে পূর্ণ হোক",
+        r: "sabakichu bhālobāsā o śāntite pūrṇa hok",
+        e: "萬事＝一切事情；平安泰＝平安順遂。"
+      },
+      es: {
+        s: "Todo lleno de amor y paz",
+        r: "",
+        e: "萬事＝一切事情；平安泰＝平安順遂。"
+      },
+      de: {
+        s: "Alles erfüllt von Liebe und Frieden",
+        r: "",
+        e: "萬事＝一切事情；平安泰＝平安順遂。"
+      },
+      my: {
+        s: "အရာအားလုံး ချစ်ခြင်းနှင့် ငြိမ်းချမ်းမှုဖြင့် ပြည့်ပါစေ",
+        r: "a-ya-a-lon chit-chin-hnin nyein-chan-hmu-phyint pyi-ba-se",
+        e: "萬事＝一切事情；平安泰＝平安順遂。"
+      },
+      ko: {
+        s: "만사가 사랑과 평화로 가득하라",
+        r: "mansaga saranggwa pyeonghwaro gadeukhara",
+        e: "萬事＝一切事情；平安泰＝平安順遂。"
+      },
+      ja: {
+        s: "万事が愛と平和に満ちよう",
+        r: "banji ga ai to heiwa ni michiyō",
+        e: "萬事＝一切事情；平安泰＝平安順遂。"
+      },
+      si: {
+        s: "සියල්ල ආදරයෙන් සහ සාමයෙන් පිරේවා",
+        r: "siyalla ādarayen saha sāmiyen pirēvā",
+        e: "萬事＝一切事情；平安泰＝平安順遂。"
+      },
+      fa: {
+        s: "همه چیز از عشق و صلح لبریز باد",
+        r: "hame chiz az eshq va solh labriz bād",
+        e: "萬事＝一切事情；平安泰＝平安順遂。"
+      }
+    },
+    {
+      hi: {
+        s: "स्वर्ग और धरती मिलकर जयकार करें",
+        r: "svarg aur dhartī milkar jaykār kareṁ",
+        e: "天人＝天上與人間；共喝采＝一同歡呼讚頌。"
+      },
+      en: {
+        s: "Heaven's in the world.",
+        r: "",
+        e: "天人＝天上與人間；共喝采＝一同歡呼讚頌。"
+      },
+      ta: {
+        s: "விண்ணும் மண்ணும் சேர்ந்து வாழ்த்தும்",
+        r: "viṇṇum maṇṇum cērntu vāḻttum",
+        e: "天人＝天上與人間；共喝采＝一同歡呼讚頌。"
+      },
+      th: {
+        s: "สวรรค์และโลกพร้อมกันสรรเสริญ",
+        r: "sawan lae lok phrom kan sansoen",
+        e: "天人＝天上與人間；共喝采＝一同歡呼讚頌。"
+      },
+      km: {
+        s: "ឋានសួគ៌និងផែនដីរួមគ្នាអបអរ",
+        r: "than suorge ning phaen dei ruom knea ob or",
+        e: "天人＝天上與人間；共喝采＝一同歡呼讚頌。"
+      },
+      vi: {
+        s: "Trời và người cùng hoan hô",
+        r: "",
+        e: "天人＝天上與人間；共喝采＝一同歡呼讚頌。"
+      },
+      id: {
+        s: "Langit dan bumi bersorak bersama",
+        r: "",
+        e: "天人＝天上與人間；共喝采＝一同歡呼讚頌。"
+      },
+      ne: {
+        s: "स्वर्ग र पृथ्वी मिलेर जयजयकार गरून्",
+        r: "svarga ra pṛthvī milera jayajaykār garūn",
+        e: "天人＝天上與人間；共喝采＝一同歡呼讚頌。"
+      },
+      bn: {
+        s: "স্বর্গ ও পৃথিবী মিলে জয়ধ্বনি করুক",
+        r: "sbarga o pṛthibī mile jaẏadhbani karuk",
+        e: "天人＝天上與人間；共喝采＝一同歡呼讚頌。"
+      },
+      es: {
+        s: "El cielo y la tierra aplauden juntos",
+        r: "",
+        e: "天人＝天上與人間；共喝采＝一同歡呼讚頌。"
+      },
+      de: {
+        s: "Himmel und Erde jubeln gemeinsam",
+        r: "",
+        e: "天人＝天上與人間；共喝采＝一同歡呼讚頌。"
+      },
+      my: {
+        s: "နတ်ပြည်နှင့် ကမ္ဘာမြေ အတူတကွ ချီးမွမ်းကြပါ",
+        r: "nat-pyi-hnin kaba-mye a-tu-ta-kwa chi-mwan-kya-ba",
+        e: "天人＝天上與人間；共喝采＝一同歡呼讚頌。"
+      },
+      ko: {
+        s: "천지가 함께 찬미하라",
+        r: "cheonjiga hamkke chanmihara",
+        e: "天人＝天上與人間；共喝采＝一同歡呼讚頌。"
+      },
+      ja: {
+        s: "天地が共に喝采しよう",
+        r: "tenchi ga tomo ni kassai shiyō",
+        e: "天人＝天上與人間；共喝采＝一同歡呼讚頌。"
+      },
+      si: {
+        s: "අහසත් පොළොවත් එක්ව ප්‍රශංසා කරත්වා",
+        r: "ahasat polovat ekva praśansā karatvā",
+        e: "天人＝天上與人間；共喝采＝一同歡呼讚頌。"
+      },
+      fa: {
+        s: "آسمان و زمین با هم ستایش کنند",
+        r: "āsmān va zamin bā ham setāyesh konand",
+        e: "天人＝天上與人間；共喝采＝一同歡呼讚頌。"
+      }
+    }
+  ]
 };
