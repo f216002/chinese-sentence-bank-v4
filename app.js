@@ -2828,6 +2828,7 @@ const V4_RITUAL_DOCS = {
     title: "乾道平常日早香燒香禮節",
     docTitle: "乾道平常日早香燒香禮節（完整版）",
     buttonLabel: "📄 乾道平常日早香內容",
+    audioPath: "audio/rituals/shaoxiang-qiandao.mp3",
     steps: [
       { seq: 1,
         shang: "作揖，跪", shangPy: "zuò yī, guì",
@@ -2973,6 +2974,7 @@ const V4_RITUAL_DOCS = {
     title: "坤道平常日早香燒香禮節",
     docTitle: "坤道平常日早香燒香禮節（完整版）",
     buttonLabel: "📄 坤道平常日早香內容",
+    audioPath: "audio/rituals/shaoxiang-kundao.mp3",
     steps: [
       { seq: 1,
         shang: "作揖，跪", shangPy: "zuò yī, guì",
@@ -3280,10 +3282,23 @@ async function renderRitualView(ritualId) {
     ritualDocIds.forEach(id => { const b = makeRitualDocButton(id); if (b) audioWrap.appendChild(b); });
     content.appendChild(audioWrap);
   } else if (ritualDocIds.length) {
-    const docWrap = document.createElement('div');
-    docWrap.className = 'song-video-wrap';
-    ritualDocIds.forEach(id => { const b = makeRitualDocButton(id); if (b) docWrap.appendChild(b); });
-    content.appendChild(docWrap);
+    /* 燒香禮：乾道／坤道各一列，音檔在左、內容按鍵在右（比照參辭駕模式）。 */
+    ritualDocIds.forEach(id => {
+      const doc = V4_RITUAL_DOCS[id];
+      const rowWrap = document.createElement('div');
+      rowWrap.className = 'song-video-wrap';
+      if (doc && doc.audioPath) {
+        const audio = document.createElement('audio');
+        audio.controls = true;
+        audio.preload = 'metadata';
+        audio.src = doc.audioPath;
+        audio.setAttribute('aria-label', `${doc.title} 朗讀`);
+        rowWrap.appendChild(audio);
+      }
+      const b = makeRitualDocButton(id);
+      if (b) rowWrap.appendChild(b);
+      content.appendChild(rowWrap);
+    });
   } else {
     const note = document.createElement('p');
     note.className = 'section-note';
