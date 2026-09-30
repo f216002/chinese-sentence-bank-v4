@@ -2249,8 +2249,8 @@ const V4_SONGS = [
   {
     id: 'huanyingge',
     title: '歡迎歌',
-    videoType: 'audio',
-    audioPath: 'audio/songs/huanyingge.mp3',
+    videoType: 'youtube',
+    youtubeId: 'CSl4pn-oxbQ',
     lines: [
       { zh: '真正高興的見到您', py: 'zhēn zhèng gāo xìng de jiàn dào nín' },
       { zh: '滿心歡喜地歡迎您', py: 'mǎn xīn huān xǐ de huān yíng nín' },
