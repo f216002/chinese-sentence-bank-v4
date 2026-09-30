@@ -2322,6 +2322,18 @@ const V4_SONGS = [
       { zh: '天人共喝采', py: 'tiān rén gòng hè cǎi' },
     ],
   },
+  {
+    id: 'huanyingge',
+    title: '歡迎歌',
+    videoType: 'audio',
+    audioPath: 'audio/songs/huanyingge.mp3',
+    lines: [
+      { zh: '真正高興的見到您', py: 'zhēn zhèng gāo xìng de jiàn dào nín' },
+      { zh: '滿心歡喜地歡迎您', py: 'mǎn xīn huān xǐ de huān yíng nín' },
+      { zh: '歡迎！歡迎！', py: 'huān yíng! huān yíng!' },
+      { zh: '我們歡迎您！', py: 'wǒ men huān yíng nín!' },
+    ],
+  },
 ];
 
 /* 合併歌曲翻譯：v4-songs-i18n.js 的 V4_SONGS_I18N 寫入各行 line.i18n。 */
@@ -2559,7 +2571,12 @@ async function renderSongView(songId) {
     lyricsGrid.appendChild(createCard(s, true));
   });
   /* YouTube 歌曲：用 iframe 嵌入；Storage 歌曲：用 SDK 取下載網址播 HTML5 video。 */
-  if (song.videoType === 'youtube' && song.youtubeId) {
+  if (song.videoType === 'audio' && song.audioPath) {
+    content.innerHTML = `
+      <div class="song-video-wrap">
+        <audio class="song-audio" controls preload="metadata" src="${song.audioPath}" aria-label="${escapeHtml(song.title)} 音檔"></audio>
+      </div>`;
+  } else if (song.videoType === 'youtube' && song.youtubeId) {
     content.innerHTML = `
       <div class="song-video-wrap">
         <iframe class="song-youtube" src="https://www.youtube.com/embed/${song.youtubeId}" title="${escapeHtml(song.title)}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
