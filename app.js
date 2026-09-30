@@ -835,7 +835,7 @@ async function submitTeacherAudio() {
     const me = requireApprovedAccess();
     const uid = me.uid;
     const mime = recording.mimeType || 'audio/webm';
-    const ext = mime.includes('mp4') ? 'm4a' : 'webm';
+    const ext = mime.includes('mp4') ? 'm4a' : mime.includes('wav') ? 'wav' : 'webm';
     /* 個人句子→該老師個人音檔區；共版課程錄音→錄音者自己的個人音檔區＋個人覆寫層
        （管理員也一樣，只影響自己的畫面；共版錄音的變更走內容包）。 */
     const isPersonal = sentence._owner && sentence._owner !== 'shared';
@@ -6326,12 +6326,16 @@ async function downloadTeacherAudio(sentence, button) {
   const url = await fetchTeacherAudioUrl(sentence);
   if (!url) return;
   const rawPath = sentence.audioPath || sentence.standardAudioUrl || '';
-  const fileName = String(rawPath).split('/').pop() || `${sentence.recordId || 'recording'}.webm`;
+  let fileName = String(rawPath).split('/').pop() || `${sentence.recordId || 'recording'}`;
+  // 根據實際音檔格式修正副檔名（舊檔可能存成.webm但內容是wav）
   try {
     if (button) button.disabled = true;
     const resp = await fetch(url);
     if (!resp.ok) throw new Error('fetch failed');
     const blob = await resp.blob();
+    const actualMime = blob.type || sentence.audioMime || '';
+    const correctExt = actualMime.includes('wav') ? 'wav' : actualMime.includes('mp4') ? 'm4a' : actualMime.includes('webm') ? 'webm' : 'wav';
+    fileName = fileName.replace(/\.(webm|wav|m4a|mp3)$/i, '') + '.' + correctExt;
     const objUrl = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = objUrl;
