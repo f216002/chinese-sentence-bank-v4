@@ -2444,6 +2444,39 @@ const V4_SONGS = [
         i18n: { hi: { s: 'Karuna bhari yaadein, dil mein nibhaana', r: 'Karuna bhari yaadein, dil mein nibhaana',
           e: 'Karuna se bhari yaadon ko humein dil mein nibhana chahiye. Unki shiksha ko hamesha yaad rakhen.' } } },
     ],
+  },
+  {
+    id: 'woshiyinduren',
+    title: '我是印度人',
+    videoType: 'youtube',
+    youtubeId: 'Fxns_NVhhWg',
+    /* 印地文專屬歌曲：僅在選擇印地文時顯示於最後，不參與排序編號。 */
+    hindiOnly: true,
+    lines: [
+      { zh: '我是印度人，正在學中文', py: 'wǒ shì yìn dù rén，zhèng zài xué zhōng wén' },
+      { zh: '一二三四五，你我大家好', py: 'yī èr sān sì wǔ，nǐ wǒ dà jiā hǎo' },
+      { zh: '六七八九十，平安你好嗎', py: 'liù qī bā jiǔ shí，píng ān nǐ hǎo ma' },
+      { zh: '我是印度人，同學老師好', py: 'wǒ shì yìn dù rén，tóng xué lǎo shī hǎo' },
+      { zh: '高興認識你，天天都快樂', py: 'gāo xìng rèn shí nǐ，tiān tiān dōu kuài lè' },
+    ],
+  },
+  {
+    id: 'zhuanihiu-hindi',
+    title: '抓泥鰍Hindi',
+    videoType: 'youtube',
+    youtubeId: 'oBFvaV6WDDI',
+    /* 印地文專屬歌曲（無歌詞卡）：僅在選擇印地文時顯示於最後，不參與排序編號。 */
+    hindiOnly: true,
+    lines: [],
+  },
+  {
+    id: 'woniu-hindi',
+    title: '蝸牛與黃鸝鳥Hindi',
+    videoType: 'youtube',
+    youtubeId: '2_9gyaHhhAg',
+    /* 印地文專屬歌曲（無歌詞卡）：僅在選擇印地文時顯示於最後，不參與排序編號。 */
+    hindiOnly: true,
+    lines: [],
   }
 ];
 
@@ -2649,11 +2682,14 @@ function renderSongsGrid() {
     card.type = 'button';
     card.className = 'lesson-card song-card';
     const seqHtml = seqNum != null ? `<span class="song-seq">${seqNum}</span>` : '';
+    const linesLabel = song.lines.length > 0
+      ? `${song.lines.length} 句歌詞 <span class="en-sub">${song.lines.length} lines</span>`
+      : `印地文歌曲 <span class="en-sub">Hindi song</span>`;
     card.innerHTML = `
       <span class="lesson-num">🎵 <span class="en-sub">Song</span></span>
       ${seqHtml}
       <span class="lesson-zh" lang="zh-Hant">${escapeHtml(song.title)}</span>
-      <span class="lesson-topic">${song.lines.length} 句歌詞 <span class="en-sub">${song.lines.length} lines</span></span>`;
+      <span class="lesson-topic">${linesLabel}</span>`;
     card.setAttribute('aria-label', `中文歌曲 ${song.title}`);
     card.addEventListener('click', () => { courseState.song = song.id; courseState.lesson = 0; courseState.page = 'songs'; renderCourse(); $('courseSection').scrollIntoView({ behavior: 'smooth' }); });
     grid.appendChild(card);
