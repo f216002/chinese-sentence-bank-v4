@@ -1585,10 +1585,13 @@ function renderSentences() {
     visible.push(s);
   }
 
-  /* 搜尋歌曲歌詞：有关键字時一併搜尋 18 首歌曲的每句歌詞。 */
+  /* 搜尋歌曲歌詞：有关键字時一併搜尋歌曲的每句歌詞。
+     印地文專屬歌曲僅在印地文模式納入。 */
   if (searching && typeof V4_SONGS !== 'undefined') {
     const terms = [kwA, kwB, kwC].filter(Boolean);
+    const isHindi = (state.sourceLanguage || 'hi') === 'hi';
     for (const song of V4_SONGS) {
+      if (song.hindiOnly && !isHindi) continue;
       song.lines.forEach((line, idx) => {
         const s = songLineToSentence(song, line, idx);
         const haystack = normalizeSearchText(
@@ -2407,6 +2410,40 @@ const V4_SONGS = [
       { zh: '整個世界全部的時光', py: 'zhěng gè shì jiè quán bù de shí guāng' },
       { zh: '美得像畫卷', py: 'měi de xiàng huà juàn' },
     ],
+  },
+  {
+    id: 'miaojijingshen-hindi',
+    title: '妙極精神(Hindi版)',
+    videoType: 'youtube',
+    youtubeId: '1TkYPTGN9kI',
+    /* 印地文專屬歌曲：僅在選擇印地文時顯示於最後，不參與排序編號。 */
+    hindiOnly: true,
+    lines: [
+      { zh: '「樞紐」為我們付出特別的愛', py: '「shū niǔ」wèi wǒ men fù chū tè bié de ài',
+        i18n: { hi: { s: 'Shuniu ne diya humein vishesh prem', r: 'Shuniu ne diya humein vishesh prem',
+          e: 'Shuniu Bao Guang Chong Zheng Dao Chang ke Hui Ming ke uttaradhikari aur Dao Chang ke neta hain. Unhone humein bahut vishesh prem diya hai.' } } },
+      { zh: '他的恩澤深如大河之壩', py: 'tā de ēn zé shēn rú dà hé zhī bà',
+        i18n: { hi: { s: 'Uska ehsaan gehra jaise dariya ka khem', r: 'Uska ehsaan gehra jaise dariya ka khem',
+          e: 'Unke upkar bahut gehre hain, jaise badi nadi ka bandh. Hum unke rini hain.' } } },
+      { zh: '一滴水成了泉源，帶來了寶藏', py: 'yī dī shuǐ chéng le quán yuán，dài lái le bǎo cáng',
+        i18n: { hi: { s: 'Boond ne diya jharna ban kar dhan', r: 'Boond ne diya jharna ban kar dhan',
+          e: 'Ek boond ne jharna ban kar humein dhan diya. Chhoti si kripa bhi mahaan ban sakti hai.' } } },
+      { zh: '為了報恩，我的心奔跑不息', py: 'wèi le bào ēn，wǒ de xīn bēn pǎo bù xī',
+        i18n: { hi: { s: 'Rinn chukane ko daudta hoon main man', r: 'Rinn chukane ko daudta hoon main man',
+          e: 'Rinn chukane ke liye mera man daudta hai. Humein Shuniu ke upkar ka badla chukana chahiye.' } } },
+      { zh: '他跨越大海，帶著誓願前行', py: 'tā kuà yuè dà hǎi，dài zhù shì yuàn qián xíng',
+        i18n: { hi: { s: 'Samundar paar le gaya apna vachan', r: 'Samundar paar le gaya apna vachan',
+          e: 'Unhone samundar paar kiya, apne vachan ko lekar. Dao ke prachar ke liye unhone kathin yatra ki.' } } },
+      { zh: '他所承受的痛苦，都是為了慈悲的使命', py: 'tā suǒ chéng shòu de tòng kǔ，dōu shì wèi le cí bēi de shǐ mìng',
+        i18n: { hi: { s: 'Dukh saha sab kuch keval daya mein rachan', r: 'Dukh saha sab kuch keval daya mein rachan',
+          e: 'Unhone jo dukh saha, woh keval daya ke mission ke liye tha. Karuna se unhone sab sahan kiya.' } } },
+      { zh: '流過的血與淚，誰能真正體會', py: 'liú guò de xuè yǔ lèi，shuí néng zhēn zhèng tǐ huì',
+        i18n: { hi: { s: 'Khoon aur aansu baha, kisne jaana', r: 'Khoon aur aansu baha, kisne jaana',
+          e: 'Unhone khoon aur aansu bahaye, lekin kisne jana? Unke tyag ko koi poori tarah nahi samajh saka.' } } },
+      { zh: '那滿懷慈悲的記憶，我們要銘記在心', py: 'nà mǎn huái cí bēi de jì yì，wǒ men yào míng jì zài xīn',
+        i18n: { hi: { s: 'Karuna bhari yaadein, dil mein nibhaana', r: 'Karuna bhari yaadein, dil mein nibhaana',
+          e: 'Karuna se bhari yaadon ko humein dil mein nibhana chahiye. Unki shiksha ko hamesha yaad rakhen.' } } },
+    ],
   }
 ];
 
@@ -2603,19 +2640,26 @@ function renderSongsGrid() {
   songDivider.className = 'book-divider';
   songDivider.textContent = '中文歌曲';
   grid.appendChild(songDivider);
-  V4_SONGS.forEach((song, idx) => {
+  const isHindi = (state.sourceLanguage || 'hi') === 'hi';
+  /* 一般歌曲：依序編號；印地文專屬歌曲僅在印地文模式顯示於最後，不編號。 */
+  const normalSongs = V4_SONGS.filter(s => !s.hindiOnly);
+  const hindiSongs = V4_SONGS.filter(s => s.hindiOnly && isHindi);
+  const renderSongCard = (song, seqNum) => {
     const card = document.createElement('button');
     card.type = 'button';
     card.className = 'lesson-card song-card';
+    const seqHtml = seqNum != null ? `<span class="song-seq">${seqNum}</span>` : '';
     card.innerHTML = `
       <span class="lesson-num">🎵 <span class="en-sub">Song</span></span>
-      <span class="song-seq">${idx + 1}</span>
+      ${seqHtml}
       <span class="lesson-zh" lang="zh-Hant">${escapeHtml(song.title)}</span>
       <span class="lesson-topic">${song.lines.length} 句歌詞 <span class="en-sub">${song.lines.length} lines</span></span>`;
     card.setAttribute('aria-label', `中文歌曲 ${song.title}`);
     card.addEventListener('click', () => { courseState.song = song.id; courseState.lesson = 0; courseState.page = 'songs'; renderCourse(); $('courseSection').scrollIntoView({ behavior: 'smooth' }); });
     grid.appendChild(card);
-  });
+  };
+  normalSongs.forEach((song, idx) => renderSongCard(song, idx + 1));
+  hindiSongs.forEach(song => renderSongCard(song, null));
 }
 
 /* 相容舊調用：清掉 song/lesson 後回到目前所在層級的總覽。 */
