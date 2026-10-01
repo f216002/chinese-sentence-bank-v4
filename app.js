@@ -2415,7 +2415,7 @@ const V4_SONGS = [
     id: 'miaojijingshen-hindi',
     title: '妙極精神(Hindi版)',
     videoType: 'youtube',
-    youtubeId: '1TkYPTGN9kI',
+    youtubeId: 'I39L20xlwe0',
     /* 印地文專屬歌曲：僅在選擇印地文時顯示於最後，不參與排序編號。 */
     hindiOnly: true,
     lines: [
