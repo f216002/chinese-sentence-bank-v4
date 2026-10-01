@@ -3905,7 +3905,7 @@ const V4_RITUAL_DOCS = {
     title: "乾道平常日早香燒香禮節",
     docTitle: "乾道平常日早香燒香禮節（完整版）",
     buttonLabel: "📄 乾道平常日早香內容",
-    audioPath: "audio/rituals/shaoxiang-qiandao.mp3",
+    audioPath: "audio/rituals/shaoxiang-qiandao.mp3?v=20261001",
     steps: [
       { seq: 1,
         shang: "作揖，跪", shangPy: "zuò yī, guì",
