@@ -190,6 +190,8 @@ async function fetchAllSentences() {
   }
   const list = [];
   const hiddenShared = [];
+  /* 歌曲／禮節卡需讀取個人錄音覆寫：存入全域供 songLineToSentence 使用。 */
+  state.overlayMap = overlayMap;
   snap.docs.forEach(d => {
     const data = d.data() || {};
     /* 防禦：共版集合若殘留補充記錄（應已遷移），跳過不顯示。 */
@@ -790,7 +792,8 @@ async function toggleCardRecording(node, sentence, preview) {
       };
       cardRecordings.set(key, recording);
       playButton.disabled = false;
-      saveButton.disabled = preview || !sentence.recordId;
+      /* 有 recordId 即可儲存（歌曲／禮節卡亦同）；AI 預覽無 recordId，保持停用。 */
+      saveButton.disabled = !sentence.recordId;
       recordButton.classList.remove('recording');
       setBilingualText(recordButton, '● 重新錄音', '● Record again');
       status.textContent = processed.normalized
@@ -1077,8 +1080,11 @@ async function submitEdit() {
 
 function createCard(sentence, preview = false) {
   const node = $('cardTemplate').content.firstElementChild.cloneNode(true);
+  /* 歌曲／禮節卡：有 recordId 但不可編輯刪除，錄音儲存需啟用（與中文句子卡一致）。 */
+  const isSongOrRitual = /^(song|ritual)-/.test(String(sentence.recordId || ''));
+  const noEdit = preview || isSongOrRitual;
   node.querySelector('.category-pill').textContent = sentence.category || 'Other';
-  node.querySelector('.record-id').textContent = preview ? 'PREVIEW' : sentence.recordId || '';
+  node.querySelector('.record-id').textContent = (preview && !isSongOrRitual) ? 'PREVIEW' : sentence.recordId || '';
   /* 課程記錄加註來源（課名＋分頁），方便在全域搜尋結果中辨識。 */
   if (!preview) {
     const meta = courseMeta(sentence);
@@ -1091,11 +1097,11 @@ function createCard(sentence, preview = false) {
     }
   }
   const deleteButton = node.querySelector('.card-delete-button');
-  deleteButton.hidden = preview;
-  if (!preview) deleteButton.addEventListener('click', () => openDeleteDialog(sentence));
+  deleteButton.hidden = noEdit;
+  if (!noEdit) deleteButton.addEventListener('click', () => openDeleteDialog(sentence));
   const editButton = node.querySelector('.card-edit-button');
-  editButton.hidden = preview;
-  if (!preview) editButton.addEventListener('click', () => openEditDialog(sentence));
+  editButton.hidden = noEdit;
+  if (!noEdit) editButton.addEventListener('click', () => openEditDialog(sentence));
   const cardProfile = displayProfile(sentence);
   const hindiEl = node.querySelector('.hindi');
   hindiEl.textContent = displaySource(sentence);
@@ -1577,6 +1583,40 @@ function renderSentences() {
       }
     }
     visible.push(s);
+  }
+
+  /* 搜尋歌曲歌詞：有关键字時一併搜尋 18 首歌曲的每句歌詞。 */
+  if (searching && typeof V4_SONGS !== 'undefined') {
+    const terms = [kwA, kwB, kwC].filter(Boolean);
+    for (const song of V4_SONGS) {
+      song.lines.forEach((line, idx) => {
+        const s = songLineToSentence(song, line, idx);
+        const haystack = normalizeSearchText(
+          [s.recordId, s.hindiSentence, romanHindiFor(s), s.chineseSentence, s.pinyin, s.hindiExplanation, s.category, s.tags].join(' ')
+        );
+        let kwMatch = true;
+        if (terms.length > 0) {
+          kwMatch = haystack.includes(terms[0]);
+          if (terms.length > 1) {
+            const m2 = haystack.includes(terms[1]);
+            kwMatch = (opAB === 'OR') ? (kwMatch || m2) : (kwMatch && m2);
+          }
+          if (terms.length > 2) {
+            const m3 = haystack.includes(terms[2]);
+            kwMatch = (opBC === 'OR') ? (kwMatch || m3) : (kwMatch && m3);
+          }
+        }
+        if (!kwMatch) return;
+        if (hasTopicFilter) {
+          const known = new Set((state.categories || []).map(normalizeSearchText));
+          const sTopics = [s.category].concat(String(s.tags || '').split(/[,;|]/))
+            .map(normalizeSearchText).filter(t => known.has(t));
+          const anyMatch = sTopics.some(t => state.selectedCategories.has(t));
+          if (!anyMatch) return;
+        }
+        visible.push(s);
+      });
+    }
   }
 
   const grid = $('sentenceGrid'); grid.innerHTML = '';
@@ -2358,9 +2398,10 @@ if (typeof V4_SONGS_I18N !== 'undefined') {
   });
 }
 
-/* 歌詞行轉句子物件：供 createCard() 使用（非課程記錄，不進搜尋）。 */
+/* 歌詞行轉句子物件：供 createCard() 使用；搜尋時亦納入（見 renderBank 歌曲搜尋段）。 */
 function songLineToSentence(song, line, idx) {
-  return {
+  const recordId = `song-${song.id}-${idx + 1}`;
+  const s = {
     chineseSentence: line.zh,
     pinyin: line.py,
     hindiSentence: (line.i18n && line.i18n.hi && line.i18n.hi.s) || '',
@@ -2369,10 +2410,17 @@ function songLineToSentence(song, line, idx) {
     i18n: line.i18n || {},
     category: '歌曲',
     tags: `中文歌曲,${song.title}`,
-    recordId: `song-${song.id}-${idx + 1}`,
+    recordId,
     /* seq: 0 讓 isCourseRecord() 判為 true，語言切換才會讀 i18n；歌詞物件即時產生、不進 bank，無副作用。 */
     seq: 0,
   };
+  /* 套用老師個人錄音覆寫（若曾錄過此句）。 */
+  const ov = (typeof state !== 'undefined' && state.overlayMap) ? state.overlayMap.get(recordId) : null;
+  if (ov) {
+    if (ov.audioPath) { s.audioPath = ov.audioPath; s.standardAudioUrl = ov.audioPath; }
+    if (ov.audioMime) s.audioMime = ov.audioMime;
+  }
+  return s;
 }
 
 const courseState = { lesson: 0, tab: '課文', song: null, ritual: null, ritualGroup: null, page: 'home' };
@@ -2582,7 +2630,7 @@ async function renderSongView(songId) {
   lyricsGrid.className = 'sentence-grid song-lyrics';
   song.lines.forEach((line, i) => {
     const s = songLineToSentence(song, line, i);
-    lyricsGrid.appendChild(createCard(s, true));
+    lyricsGrid.appendChild(createCard(s, false));
   });
   /* YouTube 歌曲：用 iframe 嵌入；Storage 歌曲：用 SDK 取下載網址播 HTML5 video。 */
   if (song.videoType === 'audio' && song.audioPath) {
@@ -5653,7 +5701,8 @@ if (typeof V4_RITUALS_I18N !== 'undefined') {
 
 /* 禮節行轉句子物件：供 createCard() 使用（非課程記錄，不進搜尋）。 */
 function ritualLineToSentence(ritual, line, idx) {
-  return {
+  const recordId = `ritual-${ritual.id}-${idx + 1}`;
+  const s = {
     chineseSentence: line.zh,
     pinyin: line.py,
     hindiSentence: (line.i18n && line.i18n.hi && line.i18n.hi.s) || '',
@@ -5662,10 +5711,16 @@ function ritualLineToSentence(ritual, line, idx) {
     i18n: line.i18n || {},
     category: '禮節',
     tags: `道場禮節,${ritual.title}`,
-    recordId: `ritual-${ritual.id}-${idx + 1}`,
+    recordId,
     /* seq: 0 讓 isCourseRecord() 判為 true，語言切換才會讀 i18n；物件即時產生、不進 bank，無副作用。 */
     seq: 0,
   };
+  const ov = (typeof state !== 'undefined' && state.overlayMap) ? state.overlayMap.get(recordId) : null;
+  if (ov) {
+    if (ov.audioPath) { s.audioPath = ov.audioPath; s.standardAudioUrl = ov.audioPath; }
+    if (ov.audioMime) s.audioMime = ov.audioMime;
+  }
+  return s;
 }
 
 /* 道場禮節首頁：群組卡（參辭駕禮節／燒香禮）。 */
@@ -5908,7 +5963,7 @@ async function renderRitualView(ritualId) {
     grid.className = 'sentence-grid song-lyrics';
     sec.lines.forEach(line => {
       const s = ritualLineToSentence(ritual, line, globalIdx);
-      grid.appendChild(createCard(s, true));
+      grid.appendChild(createCard(s, false));
       globalIdx++;
     });
     content.appendChild(grid);
