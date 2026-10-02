@@ -209,7 +209,7 @@ async function reloadSentences() {
   state.sentences = await fetchAllSentences();
   personalLayerUid = currentTeacherUid();
   $('sentenceCount').textContent = state.sentences.length;
-  saveBankCache();
+  saveBankCache(state.bankVersion);
 }
 
 /* 目前已載入個人層的 uid（''＝未載入）。登入／登出／換帳號時重載。 */
@@ -264,7 +264,7 @@ const SAMPLE = `HINDI:\nमुझे बैंक से पैसे निक�
 const AI_PROMPT = `You are a Taiwanese Mandarin teacher for a Hindi-speaking beginner. Convert the Hindi sentence below into natural Traditional Chinese used in Taiwan.\n\nHINDI SENTENCE:\n[Paste one Hindi sentence here]\n\nReturn ONLY the following labelled sections. Do not add an introduction or conclusion. Never insert notes, corrections, or commentary inside a section; each section must contain only what that section asks for. Keep every label exactly as written and do not add Markdown symbols such as ** around the labels.\n\nHINDI:\n[Repeat the original Hindi sentence]\n\nCHINESE:\n[One natural Traditional Chinese sentence used in Taiwan]\n\nPINYIN:\n[Hanyu Pinyin with tone marks for the complete Chinese sentence]\n\nEXPLANATION:\n[Explain every Chinese word and the grammar in clear Hindi. Whenever any Chinese character, word, phrase, or example appears, immediately add its pinyin in parentheses. Use Traditional Chinese only.]\n\nCATEGORY:\n[Choose exactly one: Daily Life, School, Home, Restaurant, Shopping, Bank, Hospital, Travel, Train & Bus, Airport, Work, Friends, Other]\n\nTAGS:\n[Three to five short English keywords separated by commas]\n\nAI SOURCE:\n[Write ChatGPT or Gemini]`;
 
 
-const state = { sentences: [], hiddenShared: [], categories: [], selectedCategories: new Set(), settings: {}, preview: null, sourceLanguage: 'hi' };
+const state = { sentences: [], hiddenShared: [], categories: [], selectedCategories: new Set(), settings: {}, preview: null, sourceLanguage: 'hi', bankVersion: null };
 const $ = (id) => document.getElementById(id);
 /* Bilingual UI helper: Chinese (primary) + English (secondary, smaller). */
 /* 中文為主的雙語無障礙標籤，例如：播放德文發音 (Play German pronunciation) */
@@ -1767,7 +1767,7 @@ function receiveBank(data) {
   $('sentenceCount').textContent = state.sentences.length; $('categoryCount').textContent = state.categories.length;
   $('apiStatus').className = 'live-status ready'; $('apiStatus').innerHTML = '<i></i> Firebase 已連線 <span class="en-sub">Firebase connected</span>';
   renderFilters(); renderSentences(); renderCourse();
-  saveBankCache();
+  saveBankCache(data.bankVersion);
 }
 
 function showApiError(message, canRetry) {
@@ -1797,13 +1797,14 @@ function bankCacheKey() {
   const uid = (typeof personalLayerUid === 'string' && personalLayerUid)
     ? personalLayerUid
     : (currentTeacherUid() || 'anon');
-  return 'csbCachedBankV4:' + uid;
+  return 'csbCachedBankV4v2:' + uid; /* v2：2026-10-02 起含 bankVersion，舊快取作廢 */
 }
-function saveBankCache() {
+function saveBankCache(bankVersion) {
   try {
     localStorage.setItem(bankCacheKey(), JSON.stringify({
       settings: state.settings, sentences: state.sentences,
-      categories: state.categories, savedAt: Date.now()
+      categories: state.categories, savedAt: Date.now(),
+      bankVersion: bankVersion != null ? bankVersion : null
     }));
     try { localStorage.removeItem('csbCachedBankV4'); } catch (_) {} /* 清掉舊版共用快取 */
   } catch (_) {}
@@ -1883,13 +1884,22 @@ async function loadBank(attempt = 1) {
     return;
   }
   try {
-    const [sentences, settingsSnap] = await Promise.all([
-      fetchAllSentences(),
-      fbDb.collection(META_COL).doc(SETTINGS_DOC).get(),
-    ]);
+    /* 省錢機制（2026-10-02）：先只讀 1 筆設定檔比對 bankVersion，
+       版本一致就用本機快取（本次載入僅 1 次讀取），版本變了才全量抓取。
+       任何寫入 v4_sentences 的匯入腳本都必須同步更新 bankVersion，否則快取不會失效。 */
+    const settingsSnap = await fbDb.collection(META_COL).doc(SETTINGS_DOC).get();
     personalLayerUid = currentTeacherUid();
     const settings = settingsSnap.exists ? { ...defaultSettings(), ...settingsSnap.data() } : defaultSettings();
-    receiveBank({ success: true, settings, sentences });
+    const serverVersion = settings.bankVersion || null;
+    state.bankVersion = serverVersion;
+    const cached = loadBankCache();
+    let sentences;
+    if (cached && Array.isArray(cached.sentences) && (cached.bankVersion || null) === serverVersion) {
+      sentences = cached.sentences; /* 快取命中：本次只花 1 次讀取 */
+    } else {
+      sentences = await fetchAllSentences(); /* 版本變更或無快取：全量抓取 */
+    }
+    receiveBank({ success: true, settings, sentences, bankVersion: serverVersion });
     /* 登入狀態就緒後若 uid 與載入時不同（例如 auth 較慢），再疊加個人層。 */
     whenAccessReady().then(() => refreshPersonalLayer());
   } catch (err) {
