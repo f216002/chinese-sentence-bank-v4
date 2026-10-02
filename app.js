@@ -6695,6 +6695,8 @@ function createVocabCard(sentence) {
   const meta = courseMeta(sentence);
   const node = document.createElement('div');
   node.className = 'vocab-card';
+  /* 2026-10-02：老師個人新增的生詞卡，外框與公版區分（同句子卡的暖金色）。 */
+  if (sentence._owner && sentence._owner !== 'shared') node.classList.add('personal-card');
   node.innerHTML = `
     <div class="vocab-top"><span class="vocab-word" lang="zh-Hant"></span>${meta.pos ? `<span class="vocab-pos">${escapeHtml(meta.pos)}</span>` : ''}</div>
     <div class="vocab-pinyin"></div>
@@ -6752,28 +6754,34 @@ function renderGrammarTab(content, recs, lessonNum) {
   });
   Object.keys(groups).sort().forEach(key => {
     const items = groups[key];
-    const point = items.find(s => tagList(s).some(t => t === '句型')) || items[0];
-    const examples = items.filter(s => s !== point);
+    /* 2026-10-02 修復：句型標題只認公版「句型」卡。老師個人新增的句子（_owner 非 shared）
+       永遠渲染為例句卡，不可被誤當成句型標題（否則會變成無按鈕的素卡）。 */
+    const isPersonal = (s) => s._owner && s._owner !== 'shared';
+    const point = items.find(s => !isPersonal(s) && tagList(s).some(t => t === '句型'))
+               || items.find(s => !isPersonal(s));
+    const examples = point ? items.filter(s => s !== point) : items.slice();
     const block = document.createElement('div');
     block.className = 'grammar-block';
-    const head = document.createElement('div');
-    head.className = 'grammar-point';
-    head.innerHTML = `
+    if (point) {
+      const head = document.createElement('div');
+      head.className = 'grammar-point';
+      head.innerHTML = `
       <div class="grammar-pattern" lang="zh-Hant"></div>
       <div class="grammar-pinyin"></div>
       <div class="grammar-hindi" lang="hi"></div>
       <div class="grammar-function" lang="hi"></div>`;
-    const grammarProfile = displayProfile(point);
-    head.querySelector('.grammar-pattern').textContent = point.chineseSentence || '';
-    head.querySelector('.grammar-pinyin').textContent = point.pinyin || '';
-    const grammarHindiEl = head.querySelector('.grammar-hindi');
-    grammarHindiEl.textContent = displaySource(point);
-    grammarHindiEl.setAttribute('lang', grammarProfile.locale);
-    const funcEl = head.querySelector('.grammar-function');
-    funcEl.textContent = displayExplanation(point);
-    funcEl.hidden = !displayExplanation(point);
-    funcEl.setAttribute('lang', grammarProfile.locale);
-    block.appendChild(head);
+      const grammarProfile = displayProfile(point);
+      head.querySelector('.grammar-pattern').textContent = point.chineseSentence || '';
+      head.querySelector('.grammar-pinyin').textContent = point.pinyin || '';
+      const grammarHindiEl = head.querySelector('.grammar-hindi');
+      grammarHindiEl.textContent = displaySource(point);
+      grammarHindiEl.setAttribute('lang', grammarProfile.locale);
+      const funcEl = head.querySelector('.grammar-function');
+      funcEl.textContent = displayExplanation(point);
+      funcEl.hidden = !displayExplanation(point);
+      funcEl.setAttribute('lang', grammarProfile.locale);
+      block.appendChild(head);
+    }
     /* 語法點＝最小單元：句型標題不編號，例句組內編號＋↑↓移動鈕排序。 */
     renderNumberedUnit(block, examples, {
       unitKey: `L${lessonNum}_grammar_${key}`,
@@ -6791,12 +6799,21 @@ function renderInfoTab(content, recs, tabName, lessonNum) {
     buildCard: (s) => {
       const card = document.createElement('div');
       card.className = 'info-card';
+      /* 2026-10-02：老師個人新增的說明卡，外框與公版區分（同句子卡的暖金色）。 */
+      if (s._owner && s._owner !== 'shared') card.classList.add('personal-card');
       card.innerHTML = `
         <div class="info-kicker">${tabName} <span class="en-sub">${COURSE_TAB_EN[tabName] || ''}</span></div>
-        <h4 class="info-zh" lang="zh-Hant"></h4>
-        <p class="info-hi" lang="hi"></p>
+        <div class="info-zh-row"><h4 class="info-zh" lang="zh-Hant"></h4><button type="button" class="icon-button info-speak" aria-label="播放中文發音 (Play Chinese)" title="播放中文發音 (Play Chinese)">🔊</button></div>
+        <div class="info-hi-row"><p class="info-hi" lang="hi"></p><button type="button" class="icon-button info-hindi-speak" aria-label="播放來源語言發音 (Play source pronunciation)" title="播放來源語言發音 (Play source pronunciation)">🔊</button></div>
         <p class="info-explain" lang="hi"></p>
-        <div class="info-actions"><button type="button" class="icon-button info-edit" aria-label="編輯 (Edit)" title="編輯 (Edit)">✏️</button></div>`;
+        <div class="info-actions">
+          <button type="button" class="icon-button info-download" aria-label="下載老師錄音 (Download recording)" title="下載老師錄音 (Download recording)" hidden>⤓</button>
+          <button type="button" class="icon-button card-record-button" aria-label="錄下你的聲音 (Record your voice)" title="錄音 (Record)">🎙</button>
+          <button type="button" class="icon-button card-play-button" aria-label="播放我的錄音 (Play my recording)" title="播放錄音 (Play recording)">▶</button>
+          <button type="button" class="icon-button card-save-model-button" aria-label="存為示範 (Save as teacher model)" title="存為示範 (Save as teacher model)">💾</button>
+          <button type="button" class="icon-button info-edit" aria-label="編輯 (Edit)" title="編輯 (Edit)">✏️</button>
+        </div>
+        <div class="card-recording-status info-status" aria-live="polite"></div>`;
       const infoProfile = displayProfile(s);
       card.querySelector('.info-zh').textContent = s.chineseSentence || '';
       const infoHiEl = card.querySelector('.info-hi');
@@ -6806,6 +6823,20 @@ function renderInfoTab(content, recs, tabName, lessonNum) {
       explainEl.textContent = displayExplanation(s);
       explainEl.hidden = !displayExplanation(s);
       explainEl.setAttribute('lang', infoProfile.locale);
+      /* 發音／錄音：與句子卡、生詞卡同一套函式。 */
+      card.querySelector('.info-speak').addEventListener('click', e => playSentenceModel(s, e.currentTarget));
+      const infoHindiSpeak = card.querySelector('.info-hindi-speak');
+      infoHindiSpeak.addEventListener('click', e => speakHindi(displaySource(s), e.currentTarget, infoProfile.locale));
+      infoHindiSpeak.setAttribute('aria-label', bilingualLabel(`播放${infoProfile.nameZh || infoProfile.name}發音`, `Play ${infoProfile.name} pronunciation`));
+      const infoDl = card.querySelector('.info-download');
+      infoDl.hidden = !s.standardAudioUrl;
+      infoDl.addEventListener('click', () => downloadTeacherAudio(s, infoDl));
+      card.querySelector('.card-record-button').addEventListener('click', () => toggleCardRecording(card, s, false));
+      card.querySelector('.card-play-button').addEventListener('click', () => {
+        const recording = recordingForSentence(s);
+        if (recording) new Audio(recording.url).play();
+      });
+      card.querySelector('.card-save-model-button').addEventListener('click', () => openAudioPinDialog(s, card));
       card.querySelector('.info-edit').addEventListener('click', () => openEditDialog(s));
       return card;
     }
