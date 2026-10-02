@@ -953,15 +953,24 @@ function openEditDialog(sentence) {
   setTimeout(() => $('editHindi').focus(), 50);
 }
 
-/* 新增補充句子：直接前往頁面上方的 AI 新增流程（Create your AI prompt → Paste the AI answer），
-   不再跳出表單。送出時 submitSentence 會依 courseState.lesson 自動歸入該課「補充」。 */
-function goToAiFlowForSupp(lessonNum) {
-  if (typeof courseState !== 'undefined') courseState.lesson = lessonNum;
+/* 各分頁新增句子：前往頁面上方的 AI 新增流程（Create your AI prompt → Paste the AI answer），
+   儲存時 submitSentence 會依 courseState.pendingSection 自動歸入該課該分頁（只存老師個人帳號）。 */
+function goToAiFlowForSection(lessonNum, section) {
+  if (typeof courseState !== 'undefined') {
+    courseState.lesson = lessonNum;
+    courseState.pendingSection = section;
+  }
   const target = document.getElementById('createPrompt');
   if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   const msg = $('promptMessage');
-  if (msg) setBilingualText(msg, `為${lessonShortLabel(lessonNum)}新增補充句子：請在下方輸入句子並完成 AI 流程，儲存後會自動歸入該課「補充」分頁。`, `Adding a supplementary sentence for ${lessonShortLabel(lessonNum)}: type the sentence below and complete the AI flow. It will be filed under this lesson\u2019s \u201cSupplement\u201d tab after saving.`);
+  if (msg) setBilingualText(msg, `為${lessonShortLabel(lessonNum)}「${section}」新增句子：請在下方輸入句子並完成 AI 流程，儲存後會自動歸入該課「${section}」分頁，只儲存在你的帳號下，不影響公版教材。`, `Adding a sentence to ${lessonShortLabel(lessonNum)} "${section}": type the sentence below and complete the AI flow. It will be filed under this lesson's "${section}" tab, saved to your account only.`);
   setTimeout(() => { const ta = $('promptSentence'); if (ta) ta.focus({ preventScroll: true }); }, 650);
+}
+
+/* 新增補充句子：直接前往頁面上方的 AI 新增流程（Create your AI prompt → Paste the AI answer），
+   不再跳出表單。送出時 submitSentence 會依 courseState.lesson 自動歸入該課「補充」。 */
+function goToAiFlowForSupp(lessonNum) {
+  goToAiFlowForSection(lessonNum, '補充');
 }
 
 function updateEditWarnings() {
@@ -1080,6 +1089,8 @@ async function submitEdit() {
 
 function createCard(sentence, preview = false) {
   const node = $('cardTemplate').content.firstElementChild.cloneNode(true);
+  /* 老師個人新增的句子卡：外框顏色與公版教材區分（CSS .personal-card）。 */
+  if (!preview && sentence._owner && sentence._owner !== 'shared') node.classList.add('personal-card');
   /* 歌曲／禮節卡：有 recordId 但不可編輯刪除，錄音儲存需啟用（與中文句子卡一致）。 */
   const isSongOrRitual = /^(song|ritual)-/.test(String(sentence.recordId || ''));
   const noEdit = preview || isSongOrRitual;
@@ -1844,15 +1855,18 @@ async function submitSentence() {
   setBilingualText($('saveMessage'), '正在儲存句子…', 'Saving sentence…');
   const submitted = { ...state.preview };
 
-  /* 若正在瀏覽某一課（courseState.lesson > 0），AI 新增的句子歸入該課「補充」；
+  /* 若正在瀏覽某一課（courseState.lesson > 0），AI 新增的句子歸入該課指定分頁
+     （courseState.pendingSection；各分頁「新增句子」按鈕設定，未設定時預設「補充」）；
      若未開啟任何課程，則按原規則歸入個人句庫。 */
   const activeLesson = (typeof courseState !== 'undefined' && courseState.lesson > 0) ? courseState.lesson : 0;
+  const section = activeLesson > 0 ? ((typeof courseState !== 'undefined' && courseState.pendingSection) || '補充') : '';
   if (activeLesson > 0) {
     const pasteBase = String(submitted.originalPaste || '').trim();
-    submitted.originalPaste = pasteBase + `\nLESSON: ${activeLesson}\nSECTION: 補充`;
+    submitted.originalPaste = pasteBase + `\nLESSON: ${activeLesson}\nSECTION: ${section}`;
     submitted.category = '課程';
-    submitted.tags = `${lessonShortLabel(activeLesson)}, 補充`;
+    submitted.tags = `${lessonShortLabel(activeLesson)}, ${section}`;
     submitted.seq = nextCourseSeq(activeLesson);
+    if (typeof courseState !== 'undefined') courseState.pendingSection = null;
   }
 
   try {
@@ -1863,7 +1877,7 @@ async function submitSentence() {
     await reloadSentences();
     renderSentences();
     if (activeLesson > 0) { courseMetaCache.clear(); renderCourse(); }
-    if (activeLesson > 0) setBilingualText($('saveMessage'), `已儲存至${lessonShortLabel(activeLesson)}「補充」。`, `Saved to ${lessonShortLabel(activeLesson)} supplement.`);
+    if (activeLesson > 0) setBilingualText($('saveMessage'), `已儲存至${lessonShortLabel(activeLesson)}「${section}」（只在你的帳號顯示）。`, `Saved to ${lessonShortLabel(activeLesson)} "${section}" (visible in your account only).`);
     else setBilingualText($('saveMessage'), '儲存成功！', 'Saved successfully!');
     $('saveButton').disabled = false;
     $('pasteInput').value = ''; $('previewPanel').classList.add('hidden');
@@ -6184,6 +6198,8 @@ function renderLessonView() {
   const n = courseState.lesson;
   const lesson = COURSE_LESSONS.find(l => l.n === n);
   if (!lesson) { renderLessonGrid(); return; }
+  /* 進入／重繪課程頁時清除上次「新增句子」的分頁指定，避免誤歸類。 */
+  if (typeof courseState !== 'undefined') courseState.pendingSection = null;
   $('lessonGrid').classList.add('hidden');
   const view = $('lessonView');
   view.classList.remove('hidden');
@@ -6229,9 +6245,14 @@ function renderLessonView() {
   const tabRecs = bySection[courseState.tab] || [];
   /* 補充分頁永遠顯示：即使還沒有內容，老師也要能按「新增」。 */
   if (courseState.tab === '補充') { renderSuppTab(content, tabRecs, n); renderHiddenRestore(content, n); return; }
+  /* 課文／生詞／語法／練習／文化：頂部加上老師個人「新增句子」列（登入才顯示）。 */
+  renderLessonAddBar(content, n, courseState.tab);
   if (!tabRecs.length) {
-    content.innerHTML = '<div class="loading-card" id="lessonEmptyNote"></div>';
-    setBilingualText($('lessonEmptyNote'), '這個單元還沒有內容。', 'No content in this section yet.');
+    const empty = document.createElement('div');
+    empty.className = 'loading-card';
+    empty.id = 'lessonEmptyNote';
+    setBilingualText(empty, '這個單元還沒有內容。', 'No content in this section yet.');
+    content.appendChild(empty);
     renderHiddenRestore(content, n);
     return;
   }
@@ -6240,6 +6261,26 @@ function renderLessonView() {
   else if (courseState.tab === '語法') renderGrammarTab(content, tabRecs, n);
   else renderInfoTab(content, tabRecs, courseState.tab);
   renderHiddenRestore(content, n);
+}
+
+/* ---- 各分頁新增句子列：登入的老師可在本課本分頁新增個人句子 ---- */
+function renderLessonAddBar(content, lessonNum, section) {
+  const uid = currentTeacherUid();
+  if (!uid) return;
+  const bar = document.createElement('div');
+  bar.className = 'supp-bar';
+  const hint = document.createElement('p');
+  hint.className = 'supp-hint';
+  const secLabel = { '課文': '課文', '生詞': '生詞', '語法': '語法', '練習': '練習', '文化': '文化' }[section] || section;
+  setBilingualText(hint, `老師為本課「${secLabel}」新增的個人句子：只儲存在你的帳號下，跟著本課走，不影響公版教材。`, `Your personal sentences for this lesson's "${secLabel}": saved to your account only, staying with this lesson, without affecting the shared textbooks.`);
+  const addButton = document.createElement('button');
+  addButton.type = 'button';
+  addButton.className = 'primary-button';
+  setBilingualText(addButton, '＋ 新增句子', '＋ Add a sentence');
+  addButton.addEventListener('click', () => goToAiFlowForSection(lessonNum, section));
+  bar.appendChild(hint);
+  bar.appendChild(addButton);
+  content.appendChild(bar);
 }
 
 /* ---- 已隱藏的共版卡片：老師可自行恢復顯示 ---- */
