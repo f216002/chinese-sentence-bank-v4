@@ -171,7 +171,12 @@
 .info-zh{font-family:"Noto Sans TC",sans-serif;font-size:21px;margin:0 0 10px}
 .info-hi{font-family:"Noto Sans Devanagari",sans-serif;color:#46534f;line-height:1.7;margin:0 0 10px}
 .info-explain{color:var(--muted);line-height:1.8;white-space:pre-wrap;margin:0}
-.info-actions{margin-top:14px}
+.info-zh-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.info-zh-row .info-zh{flex:1;min-width:0}
+.info-hi-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-top:2px}
+.info-hi-row .info-hi{flex:1;min-width:0}
+.info-actions{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.info-status{margin-top:8px;font-size:13px;color:var(--muted);min-height:18px}
 .supp-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:16px}
 .supp-hint{margin:0;color:#5c564a;font-size:14px;flex:1 1 240px}
 @media(max-width:700px){
@@ -249,7 +254,7 @@ button .en-sub { pointer-events: none; }
 .ritual-doc-py{color:var(--red);font-size:14px;margin-top:4px}
 .ritual-doc-empty{color:#aaa}
 /* 老師個人新增的句子卡：外框用暖金色，與公版教材卡片的灰色外框區分。 */
-.sentence-card.personal-card{border:2px solid #dfa63f;background:#fffdf6}
+.sentence-card.personal-card,.vocab-card.personal-card,.info-card.personal-card{border:2px solid #dfa63f;background:#fffdf6}
 /* 句子卡編號（框內頂部置中）＋上下移動順序（2026-10-02）：編號在框內；↑↓鈕在編輯左邊；換位前再次確認。 */
 .card-num-in{text-align:center;font-weight:700;color:var(--teal);font-size:14px;margin:2px 0 10px;user-select:none;-webkit-user-select:none;line-height:1.3}
 .card-admin .move-btn{width:34px;height:34px;font-size:16px;flex:none}
