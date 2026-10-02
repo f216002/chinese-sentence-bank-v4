@@ -1641,7 +1641,7 @@ function renderSentences() {
     /* 搜尋結果：只編號，不開放拖曳。 */
     renderNumberedStatic(grid, visible, (s) => createCard(s));
   } else {
-    /* 個人句庫：編號＋可拖曳排序（順序存老師個人帳號）。 */
+    /* 個人句庫：編號＋↑↓移動鈕排序（順序存老師個人帳號）。 */
     renderNumberedUnit(grid, visible, {
       unitKey: 'library',
       buildCard: (s) => createCard(s),
@@ -2045,6 +2045,12 @@ $('saveButton').addEventListener('click', trySaveSentence);
 $('confirmAudioSave').addEventListener('click', submitTeacherAudio);
 $('closeAudioPin').addEventListener('click', () => { pendingModelSave = null; $('audioPinDialog').close(); });
 $('confirmDelete').addEventListener('click', submitDeleteSentence);
+['confirmMove', 'cancelMove', 'closeMoveConfirm'].forEach(id => {
+  const el = $(id);
+  if (el) el.addEventListener('click', id === 'confirmMove' ? confirmMove : cancelMove);
+});
+const moveDlg = $('moveConfirmDialog');
+if (moveDlg) moveDlg.addEventListener('cancel', cancelMove);
 $('closeDelete').addEventListener('click', () => { pendingDeleteSentence = null; $('deleteDialog').close(); });
 $('confirmEdit').addEventListener('click', submitEdit);
 $('closeEdit').addEventListener('click', () => { pendingEditSentence = null; setBilingualText($('confirmEdit'), '儲存變更', 'Save changes'); $('editDialog').close(); });
@@ -2768,7 +2774,7 @@ async function renderSongView(songId) {
   content.innerHTML = '<p class="section-note">影片載入中… <span class="en-sub">Loading video…</span></p>';
   const lyricsGrid = document.createElement('div');
   lyricsGrid.className = 'sentence-grid song-lyrics';
-  /* 整首歌＝最小單元：歌詞卡編號＋可拖曳排序（順序存老師個人帳號）。 */
+  /* 整首歌＝最小單元：歌詞卡編號＋↑↓移動鈕排序（順序存老師個人帳號）。 */
   const songSentences = song.lines.map((line, i) => songLineToSentence(song, line, i));
   renderNumberedUnit(lyricsGrid, songSentences, {
     unitKey: `song_${songId}`,
@@ -6108,7 +6114,7 @@ async function renderRitualView(ritualId) {
       globalIdx++;
       return s;
     });
-    /* 禮節段落＝最小單元：段落內編號＋可拖曳排序（順序存老師個人帳號）。 */
+    /* 禮節段落＝最小單元：段落內編號＋↑↓移動鈕排序（順序存老師個人帳號）。 */
     renderNumberedUnit(grid, secSentences, {
       unitKey: `ritual_${ritualId}_sec${secIdx}`,
       buildCard: (s) => createCard(s, false)
@@ -6370,18 +6376,14 @@ function textGroupName(s) {
    拖曳：登入老師長按卡片（約0.4秒）後外框發亮，可上下拖曳換位；
          放開後自動重新編號，順序存入該老師個人帳號（cardOrder），公版不動。 */
 
-/* 卡片包裝：上方置中編號。回傳 .card-wrap（含編號＋卡片本體）。 */
-function wrapWithNumber(card, num, recordId) {
-  const wrap = document.createElement('div');
-  wrap.className = 'card-wrap';
-  if (recordId != null) wrap.dataset.recordId = String(recordId);
+/* 卡片內部編號：置於卡片框內頂部、左右置中。 */
+function addCardNumber(card, num) {
   const el = document.createElement('div');
-  el.className = 'card-num';
+  el.className = 'card-num-in';
   el.textContent = num;
   el.setAttribute('aria-hidden', 'true');
-  wrap.appendChild(el);
-  wrap.appendChild(card);
-  return wrap;
+  card.insertBefore(el, card.firstChild);
+  return el;
 }
 
 /* 依老師自訂順序排列；一律回傳新陣列（不動原陣列）。
@@ -6421,126 +6423,134 @@ function saveUnitOrder(uid, unitKey, recordIds) {
     .catch(err => console.warn('cardOrder save failed:', (err && err.message) || err));
 }
 
-/* 長按拖曳排序（滑鼠＋觸控通用，Pointer Events）。
-   container 的直接子元素應為 .card-wrap；拖曳只在同容器內換位。
-   opts: { canDrag()->bool, onDrop(recordIds)->void } */
-function makeSortable(container, opts) {
-  opts = opts || {};
-  container.classList.add('sortable');
-  /* 持久容器（如 lessonContent、sentenceGrid）只綁定一次監聽器；
-     每次渲染更新 opts，事件觸發時讀取最新值，避免閉包抓到舊 unitKey。 */
-  container._sortableOpts = opts;
-  if (container.dataset.sortableBound === '1') return;
-  container.dataset.sortableBound = '1';
-  const getOpts = () => container._sortableOpts || {};
-  const HOLD_MS = 400, MOVE_TOL = 10;
-  let holdTimer = null, dragWrap = null, placeholder = null;
-  let startX = 0, startY = 0, dragging = false, scrollTick = 0;
-  const wraps = () => Array.from(container.querySelectorAll(':scope > .card-wrap'));
-  const renumber = () => {
-    wraps().forEach((w, i) => {
-      const n = w.querySelector(':scope > .card-num');
-      if (n) n.textContent = i + 1;
-    });
-  };
-  const preventTouchScroll = (e) => { e.preventDefault(); };
+/* ============ 句子卡上下移動順序（2026-10-02 改版） ============
+   長按拖曳已取消，改為每張卡片內的 ↑ ↓ 按鈕（放在「編輯」左邊）。
+   點擊後卡片發光＋跳出確認框，使用者按「確定」才真正換位；
+   課程順序原則上不容隨意更動。順序存老師個人帳號（cardOrder），公版不動。 */
+let pendingMove = null; /* {container, card, dir, unitKey, uid} */
 
-  function cleanup() {
-    if (holdTimer) { clearTimeout(holdTimer); holdTimer = null; }
-    if (dragWrap) {
-      dragWrap.classList.remove('drag-src');
-      dragWrap.style.transform = '';
-      dragWrap.style.zIndex = '';
-      dragWrap = null;
-    }
-    if (placeholder && placeholder.parentNode) placeholder.parentNode.removeChild(placeholder);
-    placeholder = null;
-    dragging = false;
-    window.removeEventListener('touchmove', preventTouchScroll, { passive: false });
-    window.removeEventListener('pointermove', onMove);
-    window.removeEventListener('pointerup', onUp);
-    window.removeEventListener('pointercancel', onUp);
-  }
+function movableCards(container) {
+  return Array.from(container.querySelectorAll(':scope > .mv-card'));
+}
 
-  function startDrag(wrap) {
-    holdTimer = null;
-    if (!wrap.isConnected) { cleanup(); return; } /* 長按期間已被重繪：放棄 */
-    dragging = true;
-    dragWrap = wrap;
-    wrap.classList.add('drag-src');
-    wrap.style.zIndex = '60';
-    /* 觸控：拖曳中擋住頁面捲動（手指定位期間無移動，瀏覽器尚未開始捲動，此時擋有效）。 */
-    window.addEventListener('touchmove', preventTouchScroll, { passive: false });
-    placeholder = document.createElement('div');
-    placeholder.className = 'sort-placeholder';
-    placeholder.style.height = wrap.offsetHeight + 'px';
-    wrap.parentNode.insertBefore(placeholder, wrap.nextSibling);
-  }
-
-  function movePlaceholder(clientY) {
-    const list = wraps().filter(w => w !== dragWrap);
-    let before = null;
-    for (const w of list) {
-      const r = w.getBoundingClientRect();
-      if (clientY < r.top + r.height / 2) { before = w; break; }
-    }
-    if (before) placeholder.parentNode.insertBefore(placeholder, before);
-    else placeholder.parentNode.appendChild(placeholder);
-  }
-
-  function onMove(e) {
-    if (dragging && dragWrap) {
-      const dy = e.clientY - startY;
-      dragWrap.style.transform = 'translateY(' + dy + 'px)';
-      movePlaceholder(e.clientY);
-      /* 邊緣自動捲動（節流）。 */
-      const now = Date.now();
-      if (now - scrollTick > 60) {
-        scrollTick = now;
-        if (e.clientY < 90) window.scrollBy(0, -14);
-        else if (e.clientY > window.innerHeight - 90) window.scrollBy(0, 14);
-      }
-      if (e.cancelable) e.preventDefault();
-      return;
-    }
-    /* 尚未進入拖曳：移動超過容忍值＝捲動／選字，取消長按。 */
-    if (holdTimer && (Math.abs(e.clientX - startX) > MOVE_TOL || Math.abs(e.clientY - startY) > MOVE_TOL)) {
-      cleanup();
-    }
-  }
-
-  function onUp() {
-    if (dragging && dragWrap && placeholder && placeholder.parentNode) {
-      placeholder.parentNode.insertBefore(dragWrap, placeholder);
-      const ids = wraps().map(w => w.dataset.recordId).filter(Boolean);
-      cleanup();
-      renumber();
-      const onDrop = getOpts().onDrop || (() => {});
-      onDrop(ids);
-    } else {
-      cleanup();
-    }
-  }
-
-  container.addEventListener('pointerdown', (e) => {
-    const canDrag = getOpts().canDrag || (() => false);
-    if (!canDrag()) return;
-    if (e.pointerType === 'mouse' && e.button !== 0) return;
-    const wrap = e.target.closest ? e.target.closest('.card-wrap') : null;
-    if (!wrap || !container.contains(wrap)) return;
-    /* 卡片內的互動元件不觸發拖曳：按鈕、連結、details、音影訊、輸入框等。 */
-    if (e.target.closest('button, a, summary, input, textarea, select, audio, video, iframe, [data-no-drag]')) return;
-    startX = e.clientX; startY = e.clientY;
-    holdTimer = setTimeout(() => startDrag(wrap), HOLD_MS);
-    window.addEventListener('pointermove', onMove);
-    window.addEventListener('pointerup', onUp);
-    window.addEventListener('pointercancel', onUp);
+function renumberCards(container) {
+  movableCards(container).forEach((card, i) => {
+    const n = card.querySelector(':scope > .card-num-in');
+    if (n) n.textContent = i + 1;
   });
 }
 
-/* 渲染一個「編號＋可拖曳」卡片單元。
+/* 首張的 ↑、末張的 ↓ 停用。 */
+function refreshMoveButtons(container) {
+  const cards = movableCards(container);
+  cards.forEach((card, i) => {
+    const up = card.querySelector('.move-up');
+    const down = card.querySelector('.move-down');
+    if (up) up.disabled = (i === 0);
+    if (down) down.disabled = (i === cards.length - 1);
+  });
+}
+
+/* 在卡片內加入 ↑ ↓ 按鈕：句子卡放 .card-admin 內「編輯」左邊；
+   生詞卡放 .vocab-actions 內編輯鈕左邊；說明卡放 .info-actions 內編輯鈕左邊。 */
+function addMoveButtons(card) {
+  const mkBtn = (cls, label, title) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'icon-button move-btn ' + cls;
+    b.textContent = label;
+    b.setAttribute('aria-label', title);
+    b.title = title;
+    return b;
+  };
+  const up = mkBtn('move-up', '↑', '上移 (Move up)');
+  const down = mkBtn('move-down', '↓', '下移 (Move down)');
+  const admin = card.querySelector('.card-admin');
+  if (admin) {
+    const editBtn = admin.querySelector('.card-edit-button');
+    if (editBtn) { admin.insertBefore(down, editBtn); admin.insertBefore(up, down); }
+    else { admin.appendChild(up); admin.appendChild(down); }
+    return;
+  }
+  const vActions = card.querySelector('.vocab-actions');
+  if (vActions) {
+    const editBtn = vActions.querySelector('.vocab-edit');
+    if (editBtn) { vActions.insertBefore(down, editBtn); vActions.insertBefore(up, down); }
+    else { vActions.appendChild(up); vActions.appendChild(down); }
+    return;
+  }
+  const iActions = card.querySelector('.info-actions');
+  if (iActions) {
+    const editBtn = iActions.querySelector('.info-edit');
+    if (editBtn) { iActions.insertBefore(down, editBtn); iActions.insertBefore(up, down); }
+    else { iActions.appendChild(up); iActions.appendChild(down); }
+  }
+}
+
+/* 事件委派：容器只綁定一次，opts 每次更新。 */
+function attachMoveHandlers(container, unitKey, uid) {
+  container._moveOpts = { unitKey, uid };
+  if (container.dataset.moveBound === '1') return;
+  container.dataset.moveBound = '1';
+  container.addEventListener('click', (e) => {
+    const btn = e.target.closest ? e.target.closest('.move-up, .move-down') : null;
+    if (!btn || !container.contains(btn) || btn.disabled) return;
+    const card = btn.closest('.mv-card');
+    if (!card) return;
+    const o = container._moveOpts || {};
+    if (!o.unitKey || !o.uid) return;
+    const dir = btn.classList.contains('move-up') ? -1 : 1;
+    requestMove(container, card, dir, o.unitKey, o.uid);
+  });
+}
+
+function requestMove(container, card, dir, unitKey, uid) {
+  const cards = movableCards(container);
+  const i = cards.indexOf(card);
+  const j = i + dir;
+  if (j < 0 || j >= cards.length) return;
+  card.classList.add('card-glow');
+  pendingMove = { container, card, dir, unitKey, uid };
+  const dlg = $('moveConfirmDialog');
+  if (dlg && typeof dlg.showModal === 'function') dlg.showModal();
+  else if (window.confirm('確定要改變句子卡順序嗎？')) confirmMove();
+  else cancelMove();
+}
+
+function confirmMove() {
+  const m = pendingMove;
+  pendingMove = null;
+  const dlg = $('moveConfirmDialog');
+  if (dlg && dlg.open) dlg.close();
+  if (!m) return;
+  const { container, card, dir, unitKey, uid } = m;
+  card.classList.remove('card-glow');
+  const cards = movableCards(container);
+  const i = cards.indexOf(card);
+  const j = i + dir;
+  if (i < 0 || j < 0 || j >= cards.length) return;
+  const other = cards[j];
+  if (dir < 0) container.insertBefore(card, other);
+  else container.insertBefore(card, other.nextSibling);
+  renumberCards(container);
+  refreshMoveButtons(container);
+  const ids = movableCards(container).map(c => c.dataset.recordId).filter(Boolean);
+  saveUnitOrder(uid, unitKey, ids);
+  /* 換位後讓被移動的卡片回到可視範圍。 */
+  try { card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (_) {}
+}
+
+function cancelMove() {
+  if (pendingMove) pendingMove.card.classList.remove('card-glow');
+  pendingMove = null;
+  const dlg = $('moveConfirmDialog');
+  if (dlg && dlg.open) dlg.close();
+}
+
+/* 渲染一個「編號＋可移動順序」卡片單元。
    container: 卡片容器；recs: 句子陣列（會依老師自訂順序就地重排，讓連播等閉包吃到新順序）。
-   opts: { unitKey, buildCard(s)->卡片元素, canDrag()->bool } */
+   opts: { unitKey, buildCard(s)->卡片元素, canDrag()->bool }。
+   編號在卡片框內頂部置中；登入老師的卡片另有 ↑ ↓ 移動鈕（按鈕要再次確認才換位）。 */
 function renderNumberedUnit(container, recs, opts) {
   opts = opts || {};
   const uid = currentTeacherUid();
@@ -6548,22 +6558,28 @@ function renderNumberedUnit(container, recs, opts) {
   const ordered = applyUnitOrder(recs, order);
   recs.length = 0;
   ordered.forEach(s => recs.push(s));
+  const canMove = !!(opts.unitKey && uid && (!opts.canDrag || opts.canDrag()));
   ordered.forEach((s, i) => {
-    container.appendChild(wrapWithNumber(opts.buildCard(s), i + 1, s.recordId));
+    const card = opts.buildCard(s);
+    addCardNumber(card, i + 1);
+    card.classList.add('mv-card');
+    card.dataset.recordId = String(s.recordId);
+    if (canMove) addMoveButtons(card);
+    container.appendChild(card);
   });
-  if (opts.unitKey && uid) {
-    makeSortable(container, {
-      canDrag: opts.canDrag || (() => !!currentTeacherUid()),
-      onDrop: (ids) => saveUnitOrder(uid, opts.unitKey, ids)
-    });
+  if (canMove) {
+    attachMoveHandlers(container, opts.unitKey, uid);
+    refreshMoveButtons(container);
   }
   return ordered;
 }
 
-/* 只編號不拖曳（搜尋結果、訪客視角）。 */
+/* 只編號不移動（搜尋結果、訪客視角）。 */
 function renderNumberedStatic(container, recs, buildCard) {
   recs.forEach((s, i) => {
-    container.appendChild(wrapWithNumber(buildCard(s), i + 1, s.recordId));
+    const card = buildCard(s);
+    addCardNumber(card, i + 1);
+    container.appendChild(card);
   });
 }
 
@@ -6593,7 +6609,7 @@ function renderTextTab(content, recs, lessonNum) {
     playButton.addEventListener('click', () => playTextGroup(lines, playButton));
     head.appendChild(title); head.appendChild(playButton);
     section.appendChild(head);
-    /* 對話分組＝最小單元：組內編號＋可拖曳排序（順序存老師個人帳號）。 */
+    /* 對話分組＝最小單元：組內編號＋↑↓移動鈕排序（順序存老師個人帳號）。 */
     renderNumberedUnit(section, lines, {
       unitKey: `L${lessonNum}_text_${groupName}`,
       buildCard: (s) => {
@@ -6634,7 +6650,7 @@ function renderVocabTab(content, recs, lessonNum) {
     content.appendChild(head);
     const grid = document.createElement('div');
     grid.className = 'vocab-grid';
-    /* 生詞分組＝最小單元：小卡上方編號＋可拖曳排序。 */
+    /* 生詞分組＝最小單元：小卡上方編號＋↑↓移動鈕排序。 */
     renderNumberedUnit(grid, groups[groupName], {
       unitKey: `L${lessonNum}_vocab_${groupName}`,
       buildCard: (s) => createVocabCard(s)
@@ -6726,7 +6742,7 @@ function renderGrammarTab(content, recs, lessonNum) {
     funcEl.hidden = !displayExplanation(point);
     funcEl.setAttribute('lang', grammarProfile.locale);
     block.appendChild(head);
-    /* 語法點＝最小單元：句型標題不編號，例句組內編號＋可拖曳排序。 */
+    /* 語法點＝最小單元：句型標題不編號，例句組內編號＋↑↓移動鈕排序。 */
     renderNumberedUnit(block, examples, {
       unitKey: `L${lessonNum}_grammar_${key}`,
       buildCard: (s) => createCard(s)
@@ -6737,7 +6753,7 @@ function renderGrammarTab(content, recs, lessonNum) {
 
 /* ---- 練習／文化：說明卡 ---- */
 function renderInfoTab(content, recs, tabName, lessonNum) {
-  /* 練習／文化整頁＝最小單元：編號＋可拖曳排序。 */
+  /* 練習／文化整頁＝最小單元：編號＋↑↓移動鈕排序。 */
   renderNumberedUnit(content, recs, {
     unitKey: `L${lessonNum}_${tabName}`,
     buildCard: (s) => {
@@ -6786,7 +6802,7 @@ function renderSuppTab(content, recs, lessonNum) {
     content.appendChild(empty);
     return;
   }
-  /* 補充整頁＝最小單元：編號＋可拖曳排序。 */
+  /* 補充整頁＝最小單元：編號＋↑↓移動鈕排序。 */
   renderNumberedUnit(content, recs, {
     unitKey: `L${lessonNum}_supp`,
     buildCard: (s) => {
