@@ -906,6 +906,7 @@ async function submitDeleteSentence() {
     }
     state.sentences = state.sentences.filter(row => row.recordId !== sentence.recordId);
     $('sentenceCount').textContent = state.sentences.length;
+    saveBankCache(state.bankVersion); /* 同步快取，否則下次開頁（快取命中）被刪的句子會復活 */
     renderSentences();
     renderCourse(); /* 課程課文分頁也要即時重繪，避免刪掉的卡片殘留 */
     pendingDeleteSentence = null;
@@ -1077,8 +1078,23 @@ async function submitEdit() {
       await teacherOverridesRef(uid).doc(original.recordId)
         .set({ ...contentFields, updatedAt: serverTimestamp() }, { merge: true });
     }
-    await reloadSentences();
+    /* 本地更新（省錢）：把寫入的欄位直接套用到記憶體中的句子，不再全量重讀。 */
+    Object.assign(original, {
+      sourceLanguage: data.sourceLanguage,
+      hindiSentence: data.hindiSentence,
+      chineseSentence: data.chineseSentence,
+      pinyin: data.pinyin,
+      romanHindi: data.romanHindi,
+      hindiExplanation: data.hindiExplanation,
+      category: data.category,
+      tags: data.tags,
+      aiSource: data.aiSource,
+      originalPaste: data.originalPaste,
+      seq: data.seq,
+    });
     courseMetaCache.clear();
+    $('sentenceCount').textContent = state.sentences.length;
+    saveBankCache(state.bankVersion);
     renderSentences();
     renderCourse();
     pendingEditSentence = null;
@@ -1888,8 +1904,16 @@ async function submitSentence() {
     const me = requireApprovedAccess();
     const uid = me.uid;
     /* 個人句庫與課程「補充」一律寫入該老師的個人命名空間，不影響其他老師。 */
-    await teacherSentencesRef(uid).add(sentenceDocData({ ...submitted, ownerUid: uid }));
-    await reloadSentences();
+    const docData = sentenceDocData({ ...submitted, ownerUid: uid });
+    const docRef = await teacherSentencesRef(uid).add(docData);
+    /* 本地更新（省錢）：新句子直接併入記憶體＋更新快取，不再全量重讀 10,777 筆。 */
+    const newSentence = docToSentence(docRef.id, docData, uid);
+    const nowMs = Date.now();
+    newSentence.createdAt = { toMillis: () => nowMs, seconds: Math.floor(nowMs / 1000), nanoseconds: (nowMs % 1000) * 1e6 };
+    state.sentences.push(newSentence);
+    state.sentences = sortSentencesBySeq(state.sentences);
+    $('sentenceCount').textContent = state.sentences.length;
+    saveBankCache(state.bankVersion);
     renderSentences();
     if (activeLesson > 0) { courseMetaCache.clear(); renderCourse(); }
     if (activeLesson > 0) setBilingualText($('saveMessage'), `已儲存至${lessonShortLabel(activeLesson)}「${section}」（只在你的帳號顯示）。`, `Saved to ${lessonShortLabel(activeLesson)} "${section}" (visible in your account only).`);
@@ -6346,7 +6370,15 @@ async function restoreHiddenCard(sharedId, button) {
   try {
     /* 只清除 deleted 旗標，保留老師的其他覆寫（如編輯內容）。 */
     await teacherOverridesRef(uid).doc(sharedId).update({ deleted: fbFieldValue.delete(), updatedAt: serverTimestamp() });
-    await reloadSentences();
+    /* 本地更新（省錢）：把句子從隱藏清單移回句庫，不再全量重讀。 */
+    const restoredIdx = state.hiddenShared.findIndex(s => s.recordId === sharedId);
+    if (restoredIdx >= 0) {
+      const restored = state.hiddenShared.splice(restoredIdx, 1)[0];
+      state.sentences.push(restored);
+      state.sentences = sortSentencesBySeq(state.sentences);
+      $('sentenceCount').textContent = state.sentences.length;
+      saveBankCache(state.bankVersion);
+    }
     renderCourse();
   } catch (err) {
     button.disabled = false;
