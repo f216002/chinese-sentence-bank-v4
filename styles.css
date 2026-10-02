@@ -248,3 +248,5 @@ button .en-sub { pointer-events: none; }
 .ritual-doc-zh{font-family:"Noto Sans TC",sans-serif;font-size:18px;line-height:1.5}
 .ritual-doc-py{color:var(--red);font-size:14px;margin-top:4px}
 .ritual-doc-empty{color:#aaa}
+/* 老師個人新增的句子卡：外框用暖金色，與公版教材卡片的灰色外框區分。 */
+.sentence-card.personal-card{border:2px solid #dfa63f;background:#fffdf6}
