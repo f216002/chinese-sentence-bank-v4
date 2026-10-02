@@ -250,3 +250,10 @@ button .en-sub { pointer-events: none; }
 .ritual-doc-empty{color:#aaa}
 /* 老師個人新增的句子卡：外框用暖金色，與公版教材卡片的灰色外框區分。 */
 .sentence-card.personal-card{border:2px solid #dfa63f;background:#fffdf6}
+/* 句子卡編號＋拖曳排序（2026-10-02）：編號置於卡片上方置中；長按卡片外框發亮拖曳。 */
+.card-wrap{display:flex;flex-direction:column;min-width:0}
+.card-num{text-align:center;font-weight:700;color:var(--teal);font-size:15px;margin:6px 0 4px;user-select:none;-webkit-user-select:none;line-height:1.3}
+.sortable .card-wrap{cursor:grab}
+.card-wrap.drag-src{user-select:none;-webkit-user-select:none}
+.card-wrap.drag-src .sentence-card,.card-wrap.drag-src .vocab-card,.card-wrap.drag-src .info-card{border:2px solid var(--teal);box-shadow:0 0 0 4px rgba(11,112,107,.32),0 16px 36px rgba(34,50,47,.22)}
+.sort-placeholder{border:2px dashed var(--teal);border-radius:14px;background:rgba(11,112,107,.07)}
