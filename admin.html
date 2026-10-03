@@ -43,6 +43,11 @@
     .empty { text-align: center; color: #8a7f6a; padding: 28px 0; }
     .count { font-size: .82rem; color: #8a7f6a; margin: 8px 0 0; }
     .back-link { display: inline-block; margin-top: 20px; color: #b3541e; }
+    .hint { font-size: .82rem; color: #8a7f6a; }
+    .hint code { font-family: ui-monospace, monospace; font-size: .78rem; background: #f4eee0; padding: 2px 6px; border-radius: 6px; }
+    .warning-banner { background: #fbe3e1; border: 2px solid #a1261f; color: #a1261f; font-weight: 700; padding: 12px 16px; border-radius: 12px; }
+    .warning-banner[hidden] { display: none; }
+    .en-sub { font-size: .78em; color: #8a7f6a; font-weight: normal; }
     #toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: #2b2620; color: #fff; padding: 10px 18px; border-radius: 999px; font-size: .88rem; z-index: 50; }
     #toast.error { background: #a1261f; }
     .modal { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 40; }
@@ -74,6 +79,7 @@
       <div class="tabs" id="adminTabs" role="tablist" aria-label="審核分頁">
         <button type="button" data-tab="requests" class="active">待審核申請</button>
         <button type="button" data-tab="teachers">核准教師名單</button>
+        <button type="button" data-tab="version">版本監控</button>
       </div>
 
       <div id="tabRequests" class="panel">
@@ -96,6 +102,20 @@
         </div>
         <p class="empty" id="teachersEmpty">核准名單是空的。</p>
         <p class="count" id="teacherCount"></p>
+      </div>
+
+      <div id="tabVersion" class="panel" hidden>
+        <h3>bankVersion 版本監控 <span class="en-sub">Bank version monitor</span></h3>
+        <p class="hint">bankVersion 是公版句庫的版本號：每次匯入新內容都必須更新它，各老師的瀏覽器才會失效快取、重讀新內容。24 小時內更新 ≥3 次視為異常（可能是腳本失控）。更新工具：<code>tools/bump_bankversion.js</code></p>
+        <p id="versionWarning" class="warning-banner" hidden></p>
+        <p>目前版本：<strong id="currentBankVersion">讀取中…</strong></p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>時間</th><th>版本</th><th>原因</th></tr></thead>
+            <tbody id="versionHistoryBody"></tbody>
+          </table>
+        </div>
+        <p class="empty" id="versionHistoryEmpty" hidden>尚無更新記錄。</p>
       </div>
 
       <p><a class="back-link" href="index.html">← 回句庫首頁</a></p>
@@ -123,3 +143,4 @@
   <script src="v4-admin.js?v=20260926-2"></script>
 </body>
 </html>
+
