@@ -7212,3 +7212,375 @@ $('lessonBackButton').addEventListener('click', () => {
 /* 2026-09-29：內容包匯入區塊已刪除（Cheng 確認不再手動上傳內容包），loadPackPreview/importPackRecords 保留為 dead code。 */
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && textPlay.playing) stopTextPlay(); });
 
+
+/* ===== 我的招生頁（2026-10-03）=====
+   審核通過的老師在此編輯公開招生頁，寫入 enrollPages/{uid}；
+   網址代號唯一性由 enrollSlugs/{slug} 保證；
+   GitHub Action 定時把已發布文件渲染成 enroll/{slug}/ 靜態頁。
+   寫入前一律經 requireApprovedAccess()；家長瀏覽端免登入。 */
+const ENROLL_PAGES_COL = 'enrollPages';
+const ENROLL_SLUGS_COL = 'enrollSlugs';
+const ENROLL_STORAGE_PREFIX = 'enroll/';
+const ENROLL_SLUG_RE = /^[a-z0-9-]{3,30}$/;
+const ENROLL_SOCIAL_TYPES = ['whatsapp', 'telegram', 'line'];
+const ENROLL_SOCIAL_NAMES = { whatsapp: 'WhatsApp', telegram: 'Telegram', line: 'LINE' };
+const ENROLL_MAPS_URL_RE = /google\.[a-z.]+\/maps|maps\.app\.goo\.gl|goo\.gl\/maps/i;
+const ENROLL_LANGS = ['zh', 'hi', 'ta', 'th', 'km', 'vi', 'id', 'ne', 'bn', 'es', 'en', 'de', 'my', 'ko', 'ja', 'si', 'fa'];
+const ENROLL_PAGE_BASE = 'enroll/';
+
+let enrollState = { loaded: false, uid: '', oldSlug: '', photoUrl: '', images: [] };
+
+function enrollLangName(code) {
+  if (code === 'zh') return '中文 · Chinese';
+  try {
+    const p = v4GetLanguageProfile(code);
+    return (p.nativeName || code) + ' · ' + (p.nameZh || p.name || code);
+  } catch (e) { return code; }
+}
+function enrollMsg(text, isError) {
+  const el = $('enrollMessage');
+  el.textContent = text || '';
+  el.classList.toggle('error', !!isError);
+}
+function enrollIsApproved() {
+  return !!(window.V4_ACCESS && window.V4_ACCESS.status === 'approved');
+}
+function refreshEnrollVisibility() {
+  $('enrollManager').classList.toggle('hidden', !enrollIsApproved());
+  if (enrollIsApproved() && !enrollState.loaded) loadEnrollDoc();
+  if (!enrollIsApproved()) { enrollState.loaded = false; }
+}
+
+function enrollLangOptions(selected) {
+  return ENROLL_LANGS.map((c) =>
+    '<option value="' + c + '"' + (c === selected ? ' selected' : '') + '>' + enrollLangName(c) + '</option>'
+  ).join('');
+}
+function enrollAddIntroRow(lang, text) {
+  const wrap = $('enrollIntros');
+  const row = document.createElement('div');
+  row.className = 'enroll-dynamic-row';
+  row.innerHTML =
+    '<select class="enroll-intro-lang" aria-label="介紹語言">' + enrollLangOptions(lang || 'zh') + '</select>' +
+    '<textarea class="enroll-intro-text" rows="3" placeholder="用這個語言寫一段課程介紹…"></textarea>' +
+    '<button class="text-button enroll-remove" type="button" aria-label="刪除此語言">刪除</button>';
+  row.querySelector('.enroll-intro-text').value = text || '';
+  row.querySelector('.enroll-remove').addEventListener('click', () => row.remove());
+  wrap.appendChild(row);
+}
+function enrollAddSocialRow(type, label, url) {
+  const wrap = $('enrollSocials');
+  const row = document.createElement('div');
+  row.className = 'enroll-dynamic-row enroll-social-row';
+  const typeOpts = ENROLL_SOCIAL_TYPES.map((t) =>
+    '<option value="' + t + '"' + (t === type ? ' selected' : '') + '>' + ENROLL_SOCIAL_NAMES[t] + '</option>'
+  ).join('');
+  row.innerHTML =
+    '<select class="enroll-social-type" aria-label="平台">' + typeOpts + '</select>' +
+    '<input class="enroll-social-label" autocomplete="off" placeholder="名稱，例如：中文班家長群">' +
+    '<input class="enroll-social-url" autocomplete="off" placeholder="連結，例如：https://chat.whatsapp.com/…">' +
+    '<button class="text-button enroll-remove" type="button" aria-label="刪除此連結">刪除</button>';
+  row.querySelector('.enroll-social-label').value = label || '';
+  row.querySelector('.enroll-social-url').value = url || '';
+  row.querySelector('.enroll-remove').addEventListener('click', () => row.remove());
+  wrap.appendChild(row);
+}
+
+function enrollCollectIntros() {
+  const intros = {};
+  document.querySelectorAll('#enrollIntros .enroll-dynamic-row').forEach((row) => {
+    const lang = row.querySelector('.enroll-intro-lang').value;
+    const text = row.querySelector('.enroll-intro-text').value.trim();
+    if (lang && text) intros[lang] = text;
+  });
+  return intros;
+}
+function enrollCollectSocials() {
+  const socials = [];
+  document.querySelectorAll('#enrollSocials .enroll-dynamic-row').forEach((row) => {
+    const url = row.querySelector('.enroll-social-url').value.trim();
+    if (!url) return;
+    socials.push({
+      type: row.querySelector('.enroll-social-type').value,
+      label: row.querySelector('.enroll-social-label').value.trim(),
+      url: url,
+    });
+  });
+  return socials;
+}
+
+/* 圖片前端壓縮：最長邊 maxDim，JPEG 0.82 */
+function enrollCompressImage(file, maxDim) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const objectUrl = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(objectUrl);
+      let w = img.naturalWidth, h = img.naturalHeight;
+      const scale = Math.min(1, maxDim / Math.max(w, h));
+      w = Math.round(w * scale); h = Math.round(h * scale);
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error('圖片壓縮失敗')), 'image/jpeg', 0.82);
+    };
+    img.onerror = () => { URL.revokeObjectURL(objectUrl); reject(new Error('圖片讀取失敗')); };
+    img.src = objectUrl;
+  });
+}
+async function enrollUploadBlob(blob, uid, kind) {
+  const path = ENROLL_STORAGE_PREFIX + uid + '/' + kind + '-' + Date.now() + '.jpg';
+  await fbStorage.ref(path).put(blob, { contentType: 'image/jpeg' });
+  return await fbStorage.ref(path).getDownloadURL();
+}
+function enrollRenderThumbs() {
+  const photoBox = $('enrollPhotoPreview');
+  photoBox.textContent = '';
+  if (enrollState.photoUrl) {
+    const img = document.createElement('img');
+    img.src = enrollState.photoUrl; img.alt = '個人照片預覽';
+    photoBox.appendChild(img);
+  }
+  const imgBox = $('enrollImagesPreview');
+  imgBox.textContent = '';
+  enrollState.images.forEach((url, i) => {
+    const fig = document.createElement('figure');
+    const img = document.createElement('img');
+    img.src = url; img.alt = '課程圖片預覽 ' + (i + 1); img.loading = 'lazy';
+    const del = document.createElement('button');
+    del.type = 'button'; del.className = 'enroll-thumb-del'; del.textContent = '×';
+    del.setAttribute('aria-label', '刪除這張圖片');
+    del.addEventListener('click', () => { enrollState.images.splice(i, 1); enrollRenderThumbs(); });
+    fig.appendChild(img); fig.appendChild(del);
+    imgBox.appendChild(fig);
+  });
+}
+
+let enrollSlugTimer = null;
+async function enrollCheckSlug() {
+  const hint = $('enrollSlugHint');
+  const slug = $('enrollSlug').value.trim().toLowerCase();
+  $('enrollSlug').value = slug;
+  if (!slug) { hint.textContent = ''; hint.className = 'field-hint'; return; }
+  if (!ENROLL_SLUG_RE.test(slug)) {
+    hint.textContent = '格式不符：3–30 個字元，小寫英文、數字、連字號。';
+    hint.className = 'field-hint enroll-hint-bad';
+    return;
+  }
+  if (slug === enrollState.oldSlug && enrollState.oldSlug) {
+    hint.textContent = '這是你目前的代號，可以繼續使用。';
+    hint.className = 'field-hint enroll-hint-ok';
+    return;
+  }
+  hint.textContent = '檢查中…';
+  hint.className = 'field-hint';
+  try {
+    const snap = await fbDb.collection(ENROLL_SLUGS_COL).doc(slug).get();
+    if (snap.exists) {
+      hint.textContent = '這個代號已經有人用了，換一個吧。';
+      hint.className = 'field-hint enroll-hint-bad';
+    } else {
+      hint.textContent = '這個代號可以用！招生頁網址：' + ENROLL_PAGE_BASE + slug + '/';
+      hint.className = 'field-hint enroll-hint-ok';
+    }
+  } catch (e) {
+    hint.textContent = '檢查失敗：' + (e.message || '未知錯誤');
+    hint.className = 'field-hint enroll-hint-bad';
+  }
+}
+
+function enrollExtractYouTubeId(url) {
+  const m = String(url || '').match(/(?:youtube\.com\/(?:watch\?[^#]*v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
+  return m ? m[1] : '';
+}
+/* 從 Google 地圖分享連結擷取經緯度；短網址無法解析時回傳 null（改用地址查詢內嵌） */
+function enrollExtractMapsLatLng(url) {
+  const u = String(url || '');
+  let m = u.match(/@(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)(?:,|$|[^\d.])/);
+  if (m) return { lat: m[1], lng: m[2] };
+  m = u.match(/[?&](?:q|query)=(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/);
+  if (m) return { lat: m[1], lng: m[2] };
+  m = u.match(/!3d(-?\d+(?:\.\d+)?)!4d(-?\d+(?:\.\d+)?)/);
+  if (m) return { lat: m[1], lng: m[2] };
+  return null;
+}
+
+async function loadEnrollDoc() {
+  const user = requireApprovedAccess();
+  enrollState.uid = user.uid;
+  enrollMsg('載入中…');
+  try {
+    const snap = await fbDb.collection(ENROLL_PAGES_COL).doc(user.uid).get();
+    const d = snap.exists ? (snap.data() || {}) : {};
+    enrollState.oldSlug = d.slug || '';
+    enrollState.photoUrl = d.photoUrl || '';
+    enrollState.images = Array.isArray(d.images) ? d.images.slice(0, 9) : [];
+    $('enrollNameZh').value = d.nameZh || '';
+    $('enrollNameEn').value = d.nameEn || '';
+    $('enrollCountry').value = d.country || '';
+    $('enrollCity').value = d.city || '';
+    $('enrollAddress').value = d.address || '';
+    $('enrollMapsUrl').value = d.mapsUrl || '';
+    $('enrollSlug').value = d.slug || '';
+    $('enrollDefaultLang').value = d.defaultLang || 'zh';
+    $('enrollVideoUrl').value = d.videoUrl || '';
+    $('enrollFormUrl').value = d.formUrl || '';
+    $('enrollIntros').textContent = '';
+    const intros = d.intros || {};
+    if (Object.keys(intros).length) Object.keys(intros).forEach((l) => enrollAddIntroRow(l, intros[l]));
+    else enrollAddIntroRow('zh', '');
+    $('enrollSocials').textContent = '';
+    (d.socials || []).forEach((s) => enrollAddSocialRow(s.type, s.label, s.url));
+    enrollRenderThumbs();
+    enrollUpdatePreviewButton(d.status);
+    enrollMsg(snap.exists ? '' : '還沒有招生頁，從下方開始建立吧。');
+    enrollCheckSlug();
+  } catch (e) {
+    enrollMsg('載入失敗：' + (e.message || '未知錯誤'), true);
+  }
+  enrollState.loaded = true;
+}
+function enrollUpdatePreviewButton(status) {
+  const btn = $('enrollPreview');
+  const unpub = $('enrollUnpublish');
+  const slug = ($('enrollSlug').value || '').trim();
+  const live = status === 'published' && slug;
+  btn.classList.toggle('hidden', !live);
+  unpub.classList.toggle('hidden', !live);
+  if (live) btn.href = ENROLL_PAGE_BASE + slug + '/';
+}
+
+function enrollValidate(status) {
+  const nameZh = $('enrollNameZh').value.trim();
+  const slug = $('enrollSlug').value.trim().toLowerCase();
+  const intros = enrollCollectIntros();
+  const socials = enrollCollectSocials();
+  const formUrl = $('enrollFormUrl').value.trim();
+  const address = $('enrollAddress').value.trim();
+  const mapsUrl = $('enrollMapsUrl').value.trim();
+  if (!ENROLL_SLUG_RE.test(slug)) throw new Error('網址代號格式不符：3–30 個字元，小寫英文、數字、連字號。');
+  if (status === 'published') {
+    if (!nameZh) throw new Error('發布需要填寫「中文姓名」。');
+    if (!Object.keys(intros).length) throw new Error('發布需要至少一種語言的課程介紹。');
+    if (!address) throw new Error('發布需要填寫「教室地址」。');
+    if (!mapsUrl) throw new Error('發布需要填寫「Google 地圖定位」連結。');
+    if (!ENROLL_MAPS_URL_RE.test(mapsUrl)) throw new Error('Google 地圖連結格式不正確，請貼上 Google 地圖 App 的分享連結。');
+    if (!formUrl && !socials.length) throw new Error('發布需要填寫 Google 表單連結或至少一個群組連結。');
+  }
+  return { nameZh, slug, intros, socials, formUrl, address, mapsUrl };
+}
+
+async function enrollSave(status) {
+  const user = requireApprovedAccess();
+  enrollMsg(status === 'published' ? '發布中…' : '儲存中…');
+  let v;
+  try { v = enrollValidate(status); }
+  catch (e) { enrollMsg(e.message, true); return; }
+  /* 代號被搶註檢查（自己的舊代號除外） */
+  if (v.slug !== enrollState.oldSlug) {
+    try {
+      const snap = await fbDb.collection(ENROLL_SLUGS_COL).doc(v.slug).get();
+      if (snap.exists) { enrollMsg('這個網址代號剛被別人用了，換一個再試。', true); enrollCheckSlug(); return; }
+    } catch (e) { enrollMsg('代號檢查失敗：' + (e.message || '未知錯誤'), true); return; }
+  }
+  const mapsLatLng = enrollExtractMapsLatLng(v.mapsUrl);
+  const data = {
+    slug: v.slug,
+    status: status,
+    nameZh: v.nameZh,
+    nameEn: $('enrollNameEn').value.trim(),
+    photoUrl: enrollState.photoUrl,
+    country: $('enrollCountry').value.trim(),
+    city: $('enrollCity').value.trim(),
+    address: v.address,
+    mapsUrl: v.mapsUrl,
+    mapsLat: mapsLatLng ? mapsLatLng.lat : '',
+    mapsLng: mapsLatLng ? mapsLatLng.lng : '',
+    defaultLang: $('enrollDefaultLang').value,
+    intros: v.intros,
+    images: enrollState.images,
+    videoId: enrollExtractYouTubeId($('enrollVideoUrl').value.trim()),
+    videoUrl: $('enrollVideoUrl').value.trim(),
+    socials: v.socials,
+    formUrl: v.formUrl,
+    updatedAt: serverTimestamp(),
+  };
+  if (status === 'published') data.publishedAt = serverTimestamp();
+  try {
+    const batch = fbDb.batch();
+    batch.set(fbDb.collection(ENROLL_PAGES_COL).doc(user.uid), data, { merge: true });
+    if (enrollState.oldSlug && enrollState.oldSlug !== v.slug) {
+      batch.delete(fbDb.collection(ENROLL_SLUGS_COL).doc(enrollState.oldSlug));
+    }
+    if (v.slug !== enrollState.oldSlug) {
+      batch.set(fbDb.collection(ENROLL_SLUGS_COL).doc(v.slug), { uid: user.uid });
+    }
+    await batch.commit();
+    enrollState.oldSlug = v.slug;
+    enrollUpdatePreviewButton(status);
+    enrollMsg(status === 'published'
+      ? '已發布！約 15 分鐘內上線，網址：' + ENROLL_PAGE_BASE + v.slug + '/'
+      : '草稿已儲存。');
+    enrollCheckSlug();
+  } catch (e) {
+    enrollMsg('儲存失敗：' + (e.message || '未知錯誤'), true);
+  }
+}
+async function enrollUnpublish() {
+  const user = requireApprovedAccess();
+  if (!confirm('確定要下架招生頁嗎？家長將無法再瀏覽，代號會為你保留。')) return;
+  enrollMsg('下架中…');
+  try {
+    await fbDb.collection(ENROLL_PAGES_COL).doc(user.uid).set(
+      { status: 'unpublished', updatedAt: serverTimestamp() }, { merge: true });
+    enrollUpdatePreviewButton('unpublished');
+    enrollMsg('已下架。');
+  } catch (e) {
+    enrollMsg('下架失敗：' + (e.message || '未知錯誤'), true);
+  }
+}
+
+function initEnrollManager() {
+  if (!($('enrollManager'))) return;
+  $('enrollDefaultLang').innerHTML = enrollLangOptions('zh');
+  $('enrollAddIntro').addEventListener('click', () => enrollAddIntroRow('zh', ''));
+  $('enrollAddSocial').addEventListener('click', () => enrollAddSocialRow('whatsapp', '', ''));
+  $('enrollSlug').addEventListener('input', () => {
+    clearTimeout(enrollSlugTimer);
+    enrollSlugTimer = setTimeout(enrollCheckSlug, 600);
+  });
+  $('enrollPhoto').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const user = requireApprovedAccess();
+    enrollMsg('照片上傳中…');
+    try {
+      const blob = await enrollCompressImage(file, 800);
+      enrollState.photoUrl = await enrollUploadBlob(blob, user.uid, 'photo');
+      enrollRenderThumbs();
+      enrollMsg('照片已上傳，記得按「儲存草稿」或「發布」。');
+    } catch (err) { enrollMsg('照片上傳失敗：' + (err.message || '未知錯誤'), true); }
+    e.target.value = '';
+  });
+  $('enrollImages').addEventListener('change', async (e) => {
+    const files = Array.from(e.target.files || []).slice(0, 9 - enrollState.images.length);
+    if (!files.length) { enrollMsg('圖片已達上限 9 張。', true); e.target.value = ''; return; }
+    const user = requireApprovedAccess();
+    enrollMsg('圖片上傳中…');
+    try {
+      for (const file of files) {
+        const blob = await enrollCompressImage(file, 1280);
+        enrollState.images.push(await enrollUploadBlob(blob, user.uid, 'img'));
+      }
+      enrollRenderThumbs();
+      enrollMsg('圖片已上傳，記得按「儲存草稿」或「發布」。');
+    } catch (err) { enrollMsg('圖片上傳失敗：' + (err.message || '未知錯誤'), true); }
+    e.target.value = '';
+  });
+  $('enrollSaveDraft').addEventListener('click', () => enrollSave('draft'));
+  $('enrollPublish').addEventListener('click', () => enrollSave('published'));
+  $('enrollUnpublish').addEventListener('click', enrollUnpublish);
+  window.addEventListener('v4-access-changed', refreshEnrollVisibility);
+  refreshEnrollVisibility();
+}
+initEnrollManager();
