@@ -263,3 +263,25 @@ button .en-sub { pointer-events: none; }
 .sentence-card.card-glow,.vocab-card.card-glow,.info-card.card-glow{border:2px solid var(--teal);box-shadow:0 0 0 4px rgba(11,112,107,.32),0 16px 36px rgba(34,50,47,.22)}
 .move-confirm-actions{display:flex;gap:12px;margin-top:22px}
 .move-confirm-actions .secondary-button,.move-confirm-actions .primary-button{flex:1}
+/* 我的招生頁（2026-10-03）：老師編輯公開招生頁 */
+.enroll-manager{padding-top:72px;padding-bottom:72px}
+.enroll-form{display:grid;gap:18px;margin-top:8px}
+.enroll-row{display:grid;gap:18px}
+@media(min-width:640px){.enroll-row{grid-template-columns:1fr 1fr}}
+.enroll-form input{padding-left:16px}
+.req{color:var(--red)}
+.field-hint{font-size:13px;color:var(--muted);font-weight:400}
+.enroll-hint-ok{color:#1e7e34}
+.enroll-hint-bad{color:var(--red)}
+.enroll-block{border:1px solid var(--line);border-radius:12px;padding:18px;background:#fffdf8;display:grid;gap:12px}
+.enroll-block-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.enroll-dynamic-row{display:grid;gap:10px;border-top:1px dashed var(--line);padding-top:12px}
+@media(min-width:640px){.enroll-dynamic-row{grid-template-columns:200px 1fr auto;align-items:start}}
+@media(min-width:640px){.enroll-social-row{grid-template-columns:150px 1fr 1.4fr auto}}
+.enroll-dynamic-row textarea{min-height:96px;resize:vertical;border:1px solid var(--line);border-radius:8px;padding:12px;font:inherit}
+.enroll-thumbs{display:flex;gap:10px;flex-wrap:wrap}
+.enroll-thumbs img{width:96px;height:96px;object-fit:cover;border-radius:10px;border:1px solid var(--line);background:#f6f3ec}
+#enrollPhotoPreview img{border-radius:50%}
+.enroll-thumbs figure{position:relative;margin:0}
+.enroll-thumb-del{position:absolute;top:-8px;right:-8px;width:26px;height:26px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--red);cursor:pointer;font-size:16px;line-height:1;padding:0}
+.enroll-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px;align-items:center}
