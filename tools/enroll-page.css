@@ -54,6 +54,10 @@ body {
   font-size: 34px; letter-spacing: 6px; margin: 18px 0 4px;
 }
 .hero .hero-sub { color: var(--ink-soft); font-size: 15px; margin: 0 0 10px; }
+.hero .hero-class-local {
+  font-family: "Noto Serif TC", serif; font-size: 22px; letter-spacing: 4px;
+  color: var(--ink); margin: 2px 0 8px;
+}
 .hero .hero-teacher { color: var(--ink); font-size: 17px; letter-spacing: 2px; margin: 0 0 6px; }
 .badge-open {
   display: inline-block;
@@ -155,7 +159,10 @@ body {
 .intro-verse p:last-child { margin-bottom: 0; }
 .intro-sep { display: flex; align-items: center; gap: 12px; margin: 22px 0 14px; }
 .intro-sep::before, .intro-sep::after { content: ""; flex: 1; height: 1px; background: var(--line); }
-.intro-zh-text p { font-size: 15px; line-height: 1.95; letter-spacing: 1px; color: var(--ink-soft); margin: 0 0 10px; }
+.intro-zh-text p {
+  font-family: "Noto Sans TC", sans-serif; font-size: 22px; line-height: 1.9; letter-spacing: 2px;
+  text-align: center; color: var(--ink); margin: 0 0 10px;
+}
 .intro-zh-text p:last-child { margin-bottom: 0; }
 .zh-chip { display: inline-block; font-size: 11px; letter-spacing: 2px; border: 1px solid var(--line); border-radius: 6px; padding: 1px 8px; margin-bottom: 8px; color: var(--ink-soft); }
 /* 雙語小標（上課時間卡等）：中文較小、顏色較淡 */
