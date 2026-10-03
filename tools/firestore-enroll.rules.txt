@@ -1,0 +1,56 @@
+# 全球中文班招生頁：Firestore + Storage 規則（2026-10-03）
+# 給 Cheng 貼上 Firebase Console 用。沿用現有 helper：
+#   isV4Admin()（管理員信箱）與 isV4ApprovedTeacher()（v4_approvedTeachers 內且 active）
+# 不要刪除 V2、V3、V4 原有規則，貼完按 Publish。
+
+## 1) Firestore Database → Rules，在 match /databases/{database}/documents { 內加入：
+
+// ---- 招生頁（2026-10-03）：公開招生，每人一頁 ----
+// 任何人可讀（含 GitHub Action 產生靜態頁、家長瀏覽）；
+// 建立／修改只限已核准老師本人；刪除只限管理員。
+match /enrollPages/{uid} {
+  allow read: if true;
+  allow create: if request.auth != null
+    && request.auth.uid == uid
+    && isV4ApprovedTeacher();
+  allow update: if (request.auth != null
+      && request.auth.uid == uid
+      && isV4ApprovedTeacher())
+    || isV4Admin();
+  allow delete: if isV4Admin();
+}
+
+// ---- 網址代號對照（2026-10-03）：保證全站唯一 ----
+// 任何人可讀（老師即時查重用）；
+// 老師只能登記自己的代號、刪除自己的代號；不開放修改（改代號＝刪舊建新）。
+match /enrollSlugs/{slug} {
+  allow read: if true;
+  allow create: if request.auth != null
+    && isV4ApprovedTeacher()
+    && !exists(/databases/$(database)/documents/enrollSlugs/$(slug))
+    && request.resource.data.uid == request.auth.uid;
+  allow delete: if request.auth != null
+    && resource.data.uid == request.auth.uid;
+  allow update: if false;
+}
+
+# 注意：Storage 規則沿用現有寫法（行內判斷管理員信箱），
+# 不使用 Firestore 的 isV4Admin() helper（該 helper 只定義在 Firestore 規則檔）。
+
+## 2) Storage → Rules，在 match /b/{bucket}/o { 內加入：
+
+// ---- 招生頁圖片（2026-10-03）：老師個人照片＋課程圖片 ----
+// 所有人可讀；只有已核准的老師本人（或管理員）可寫自己的目錄。
+match /enroll/{teacherId}/{fileName} {
+  allow read: if true;
+  allow write: if request.auth != null
+    && request.auth.token.email_verified == true
+    && (request.auth.uid == teacherId
+      || request.auth.token.email.lower() == 'f216002@gmail.com');
+}
+
+## 驗證方式（貼上 Publish 後）
+# 1. 未登入開 https://f216002.github.io/chinese-sentence-bank-v4/ → 「我的招生頁」區塊不出現。
+# 2. 點傳師登入（已核准）→ 區塊出現；填寫後按「儲存草稿」→ Firestore 出現 enrollPages/{uid}。
+# 3. 按「發布招生頁」→ 約 15 分鐘後 https://f216002.github.io/chinese-sentence-bank-v4/enroll/{代號}/ 可瀏覽。
+# 4. 把連結貼到 WhatsApp 對話框 → 應出現該老師的標題＋照片預覽卡。
