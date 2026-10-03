@@ -155,13 +155,15 @@ function buildPageData(p) {
       url: String(s.url),
     }));
 
-  const ogTitle = stripNewlines(p.nameZh || p.nameEn) + ' ' + t(displayLang, 'enrollTitle');
+  const ogTitle = (p.className ? stripNewlines(p.className) + '｜' : '') +
+    stripNewlines(p.nameZh || p.nameEn) + ' ' + t(displayLang, 'enrollTitle');
   const ogDescription = truncate(introLocal, 140);
 
   return {
     slug: p.slug,
     nameZh: stripNewlines(p.nameZh),
     nameEn: stripNewlines(p.nameEn),
+    className: stripNewlines(p.className),
     photoUrl: p.photoUrl || '',
     country: stripNewlines(p.country),
     city: stripNewlines(p.city),
@@ -342,7 +344,10 @@ function renderPage(pd, template, css) {
     .split('{{CANONICAL_URL}}').join(escAttr(pd.canonical))
     .split('{{INLINE_CSS}}').join(css)
     .split('{{HERO_PHOTO}}').join(heroPhoto)
-    .split('{{TEACHER_NAME}}').join(escHtml(pd.nameZh || pd.nameEn))
+    .split('{{HERO_TITLE}}').join(escHtml(pd.className || pd.nameZh || pd.nameEn))
+    .split('{{HERO_TEACHER}}').join(pd.className
+      ? '<p class="hero-teacher">' + escHtml(pd.nameZh || pd.nameEn) + '</p>'
+      : '')
     .split('{{OPEN_BADGE}}').join(openBadge)
     .split('{{LOCATION_LINE}}').join(escHtml(location))
     .split('{{INTRO_HTML}}').join(introHtml)
@@ -358,7 +363,7 @@ function renderPage(pd, template, css) {
 async function main() {
   const template = fs.readFileSync(TEMPLATE_FILE, 'utf8');
   const css = fs.readFileSync(CSS_FILE, 'utf8');
-  ['{{INLINE_CSS}}', '{{INTRO_HTML}}', '{{TEACHER_NAME}}', '{{CTA_HTML}}'].forEach((t) => {
+  ['{{INLINE_CSS}}', '{{INTRO_HTML}}', '{{HERO_TITLE}}', '{{HERO_TEACHER}}', '{{CTA_HTML}}'].forEach((t) => {
     if (!template.includes(t)) throw new Error('樣板缺少佔位符 ' + t);
   });
 
