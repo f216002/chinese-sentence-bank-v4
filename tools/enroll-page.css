@@ -40,7 +40,7 @@ body {
 }
 .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
 
-/* 頂欄：印章＋語言切換 */
+/* 頂欄：印章（固定中文印章為品牌標記，不翻譯） */
 .topbar {
   display: flex; align-items: center; justify-content: space-between;
   gap: 12px; padding: 14px 0;
@@ -56,19 +56,6 @@ body {
   transform: rotate(-4deg);
   box-shadow: 0 2px 8px rgba(143, 38, 30, 0.35);
 }
-.lang-row {
-  display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px;
-  -webkit-overflow-scrolling: touch;
-}
-.lang-pill {
-  flex: none;
-  border: 1px solid var(--line); background: var(--card); color: var(--ink-soft);
-  border-radius: 999px; padding: 6px 14px; font-size: 14px; cursor: pointer;
-}
-.lang-pill[aria-pressed="true"] {
-  background: var(--ink); color: var(--paper); border-color: var(--ink);
-}
-
 /* 主視覺 */
 .hero { text-align: center; padding: 34px 0 10px; }
 .hero-photo {
@@ -90,7 +77,7 @@ body {
   padding: 5px 18px 5px 21px; border-radius: 999px;
   margin-bottom: 14px;
 }
-.badge-open .en-sub { display: block; font-size: 11px; letter-spacing: 1px; opacity: 0.9; }
+.badge-open .pill-zh { display: block; font-size: 11px; letter-spacing: 2px; opacity: 0.9; font-weight: 400; }
 .hero-intro { text-align: left; margin: 6px 0 0; font-size: 16px; }
 
 /* 區塊 */
@@ -104,7 +91,7 @@ body {
   content: ""; width: 10px; height: 10px; background: var(--cinnabar);
   transform: rotate(45deg); flex: none;
 }
-.section-title .en-sub { font-family: "Noto Sans TC", sans-serif; font-size: 12px; letter-spacing: 1px; color: var(--ink-soft); font-weight: 400; }
+.section-title .sec-zh { font-family: "Noto Sans TC", sans-serif; font-size: 13px; letter-spacing: 2px; color: var(--ink-soft); font-weight: 400; }
 .card {
   background: var(--card); border: 1px solid var(--line); border-radius: 14px;
   padding: 20px; box-shadow: 0 2px 10px rgba(45, 41, 37, 0.06);
@@ -130,7 +117,7 @@ body {
 .map-wrap { position: relative; padding-top: 62%; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: var(--paper-deep); margin-bottom: 14px; }
 .map-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .map-open { display: inline-block; text-decoration: none; color: var(--cinnabar); font-weight: 700; border: 1px solid var(--cinnabar); border-radius: 999px; padding: 8px 20px; font-size: 15px; background: var(--card); }
-.map-open .en-sub { display: block; font-size: 11px; font-weight: 400; }
+.map-open .lb-zh { display: block; font-size: 11px; font-weight: 400; }
 
 /* 上課時間 */
 .schedule-card p { margin: 0 0 10px; font-size: 16px; }
@@ -168,8 +155,14 @@ body {
   box-shadow: 0 4px 14px rgba(184, 53, 44, 0.35);
 }
 .cta-button:hover { background: var(--cinnabar-deep); }
-.cta-button .en-sub { display: block; font-size: 12px; letter-spacing: 2px; font-weight: 400; opacity: 0.92; }
+.cta-button .cta-zh { display: block; font-size: 12px; letter-spacing: 3px; font-weight: 400; opacity: 0.92; }
 
 .site-footer { text-align: center; color: var(--ink-soft); font-size: 12px; padding: 26px 20px 90px; }
-.site-footer .en-sub { display: block; }
+.site-footer .ft-zh { display: block; margin-top: 2px; }
+
+/* 課程介紹雙語：對外語言在前、中文對照在後 */
+.intro-zh { margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--line); font-size: 14px; color: var(--ink-soft); }
+.zh-chip { display: inline-block; font-size: 11px; letter-spacing: 2px; border: 1px solid var(--line); border-radius: 6px; padding: 1px 8px; margin-bottom: 8px; color: var(--ink-soft); }
+/* 雙語小標（上課時間卡等）：中文較小、顏色較淡 */
+.lb-zh { font-size: 13px; font-weight: 400; color: var(--ink-soft); }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
