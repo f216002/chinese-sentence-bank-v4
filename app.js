@@ -7620,26 +7620,41 @@ function enrollUpdateIntroLocalLang() {
   if (el1) el1.textContent = name;
   if (el2) el2.textContent = name;
 }
-function enrollCopyTranslatePrompt() {
+function enrollBuildTranslatePrompt() {
   const name = enrollIntroLangName();
   const zh = $('enrollIntroZh').value.trim();
-  const prompt = '請將以下中文課程介紹翻譯成' + name +
+  return '請將以下中文課程介紹翻譯成' + name +
     '（用於中文班招生宣傳，語氣親切自然，符合當地人的表達習慣）：\n\n' +
     (zh || '（請在此貼上中文介紹）') +
     '\n\n要求：只回傳譯文，不要加任何解釋或前言。';
-  const done = () => enrollMsg('翻譯提示詞已複製，到 ChatGPT／Gemini 貼上，取得譯文後貼回「課程介紹（外文）」。');
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(prompt).then(done, () => enrollMsg('複製失敗，請檢查瀏覽器權限後重試。', true));
-  } else {
-    enrollMsg('瀏覽器不支援自動複製。', true);
+}
+async function enrollCopyTranslatePrompt() {
+  try {
+    await navigator.clipboard.writeText(enrollBuildTranslatePrompt());
+    return true;
+  } catch (_) {
+    enrollMsg('複製失敗，請檢查瀏覽器權限後重試。', true);
+    return false;
   }
+}
+/* 沿用 V4 新增句子的模式：先複製提示詞，再開啟 AI 網站（手機版直接跳轉） */
+function enrollCopyAndOpen(url) {
+  const isMobile = window.matchMedia('(pointer: coarse)').matches || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (isMobile) {
+    enrollCopyTranslatePrompt().then((copied) => { if (copied) window.location.assign(url); });
+    return;
+  }
+  const newPage = window.open(url, '_blank', 'noopener,noreferrer');
+  enrollCopyTranslatePrompt();
+  if (!newPage) enrollMsg('已複製提示詞。請允許彈出視窗，再開啟 AI 網站。', true);
 }
 function initEnrollManager() {
   if (!($('enrollManager'))) return;
   $('enrollDefaultLang').innerHTML = enrollLangOptions('zh');
   enrollUpdateIntroLocalLang();
   $('enrollDefaultLang').addEventListener('change', enrollUpdateIntroLocalLang);
-  $('enrollPromptBtn').addEventListener('click', enrollCopyTranslatePrompt);
+  $('enrollOpenChatGPT').addEventListener('click', () => enrollCopyAndOpen('https://chatgpt.com/'));
+  $('enrollOpenGemini').addEventListener('click', () => enrollCopyAndOpen('https://gemini.google.com/app'));
   enrollBuildWeekdays();
   $('enrollWeekAll').addEventListener('click', () => enrollSetWeekdays([1, 2, 3, 4, 5, 6, 7]));
   $('enrollWeekNone').addEventListener('click', () => enrollSetWeekdays([]));
