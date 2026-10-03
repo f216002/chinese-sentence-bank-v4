@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261003-02">
+  <link rel="stylesheet" href="styles.css?v=20261003-03">
 </head>
 <body>
   <a class="skip-link" href="#sentenceGrid">跳到句子庫 <span class="en-sub">Skip to sentence bank</span></a>
@@ -270,6 +270,17 @@
           <label class="edit-field">城市 <span class="en-sub">City</span><input id="enrollCity" autocomplete="off" placeholder="例如：那爛陀"></label>
         </div>
         <div class="enroll-row">
+          <label class="edit-field">開課日期 <span class="en-sub">Start date</span> <b class="req" aria-hidden="true">*</b><input id="enrollStartDate" type="date"></label>
+          <div class="edit-field"><span>上課時間 <span class="en-sub">Class time</span> <b class="req" aria-hidden="true">*</b></span>
+            <div class="enroll-time-row"><input id="enrollTimeStart" type="time" aria-label="開始時間 (Start time)"> <span aria-hidden="true">～</span> <input id="enrollTimeEnd" type="time" aria-label="結束時間 (End time)"></div>
+          </div>
+        </div>
+        <div class="enroll-block">
+          <div class="enroll-block-head"><strong>上課星期 <span class="en-sub">Class days</span> <b class="req" aria-hidden="true">*</b></strong><span class="enroll-head-actions"><button class="secondary-button" id="enrollWeekAll" type="button">全選 <span class="en-sub">All</span></button> <button class="secondary-button" id="enrollWeekNone" type="button">清除 <span class="en-sub">Clear</span></button></span></div>
+          <div id="enrollWeekdays" class="enroll-checks"></div>
+          <small class="field-hint">可複選，例如一三五、二四六，或按全選改成每天上課。 <span class="en-sub">Select multiple days, e.g. Mon/Wed/Fri, or select all for daily classes.</span></small>
+        </div>
+        <div class="enroll-row">
           <label class="edit-field">教室地址 <span class="en-sub">Classroom address</span> <b class="req" aria-hidden="true">*</b><input id="enrollAddress" autocomplete="off" placeholder="例如：Nalanda Heritage City, Nalanda, Bihar 803101"></label>
           <label class="edit-field">Google 地圖定位 <span class="en-sub">Google Maps location</span> <b class="req" aria-hidden="true">*</b><input id="enrollMapsUrl" autocomplete="off" placeholder="貼上 Google 地圖分享連結 (Paste a Google Maps share link)"><small class="field-hint">在 Google 地圖 App 選定教室位置 → 分享 → 複製連結 → 貼在這裡。 <span class="en-sub">In Google Maps, pick the classroom location → Share → Copy link → paste here.</span></small></label>
         </div>
@@ -421,7 +432,7 @@
   <script src="v4-language-config.js?v=20260929-2"></script>
   <script src="v4-songs-i18n.js?v=20260930-9"></script>
   <script src="v4-rituals-i18n.js?v=20260930-6"></script>
-  <script src="app.js?v=20261003-02"></script>
+  <script src="app.js?v=20261003-03"></script>
 </body>
 </html>
 
