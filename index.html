@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261002-05">
+  <link rel="stylesheet" href="styles.css?v=20261003-01">
 </head>
 <body>
   <a class="skip-link" href="#sentenceGrid">跳到句子庫 <span class="en-sub">Skip to sentence bank</span></a>
@@ -255,6 +255,53 @@
       </div>
     </section>
 
+    <section class="enroll-manager hidden" id="enrollManager" aria-labelledby="enrollManagerTitle">
+      <div class="section-heading">
+        <div><span class="step">招生 <span class="en-sub">ENROLL</span></span><h2 id="enrollManagerTitle">我的招生頁 <span class="en-sub">My enrollment page</span></h2></div>
+      </div>
+      <p class="section-note">為你的中文班建立公開招生頁：發布後約 15 分鐘內上線，家長免登入即可瀏覽，並能在 WhatsApp／Telegram／LINE 分享。 <span class="en-sub">Create a public enrollment page for your Chinese class. It goes live within about 15 minutes after publishing; parents browse without signing in and can share it on WhatsApp / Telegram / LINE.</span></p>
+      <div class="enroll-form">
+        <div class="enroll-row">
+          <label class="edit-field">中文姓名 <span class="en-sub">Chinese name</span> <b class="req" aria-hidden="true">*</b><input id="enrollNameZh" autocomplete="off" placeholder="例如：王承祺老師"></label>
+          <label class="edit-field">外文姓名 <span class="en-sub">Name in another language</span><input id="enrollNameEn" autocomplete="off" placeholder="例如：Teacher Cheng"></label>
+        </div>
+        <div class="enroll-row">
+          <label class="edit-field">國家 <span class="en-sub">Country</span><input id="enrollCountry" autocomplete="off" placeholder="例如：印度"></label>
+          <label class="edit-field">城市 <span class="en-sub">City</span><input id="enrollCity" autocomplete="off" placeholder="例如：那爛陀"></label>
+        </div>
+        <div class="enroll-row">
+          <label class="edit-field">教室地址 <span class="en-sub">Classroom address</span> <b class="req" aria-hidden="true">*</b><input id="enrollAddress" autocomplete="off" placeholder="例如：Nalanda Heritage City, Nalanda, Bihar 803101"></label>
+          <label class="edit-field">Google 地圖定位 <span class="en-sub">Google Maps location</span> <b class="req" aria-hidden="true">*</b><input id="enrollMapsUrl" autocomplete="off" placeholder="貼上 Google 地圖分享連結 (Paste a Google Maps share link)"><small class="field-hint">在 Google 地圖 App 選定教室位置 → 分享 → 複製連結 → 貼在這裡。 <span class="en-sub">In Google Maps, pick the classroom location → Share → Copy link → paste here.</span></small></label>
+        </div>
+        <label class="edit-field">個人照片 <span class="en-sub">Photo</span><input id="enrollPhoto" type="file" accept="image/*"><small class="field-hint">顯示在招生頁頂部與社群預覽卡，會自動壓縮。 <span class="en-sub">Shown at the top of the page and in social preview cards. Auto-compressed.</span></small></label>
+        <div id="enrollPhotoPreview" class="enroll-thumbs"></div>
+        <div class="enroll-row">
+          <label class="edit-field">網址代號 <span class="en-sub">Page URL name</span> <b class="req" aria-hidden="true">*</b><input id="enrollSlug" autocomplete="off" placeholder="例如：chen-nalanda（小寫英文、數字、連字號）"><small class="field-hint" id="enrollSlugHint" aria-live="polite"></small></label>
+          <label class="edit-field">預設語言 <span class="en-sub">Default language</span><select id="enrollDefaultLang"></select></label>
+        </div>
+        <div class="enroll-block">
+          <div class="enroll-block-head"><strong>課程介紹 <span class="en-sub">Course introductions</span></strong><button class="secondary-button" id="enrollAddIntro" type="button">＋ 新增語言 <span class="en-sub">Add language</span></button></div>
+          <div id="enrollIntros"></div>
+          <small class="field-hint">每種語言寫一段介紹，家長切換語言時看到對應版本。 <span class="en-sub">Write one introduction per language; parents see the matching version when they switch languages.</span></small>
+        </div>
+        <label class="edit-field">課程圖片 <span class="en-sub">Course photos</span><input id="enrollImages" type="file" accept="image/*" multiple><small class="field-hint">最多 9 張，會自動壓縮。 <span class="en-sub">Up to 9 photos, auto-compressed.</span></small></label>
+        <div id="enrollImagesPreview" class="enroll-thumbs"></div>
+        <label class="edit-field">影片介紹 <span class="en-sub">Intro video</span><input id="enrollVideoUrl" autocomplete="off" placeholder="貼上 YouTube 連結，可留空 (Paste a YouTube link, optional)"></label>
+        <div class="enroll-block">
+          <div class="enroll-block-head"><strong>加入群組連結 <span class="en-sub">Group links</span></strong><button class="secondary-button" id="enrollAddSocial" type="button">＋ 新增連結 <span class="en-sub">Add link</span></button></div>
+          <div id="enrollSocials"></div>
+        </div>
+        <label class="edit-field">Google 表單報名連結 <span class="en-sub">Enrollment form link</span><input id="enrollFormUrl" autocomplete="off" placeholder="貼上你的 Google 表單連結 (Paste your Google Form link)"></label>
+      </div>
+      <div class="enroll-actions">
+        <button class="secondary-button" id="enrollSaveDraft" type="button">儲存草稿 <span class="en-sub">Save draft</span></button>
+        <button class="primary-button" id="enrollPublish" type="button">發布招生頁 <span class="en-sub">Publish</span></button>
+        <button class="secondary-button hidden" id="enrollUnpublish" type="button">下架 <span class="en-sub">Unpublish</span></button>
+        <a class="text-button hidden" id="enrollPreview" href="#" target="_blank" rel="noopener">預覽公開頁 <span class="en-sub">View live page</span> ↗</a>
+      </div>
+      <div class="parse-message" id="enrollMessage" role="status" aria-live="polite"></div>
+    </section>
+
   </main>
 
   <dialog id="audioPinDialog">
@@ -366,7 +413,7 @@
   <script src="v4-language-config.js?v=20260929-2"></script>
   <script src="v4-songs-i18n.js?v=20260930-9"></script>
   <script src="v4-rituals-i18n.js?v=20260930-6"></script>
-  <script src="app.js?v=20261002-06"></script>
+  <script src="app.js?v=20261003-01"></script>
 </body>
 </html>
 
