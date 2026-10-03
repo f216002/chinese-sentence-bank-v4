@@ -156,7 +156,8 @@ function buildPageData(p) {
       url: String(s.url),
     }));
 
-  const ogTitle = (p.className ? stripNewlines(p.className) + '｜' : '') +
+  const classNameZh = stripNewlines(p.classNameZh) || stripNewlines(p.className);
+  const ogTitle = (classNameZh ? classNameZh + '｜' : '') +
     stripNewlines(p.nameZh || p.nameEn) + ' ' + t(displayLang, 'enrollTitle');
   const ogDescription = truncate(introLocal, 140);
 
@@ -164,7 +165,8 @@ function buildPageData(p) {
     slug: p.slug,
     nameZh: stripNewlines(p.nameZh),
     nameEn: stripNewlines(p.nameEn),
-    className: stripNewlines(p.className),
+    classNameZh: stripNewlines(p.classNameZh) || stripNewlines(p.className),
+    classNameLocal: stripNewlines(p.classNameLocal),
     photoUrl: p.photoUrl || '',
     country: stripNewlines(p.country),
     city: stripNewlines(p.city),
@@ -244,7 +246,7 @@ function renderPage(pd, template, css) {
       '<div class="intro-verse">' + renderParas(pd.introLocal) + '</div>' +
       (lang === 'zh'
         ? ''
-        : '<div class="intro-sep"><span class="zh-chip">中文</span></div>' +
+        : '<div class="intro-sep" aria-hidden="true"></div>' +
           '<div class="intro-zh-text">' + renderParas(pd.introZh) + '</div>') +
       '</div>'
   );
@@ -348,8 +350,11 @@ function renderPage(pd, template, css) {
     .split('{{CANONICAL_URL}}').join(escAttr(pd.canonical))
     .split('{{INLINE_CSS}}').join(css)
     .split('{{HERO_PHOTO}}').join(heroPhoto)
-    .split('{{HERO_TITLE}}').join(escHtml(pd.className || pd.nameZh || pd.nameEn))
-    .split('{{HERO_TEACHER}}').join(pd.className
+    .split('{{HERO_TITLE}}').join(escHtml(pd.classNameZh || pd.nameZh || pd.nameEn))
+    .split('{{HERO_CLASS_LOCAL}}').join(pd.classNameZh && pd.classNameLocal
+      ? '<p class="hero-class-local">' + escHtml(pd.classNameLocal) + '</p>'
+      : '')
+    .split('{{HERO_TEACHER}}').join(pd.classNameZh
       ? '<p class="hero-teacher">' + escHtml(pd.nameZh || pd.nameEn) + '</p>'
       : '')
     .split('{{OPEN_BADGE}}').join(openBadge)
@@ -367,7 +372,7 @@ function renderPage(pd, template, css) {
 async function main() {
   const template = fs.readFileSync(TEMPLATE_FILE, 'utf8');
   const css = fs.readFileSync(CSS_FILE, 'utf8');
-  ['{{INLINE_CSS}}', '{{INTRO_HTML}}', '{{HERO_TITLE}}', '{{HERO_TEACHER}}', '{{CTA_HTML}}'].forEach((t) => {
+  ['{{INLINE_CSS}}', '{{INTRO_HTML}}', '{{HERO_TITLE}}', '{{HERO_CLASS_LOCAL}}', '{{HERO_TEACHER}}', '{{CTA_HTML}}'].forEach((t) => {
     if (!template.includes(t)) throw new Error('樣板缺少佔位符 ' + t);
   });
 
