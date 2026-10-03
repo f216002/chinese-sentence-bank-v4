@@ -104,7 +104,12 @@ function buildPageData(p) {
 
   const defaultLang = (p.defaultLang && intros[p.defaultLang]) ? p.defaultLang : Object.keys(intros)[0];
   const images = (Array.isArray(p.images) ? p.images : []).filter(Boolean).slice(0, 9);
-  const videoId = p.videoId || extractYouTubeId(p.videoUrl);
+  /* 影片：新 videoIds 陣列優先，相容舊的單一 videoId／videoUrl */
+  const videoIds = (Array.isArray(p.videoIds) ? p.videoIds : []).filter(Boolean).slice(0, 5);
+  if (!videoIds.length) {
+    const legacy = p.videoId || extractYouTubeId(p.videoUrl);
+    if (legacy) videoIds.push(legacy);
+  }
   const socials = (Array.isArray(p.socials) ? p.socials : [])
     .filter((s) => s && s.url)
     .slice(0, 8)
@@ -131,7 +136,7 @@ function buildPageData(p) {
     defaultLang,
     intros,
     images,
-    videoId,
+    videoIds,
     socials,
     formUrl: p.formUrl || '#',
     ogTitle,
@@ -183,11 +188,19 @@ function renderPage(pd, template, css, js) {
       )
     : '';
 
-  const videoHtml = pd.videoId
+  const videoHtml = pd.videoIds.length
     ? renderSection(
-        '影片介紹', 'Video',
-        '<div class="video-wrap"><iframe src="https://www.youtube-nocookie.com/embed/' + escAttr(pd.videoId) +
-          '" title="課程介紹影片" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>'
+        '影片介紹', 'Videos',
+        '<div class="video-list">' +
+          pd.videoIds
+            .map(
+              (id) =>
+                '<div class="video-wrap"><iframe src="https://www.youtube-nocookie.com/embed/' +
+                escAttr(id) +
+                '" title="課程介紹影片" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>'
+            )
+            .join('') +
+          '</div>'
       )
     : '';
 
