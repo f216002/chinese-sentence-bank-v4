@@ -1,12 +1,13 @@
 # ---- 全球中文班招生頁：靜態產生 ----
-# 每 15 分鐘讀取 Firestore `enrollPages`（已發布），
+# 每 5 分鐘讀取 Firestore `enrollPages`（已發布），
 # 以公版樣板渲染每位老師的 enroll/{slug}/index.html 並推回 main，
 # GitHub Pages 隨即上線。家長看到的是純靜態頁，零資料庫讀取。
+# （老師發布另有 Cloud Function 即時觸發，見 ~/workspace/enrollment-page/deploy-trigger-guide.md）
 name: Generate enrollment pages
 
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 permissions:
