@@ -70,6 +70,7 @@ body {
   font-size: 34px; letter-spacing: 6px; margin: 18px 0 4px;
 }
 .hero .hero-sub { color: var(--ink-soft); font-size: 15px; margin: 0 0 10px; }
+.hero .hero-teacher { color: var(--ink); font-size: 17px; letter-spacing: 2px; margin: 0 0 6px; }
 .badge-open {
   display: inline-block;
   background: var(--cinnabar); color: #fff8f0;
@@ -138,26 +139,20 @@ body {
 }
 .social-btn small { display: block; color: var(--ink-soft); font-size: 12px; }
 
-/* 底部固定報名列 */
-.cta-bar {
-  position: sticky; bottom: 0; z-index: 20;
-  background: rgba(247, 242, 232, 0.96);
-  border-top: 1px solid var(--line);
-  padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
-  backdrop-filter: blur(6px);
-}
-.cta-inner { max-width: 720px; margin: 0 auto; }
+/* 底部報名區：一般文件流，置於頁尾上方，不隨捲動固定 */
+.cta-bar { max-width: 720px; margin: 26px auto 0; padding: 0 20px; }
+.cta-inner { max-width: 400px; margin: 0 auto; }
 .cta-button {
   display: block; text-align: center; text-decoration: none;
   background: var(--cinnabar); color: #fff8f0;
-  font-size: 19px; letter-spacing: 6px; font-weight: 700;
-  padding: 13px; border-radius: 14px;
+  font-size: 16px; letter-spacing: 4px; font-weight: 700;
+  padding: 10px; border-radius: 12px;
   box-shadow: 0 4px 14px rgba(184, 53, 44, 0.35);
 }
 .cta-button:hover { background: var(--cinnabar-deep); }
 .cta-button .cta-zh { display: block; font-size: 12px; letter-spacing: 3px; font-weight: 400; opacity: 0.92; }
 
-.site-footer { text-align: center; color: var(--ink-soft); font-size: 12px; padding: 26px 20px 90px; }
+.site-footer { text-align: center; color: var(--ink-soft); font-size: 12px; padding: 26px 20px 40px; }
 .site-footer .ft-zh { display: block; margin-top: 2px; }
 
 /* 課程介紹雙語：對外語言在前、中文對照在後 */
