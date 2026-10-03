@@ -7286,6 +7286,30 @@ function enrollAddSocialRow(type, label, url) {
   wrap.appendChild(row);
 }
 
+function enrollAddVideoRow(url) {
+  const wrap = $('enrollVideos');
+  if (wrap.querySelectorAll('.enroll-dynamic-row').length >= 5) {
+    enrollMsg('影片最多 5 部。', true);
+    return;
+  }
+  const row = document.createElement('div');
+  row.className = 'enroll-dynamic-row enroll-video-row';
+  row.innerHTML =
+    '<input class="enroll-video-url" autocomplete="off" placeholder="貼上 YouTube 連結 (Paste a YouTube link)">' +
+    '<button class="text-button enroll-remove" type="button" aria-label="刪除此影片">刪除</button>';
+  row.querySelector('.enroll-video-url').value = url || '';
+  row.querySelector('.enroll-remove').addEventListener('click', () => row.remove());
+  wrap.appendChild(row);
+}
+function enrollCollectVideos() {
+  const ids = [];
+  document.querySelectorAll('#enrollVideos .enroll-video-url').forEach((input) => {
+    const id = enrollExtractYouTubeId(input.value.trim());
+    if (id && ids.indexOf(id) === -1) ids.push(id);
+  });
+  return ids.slice(0, 5);
+}
+
 function enrollCollectIntros() {
   const intros = {};
   document.querySelectorAll('#enrollIntros .enroll-dynamic-row').forEach((row) => {
@@ -7423,7 +7447,11 @@ async function loadEnrollDoc() {
     $('enrollMapsUrl').value = d.mapsUrl || '';
     $('enrollSlug').value = d.slug || '';
     $('enrollDefaultLang').value = d.defaultLang || 'zh';
-    $('enrollVideoUrl').value = d.videoUrl || '';
+    $('enrollVideos').textContent = '';
+    const vids = (Array.isArray(d.videoIds) && d.videoIds.length ? d.videoIds
+      : (d.videoId ? [d.videoId] : [])).slice(0, 5);
+    if (vids.length) vids.forEach((id) => enrollAddVideoRow('https://www.youtube.com/watch?v=' + id));
+    else if (d.videoUrl) enrollAddVideoRow(d.videoUrl);
     $('enrollFormUrl').value = d.formUrl || '';
     $('enrollIntros').textContent = '';
     const intros = d.intros || {};
@@ -7499,8 +7527,9 @@ async function enrollSave(status) {
     defaultLang: $('enrollDefaultLang').value,
     intros: v.intros,
     images: enrollState.images,
-    videoId: enrollExtractYouTubeId($('enrollVideoUrl').value.trim()),
-    videoUrl: $('enrollVideoUrl').value.trim(),
+    videoIds: enrollCollectVideos(),
+    videoId: '', // 舊欄位清空，改用 videoIds（產生器仍相容舊資料）
+    videoUrl: '',
     socials: v.socials,
     formUrl: v.formUrl,
     updatedAt: serverTimestamp(),
@@ -7540,11 +7569,113 @@ async function enrollUnpublish() {
   }
 }
 
+/* 課程介紹自動翻譯：以中文介紹為原文，經免費 MyMemory API 翻成勾選的語言。
+   結果一律標示為 AI 草稿，請老師審定後再發布。 */
+async function enrollTranslateText(text, targetLang) {
+  const url = 'https://api.mymemory.translated.net/get?q=' + encodeURIComponent(text)
+    + '&langpair=zh-CN|' + encodeURIComponent(targetLang);
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  const body = await res.json();
+  const t = body && body.responseData && body.responseData.translatedText;
+  if (!t || /QUERY LENGTH LIMIT|INVALID EMAIL|MYMEMORY WARNING/i.test(t)) throw new Error('翻譯服務拒絕');
+  return t;
+}
+function enrollUpsertIntroRow(lang, text, isDraft) {
+  let row = null;
+  document.querySelectorAll('#enrollIntros .enroll-dynamic-row').forEach((r) => {
+    if (r.querySelector('.enroll-intro-lang').value === lang) row = r;
+  });
+  if (!row) {
+    enrollAddIntroRow(lang, '');
+    row = $('enrollIntros').lastElementChild;
+    row.querySelector('.enroll-intro-lang').value = lang;
+  }
+  row.querySelector('.enroll-intro-text').value = text;
+  row.classList.toggle('enroll-row-draft', !!isDraft);
+  let tag = row.querySelector('.enroll-draft-tag');
+  if (isDraft && !tag) {
+    tag = document.createElement('span');
+    tag.className = 'enroll-draft-tag';
+    tag.textContent = '🤖 AI 草稿待審定';
+    row.appendChild(tag);
+  } else if (!isDraft && tag) {
+    tag.remove();
+    row.classList.remove('enroll-row-draft');
+  }
+}
+function enrollBuildTranslateChecks() {
+  const box = $('enrollTranslateChecks');
+  if (!box || box.dataset.built) return;
+  box.dataset.built = '1';
+  ENROLL_LANGS.filter((c) => c !== 'zh').forEach((c) => {
+    const lab = document.createElement('label');
+    lab.className = 'enroll-check';
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.value = c;
+    cb.checked = true;
+    lab.appendChild(cb);
+    lab.appendChild(document.createTextNode(' ' + enrollLangName(c)));
+    box.appendChild(lab);
+  });
+}
+async function enrollAutoTranslate() {
+  let zhText = '';
+  document.querySelectorAll('#enrollIntros .enroll-dynamic-row').forEach((r) => {
+    if (!zhText && r.querySelector('.enroll-intro-lang').value === 'zh') {
+      zhText = r.querySelector('.enroll-intro-text').value.trim();
+    }
+  });
+  if (!zhText) { enrollMsg('請先寫好中文介紹，再按自動翻譯。', true); return; }
+  const targets = [];
+  document.querySelectorAll('#enrollTranslateChecks input:checked').forEach((cb) => targets.push(cb.value));
+  if (!targets.length) { enrollMsg('請至少勾選一種要翻譯的語言。', true); return; }
+  const btn = $('enrollAutoTranslate');
+  btn.disabled = true;
+  enrollMsg('翻譯中…（' + targets.length + ' 種語言，每種約需 1 秒）');
+  const failed = [];
+  for (const lang of targets) {
+    try {
+      const t = await enrollTranslateText(zhText, lang);
+      enrollUpsertIntroRow(lang, t, true);
+    } catch (e) {
+      failed.push(enrollLangName(lang));
+    }
+    await new Promise((r) => setTimeout(r, 400));
+  }
+  btn.disabled = false;
+  if (failed.length) enrollMsg('完成，但以下語言翻譯失敗（可手動填寫）：' + failed.join('、'), true);
+  else enrollMsg('翻譯完成！標示 🤖 的是 AI 草稿，請逐一審定後再發布。');
+}
+
 function initEnrollManager() {
   if (!($('enrollManager'))) return;
   $('enrollDefaultLang').innerHTML = enrollLangOptions('zh');
+  enrollBuildTranslateChecks();
   $('enrollAddIntro').addEventListener('click', () => enrollAddIntroRow('zh', ''));
+  $('enrollAutoTranslate').addEventListener('click', enrollAutoTranslate);
+  $('enrollAddVideo').addEventListener('click', () => enrollAddVideoRow(''));
   $('enrollAddSocial').addEventListener('click', () => enrollAddSocialRow('whatsapp', '', ''));
+  /* 預覽前先檢查靜態頁是否已產生，避免直接撞上 GitHub 404 */
+  $('enrollPreview').addEventListener('click', async (e) => {
+    e.preventDefault();
+    const slug = ($('enrollSlug').value || '').trim();
+    if (!slug) return;
+    const url = ENROLL_PAGE_BASE + slug + '/';
+    enrollMsg('檢查頁面狀態…');
+    try {
+      const res = await fetch(url, { method: 'HEAD' });
+      if (res.ok) {
+        enrollMsg('');
+        window.open(url, '_blank', 'noopener');
+      } else {
+        enrollMsg('靜態頁產生中：發布後約 15 分鐘上線，請稍後再試。若超過 30 分鐘仍是這樣，請聯繫管理員。', true);
+      }
+    } catch (err) {
+      window.open(url, '_blank', 'noopener');
+    }
+  });
   $('enrollSlug').addEventListener('input', () => {
     clearTimeout(enrollSlugTimer);
     enrollSlugTimer = setTimeout(enrollCheckSlug, 600);
