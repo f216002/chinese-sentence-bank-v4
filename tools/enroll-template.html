@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="{{HTML_LANG}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{OG_TITLE}}</title>
+  <meta name="description" content="{{OG_DESCRIPTION}}">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="{{CANONICAL_URL}}">
+  <!-- 社群預覽卡：每位老師專屬 -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{OG_TITLE}}">
+  <meta property="og:description" content="{{OG_DESCRIPTION}}">
+  <meta property="og:image" content="{{OG_IMAGE}}">
+  <meta property="og:url" content="{{CANONICAL_URL}}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{OG_TITLE}}">
+  <meta name="twitter:description" content="{{OG_DESCRIPTION}}">
+  <meta name="twitter:image" content="{{OG_IMAGE}}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+  <style>{{INLINE_CSS}}</style>
+</head>
+<body>
+  <div class="fret" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <header class="topbar">
+      <span class="seal" aria-hidden="true">招生</span>
+      <nav class="lang-row" id="enroll-lang-row" aria-label="選擇語言 Choose language"></nav>
+    </header>
+
+    <section class="hero">
+      {{HERO_PHOTO}}
+      <h1 id="enroll-teacher-name"></h1>
+      <p class="hero-sub">{{LOCATION_LINE}}</p>
+      <div><span class="badge-open">招生中<span class="en-sub">Now enrolling</span></span></div>
+    </section>
+
+    <section class="section" aria-label="課程介紹">
+      <h2 class="section-title">課程介紹 <span class="en-sub">About the course</span></h2>
+      <div class="card" id="enroll-intro"></div>
+    </section>
+
+    {{LOCATION_HTML}}
+    {{GALLERY_HTML}}
+    {{VIDEO_HTML}}
+    {{SOCIALS_HTML}}
+  </div>
+
+  <div class="cta-bar">
+    <div class="cta-inner">
+      <a class="cta-button" href="{{FORM_URL}}" target="_blank" rel="noopener">立即報名<span class="en-sub">Enroll now</span></a>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="fret" aria-hidden="true" style="margin-bottom: 18px;"></div>
+    中文班招生專頁 <span class="en-sub">Chinese class enrollment page</span>
+  </footer>
+
+  <script type="application/json" id="enroll-data">{{PAGE_DATA_JSON}}</script>
+  <script>{{INLINE_JS}}</script>
+</body>
+</html>
