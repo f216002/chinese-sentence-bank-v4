@@ -7228,7 +7228,7 @@ const ENROLL_MAPS_URL_RE = /google\.[a-z.]+\/maps|maps\.app\.goo\.gl|goo\.gl\/ma
 const ENROLL_LANGS = ['zh', 'hi', 'ta', 'th', 'km', 'vi', 'id', 'ne', 'bn', 'es', 'en', 'de', 'my', 'ko', 'ja', 'si', 'fa'];
 const ENROLL_PAGE_BASE = 'enroll/';
 
-let enrollState = { loaded: false, uid: '', oldSlug: '', photoUrl: '', images: [] };
+let enrollState = { loaded: false, uid: '', oldSlug: '', photoUrl: '', images: [], introZh: '', introLang: '', introTranslated: '' };
 
 function enrollLangName(code) {
   if (code === 'zh') return '中文 · Chinese';
@@ -7255,18 +7255,6 @@ function enrollLangOptions(selected) {
   return ENROLL_LANGS.map((c) =>
     '<option value="' + c + '"' + (c === selected ? ' selected' : '') + '>' + enrollLangName(c) + '</option>'
   ).join('');
-}
-function enrollAddIntroRow(lang, text) {
-  const wrap = $('enrollIntros');
-  const row = document.createElement('div');
-  row.className = 'enroll-dynamic-row';
-  row.innerHTML =
-    '<select class="enroll-intro-lang" aria-label="介紹語言">' + enrollLangOptions(lang || 'zh') + '</select>' +
-    '<textarea class="enroll-intro-text" rows="3" placeholder="用這個語言寫一段課程介紹…"></textarea>' +
-    '<button class="text-button enroll-remove" type="button" aria-label="刪除此語言">刪除</button>';
-  row.querySelector('.enroll-intro-text').value = text || '';
-  row.querySelector('.enroll-remove').addEventListener('click', () => row.remove());
-  wrap.appendChild(row);
 }
 function enrollAddSocialRow(type, label, url) {
   const wrap = $('enrollSocials');
@@ -7340,15 +7328,6 @@ function enrollCollectVideos() {
   return ids.slice(0, 5);
 }
 
-function enrollCollectIntros() {
-  const intros = {};
-  document.querySelectorAll('#enrollIntros .enroll-dynamic-row').forEach((row) => {
-    const lang = row.querySelector('.enroll-intro-lang').value;
-    const text = row.querySelector('.enroll-intro-text').value.trim();
-    if (lang && text) intros[lang] = text;
-  });
-  return intros;
-}
 function enrollCollectSocials() {
   const socials = [];
   document.querySelectorAll('#enrollSocials .enroll-dynamic-row').forEach((row) => {
@@ -7487,10 +7466,11 @@ async function loadEnrollDoc() {
     if (vids.length) vids.forEach((id) => enrollAddVideoRow('https://www.youtube.com/watch?v=' + id));
     else if (d.videoUrl) enrollAddVideoRow(d.videoUrl);
     $('enrollFormUrl').value = d.formUrl || '';
-    $('enrollIntros').textContent = '';
-    const intros = d.intros || {};
-    if (Object.keys(intros).length) Object.keys(intros).forEach((l) => enrollAddIntroRow(l, intros[l]));
-    else enrollAddIntroRow('zh', '');
+    /* 課程介紹：新 introZh 優先，相容舊 intros.zh */
+    $('enrollIntroZh').value = d.introZh || (d.intros && d.intros.zh) || '';
+    enrollState.introZh = d.introZh || '';
+    enrollState.introLang = d.introLang || '';
+    enrollState.introTranslated = d.introTranslated || '';
     $('enrollSocials').textContent = '';
     (d.socials || []).forEach((s) => enrollAddSocialRow(s.type, s.label, s.url));
     enrollRenderThumbs();
@@ -7515,7 +7495,8 @@ function enrollUpdatePreviewButton(status) {
 function enrollValidate(status) {
   const nameZh = $('enrollNameZh').value.trim();
   const slug = $('enrollSlug').value.trim().toLowerCase();
-  const intros = enrollCollectIntros();
+  const introZh = $('enrollIntroZh').value.trim();
+  const displayLang = $('enrollDefaultLang').value;
   const socials = enrollCollectSocials();
   const formUrl = $('enrollFormUrl').value.trim();
   const address = $('enrollAddress').value.trim();
@@ -7527,7 +7508,7 @@ function enrollValidate(status) {
   if (!ENROLL_SLUG_RE.test(slug)) throw new Error('網址代號格式不符：3–30 個字元，小寫英文、數字、連字號。');
   if (status === 'published') {
     if (!nameZh) throw new Error('發布需要填寫「中文姓名」。');
-    if (!Object.keys(intros).length) throw new Error('發布需要至少一種語言的課程介紹。');
+    if (!introZh) throw new Error('發布需要填寫「課程介紹（中文）」。');
     if (!startDate) throw new Error('發布需要填寫「開課日期」。');
     if (!weekdays.length) throw new Error('發布需要至少選擇一個「上課星期」。');
     if (!timeStart || !timeEnd) throw new Error('發布需要填寫「上課時間」（幾點到幾點）。');
@@ -7537,7 +7518,7 @@ function enrollValidate(status) {
     if (!ENROLL_MAPS_URL_RE.test(mapsUrl)) throw new Error('Google 地圖連結格式不正確，請貼上 Google 地圖 App 的分享連結。');
     if (!formUrl && !socials.length) throw new Error('發布需要填寫 Google 表單連結或至少一個群組連結。');
   }
-  return { nameZh, slug, intros, socials, formUrl, address, mapsUrl, startDate, weekdays, timeStart, timeEnd };
+  return { nameZh, slug, introZh, displayLang, socials, formUrl, address, mapsUrl, startDate, weekdays, timeStart, timeEnd };
 }
 
 async function enrollSave(status) {
@@ -7554,6 +7535,22 @@ async function enrollSave(status) {
     } catch (e) { enrollMsg('代號檢查失敗：' + (e.message || '未知錯誤'), true); return; }
   }
   const mapsLatLng = enrollExtractMapsLatLng(v.mapsUrl);
+  /* 發布時：老師只寫中文，AI 自動翻成對外顯示語言；中文沒變且已有譯文就不重翻 */
+  let introTranslated = enrollState.introTranslated;
+  let introLang = enrollState.introLang;
+  if (status === 'published' && v.displayLang !== 'zh') {
+    const needTranslate = !introTranslated || introLang !== v.displayLang || enrollState.introZh !== v.introZh;
+    if (needTranslate) {
+      enrollMsg('AI 翻譯課程介紹中…（約需數秒）');
+      try {
+        introTranslated = await enrollTranslateText(v.introZh, v.displayLang);
+        introLang = v.displayLang;
+      } catch (e) {
+        enrollMsg('自動翻譯失敗（' + (e.message || '網路錯誤') + '），請檢查網路後重試發布。', true);
+        return;
+      }
+    }
+  }
   const data = {
     slug: v.slug,
     status: status,
@@ -7570,8 +7567,8 @@ async function enrollSave(status) {
     weekdays: v.weekdays,
     timeStart: v.timeStart,
     timeEnd: v.timeEnd,
-    defaultLang: $('enrollDefaultLang').value,
-    intros: v.intros,
+    defaultLang: v.displayLang,
+    introZh: v.introZh,
     images: enrollState.images,
     videoIds: enrollCollectVideos(),
     videoId: '', // 舊欄位清空，改用 videoIds（產生器仍相容舊資料）
@@ -7580,7 +7577,13 @@ async function enrollSave(status) {
     formUrl: v.formUrl,
     updatedAt: serverTimestamp(),
   };
-  if (status === 'published') data.publishedAt = serverTimestamp();
+  if (status === 'published') {
+    data.publishedAt = serverTimestamp();
+    data.introLang = introLang;
+    data.introTranslated = introTranslated;
+    data.introTranslatedAt = serverTimestamp();
+    data.intros = fbFieldValue.delete(); // 舊多語言欄位已由 introZh＋introTranslated 取代
+  }
   try {
     const batch = fbDb.batch();
     batch.set(fbDb.collection(ENROLL_PAGES_COL).doc(user.uid), data, { merge: true });
@@ -7592,6 +7595,11 @@ async function enrollSave(status) {
     }
     await batch.commit();
     enrollState.oldSlug = v.slug;
+    enrollState.introZh = v.introZh;
+    if (status === 'published') {
+      enrollState.introLang = introLang;
+      enrollState.introTranslated = introTranslated;
+    }
     enrollUpdatePreviewButton(status);
     enrollMsg(status === 'published'
       ? '已發布！約 15 分鐘內上線，網址：' + ENROLL_PAGE_BASE + v.slug + '/'
@@ -7627,83 +7635,12 @@ async function enrollTranslateText(text, targetLang) {
   if (!t || /QUERY LENGTH LIMIT|INVALID EMAIL|MYMEMORY WARNING/i.test(t)) throw new Error('翻譯服務拒絕');
   return t;
 }
-function enrollUpsertIntroRow(lang, text, isDraft) {
-  let row = null;
-  document.querySelectorAll('#enrollIntros .enroll-dynamic-row').forEach((r) => {
-    if (r.querySelector('.enroll-intro-lang').value === lang) row = r;
-  });
-  if (!row) {
-    enrollAddIntroRow(lang, '');
-    row = $('enrollIntros').lastElementChild;
-    row.querySelector('.enroll-intro-lang').value = lang;
-  }
-  row.querySelector('.enroll-intro-text').value = text;
-  row.classList.toggle('enroll-row-draft', !!isDraft);
-  let tag = row.querySelector('.enroll-draft-tag');
-  if (isDraft && !tag) {
-    tag = document.createElement('span');
-    tag.className = 'enroll-draft-tag';
-    tag.textContent = '🤖 AI 草稿待審定';
-    row.appendChild(tag);
-  } else if (!isDraft && tag) {
-    tag.remove();
-    row.classList.remove('enroll-row-draft');
-  }
-}
-function enrollBuildTranslateChecks() {
-  const box = $('enrollTranslateChecks');
-  if (!box || box.dataset.built) return;
-  box.dataset.built = '1';
-  ENROLL_LANGS.filter((c) => c !== 'zh').forEach((c) => {
-    const lab = document.createElement('label');
-    lab.className = 'enroll-check';
-    const cb = document.createElement('input');
-    cb.type = 'checkbox';
-    cb.value = c;
-    cb.checked = true;
-    lab.appendChild(cb);
-    lab.appendChild(document.createTextNode(' ' + enrollLangName(c)));
-    box.appendChild(lab);
-  });
-}
-async function enrollAutoTranslate() {
-  let zhText = '';
-  document.querySelectorAll('#enrollIntros .enroll-dynamic-row').forEach((r) => {
-    if (!zhText && r.querySelector('.enroll-intro-lang').value === 'zh') {
-      zhText = r.querySelector('.enroll-intro-text').value.trim();
-    }
-  });
-  if (!zhText) { enrollMsg('請先寫好中文介紹，再按自動翻譯。', true); return; }
-  const targets = [];
-  document.querySelectorAll('#enrollTranslateChecks input:checked').forEach((cb) => targets.push(cb.value));
-  if (!targets.length) { enrollMsg('請至少勾選一種要翻譯的語言。', true); return; }
-  const btn = $('enrollAutoTranslate');
-  btn.disabled = true;
-  enrollMsg('翻譯中…（' + targets.length + ' 種語言，每種約需 1 秒）');
-  const failed = [];
-  for (const lang of targets) {
-    try {
-      const t = await enrollTranslateText(zhText, lang);
-      enrollUpsertIntroRow(lang, t, true);
-    } catch (e) {
-      failed.push(enrollLangName(lang));
-    }
-    await new Promise((r) => setTimeout(r, 400));
-  }
-  btn.disabled = false;
-  if (failed.length) enrollMsg('完成，但以下語言翻譯失敗（可手動填寫）：' + failed.join('、'), true);
-  else enrollMsg('翻譯完成！標示 🤖 的是 AI 草稿，請逐一審定後再發布。');
-}
-
 function initEnrollManager() {
   if (!($('enrollManager'))) return;
   $('enrollDefaultLang').innerHTML = enrollLangOptions('zh');
   enrollBuildWeekdays();
-  enrollBuildTranslateChecks();
   $('enrollWeekAll').addEventListener('click', () => enrollSetWeekdays([1, 2, 3, 4, 5, 6, 7]));
   $('enrollWeekNone').addEventListener('click', () => enrollSetWeekdays([]));
-  $('enrollAddIntro').addEventListener('click', () => enrollAddIntroRow('zh', ''));
-  $('enrollAutoTranslate').addEventListener('click', enrollAutoTranslate);
   $('enrollAddVideo').addEventListener('click', () => enrollAddVideoRow(''));
   $('enrollAddSocial').addEventListener('click', () => enrollAddSocialRow('whatsapp', '', ''));
   /* 預覽前先檢查靜態頁是否已產生，避免直接撞上 GitHub 404 */
