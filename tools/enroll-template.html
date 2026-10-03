@@ -28,21 +28,16 @@
   <div class="wrap">
     <header class="topbar">
       <span class="seal" aria-hidden="true">招生</span>
-      <nav class="lang-row" id="enroll-lang-row" aria-label="選擇語言 Choose language"></nav>
     </header>
 
     <section class="hero">
       {{HERO_PHOTO}}
-      <h1 id="enroll-teacher-name"></h1>
+      <h1>{{TEACHER_NAME}}</h1>
       <p class="hero-sub">{{LOCATION_LINE}}</p>
-      <div><span class="badge-open">招生中<span class="en-sub">Now enrolling</span></span></div>
+      <div>{{OPEN_BADGE}}</div>
     </section>
 
-    <section class="section" aria-label="課程介紹">
-      <h2 class="section-title">課程介紹 <span class="en-sub">About the course</span></h2>
-      <div class="card" id="enroll-intro"></div>
-    </section>
-
+    {{INTRO_HTML}}
     {{SCHEDULE_HTML}}
     {{LOCATION_HTML}}
     {{GALLERY_HTML}}
@@ -52,16 +47,13 @@
 
   <div class="cta-bar">
     <div class="cta-inner">
-      <a class="cta-button" href="{{FORM_URL}}" target="_blank" rel="noopener">立即報名<span class="en-sub">Enroll now</span></a>
+      {{CTA_HTML}}
     </div>
   </div>
 
   <footer class="site-footer">
     <div class="fret" aria-hidden="true" style="margin-bottom: 18px;"></div>
-    中文班招生專頁 <span class="en-sub">Chinese class enrollment page</span>
+    {{FOOTER_HTML}}
   </footer>
-
-  <script type="application/json" id="enroll-data">{{PAGE_DATA_JSON}}</script>
-  <script>{{INLINE_JS}}</script>
 </body>
 </html>
