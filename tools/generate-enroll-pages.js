@@ -236,13 +236,16 @@ function renderPage(pd, template, css) {
     ? '<img class="hero-photo" src="' + escAttr(pd.photoUrl) + '" alt="' + escAttr(pd.nameZh || pd.nameEn) + '">'
     : '';
 
-  /* 課程介紹：對外語言在前、中文在後（中文是給老師看的對照） */
+  /* 課程介紹：對外語言在前、中文在後（中文是給老師看的對照）；
+     文人排版：硃砂豎線引文＋「學」字淡印＋細線分隔，不用白底卡片 */
   const introHtml = renderSection(
     t(lang, 'intro'), '課程介紹',
-    '<div class="card"><div class="intro-local">' + renderParas(pd.introLocal) + '</div>' +
+    '<div class="intro-art"><span class="intro-mark" aria-hidden="true">學</span>' +
+      '<div class="intro-verse">' + renderParas(pd.introLocal) + '</div>' +
       (lang === 'zh'
         ? ''
-        : '<div class="intro-zh"><span class="zh-chip">中文</span>' + renderParas(pd.introZh) + '</div>') +
+        : '<div class="intro-sep"><span class="zh-chip">中文</span></div>' +
+          '<div class="intro-zh-text">' + renderParas(pd.introZh) + '</div>') +
       '</div>'
   );
 
