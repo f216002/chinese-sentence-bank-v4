@@ -129,14 +129,15 @@ async function fetchPublished() {
 /* 整理成樣板需要的資料；回傳 null 表示資料不足、跳過此頁 */
 function buildPageData(p) {
   if (!p.nameZh && !p.nameEn) return null;
-  /* 課程介紹：新 introZh 優先，相容舊 intros.zh；譯文用 introTranslated，相容舊 intros[displayLang] */
+  /* 課程介紹：新 introZh 優先，相容舊 intros.zh；外文用老師手填的 introLocal，舊 AI 譯文 introTranslated 僅作退路 */
   const introZh = String(p.introZh || (p.intros && p.intros.zh) || '').trim();
   if (!introZh) return null;
   const displayLang = UI_STRINGS[p.defaultLang] ? p.defaultLang : 'zh';
   let introLocal = introZh;
   if (displayLang !== 'zh') {
-    const tr = ((p.introLang === displayLang && p.introTranslated) ? p.introTranslated
-      : (p.intros && p.intros[displayLang]) || '').trim();
+    const tr = (String(p.introLocal || '').trim()
+      || ((p.introLang === displayLang && p.introTranslated) ? p.introTranslated : '')
+      || (p.intros && p.intros[displayLang]) || '').trim();
     if (tr) introLocal = tr;
   }
   const images = (Array.isArray(p.images) ? p.images : []).filter(Boolean).slice(0, 9);
