@@ -132,6 +132,11 @@ body {
 .map-open { display: inline-block; text-decoration: none; color: var(--cinnabar); font-weight: 700; border: 1px solid var(--cinnabar); border-radius: 999px; padding: 8px 20px; font-size: 15px; background: var(--card); }
 .map-open .en-sub { display: block; font-size: 11px; font-weight: 400; }
 
+/* 上課時間 */
+.schedule-card p { margin: 0 0 10px; font-size: 16px; }
+.schedule-card p:last-child { margin-bottom: 0; }
+.schedule-card strong { font-family: "Noto Serif TC", serif; letter-spacing: 2px; }
+
 /* 社群按鈕 */
 .social-list { display: grid; gap: 10px; }
 .social-btn {
