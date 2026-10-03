@@ -7228,7 +7228,7 @@ const ENROLL_MAPS_URL_RE = /google\.[a-z.]+\/maps|maps\.app\.goo\.gl|goo\.gl\/ma
 const ENROLL_LANGS = ['zh', 'hi', 'ta', 'th', 'km', 'vi', 'id', 'ne', 'bn', 'es', 'en', 'de', 'my', 'ko', 'ja', 'si', 'fa'];
 const ENROLL_PAGE_BASE = 'enroll/';
 
-let enrollState = { loaded: false, uid: '', oldSlug: '', photoUrl: '', images: [], introZh: '', introLang: '', introTranslated: '' };
+let enrollState = { loaded: false, uid: '', oldSlug: '', photoUrl: '', images: [] };
 
 function enrollLangName(code) {
   if (code === 'zh') return '中文 · Chinese';
@@ -7467,11 +7467,10 @@ async function loadEnrollDoc() {
     if (vids.length) vids.forEach((id) => enrollAddVideoRow('https://www.youtube.com/watch?v=' + id));
     else if (d.videoUrl) enrollAddVideoRow(d.videoUrl);
     $('enrollFormUrl').value = d.formUrl || '';
-    /* 課程介紹：新 introZh 優先，相容舊 intros.zh */
+    /* 課程介紹：新 introZh 優先，相容舊 intros.zh；外文用老師手填的 introLocal，舊 AI 譯文 introTranslated 預填方便修正 */
     $('enrollIntroZh').value = d.introZh || (d.intros && d.intros.zh) || '';
-    enrollState.introZh = d.introZh || '';
-    enrollState.introLang = d.introLang || '';
-    enrollState.introTranslated = d.introTranslated || '';
+    $('enrollIntroLocal').value = d.introLocal || d.introTranslated || '';
+    enrollUpdateIntroLocalLang();
     $('enrollSocials').textContent = '';
     (d.socials || []).forEach((s) => enrollAddSocialRow(s.type, s.label, s.url));
     enrollRenderThumbs();
@@ -7497,6 +7496,7 @@ function enrollValidate(status) {
   const nameZh = $('enrollNameZh').value.trim();
   const slug = $('enrollSlug').value.trim().toLowerCase();
   const introZh = $('enrollIntroZh').value.trim();
+  const introLocal = $('enrollIntroLocal').value.trim();
   const displayLang = $('enrollDefaultLang').value;
   const socials = enrollCollectSocials();
   const formUrl = $('enrollFormUrl').value.trim();
@@ -7510,6 +7510,7 @@ function enrollValidate(status) {
   if (status === 'published') {
     if (!nameZh) throw new Error('發布需要填寫「中文姓名」。');
     if (!introZh) throw new Error('發布需要填寫「課程介紹（中文）」。');
+    if (displayLang !== 'zh' && !introLocal) throw new Error('發布需要填寫「課程介紹（外文）」。');
     if (!startDate) throw new Error('發布需要填寫「開課日期」。');
     if (!weekdays.length) throw new Error('發布需要至少選擇一個「上課星期」。');
     if (!timeStart || !timeEnd) throw new Error('發布需要填寫「上課時間」（幾點到幾點）。');
@@ -7519,7 +7520,7 @@ function enrollValidate(status) {
     if (!ENROLL_MAPS_URL_RE.test(mapsUrl)) throw new Error('Google 地圖連結格式不正確，請貼上 Google 地圖 App 的分享連結。');
     if (!formUrl && !socials.length) throw new Error('發布需要填寫 Google 表單連結或至少一個群組連結。');
   }
-  return { nameZh, slug, introZh, displayLang, socials, formUrl, address, mapsUrl, startDate, weekdays, timeStart, timeEnd };
+  return { nameZh, slug, introZh, introLocal, displayLang, socials, formUrl, address, mapsUrl, startDate, weekdays, timeStart, timeEnd };
 }
 
 async function enrollSave(status) {
@@ -7536,22 +7537,7 @@ async function enrollSave(status) {
     } catch (e) { enrollMsg('代號檢查失敗：' + (e.message || '未知錯誤'), true); return; }
   }
   const mapsLatLng = enrollExtractMapsLatLng(v.mapsUrl);
-  /* 發布時：老師只寫中文，AI 自動翻成對外顯示語言；中文沒變且已有譯文就不重翻 */
-  let introTranslated = enrollState.introTranslated;
-  let introLang = enrollState.introLang;
-  if (status === 'published' && v.displayLang !== 'zh') {
-    const needTranslate = !introTranslated || introLang !== v.displayLang || enrollState.introZh !== v.introZh;
-    if (needTranslate) {
-      enrollMsg('AI 翻譯課程介紹中…（約需數秒）');
-      try {
-        introTranslated = await enrollTranslateText(v.introZh, v.displayLang);
-        introLang = v.displayLang;
-      } catch (e) {
-        enrollMsg('自動翻譯失敗（' + (e.message || '網路錯誤') + '），請檢查網路後重試發布。', true);
-        return;
-      }
-    }
-  }
+  /* 課程介紹外文由老師手動翻譯貼上，不再自動翻譯 */
   const data = {
     slug: v.slug,
     status: status,
@@ -7571,6 +7557,7 @@ async function enrollSave(status) {
     timeEnd: v.timeEnd,
     defaultLang: v.displayLang,
     introZh: v.introZh,
+    introLocal: v.introLocal,
     images: enrollState.images,
     videoIds: enrollCollectVideos(),
     videoId: '', // 舊欄位清空，改用 videoIds（產生器仍相容舊資料）
@@ -7581,10 +7568,7 @@ async function enrollSave(status) {
   };
   if (status === 'published') {
     data.publishedAt = serverTimestamp();
-    data.introLang = introLang;
-    data.introTranslated = introTranslated;
-    data.introTranslatedAt = serverTimestamp();
-    data.intros = fbFieldValue.delete(); // 舊多語言欄位已由 introZh＋introTranslated 取代
+    data.intros = fbFieldValue.delete(); // 舊多語言欄位已由 introZh＋introLocal 取代
   }
   try {
     const batch = fbDb.batch();
@@ -7597,11 +7581,6 @@ async function enrollSave(status) {
     }
     await batch.commit();
     enrollState.oldSlug = v.slug;
-    enrollState.introZh = v.introZh;
-    if (status === 'published') {
-      enrollState.introLang = introLang;
-      enrollState.introTranslated = introTranslated;
-    }
     enrollUpdatePreviewButton(status);
     enrollMsg(status === 'published'
       ? '已發布，約 3 分鐘後上線'
@@ -7625,21 +7604,42 @@ async function enrollUnpublish() {
   }
 }
 
-/* 課程介紹自動翻譯：以中文介紹為原文，經免費 MyMemory API 翻成勾選的語言。
-   結果一律標示為 AI 草稿，請老師審定後再發布。 */
-async function enrollTranslateText(text, targetLang) {
-  const url = 'https://api.mymemory.translated.net/get?q=' + encodeURIComponent(text)
-    + '&langpair=zh-CN|' + encodeURIComponent(targetLang);
-  const res = await fetch(url);
-  if (!res.ok) throw new Error('HTTP ' + res.status);
-  const body = await res.json();
-  const t = body && body.responseData && body.responseData.translatedText;
-  if (!t || /QUERY LENGTH LIMIT|INVALID EMAIL|MYMEMORY WARNING/i.test(t)) throw new Error('翻譯服務拒絕');
-  return t;
+/* 外文介紹欄：標籤顯示對外語言名稱；「產生翻譯提示詞」一鍵複製，給 ChatGPT／Gemini 用 */
+function enrollIntroLangName() {
+  const code = ($('enrollDefaultLang') && $('enrollDefaultLang').value) || 'zh';
+  if (code === 'zh') return '中文';
+  try {
+    const p = v4GetLanguageProfile(code);
+    return p.nameZh || p.name || code;
+  } catch (e) { return code; }
+}
+function enrollUpdateIntroLocalLang() {
+  const name = enrollIntroLangName();
+  const el1 = $('enrollIntroLocalLang');
+  const el2 = $('enrollIntroLocalLang2');
+  if (el1) el1.textContent = name;
+  if (el2) el2.textContent = name;
+}
+function enrollCopyTranslatePrompt() {
+  const name = enrollIntroLangName();
+  const zh = $('enrollIntroZh').value.trim();
+  const prompt = '請將以下中文課程介紹翻譯成' + name +
+    '（用於中文班招生宣傳，語氣親切自然，符合當地人的表達習慣）：\n\n' +
+    (zh || '（請在此貼上中文介紹）') +
+    '\n\n要求：只回傳譯文，不要加任何解釋或前言。';
+  const done = () => enrollMsg('翻譯提示詞已複製，到 ChatGPT／Gemini 貼上，取得譯文後貼回「課程介紹（外文）」。');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(prompt).then(done, () => enrollMsg('複製失敗，請檢查瀏覽器權限後重試。', true));
+  } else {
+    enrollMsg('瀏覽器不支援自動複製。', true);
+  }
 }
 function initEnrollManager() {
   if (!($('enrollManager'))) return;
   $('enrollDefaultLang').innerHTML = enrollLangOptions('zh');
+  enrollUpdateIntroLocalLang();
+  $('enrollDefaultLang').addEventListener('change', enrollUpdateIntroLocalLang);
+  $('enrollPromptBtn').addEventListener('click', enrollCopyTranslatePrompt);
   enrollBuildWeekdays();
   $('enrollWeekAll').addEventListener('click', () => enrollSetWeekdays([1, 2, 3, 4, 5, 6, 7]));
   $('enrollWeekNone').addEventListener('click', () => enrollSetWeekdays([]));
