@@ -7604,7 +7604,7 @@ async function enrollSave(status) {
     }
     enrollUpdatePreviewButton(status);
     enrollMsg(status === 'published'
-      ? '已發布！約 15 分鐘內上線，網址：' + ENROLL_PAGE_BASE + v.slug + '/'
+      ? '已發布，約 3 分鐘後上線'
       : '草稿已儲存。');
     enrollCheckSlug();
   } catch (e) {
@@ -7658,7 +7658,7 @@ function initEnrollManager() {
         enrollMsg('');
         window.open(url, '_blank', 'noopener');
       } else {
-        enrollMsg('靜態頁產生中：發布後約 15 分鐘上線，請稍後再試。若超過 30 分鐘仍是這樣，請聯繫管理員。', true);
+        enrollMsg('靜態頁產生中：發布後約 3 分鐘上線，請稍後再試。若超過 10 分鐘仍是這樣，請聯繫管理員。', true);
       }
     } catch (err) {
       window.open(url, '_blank', 'noopener');
