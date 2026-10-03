@@ -139,8 +139,24 @@ body {
 .site-footer { text-align: center; color: var(--ink-soft); font-size: 12px; padding: 26px 20px 40px; }
 .site-footer .ft-zh { display: block; margin-top: 2px; }
 
-/* 課程介紹雙語：對外語言在前、中文對照在後 */
-.intro-zh { margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--line); font-size: 14px; color: var(--ink-soft); }
+/* 課程介紹：文人排版——硃砂豎線引文、「學」字淡印、細線分隔中文對照 */
+.intro-art { position: relative; margin: 4px 0 0; padding: 10px 0 4px; }
+.intro-mark {
+  position: absolute; right: -4px; top: -36px; z-index: 0;
+  font-family: "Noto Serif TC", serif; font-weight: 700; font-size: 110px; line-height: 1;
+  color: var(--cinnabar); opacity: 0.09; pointer-events: none; user-select: none;
+}
+.intro-verse { position: relative; z-index: 1; border-left: 3px solid var(--cinnabar); padding-left: 20px; }
+.intro-verse p {
+  font-family: "Noto Serif TC", "Noto Serif", serif;
+  font-size: 19px; line-height: 2.05; letter-spacing: 1.5px;
+  color: var(--ink); margin: 0 0 14px;
+}
+.intro-verse p:last-child { margin-bottom: 0; }
+.intro-sep { display: flex; align-items: center; gap: 12px; margin: 22px 0 14px; }
+.intro-sep::before, .intro-sep::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.intro-zh-text p { font-size: 15px; line-height: 1.95; letter-spacing: 1px; color: var(--ink-soft); margin: 0 0 10px; }
+.intro-zh-text p:last-child { margin-bottom: 0; }
 .zh-chip { display: inline-block; font-size: 11px; letter-spacing: 2px; border: 1px solid var(--line); border-radius: 6px; padding: 1px 8px; margin-bottom: 8px; color: var(--ink-soft); }
 /* 雙語小標（上課時間卡等）：中文較小、顏色較淡 */
 .lb-zh { font-size: 13px; font-weight: 400; color: var(--ink-soft); }
