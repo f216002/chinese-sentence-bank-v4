@@ -7286,6 +7286,36 @@ function enrollAddSocialRow(type, label, url) {
   wrap.appendChild(row);
 }
 
+const ENROLL_WEEKDAYS = [1, 2, 3, 4, 5, 6, 7];
+const ENROLL_WEEKDAY_NAMES = { 1: '一', 2: '二', 3: '三', 4: '四', 5: '五', 6: '六', 7: '日' };
+function enrollBuildWeekdays() {
+  const box = $('enrollWeekdays');
+  if (!box || box.dataset.built) return;
+  box.dataset.built = '1';
+  ENROLL_WEEKDAYS.forEach((d) => {
+    const lab = document.createElement('label');
+    lab.className = 'enroll-check';
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.value = d;
+    lab.appendChild(cb);
+    lab.appendChild(document.createTextNode(' 星期' + ENROLL_WEEKDAY_NAMES[d]));
+    box.appendChild(lab);
+  });
+}
+function enrollCollectWeekdays() {
+  const days = [];
+  document.querySelectorAll('#enrollWeekdays input:checked').forEach((cb) => {
+    days.push(parseInt(cb.value, 10));
+  });
+  return days.sort((a, b) => a - b);
+}
+function enrollSetWeekdays(days) {
+  document.querySelectorAll('#enrollWeekdays input').forEach((cb) => {
+    cb.checked = days.indexOf(parseInt(cb.value, 10)) !== -1;
+  });
+}
+
 function enrollAddVideoRow(url) {
   const wrap = $('enrollVideos');
   if (wrap.querySelectorAll('.enroll-dynamic-row').length >= 5) {
@@ -7445,6 +7475,10 @@ async function loadEnrollDoc() {
     $('enrollCity').value = d.city || '';
     $('enrollAddress').value = d.address || '';
     $('enrollMapsUrl').value = d.mapsUrl || '';
+    $('enrollStartDate').value = d.startDate || '';
+    $('enrollTimeStart').value = d.timeStart || '';
+    $('enrollTimeEnd').value = d.timeEnd || '';
+    enrollSetWeekdays(Array.isArray(d.weekdays) ? d.weekdays : []);
     $('enrollSlug').value = d.slug || '';
     $('enrollDefaultLang').value = d.defaultLang || 'zh';
     $('enrollVideos').textContent = '';
@@ -7486,16 +7520,24 @@ function enrollValidate(status) {
   const formUrl = $('enrollFormUrl').value.trim();
   const address = $('enrollAddress').value.trim();
   const mapsUrl = $('enrollMapsUrl').value.trim();
+  const startDate = $('enrollStartDate').value;
+  const timeStart = $('enrollTimeStart').value;
+  const timeEnd = $('enrollTimeEnd').value;
+  const weekdays = enrollCollectWeekdays();
   if (!ENROLL_SLUG_RE.test(slug)) throw new Error('網址代號格式不符：3–30 個字元，小寫英文、數字、連字號。');
   if (status === 'published') {
     if (!nameZh) throw new Error('發布需要填寫「中文姓名」。');
     if (!Object.keys(intros).length) throw new Error('發布需要至少一種語言的課程介紹。');
+    if (!startDate) throw new Error('發布需要填寫「開課日期」。');
+    if (!weekdays.length) throw new Error('發布需要至少選擇一個「上課星期」。');
+    if (!timeStart || !timeEnd) throw new Error('發布需要填寫「上課時間」（幾點到幾點）。');
+    if (timeEnd <= timeStart) throw new Error('結束時間必須晚於開始時間。');
     if (!address) throw new Error('發布需要填寫「教室地址」。');
     if (!mapsUrl) throw new Error('發布需要填寫「Google 地圖定位」連結。');
     if (!ENROLL_MAPS_URL_RE.test(mapsUrl)) throw new Error('Google 地圖連結格式不正確，請貼上 Google 地圖 App 的分享連結。');
     if (!formUrl && !socials.length) throw new Error('發布需要填寫 Google 表單連結或至少一個群組連結。');
   }
-  return { nameZh, slug, intros, socials, formUrl, address, mapsUrl };
+  return { nameZh, slug, intros, socials, formUrl, address, mapsUrl, startDate, weekdays, timeStart, timeEnd };
 }
 
 async function enrollSave(status) {
@@ -7524,6 +7566,10 @@ async function enrollSave(status) {
     mapsUrl: v.mapsUrl,
     mapsLat: mapsLatLng ? mapsLatLng.lat : '',
     mapsLng: mapsLatLng ? mapsLatLng.lng : '',
+    startDate: v.startDate,
+    weekdays: v.weekdays,
+    timeStart: v.timeStart,
+    timeEnd: v.timeEnd,
     defaultLang: $('enrollDefaultLang').value,
     intros: v.intros,
     images: enrollState.images,
@@ -7652,7 +7698,10 @@ async function enrollAutoTranslate() {
 function initEnrollManager() {
   if (!($('enrollManager'))) return;
   $('enrollDefaultLang').innerHTML = enrollLangOptions('zh');
+  enrollBuildWeekdays();
   enrollBuildTranslateChecks();
+  $('enrollWeekAll').addEventListener('click', () => enrollSetWeekdays([1, 2, 3, 4, 5, 6, 7]));
+  $('enrollWeekNone').addEventListener('click', () => enrollSetWeekdays([]));
   $('enrollAddIntro').addEventListener('click', () => enrollAddIntroRow('zh', ''));
   $('enrollAutoTranslate').addEventListener('click', enrollAutoTranslate);
   $('enrollAddVideo').addEventListener('click', () => enrollAddVideoRow(''));
