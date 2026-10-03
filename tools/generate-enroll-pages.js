@@ -294,8 +294,18 @@ function renderPage(pd, template, css) {
     ? renderSection(
         t(lang, 'gallery'), '精彩瞬間',
         '<div class="gallery">' +
-          pd.images.map((u, i) => '<img src="' + escAttr(u) + '" alt="課程照片 ' + (i + 1) + '" loading="lazy">').join('') +
-          '</div>'
+          pd.images.map((u, i) =>
+            '<a class="g-thumb" href="#g' + i + '"><img src="' + escAttr(u) + '" alt="課程照片 ' + (i + 1) + '" loading="lazy"></a>'
+          ).join('') +
+          '</div>' +
+          pd.images.map((u, i) =>
+            '<div class="lightbox" id="g' + i + '" role="dialog" aria-label="課程照片 ' + (i + 1) + '">' +
+              '<a class="lb-close" href="#!" aria-label="關閉"></a>' +
+              '<a class="lb-x" href="#!" aria-label="關閉">✕</a>' +
+              '<input class="lb-zoom" type="checkbox" id="gz' + i + '" aria-hidden="true" tabindex="-1">' +
+              '<label class="lb-stage" for="gz' + i + '"><img src="' + escAttr(u) + '" alt="課程照片 ' + (i + 1) + '" title="點擊放大／縮小"></label>' +
+              '</div>'
+          ).join('')
       )
     : '';
 
