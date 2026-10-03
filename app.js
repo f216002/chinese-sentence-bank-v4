@@ -1939,8 +1939,15 @@ async function loadBank(attempt = 1) {
   try {
     /* 省錢機制（2026-10-02）：先只讀 1 筆設定檔比對 bankVersion，
        版本一致就用本機快取（本次載入僅 1 次讀取），版本變了才全量抓取。
-       任何寫入 v4_sentences 的匯入腳本都必須同步更新 bankVersion，否則快取不會失效。 */
-    const settingsSnap = await fbDb.collection(META_COL).doc(SETTINGS_DOC).get();
+       任何寫入 v4_sentences 的匯入腳本都必須同步更新 bankVersion，否則快取不會失效。
+       2026-10-03 修正：必須先等登入狀態就緒（whenAccessReady）再查快取，
+       否則快取鍵會以 'anon' 查不到該老師的個人快取，且隨後的 refreshPersonalLayer
+       會因 uid 變化（'' → 真實 uid）再全量重讀一次——等於每次冷啟動花 2 次全量讀取，
+       修復完全無效。設定檔讀取與等待登入並行執行，不增加載入時間。 */
+    const [settingsSnap] = await Promise.all([
+      fbDb.collection(META_COL).doc(SETTINGS_DOC).get(),
+      whenAccessReady(),
+    ]);
     personalLayerUid = currentTeacherUid();
     const settings = settingsSnap.exists ? { ...defaultSettings(), ...settingsSnap.data() } : defaultSettings();
     const serverVersion = settings.bankVersion || null;
@@ -1953,7 +1960,8 @@ async function loadBank(attempt = 1) {
       sentences = await fetchAllSentences(); /* 版本變更或無快取：全量抓取 */
     }
     receiveBank({ success: true, settings, sentences, bankVersion: serverVersion });
-    /* 登入狀態就緒後若 uid 與載入時不同（例如 auth 較慢），再疊加個人層。 */
+    /* 登入狀態已於上方就緒；保留此呼叫以防載入過程中帳號又發生變化
+      （uid 一致時 refreshPersonalLayer 會直接返回，不重讀）。 */
     whenAccessReady().then(() => refreshPersonalLayer());
   } catch (err) {
     handleBankFailure(attempt, MAX_ATTEMPTS, `Could not reach Firebase: ${(err && err.message) || 'unknown error'}.`);
