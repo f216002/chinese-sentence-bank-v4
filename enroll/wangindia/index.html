@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>王承祺老師 中文班招生</title>
+  <meta name="description" content="跟上中文，你就跟上世界的潮流!">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://f216002.github.io/chinese-sentence-bank-v4/enroll/wangindia/">
+  <!-- 社群預覽卡：每位老師專屬 -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="王承祺老師 中文班招生">
+  <meta property="og:description" content="跟上中文，你就跟上世界的潮流!">
+  <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/my-chinese-sentence-bank-v3.firebasestorage.app/o/enroll%2FPpHZykWAVVeknZeEfjSmQ19VBIA3%2Fphoto-1790999694873.jpg?alt=media&amp;token=19d22cb7-a461-4ebc-91a6-40b6d92add05">
+  <meta property="og:url" content="https://f216002.github.io/chinese-sentence-bank-v4/enroll/wangindia/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="王承祺老師 中文班招生">
+  <meta name="twitter:description" content="跟上中文，你就跟上世界的潮流!">
+  <meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/my-chinese-sentence-bank-v3.firebasestorage.app/o/enroll%2FPpHZykWAVVeknZeEfjSmQ19VBIA3%2Fphoto-1790999694873.jpg?alt=media&amp;token=19d22cb7-a461-4ebc-91a6-40b6d92add05">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+  <style>/* ---- 全球中文班招生頁：公版樣式（中國風 × 現代感） ----
+   傳統元素：宣紙底、水墨暈染、硃砂紅印章、回紋飾線、宋體標題；
+   現代手法：手機優先、大留白、極簡排版、底部固定報名列。
+   由 tools/generate-enroll-pages.js 內嵌進每位老師的靜態頁。 */
+:root {
+  --paper: #f7f2e8;
+  --paper-deep: #efe6d3;
+  --ink: #2d2925;
+  --ink-soft: #6b6257;
+  --cinnabar: #b8352c;
+  --cinnabar-deep: #8f261e;
+  --gold: #a8842c;
+  --teal: #2f5d5a;
+  --line: #ddd2bd;
+  --card: #fffdf8;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 500px at 85% -5%, rgba(184, 53, 44, 0.07), transparent 60%),
+    radial-gradient(900px 480px at -10% 12%, rgba(47, 93, 90, 0.08), transparent 60%),
+    radial-gradient(700px 700px at 50% 110%, rgba(168, 132, 44, 0.06), transparent 60%),
+    var(--paper);
+  line-height: 1.75;
+}
+/* 回紋飾線（簡化回紋意象） */
+.fret {
+  height: 14px;
+  border-top: 2px solid var(--cinnabar);
+  border-bottom: 1px solid var(--cinnabar);
+  background-image: repeating-linear-gradient(90deg, var(--cinnabar) 0 3px, transparent 3px 14px);
+  background-size: 100% 4px;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.85;
+}
+.wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+
+/* 頂欄：印章＋語言切換 */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; padding: 14px 0;
+}
+.seal {
+  flex: none;
+  width: 58px; height: 58px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--cinnabar); color: #fff8f0;
+  border-radius: 9px;
+  font-family: "Noto Serif TC", serif; font-weight: 700; font-size: 24px;
+  writing-mode: vertical-rl; letter-spacing: 2px;
+  transform: rotate(-4deg);
+  box-shadow: 0 2px 8px rgba(143, 38, 30, 0.35);
+}
+.lang-row {
+  display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px;
+  -webkit-overflow-scrolling: touch;
+}
+.lang-pill {
+  flex: none;
+  border: 1px solid var(--line); background: var(--card); color: var(--ink-soft);
+  border-radius: 999px; padding: 6px 14px; font-size: 14px; cursor: pointer;
+}
+.lang-pill[aria-pressed="true"] {
+  background: var(--ink); color: var(--paper); border-color: var(--ink);
+}
+
+/* 主視覺 */
+.hero { text-align: center; padding: 34px 0 10px; }
+.hero-photo {
+  width: 148px; height: 148px; object-fit: cover; border-radius: 50%;
+  border: 5px solid var(--card);
+  outline: 2px solid var(--cinnabar);
+  box-shadow: 0 6px 20px rgba(45, 41, 37, 0.18);
+  background: var(--paper-deep);
+}
+.hero h1 {
+  font-family: "Noto Serif TC", serif; font-weight: 700;
+  font-size: 34px; letter-spacing: 6px; margin: 18px 0 4px;
+}
+.hero .hero-sub { color: var(--ink-soft); font-size: 15px; margin: 0 0 10px; }
+.badge-open {
+  display: inline-block;
+  background: var(--cinnabar); color: #fff8f0;
+  font-size: 14px; letter-spacing: 3px;
+  padding: 5px 18px 5px 21px; border-radius: 999px;
+  margin-bottom: 14px;
+}
+.badge-open .en-sub { display: block; font-size: 11px; letter-spacing: 1px; opacity: 0.9; }
+.hero-intro { text-align: left; margin: 6px 0 0; font-size: 16px; }
+
+/* 區塊 */
+.section { padding: 30px 0 6px; }
+.section-title {
+  display: flex; align-items: center; gap: 10px;
+  font-family: "Noto Serif TC", serif; font-size: 22px; font-weight: 700;
+  letter-spacing: 4px; margin: 0 0 14px;
+}
+.section-title::before {
+  content: ""; width: 10px; height: 10px; background: var(--cinnabar);
+  transform: rotate(45deg); flex: none;
+}
+.section-title .en-sub { font-family: "Noto Sans TC", sans-serif; font-size: 12px; letter-spacing: 1px; color: var(--ink-soft); font-weight: 400; }
+.card {
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  padding: 20px; box-shadow: 0 2px 10px rgba(45, 41, 37, 0.06);
+}
+.card p { margin: 0 0 1em; }
+.card p:last-child { margin-bottom: 0; }
+
+/* 圖片牆 */
+.gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.gallery img {
+  width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px;
+  border: 1px solid var(--line); background: var(--paper-deep);
+}
+@media (min-width: 560px) { .gallery { grid-template-columns: repeat(3, 1fr); } }
+
+/* 影片 */
+.video-wrap { position: relative; padding-top: 56.25%; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: #000; }
+.video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* 上課地點 */
+.map-address { font-size: 17px; font-weight: 500; margin: 0 0 12px; }
+.map-wrap { position: relative; padding-top: 62%; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: var(--paper-deep); margin-bottom: 14px; }
+.map-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.map-open { display: inline-block; text-decoration: none; color: var(--cinnabar); font-weight: 700; border: 1px solid var(--cinnabar); border-radius: 999px; padding: 8px 20px; font-size: 15px; background: var(--card); }
+.map-open .en-sub { display: block; font-size: 11px; font-weight: 400; }
+
+/* 社群按鈕 */
+.social-list { display: grid; gap: 10px; }
+.social-btn {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  padding: 13px 16px; text-decoration: none; color: var(--ink); font-size: 16px;
+}
+.social-btn:hover { border-color: var(--cinnabar); }
+.social-tag {
+  flex: none; font-size: 12px; letter-spacing: 1px; color: #fff8f0;
+  background: var(--teal); border-radius: 6px; padding: 3px 9px;
+}
+.social-btn small { display: block; color: var(--ink-soft); font-size: 12px; }
+
+/* 底部固定報名列 */
+.cta-bar {
+  position: sticky; bottom: 0; z-index: 20;
+  background: rgba(247, 242, 232, 0.96);
+  border-top: 1px solid var(--line);
+  padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
+  backdrop-filter: blur(6px);
+}
+.cta-inner { max-width: 720px; margin: 0 auto; }
+.cta-button {
+  display: block; text-align: center; text-decoration: none;
+  background: var(--cinnabar); color: #fff8f0;
+  font-size: 19px; letter-spacing: 6px; font-weight: 700;
+  padding: 13px; border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(184, 53, 44, 0.35);
+}
+.cta-button:hover { background: var(--cinnabar-deep); }
+.cta-button .en-sub { display: block; font-size: 12px; letter-spacing: 2px; font-weight: 400; opacity: 0.92; }
+
+.site-footer { text-align: center; color: var(--ink-soft); font-size: 12px; padding: 26px 20px 90px; }
+.site-footer .en-sub { display: block; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+</style>
+</head>
+<body>
+  <div class="fret" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <header class="topbar">
+      <span class="seal" aria-hidden="true">招生</span>
+      <nav class="lang-row" id="enroll-lang-row" aria-label="選擇語言 Choose language"></nav>
+    </header>
+
+    <section class="hero">
+      <img class="hero-photo" src="https://firebasestorage.googleapis.com/v0/b/my-chinese-sentence-bank-v3.firebasestorage.app/o/enroll%2FPpHZykWAVVeknZeEfjSmQ19VBIA3%2Fphoto-1790999694873.jpg?alt=media&amp;token=19d22cb7-a461-4ebc-91a6-40b6d92add05" alt="王承祺老師">
+      <h1 id="enroll-teacher-name"></h1>
+      <p class="hero-sub">India · NALANDA</p>
+      <div><span class="badge-open">招生中<span class="en-sub">Now enrolling</span></span></div>
+    </section>
+
+    <section class="section" aria-label="課程介紹">
+      <h2 class="section-title">課程介紹 <span class="en-sub">About the course</span></h2>
+      <div class="card" id="enroll-intro"></div>
+    </section>
+
+    <section class="section" aria-label="上課地點"><h2 class="section-title">上課地點 <span class="en-sub">Classroom</span></h2><p class="map-address">FLAT NO 602,NALANDA HERITAGE CITY RAJGIR ROAD NALANDA</p><div class="map-wrap"><iframe src="https://www.google.com/maps?q=FLAT%20NO%20602%2CNALANDA%20HERITAGE%20CITY%20RAJGIR%20ROAD%20NALANDA&amp;output=embed" title="教室地圖" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><a class="map-open" href="https://maps.app.goo.gl/JvhYE27hMyQfaCsD7" target="_blank" rel="noopener">在 Google 地圖開啟<span class="en-sub">Open in Google Maps</span></a></section>
+    <section class="section" aria-label="精彩瞬間"><h2 class="section-title">精彩瞬間 <span class="en-sub">Moments</span></h2><div class="gallery"><img src="https://firebasestorage.googleapis.com/v0/b/my-chinese-sentence-bank-v3.firebasestorage.app/o/enroll%2FPpHZykWAVVeknZeEfjSmQ19VBIA3%2Fimg-1791001624645.jpg?alt=media&amp;token=3e1694df-107b-42af-8ea5-73076a33d3cb" alt="課程照片 1" loading="lazy"><img src="https://firebasestorage.googleapis.com/v0/b/my-chinese-sentence-bank-v3.firebasestorage.app/o/enroll%2FPpHZykWAVVeknZeEfjSmQ19VBIA3%2Fimg-1791001964821.jpg?alt=media&amp;token=aa48f2f2-f15f-4eb4-9c4c-f3c970974da7" alt="課程照片 2" loading="lazy"><img src="https://firebasestorage.googleapis.com/v0/b/my-chinese-sentence-bank-v3.firebasestorage.app/o/enroll%2FPpHZykWAVVeknZeEfjSmQ19VBIA3%2Fimg-1791001969643.jpg?alt=media&amp;token=7dbb2cdb-2694-4869-bfd7-3e7714009843" alt="課程照片 3" loading="lazy"></div></section>
+    <section class="section" aria-label="影片介紹"><h2 class="section-title">影片介紹 <span class="en-sub">Video</span></h2><div class="video-wrap"><iframe src="https://www.youtube-nocookie.com/embed/P3z713kIzwQ" title="課程介紹影片" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div></section>
+    <section class="section" aria-label="加入群組"><h2 class="section-title">加入群組 <span class="en-sub">Join us</span></h2><div class="social-list"><a class="social-btn" href="https://chat.whatsapp.com/CNKOO9viRNIL5R7bGrhGwn?mode=gi_t" target="_blank" rel="noopener"><span class="social-tag">WhatsApp</span><span>Test Chinese<small>https://chat.whatsapp.com/CNKOO9viRNIL5R7bGrhGwn?mode=gi_t</small></span></a></div></section>
+  </div>
+
+  <div class="cta-bar">
+    <div class="cta-inner">
+      <a class="cta-button" href="https://docs.google.com/forms/d/e/1FAIpQLSchNQQrJRyLsgABP0vyi7WNP1S8a78fmPWjTXy51XY6cMdM6A/viewform?usp=header" target="_blank" rel="noopener">立即報名<span class="en-sub">Enroll now</span></a>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="fret" aria-hidden="true" style="margin-bottom: 18px;"></div>
+    中文班招生專頁 <span class="en-sub">Chinese class enrollment page</span>
+  </footer>
+
+  <script type="application/json" id="enroll-data">{"slug":"wangindia","nameZh":"王承祺老師","nameEn":"Teacher Wang","defaultLang":"zh","intros":{"zh":"跟上中文，你就跟上世界的潮流!"}}</script>
+  <script>/* ---- 招生公開頁前端：語言切換（內嵌進每位老師的靜態頁） ----
+   無外部依賴、無 Firebase；老師內容以 textContent 寫入，避免 XSS。 */
+(function () {
+  'use strict';
+
+  var LANG_NAMES = {
+    hi: 'हिन्दी', ta: 'தமிழ்', th: 'ไทย', km: 'ខ្មែរ',
+    vi: 'Tiếng Việt', id: 'Bahasa Indonesia', ne: 'नेपाली', bn: 'বাংলা',
+    es: 'Español', en: 'English', de: 'Deutsch', my: 'မြန်မာ',
+    ko: '한국어', ja: '日本語', si: 'සිංහල', fa: 'فارسی', zh: '中文'
+  };
+
+  function $(id) { return document.getElementById(id); }
+
+  var dataEl = $('enroll-data');
+  if (!dataEl) return;
+  var data;
+  try { data = JSON.parse(dataEl.textContent); }
+  catch (e) { return; }
+
+  function firstValue(map) {
+    if (!map) return '';
+    var keys = Object.keys(map);
+    return keys.length ? map[keys[0]] : '';
+  }
+
+  /* 取值順序：指定語言 → 老師預設語言 → 中文 → 英文 → 第一個有的 */
+  function pickText(map, lang) {
+    if (!map) return '';
+    return map[lang] || map[data.defaultLang] || map.zh || map.en || firstValue(map);
+  }
+
+  function availableLangs() {
+    var set = {};
+    Object.keys(data.intros || {}).forEach(function (l) { set[l] = true; });
+    if (data.defaultLang) set[data.defaultLang] = true;
+    var langs = Object.keys(set);
+    if (!langs.length) langs = ['zh'];
+    /* 預設語言排第一 */
+    langs.sort(function (a, b) {
+      if (a === data.defaultLang) return -1;
+      if (b === data.defaultLang) return 1;
+      return 0;
+    });
+    return langs;
+  }
+
+  function teacherName(lang) {
+    if (lang === 'zh' || /^zh/.test(lang)) return data.nameZh || data.nameEn || '';
+    return data.nameEn || data.nameZh || '';
+  }
+
+  function renderParagraphs(container, text) {
+    container.textContent = '';
+    String(text || '').split(/\n{2,}|\r\n\r\n/).forEach(function (para) {
+      var p = document.createElement('p');
+      /* 段內單換行轉 <br>，仍用 textContent 逐段寫入 */
+      var lines = para.split(/\n/);
+      lines.forEach(function (line, i) {
+        if (i > 0) p.appendChild(document.createElement('br'));
+        p.appendChild(document.createTextNode(line));
+      });
+      container.appendChild(p);
+    });
+  }
+
+  function render(lang) {
+    document.documentElement.setAttribute('lang', lang === 'zh' ? 'zh-Hant' : lang);
+    var nameEl = $('enroll-teacher-name');
+    if (nameEl) nameEl.textContent = teacherName(lang);
+    var introEl = $('enroll-intro');
+    if (introEl) renderParagraphs(introEl, pickText(data.intros, lang));
+    var pills = document.querySelectorAll('.lang-pill');
+    pills.forEach(function (pill) {
+      pill.setAttribute('aria-pressed', pill.getAttribute('data-lang') === lang ? 'true' : 'false');
+    });
+    try { localStorage.setItem('enroll-lang-' + data.slug, lang); } catch (e) {}
+  }
+
+  function initialLang(langs) {
+    try {
+      var saved = localStorage.getItem('enroll-lang-' + data.slug);
+      if (saved && langs.indexOf(saved) !== -1) return saved;
+    } catch (e) {}
+    var nav = (navigator.language || 'en').toLowerCase().replace('_', '-');
+    var short = nav.split('-')[0];
+    if (langs.indexOf(nav) !== -1) return nav;
+    if (langs.indexOf(short) !== -1) return short;
+    return data.defaultLang && langs.indexOf(data.defaultLang) !== -1 ? data.defaultLang : langs[0];
+  }
+
+  function buildPills(langs) {
+    var row = $('enroll-lang-row');
+    if (!row) return;
+    row.textContent = '';
+    langs.forEach(function (lang) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'lang-pill';
+      b.setAttribute('data-lang', lang);
+      b.setAttribute('aria-pressed', 'false');
+      b.textContent = LANG_NAMES[lang] || lang;
+      b.addEventListener('click', function () { render(lang); });
+      row.appendChild(b);
+    });
+  }
+
+  var langs = availableLangs();
+  buildPills(langs);
+  render(initialLang(langs));
+})();
+</script>
+</body>
+</html>
