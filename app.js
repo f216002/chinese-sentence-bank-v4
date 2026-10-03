@@ -7449,7 +7449,8 @@ async function loadEnrollDoc() {
     enrollState.photoUrl = d.photoUrl || '';
     enrollState.images = Array.isArray(d.images) ? d.images.slice(0, 9) : [];
     $('enrollNameZh').value = d.nameZh || '';
-    $('enrollClassName').value = d.className || '';
+    $('enrollClassNameZh').value = d.classNameZh || d.className || '';
+    $('enrollClassNameLocal').value = d.classNameLocal || '';
     $('enrollNameEn').value = d.nameEn || '';
     $('enrollCountry').value = d.country || '';
     $('enrollCity').value = d.city || '';
@@ -7543,7 +7544,8 @@ async function enrollSave(status) {
     status: status,
     nameZh: v.nameZh,
     nameEn: $('enrollNameEn').value.trim(),
-    className: $('enrollClassName').value.trim(),
+    classNameZh: $('enrollClassNameZh').value.trim(),
+    classNameLocal: $('enrollClassNameLocal').value.trim(),
     photoUrl: enrollState.photoUrl,
     country: $('enrollCountry').value.trim(),
     city: $('enrollCity').value.trim(),
