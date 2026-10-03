@@ -133,6 +133,10 @@ function buildPageData(p) {
     mapsUrl: p.mapsUrl || '',
     mapsLat: p.mapsLat || '',
     mapsLng: p.mapsLng || '',
+    startDate: p.startDate || '',
+    weekdays: (Array.isArray(p.weekdays) ? p.weekdays : []).filter((n) => n >= 1 && n <= 7).sort(),
+    timeStart: p.timeStart || '',
+    timeEnd: p.timeEnd || '',
     defaultLang,
     intros,
     images,
@@ -144,6 +148,17 @@ function buildPageData(p) {
     ogImage: p.photoUrl || DEFAULT_OG_IMAGE,
     canonical: BASE_URL + '/enroll/' + p.slug + '/',
   };
+}
+
+function formatDateZh(iso) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
+  return m ? parseInt(m[1], 10) + '年' + parseInt(m[2], 10) + '月' + parseInt(m[3], 10) + '日' : '';
+}
+const WEEKDAY_ZH = { 1: '一', 2: '二', 3: '三', 4: '四', 5: '五', 6: '六', 7: '日' };
+function formatWeekdays(days) {
+  if (!days || !days.length) return '';
+  if (days.length === 7) return '每天';
+  return '每週' + days.map((d) => WEEKDAY_ZH[d]).join('、');
 }
 
 function renderSection(title, enSub, innerHtml) {
@@ -162,6 +177,27 @@ function renderPage(pd, template, css, js) {
   const heroPhoto = pd.photoUrl
     ? '<img class="hero-photo" src="' + escAttr(pd.photoUrl) + '" alt="' + escAttr(pd.nameZh || pd.nameEn) + '">'
     : '';
+
+  /* 上課時間：開課日期＋星期＋時段 */
+  const scheduleHtml =
+    pd.startDate || pd.weekdays.length || (pd.timeStart && pd.timeEnd)
+      ? renderSection(
+          '上課時間', 'Schedule',
+          '<div class="schedule-card">' +
+            (pd.startDate
+              ? '<p><strong>開課日期</strong>：' + escHtml(formatDateZh(pd.startDate)) + '</p>'
+              : '') +
+            (pd.weekdays.length || (pd.timeStart && pd.timeEnd)
+              ? '<p><strong>上課時間</strong>：' +
+                escHtml(
+                  formatWeekdays(pd.weekdays) +
+                    (pd.timeStart && pd.timeEnd ? ' ' + pd.timeStart + '–' + pd.timeEnd : '')
+                ).trim() +
+                '</p>'
+              : '') +
+            '</div>'
+        )
+      : '';
 
   /* 上課地點：有經緯度就用座標內嵌，否則用地址查詢；按鈕一律連老師原始分享連結 */
   const locationHtml = pd.address
@@ -238,6 +274,7 @@ function renderPage(pd, template, css, js) {
     .split('{{INLINE_JS}}').join(js)
     .split('{{HERO_PHOTO}}').join(heroPhoto)
     .split('{{LOCATION_LINE}}').join(escHtml(location))
+    .split('{{SCHEDULE_HTML}}').join(scheduleHtml)
     .split('{{LOCATION_HTML}}').join(locationHtml)
     .split('{{GALLERY_HTML}}').join(galleryHtml)
     .split('{{VIDEO_HTML}}').join(videoHtml)
