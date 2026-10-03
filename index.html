@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261003-03">
+  <link rel="stylesheet" href="styles.css?v=20261003-04">
 </head>
 <body>
   <a class="skip-link" href="#sentenceGrid">跳到句子庫 <span class="en-sub">Skip to sentence bank</span></a>
@@ -288,17 +288,9 @@
         <div id="enrollPhotoPreview" class="enroll-thumbs"></div>
         <div class="enroll-row">
           <label class="edit-field">網址代號 <span class="en-sub">Page URL name</span> <b class="req" aria-hidden="true">*</b><input id="enrollSlug" autocomplete="off" placeholder="例如：chen-nalanda（小寫英文、數字、連字號）"><small class="field-hint" id="enrollSlugHint" aria-live="polite"></small></label>
-          <label class="edit-field">預設語言 <span class="en-sub">Default language</span><select id="enrollDefaultLang"></select><small class="field-hint">家長打開招生頁時第一眼看到的語言；在印度建議選印地文。 <span class="en-sub">The language parents see first when opening the page. In India, Hindi is recommended.</span></small></label>
+          <label class="edit-field">對外顯示語言 <span class="en-sub">Display language</span> <b class="req" aria-hidden="true">*</b><select id="enrollDefaultLang"></select><small class="field-hint">公開招生頁固定以這個語言＋中文雙語顯示（對外語言在前、中文在後）；在印度建議選印地文。 <span class="en-sub">The public page is fixed bilingual: this language first, Chinese second. In India, Hindi is recommended.</span></small></label>
         </div>
-        <div class="enroll-block">
-          <div class="enroll-block-head"><strong>課程介紹 <span class="en-sub">Course introductions</span></strong><span class="enroll-head-actions"><button class="secondary-button" id="enrollAutoTranslate" type="button">🤖 自動翻譯 <span class="en-sub">Auto-translate</span></button> <button class="secondary-button" id="enrollAddIntro" type="button">＋ 新增語言 <span class="en-sub">Add language</span></button></span></div>
-          <div id="enrollIntros"></div>
-          <small class="field-hint">每種語言寫一段介紹，家長切換語言時看到對應版本。先寫好中文介紹，再按「自動翻譯」翻成其他語言（AI 草稿，請審定後再發布）。 <span class="en-sub">Write one introduction per language. Write the Chinese version first, then use Auto-translate for the others (AI drafts — please review before publishing).</span></small>
-          <details class="enroll-translate-langs" id="enrollTranslateLangs">
-            <summary>選擇要翻譯的語言 <span class="en-sub">Choose target languages</span></summary>
-            <div id="enrollTranslateChecks" class="enroll-checks"></div>
-          </details>
-        </div>
+        <label class="edit-field">課程介紹（中文） <span class="en-sub">Course introduction in Chinese</span> <b class="req" aria-hidden="true">*</b><textarea id="enrollIntroZh" rows="5" placeholder="用中文寫一段課程介紹…"></textarea><small class="field-hint">老師只需填寫中文；發布時 AI 會自動翻譯成對外顯示語言，公開頁以雙語呈現。 <span class="en-sub">Write in Chinese only. AI auto-translates it into the display language on publish; the public page shows both.</span></small></label>
         <label class="edit-field">課程圖片 <span class="en-sub">Course photos</span><input id="enrollImages" type="file" accept="image/*" multiple><small class="field-hint">最多 9 張，會自動壓縮。 <span class="en-sub">Up to 9 photos, auto-compressed.</span></small></label>
         <div id="enrollImagesPreview" class="enroll-thumbs"></div>
         <div class="enroll-block">
@@ -432,7 +424,7 @@
   <script src="v4-language-config.js?v=20260929-2"></script>
   <script src="v4-songs-i18n.js?v=20260930-9"></script>
   <script src="v4-rituals-i18n.js?v=20260930-6"></script>
-  <script src="app.js?v=20261003-03"></script>
+  <script src="app.js?v=20261003-04"></script>
 </body>
 </html>
 
