@@ -90,11 +90,32 @@ body {
 
 /* 圖片牆 */
 .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-.gallery img {
+.g-thumb img {
   width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px;
-  border: 1px solid var(--line); background: var(--paper-deep);
+  border: 1px solid var(--line); background: var(--paper-deep); cursor: zoom-in;
+  display: block;
 }
 @media (min-width: 560px) { .gallery { grid-template-columns: repeat(3, 1fr); } }
+
+/* 相簿燈箱：純 CSS（:target 彈出，點圖片切換放大／縮小），無 JavaScript */
+.lightbox { position: fixed; inset: 0; z-index: 60; display: none; }
+.lightbox:target { display: block; }
+.lb-close { position: absolute; inset: 0; background: rgba(24, 19, 14, 0.93); }
+.lb-x {
+  position: absolute; top: 12px; right: 18px; z-index: 3;
+  color: #fff8f0; font-size: 30px; line-height: 1; text-decoration: none; opacity: 0.9;
+}
+.lb-zoom { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.lb-stage {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  padding: 24px; pointer-events: none;
+}
+.lb-stage img {
+  pointer-events: auto; max-width: min(94vw, 1000px); max-height: 86vh; object-fit: contain;
+  border-radius: 10px; cursor: zoom-in; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+.lb-zoom:checked ~ .lb-stage { display: block; overflow: auto; text-align: center; }
+.lb-zoom:checked ~ .lb-stage img { width: 175vw; max-width: 1600px; max-height: none; cursor: zoom-out; }
 
 /* 影片 */
 .video-list { display: grid; gap: 12px; }
