@@ -36,6 +36,10 @@
     teachersEmpty: $('teachersEmpty'),
     requestCount: $('requestCount'),
     teacherCount: $('teacherCount'),
+    versionWarning: $('versionWarning'),
+    currentBankVersion: $('currentBankVersion'),
+    versionHistoryBody: $('versionHistoryBody'),
+    versionHistoryEmpty: $('versionHistoryEmpty'),
     rejectModal: $('rejectModal'),
     rejectNote: $('rejectNote'),
     rejectCancel: $('rejectCancel'),
@@ -255,6 +259,8 @@
         console.error('Teachers snapshot failed:', error);
         showToast('讀取教師列表失敗。', true);
       });
+
+    loadVersionMonitor();
   }
 
   function showTab(name) {
@@ -265,6 +271,47 @@
     });
     $('tabRequests').hidden = name !== 'requests';
     $('tabTeachers').hidden = name !== 'teachers';
+    $('tabVersion').hidden = name !== 'version';
+  }
+
+  /* ---------- bankVersion 版本監控（2026-10-03） ----------
+     讀取 v4_meta/settings 的 bankVersion 與 bankVersionHistory（由
+     tools/bump_bankversion.js 維護）。24 小時內 ≥3 次更新視為異常。 */
+  function loadVersionMonitor() {
+    db.collection('v4_meta').doc('settings').get().then(function (snap) {
+      var data = snap.exists ? snap.data() : {};
+      var version = data.bankVersion || '(未設定)';
+      var history = Array.isArray(data.bankVersionHistory) ? data.bankVersionHistory : [];
+      if (els.currentBankVersion) els.currentBankVersion.textContent = version;
+
+      var now = Date.now();
+      var recent = history.filter(function (h) { return (now - (h.at || 0)) < 24 * 3600 * 1000; });
+      if (els.versionWarning) {
+        if (recent.length >= 3) {
+          els.versionWarning.hidden = false;
+          els.versionWarning.textContent = '⚠️ 異常：24 小時內 bankVersion 已更新 ' + recent.length + ' 次！請檢查是否有腳本失控重複執行。每次更新都會讓所有老師下次開頁全量重讀。';
+        } else {
+          els.versionWarning.hidden = true;
+        }
+      }
+
+      if (els.versionHistoryBody) {
+        if (!history.length) {
+          els.versionHistoryBody.innerHTML = '';
+          if (els.versionHistoryEmpty) els.versionHistoryEmpty.hidden = false;
+        } else {
+          if (els.versionHistoryEmpty) els.versionHistoryEmpty.hidden = true;
+          els.versionHistoryBody.innerHTML = history.slice(0, 20).map(function (h) {
+            var t = h.at ? new Date(h.at).toLocaleString() : '—';
+            return '<tr><td>' + escapeHtml(t) + '</td><td>' + escapeHtml(h.version) +
+              '</td><td>' + escapeHtml(h.reason || '') + '</td></tr>';
+          }).join('');
+        }
+      }
+    }).catch(function (error) {
+      console.error('Version monitor failed:', error);
+      if (els.currentBankVersion) els.currentBankVersion.textContent = '讀取失敗';
+    });
   }
 
   /* ---------- 啟動 ---------- */
@@ -333,3 +380,4 @@
     }
   });
 })();
+
