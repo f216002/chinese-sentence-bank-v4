@@ -2574,7 +2574,7 @@ function renderCourse() {
   else renderCourseHome();
 }
 
-/* 首頁：兩大選項——中文課本 / 中文歌曲。 */
+/* 首頁：四大選項——中文課本 / 中文歌曲 / 道場禮節 / 學外語。 */
 function renderCourseHome() {
   $('lessonView').classList.add('hidden');
   const grid = $('lessonGrid');
@@ -2589,6 +2589,7 @@ function renderCourseHome() {
     { page: 'books', icon: '📚', zh: '中文課本', en: 'Textbooks', desc: `${bookCount} 課 <span class="en-sub">${bookCount} lessons</span>`, aria: '中文課本，六冊課程' },
     { page: 'songs', icon: '🎵', zh: '中文歌曲', en: 'Songs', desc: `${songCount} 首歌曲 · ${songLines} 句歌詞 <span class="en-sub">${songCount} songs</span>`, aria: '中文歌曲' },
     { page: 'rituals', icon: '🙏', zh: '道場禮節', en: 'Rituals', desc: `${ritualCount} 套禮節 · ${ritualLines} 句 <span class="en-sub">${ritualCount} rituals</span>`, aria: '道場禮節' },
+    { href: 'https://f216002.github.io/language-learning/', icon: '🌍', zh: '學外語', en: 'Language Learning', desc: `16 種語言 <span class="en-sub">16 languages</span>`, aria: '學外語，老師個人外語學習空間' },
   ];
   homeOpts.forEach(opt => {
     const card = document.createElement('button');
@@ -2599,7 +2600,10 @@ function renderCourseHome() {
       <span class="home-option-zh" lang="zh-Hant">${opt.zh} <span class="en-sub">${opt.en}</span></span>
       <span class="lesson-topic">${opt.desc}</span>`;
     card.setAttribute('aria-label', opt.aria);
-    card.addEventListener('click', () => { courseState.page = opt.page; renderCourse(); $('courseSection').scrollIntoView({ behavior: 'smooth' }); });
+    card.addEventListener('click', () => {
+      if (opt.href) { window.location.href = opt.href; return; }
+      courseState.page = opt.page; renderCourse(); $('courseSection').scrollIntoView({ behavior: 'smooth' });
+    });
     grid.appendChild(card);
   });
 }
