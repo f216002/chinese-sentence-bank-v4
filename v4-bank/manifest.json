@@ -1,0 +1,42 @@
+{
+ "version": "20261005-01",
+ "count": 10777,
+ "fields": [
+  "id",
+  "chineseSentence",
+  "pinyin",
+  "hindiSentence",
+  "romanHindi",
+  "hindiExplanation",
+  "category",
+  "tags",
+  "seq",
+  "audioPath",
+  "lesson",
+  "section",
+  "speaker",
+  "pos",
+  "zhuyin",
+  "i18n_s",
+  "i18n_r",
+  "i18n_e"
+ ],
+ "langs": {
+  "bn": "v4-bank-bn.json",
+  "de": "v4-bank-de.json",
+  "en": "v4-bank-en.json",
+  "es": "v4-bank-es.json",
+  "fa": "v4-bank-fa.json",
+  "hi": "v4-bank-hi.json",
+  "id": "v4-bank-id.json",
+  "ja": "v4-bank-ja.json",
+  "km": "v4-bank-km.json",
+  "ko": "v4-bank-ko.json",
+  "my": "v4-bank-my.json",
+  "ne": "v4-bank-ne.json",
+  "si": "v4-bank-si.json",
+  "ta": "v4-bank-ta.json",
+  "th": "v4-bank-th.json",
+  "vi": "v4-bank-vi.json"
+ }
+}
