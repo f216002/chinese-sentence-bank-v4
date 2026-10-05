@@ -55,6 +55,50 @@
     return String(email || '').toLowerCase() === String(window.V4_ADMIN_EMAIL).toLowerCase();
   }
 
+  /* ---- 內建瀏覽器偵測（2026-10-05） ----
+     LINE / Facebook / Instagram 等 App 內建瀏覽器會隔離儲存空間，
+     Firebase 彈出視窗登入在裡面跑不起來（會卡死在 missing initial state 錯誤頁）。
+     偵測到就攔截登入，顯示引導頁請用戶轉到 Safari / Chrome。 */
+  function detectInAppBrowser() {
+    var ua = navigator.userAgent || '';
+    if (/Line\//i.test(ua)) return 'LINE';
+    if (/FBAN\/|FBAV\//i.test(ua)) return 'Facebook';
+    if (/Instagram/i.test(ua)) return 'Instagram';
+    if (/MicroMessenger/i.test(ua)) return 'WeChat';
+    return null;
+  }
+
+  function showWebviewGuide(appName) {
+    var old = $('v4WebviewGuide');
+    if (old) old.remove();
+    var overlay = document.createElement('div');
+    overlay.id = 'v4WebviewGuide';
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.55);' +
+      'display:flex;align-items:center;justify-content:center;padding:24px;';
+    var card = document.createElement('div');
+    card.style.cssText = 'background:#fffdf8;border-radius:16px;max-width:420px;width:100%;' +
+      'padding:24px;color:#2b2620;font-size:.95rem;line-height:1.7;';
+    card.innerHTML =
+      '<h3 style="margin:0 0 10px;font-size:1.1rem;">請用 Safari / Chrome 開啟再登入</h3>' +
+      '<p style="margin:0 0 10px;">您正在「' + appName + '」的內建瀏覽器中，Google 登入在這裡無法使用，這是 App 本身的限制，不是網站故障。</p>' +
+      '<p style="margin:0 0 6px;font-weight:700;">請這樣做：</p>' +
+      '<ol style="margin:0 0 14px;padding-left:22px;">' +
+      '<li>iPhone：點右下角「⋯」→「在 Safari 中開啟」</li>' +
+      '<li>Android：點右上角「⋮」→「用其他應用程式開啟」→ 選 Chrome</li>' +
+      '</ol>' +
+      '<p style="margin:0 0 14px;color:#8a7f6a;font-size:.85rem;">小提醒：請在 Safari / Chrome 的網址列手動輸入本站網址，不要直接分享報錯頁面過去。</p>';
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = '我知道了';
+    btn.style.cssText = 'font:inherit;cursor:pointer;border-radius:10px;border:1px solid #d8cdb4;' +
+      'background:#2b2620;color:#fff;padding:10px 20px;width:100%;';
+    btn.addEventListener('click', function () { overlay.remove(); });
+    card.appendChild(btn);
+    overlay.appendChild(card);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) overlay.remove(); });
+    document.body.appendChild(overlay);
+  }
+
   function publishAuthState(user) {
     window.V4_AUTH = Object.freeze({
       ready: true,
@@ -95,6 +139,8 @@
 
   if (signInButton) {
     signInButton.addEventListener('click', function () {
+      var inApp = detectInAppBrowser();
+      if (inApp) { showWebviewGuide(inApp); return; }
       signInButton.disabled = true;
       setAuthMessage('正在開啟 Google 登入…');
       auth.signInWithPopup(provider).catch(function (error) {
