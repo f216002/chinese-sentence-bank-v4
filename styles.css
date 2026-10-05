@@ -66,10 +66,7 @@
 /* Hindi sentence playback */
 .hindi-row{display:flex;align-items:flex-start;gap:14px;margin:25px 0 16px}
 .sentence-card .hindi-row .hindi{flex:1;min-width:0;margin:0}
-.hindi-speak-button{width:54px;height:54px;flex:none;display:grid;place-items:center;border:0;border-radius:50%;background:#e5f2ee;color:var(--teal);font-size:19px;cursor:pointer}
-.hindi-speak-button.speaking{background:var(--teal);color:white;box-shadow:0 0 0 5px rgba(11,112,107,.14)}
-.hindi-speak-button:focus-visible{outline:3px solid rgba(11,112,107,.25);outline-offset:3px}
-@media(max-width:700px){.hindi-row{gap:10px}.hindi-speak-button{width:48px;height:48px}}
+@media(max-width:700px){.hindi-row{gap:10px}}
 .skip-link{position:absolute;left:16px;top:-60px;z-index:100;background:var(--ink);color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;transition:top .2s}
 .skip-link:focus{top:12px;color:#fff}
 .audience-note{margin-top:10px;font-size:15px;color:var(--muted)}
@@ -154,7 +151,6 @@
 .vocab-zhuyin{font-family:"Noto Sans TC",sans-serif;color:#8a6d1f;font-size:15px}
 .vocab-hindi-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .vocab-hindi{font-family:"Noto Sans Devanagari",sans-serif;font-size:18px;color:#46534f;line-height:1.5}
-.vocab-hindi-speak{width:34px;height:34px;font-size:15px}
 .vocab-roman{color:var(--muted);font-size:14px}
 .vocab-example{font-size:13px;color:#4b5855;white-space:pre-wrap;line-height:1.6;border-top:1px dashed var(--line);padding-top:8px}
 .vocab-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
