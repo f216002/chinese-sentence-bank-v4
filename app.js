@@ -172,7 +172,21 @@ function applyOverlay(sentence, overlay) {
    未登入或無權限時只載入共版課程。 */
 async function fetchAllSentences() {
   const uid = currentTeacherUid();
-  const snap = await fbDb.collection(SENTENCES_COL).get();
+  const lang = state.sourceLanguage || 'hi';
+  /* 共版句庫：優先用靜態 JSON（快）；失敗才退回 Firestore 全量讀取。 */
+  let sharedSentences;
+  try {
+    sharedSentences = await loadSharedBank(lang);
+  } catch (err) {
+    console.warn('Static bank unavailable, falling back to Firestore:', (err && err.message) || err);
+    const snap = await fbDb.collection(SENTENCES_COL).get();
+    sharedSentences = [];
+    snap.docs.forEach(d => {
+      const data = d.data() || {};
+      if (isSupplementData(data)) return;
+      sharedSentences.push(docToSentence(d.id, data, 'shared'));
+    });
+  }
   let personalDocs = [];
   const overlayMap = new Map();
   if (uid) {
@@ -192,13 +206,10 @@ async function fetchAllSentences() {
   const hiddenShared = [];
   /* 歌曲／禮節卡需讀取個人錄音覆寫：存入全域供 songLineToSentence 使用。 */
   state.overlayMap = overlayMap;
-  snap.docs.forEach(d => {
-    const data = d.data() || {};
-    /* 防禦：共版集合若殘留補充記錄（應已遷移），跳過不顯示。 */
-    if (isSupplementData(data)) return;
-    const ov = overlayMap.get(d.id);
-    if (ov && ov.deleted) { hiddenShared.push(docToSentence(d.id, data, 'shared')); return; } /* 該老師個人隱藏的共版句子 */
-    list.push(applyOverlay(docToSentence(d.id, data, 'shared'), ov));
+  sharedSentences.forEach(s => {
+    const ov = overlayMap.get(s.recordId);
+    if (ov && ov.deleted) { hiddenShared.push(s); return; } /* 該老師個人隱藏的共版句子 */
+    list.push(applyOverlay(s, ov));
   });
   personalDocs.forEach(d => list.push(docToSentence(d.id, d.data(), uid)));
   state.hiddenShared = sortSentencesBySeq(hiddenShared);
@@ -220,6 +231,65 @@ function loadFullBank() {
     fullLoadPromise = fetchAllSentences().finally(() => { fullLoadPromise = null; });
   }
   return fullLoadPromise;
+}
+
+/* ---- 靜態句庫 JSON（2026-10-05） ----
+   共版 10,777 句預先匯出為 GitHub Pages 靜態檔，按老師母語分語言
+   （v4-bank/v4-bank-{lang}.json，每種約 2-4MB gzip，手機幾秒下載完），
+   取代 10k 次 Firestore 讀取（手機上要 2 分鐘＋貴＋易崩潰）。
+   個人層（老師自己的句子／覆寫）仍走 Firestore（量小）。
+   課程元數據（lesson/section 等）已在匯出時預解析，不用再帶 4MB 原文。 */
+const VBANK_DIR = 'v4-bank/';
+let vbankManifestCache = null;
+const vbankBankCache = {}; /* lang -> processed sentences */
+async function vbankManifest() {
+  if (!vbankManifestCache) {
+    const r = await fetch(VBANK_DIR + 'manifest.json', {cache: 'no-cache'});
+    if (!r.ok) throw new Error('manifest ' + r.status);
+    vbankManifestCache = await r.json();
+  }
+  return vbankManifestCache;
+}
+function vbankRowToSentence(fields, row, lang) {
+  const o = {};
+  for (let i = 0; i < fields.length; i++) o[fields[i]] = row[i];
+  const hasTr = !!(o.i18n_s || o.i18n_r || o.i18n_e);
+  return {
+    _owner: 'shared',
+    recordId: o.id,
+    sourceLanguage: 'hi',
+    hindiSentence: o.hindiSentence || '',
+    chineseSentence: o.chineseSentence || '',
+    pinyin: o.pinyin || '',
+    romanHindi: o.romanHindi || '',
+    hindiExplanation: o.hindiExplanation || '',
+    category: o.category || 'Other',
+    tags: o.tags || '',
+    aiSource: '',
+    originalPaste: '',
+    favorite: false,
+    i18n: hasTr ? { [lang]: {s: o.i18n_s || '', r: o.i18n_r || '', e: o.i18n_e || ''} } : {},
+    audioPath: o.audioPath || '',
+    audioMime: '',
+    standardAudioUrl: o.audioPath || '',
+    createdAt: null,
+    updatedAt: null,
+    seq: (o.seq == null ? null : o.seq),
+    _meta: { lesson: o.lesson || '', section: o.section || '', speaker: o.speaker || '', pos: o.pos || '', zhuyin: o.zhuyin || '' },
+  };
+}
+async function loadSharedBank(lang) {
+  lang = lang || state.sourceLanguage || 'hi';
+  if (vbankBankCache[lang]) return vbankBankCache[lang];
+  const m = await vbankManifest();
+  const file = (m.langs && m.langs[lang]) || (m.langs && m.langs.hi);
+  if (!file) throw new Error('no bank file for ' + lang);
+  const r = await fetch(VBANK_DIR + file);
+  if (!r.ok) throw new Error('bank file ' + r.status);
+  const j = await r.json();
+  const sentences = j.rows.map(row => vbankRowToSentence(j.f, row, lang));
+  vbankBankCache[lang] = sentences;
+  return sentences;
 }
 
 async function reloadSentences() {
@@ -350,8 +420,9 @@ function sourceLanguageFor(sentence) {
 }
 
 /* Apply a language profile to the prompt builder UI and remember it. */
-function applyV4LanguageProfile(code) {
+async function applyV4LanguageProfile(code) {
   const profile = v4GetLanguageProfile(code);
+  const langChanged = profile.code !== state.sourceLanguage;
   state.sourceLanguage = profile.code;
   try { localStorage.setItem('v4SourceLanguage', profile.code); } catch (_) {}
   const select = $('v4SourceLanguage');
@@ -363,6 +434,14 @@ function applyV4LanguageProfile(code) {
   if ($('generatedPrompt')) $('generatedPrompt').value = '';
   if ($('generatedPromptPanel')) $('generatedPromptPanel').classList.add('hidden');
   if ($('promptMessage')) $('promptMessage').textContent = '';
+  /* 換語言要換句庫 JSON（2026-10-05）：有資料才重載，否則等 loadBank。 */
+  if (langChanged && state.sentences.length) {
+    try {
+      await reloadSentences();
+    } catch (err) {
+      console.warn('Language bank reload failed:', (err && err.message) || err);
+    }
+  }
   /* 課程跟著老師選的語言即時切換。 */
   try { if (typeof renderCourse === 'function' && $('courseSection')) renderCourse(); } catch (_) {}
   /* 句庫搜尋結果裡的課程卡片標籤也要跟著換語言。 */
@@ -1485,6 +1564,8 @@ function updateTopicPicker() {
 const courseMetaCache = new Map();
 function courseMeta(sentence) {
   if (!sentence) return { lesson: '', section: '', speaker: '', pos: '', zhuyin: '' };
+  /* 靜態 JSON 已預解析（2026-10-05）：直接取用，不用再解析 4MB 原文。 */
+  if (sentence._meta) return sentence._meta;
   const key = sentence.recordId || sentence.originalPaste || '';
   if (courseMetaCache.has(key)) return courseMetaCache.get(key);
   const parsed = parsePaste(sentence.originalPaste || '');
@@ -1785,6 +1866,7 @@ function saveBankCache(bankVersion) {
       settings: state.settings, sentences: state.sentences,
       categories: state.categories, savedAt: Date.now(),
       bankVersion: bankVersion != null ? bankVersion : null,
+      lang: state.sourceLanguage || 'hi',
       unitOrders: state.unitOrders || {}
     }));
     try { localStorage.removeItem('csbCachedBankV4'); } catch (_) {} /* 清掉舊版共用快取 */
@@ -1884,17 +1966,21 @@ async function loadBank(attempt = 1) {
        否則快取鍵會以 'anon' 查不到該老師的個人快取，且隨後的 refreshPersonalLayer
        會因 uid 變化（'' → 真實 uid）再全量重讀一次——等於每次冷啟動花 2 次全量讀取，
        修復完全無效。設定檔讀取與等待登入並行執行，不增加載入時間。 */
-    const [settingsSnap] = await Promise.all([
+    const [manifest, settingsSnap] = await Promise.all([
+      vbankManifest().catch(() => null),
       fbDb.collection(META_COL).doc(SETTINGS_DOC).get(),
       whenAccessReady(),
     ]);
     personalLayerUid = currentTeacherUid();
     const settings = settingsSnap.exists ? { ...defaultSettings(), ...settingsSnap.data() } : defaultSettings();
-    const serverVersion = settings.bankVersion || null;
+    /* 版本號改用靜態句庫 manifest（2026-10-05）：Firestore 的 bankVersion 從未成功寫入，
+       此處以 manifest.version 為準；拿不到 manifest 時退回舊邏輯。 */
+    const serverVersion = (manifest && manifest.version) || settings.bankVersion || null;
     state.bankVersion = serverVersion;
     const cached = loadBankCache();
     let sentences;
-    if (cached && Array.isArray(cached.sentences) && (cached.bankVersion || null) === serverVersion) {
+    const cacheLang = (cached && cached.lang) || 'hi';
+    if (cached && Array.isArray(cached.sentences) && (cached.bankVersion || null) === serverVersion && cacheLang === (state.sourceLanguage || 'hi')) {
       sentences = cached.sentences; /* 快取命中：本次只花 1 次讀取 */
     } else {
       sentences = await loadFullBank(); /* 版本變更或無快取：全量抓取（去重併發） */
