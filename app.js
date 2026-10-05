@@ -1136,8 +1136,6 @@ function createCard(sentence, preview = false) {
   const hindiEl = node.querySelector('.hindi');
   hindiEl.textContent = displaySource(sentence);
   hindiEl.setAttribute('lang', cardProfile.locale);
-  const hindiSpeak = node.querySelector('.hindi-speak-button');
-  hindiSpeak.addEventListener('click', () => speakHindi(displaySource(sentence), hindiSpeak, cardProfile.locale));
   const roman = displayRoman(sentence);
   const romanLine = node.querySelector('.roman-hindi');
   romanLine.textContent = roman ? `${cardProfile.romanizationName}: ${roman}` : '';
@@ -1156,7 +1154,6 @@ function createCard(sentence, preview = false) {
     const nameZh = cardProfile.nameZh || cardProfile.name;
     explSummary.innerHTML = escapeHtml(nameZh) + '解說 <span class="en-sub">' + escapeHtml(cardProfile.name) + ' explanation</span> <span>＋</span>';
   }
-  hindiSpeak.setAttribute('aria-label', bilingualLabel(`播放${cardProfile.nameZh || cardProfile.name}發音`, `Play ${cardProfile.name} pronunciation`));
   const tags = [...new Set(String(sentence.tags || '').split(/[,;|]/).map(t => t.trim().toLowerCase()).filter(Boolean))];
   node.querySelector('.tags').innerHTML = tags.map(tag => `<span class="tag"></span>`).join('');
   node.querySelectorAll('.tag').forEach((el, i) => { el.textContent = tags[i]; });
@@ -1191,78 +1188,6 @@ function speakChinese(text, button) {
   speechSynthesis.speak(utterance);
 }
 
-/* V4 cloud voices: these 9 languages go through the synthesizeV4Source
-   Cloud Function (Azure Speech, shared cross-teacher cache, 30 new
-   voices per teacher per day). Every other language uses the browser's
-   built-in speechSynthesis, which costs nothing.
-   Sinhala and Persian each offer two voices (female/male); the teacher
-   picks one in the topbar voice selector and the choice is remembered
-   per language. */
-const V4_AZURE_LOCALES = new Set(['km-KH', 'th-TH', 'vi-VN', 'ne-NP', 'ta-IN', 'bn-BD', 'my-MM', 'si-LK', 'fa-IR']);
-const v4CloudAudioCache = new Map(); /* locale + '\n' + text -> data URL */
-let v4SynthesizeFn = null;
-let v4ActiveCloudAudio = null;
-
-function speakHindi(text, button, locale) {
-  const targetLocale = locale || 'hi-IN';
-  if (V4_AZURE_LOCALES.has(targetLocale)) {
-    speakWithAzure(text, button, targetLocale);
-    return;
-  }
-  speakHindiBrowser(text, button, targetLocale);
-}
-
-async function speakWithAzure(text, button, targetLocale) {
-  const cacheKey = targetLocale + '\n' + text;
-  button.classList.add('speaking');
-  button.disabled = true;
-  try {
-    let dataUrl = v4CloudAudioCache.get(cacheKey);
-    if (!dataUrl) {
-      if (!v4SynthesizeFn) {
-        v4SynthesizeFn = firebase.app().functions('us-east1').httpsCallable('synthesizeV4Source', { timeout: 60000 });
-      }
-      const res = await v4SynthesizeFn({ locale: targetLocale, text });
-      const data = (res && res.data) || {};
-      if (!data.audioBase64) throw new Error('empty audio');
-      dataUrl = 'data:' + (data.contentType || 'audio/mpeg') + ';base64,' + data.audioBase64;
-      v4CloudAudioCache.set(cacheKey, dataUrl);
-    }
-    try { speechSynthesis.cancel(); } catch (_) {}
-    if (v4ActiveCloudAudio) { try { v4ActiveCloudAudio.pause(); } catch (_) {} }
-    const audio = new Audio(dataUrl);
-    v4ActiveCloudAudio = audio;
-    const done = () => { button.classList.remove('speaking'); button.disabled = false; };
-    audio.onended = done;
-    audio.onerror = () => { done(); alert('雲端語音播放失敗，請再試一次。'); };
-    await audio.play();
-  } catch (err) {
-    button.classList.remove('speaking');
-    button.disabled = false;
-    const code = String((err && err.code) || '');
-    const msg = String((err && err.message) || '');
-    if (code.includes('unauthenticated')) alert('雲端語音需要先登入 Google。');
-    else if (code.includes('permission-denied')) alert('雲端語音需要老師審核通過後才能使用。');
-    else if (code.includes('resource-exhausted')) alert('今天的雲端新語音額度（30 句）已用完，之前產生過的句子仍可播放。');
-    else if (code.includes('aborted')) alert('這句的語音正在準備中，請稍後再點一次播放。');
-    else { console.error('Azure TTS error', err); alert('雲端語音暫時無法使用：' + (msg || '請稍後再試')); }
-  }
-}
-
-function speakHindiBrowser(text, button, targetLocale) {
-  if (!('speechSynthesis' in window)) return alert('這個瀏覽器不支援語音播放，請用 Chrome、Edge 或 Safari。\nSpeech is not supported in this browser. Please try Chrome, Edge or Safari.');
-  speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = targetLocale;
-  utterance.rate = 0.85;
-  const voices = speechSynthesis.getVoices();
-  const target = targetLocale.toLowerCase();
-  const prefix = target.split('-')[0];
-  utterance.voice = voices.find(v => v.lang.toLowerCase() === target) || voices.find(v => v.lang.toLowerCase().startsWith(prefix)) || null;
-  utterance.onstart = () => button.classList.add('speaking');
-  utterance.onend = utterance.onerror = () => button.classList.remove('speaking');
-  speechSynthesis.speak(utterance);
-}
 
 /* Pronunciation Lab: listening, recording, pitch direction and homophones. */
 const toneModels = {
@@ -6709,7 +6634,7 @@ function createVocabCard(sentence) {
     <div class="vocab-top"><span class="vocab-word" lang="zh-Hant"></span>${meta.pos ? `<span class="vocab-pos">${escapeHtml(meta.pos)}</span>` : ''}</div>
     <div class="vocab-pinyin"></div>
     ${meta.zhuyin ? `<div class="vocab-zhuyin" lang="zh-Hant"></div>` : ''}
-    <div class="vocab-hindi-row"><span class="vocab-hindi" lang="hi"></span><button type="button" class="icon-button vocab-hindi-speak" aria-label="Play Hindi">🔊</button></div>
+    <div class="vocab-hindi-row"><span class="vocab-hindi" lang="hi"></span></div>
     <div class="vocab-roman"></div>
     <div class="vocab-example"></div>
     <div class="vocab-actions">
@@ -6736,8 +6661,6 @@ function createVocabCard(sentence) {
   const exampleEl = node.querySelector('.vocab-example');
   exampleEl.textContent = displayExplanation(sentence);
   exampleEl.hidden = !displayExplanation(sentence);
-  node.querySelector('.vocab-hindi-speak').addEventListener('click', e => speakHindi(displaySource(sentence), e.currentTarget, vocabProfile.locale));
-  node.querySelector('.vocab-hindi-speak').setAttribute('aria-label', bilingualLabel(`播放${vocabProfile.nameZh || vocabProfile.name}發音`, `Play ${vocabProfile.name} pronunciation`));
   node.querySelector('.vocab-speak').addEventListener('click', e => playSentenceModel(sentence, e.currentTarget));
   const vocabDl = node.querySelector('.vocab-download');
   vocabDl.hidden = !sentence.standardAudioUrl;
@@ -6812,7 +6735,7 @@ function renderInfoTab(content, recs, tabName, lessonNum) {
       card.innerHTML = `
         <div class="info-kicker">${tabName} <span class="en-sub">${COURSE_TAB_EN[tabName] || ''}</span></div>
         <div class="info-zh-row"><h4 class="info-zh" lang="zh-Hant"></h4><button type="button" class="icon-button info-speak" aria-label="播放中文發音 (Play Chinese)" title="播放中文發音 (Play Chinese)">🔊</button></div>
-        <div class="info-hi-row"><p class="info-hi" lang="hi"></p><button type="button" class="icon-button info-hindi-speak" aria-label="播放來源語言發音 (Play source pronunciation)" title="播放來源語言發音 (Play source pronunciation)">🔊</button></div>
+        <div class="info-hi-row"><p class="info-hi" lang="hi"></p></div>
         <p class="info-explain" lang="hi"></p>
         <div class="info-actions">
           <button type="button" class="icon-button info-download" aria-label="下載老師錄音 (Download recording)" title="下載老師錄音 (Download recording)" hidden>⤓</button>
@@ -6833,9 +6756,6 @@ function renderInfoTab(content, recs, tabName, lessonNum) {
       explainEl.setAttribute('lang', infoProfile.locale);
       /* 發音／錄音：與句子卡、生詞卡同一套函式。 */
       card.querySelector('.info-speak').addEventListener('click', e => playSentenceModel(s, e.currentTarget));
-      const infoHindiSpeak = card.querySelector('.info-hindi-speak');
-      infoHindiSpeak.addEventListener('click', e => speakHindi(displaySource(s), e.currentTarget, infoProfile.locale));
-      infoHindiSpeak.setAttribute('aria-label', bilingualLabel(`播放${infoProfile.nameZh || infoProfile.name}發音`, `Play ${infoProfile.name} pronunciation`));
       const infoDl = card.querySelector('.info-download');
       infoDl.hidden = !s.standardAudioUrl;
       infoDl.addEventListener('click', () => downloadTeacherAudio(s, infoDl));
