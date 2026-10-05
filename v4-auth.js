@@ -71,6 +71,7 @@
   function showWebviewGuide(appName) {
     var old = $('v4WebviewGuide');
     if (old) old.remove();
+    var siteUrl = location.origin + location.pathname;
     var overlay = document.createElement('div');
     overlay.id = 'v4WebviewGuide';
     overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.55);' +
@@ -82,11 +83,37 @@
       '<h3 style="margin:0 0 10px;font-size:1.1rem;">請用 Safari / Chrome 開啟再登入</h3>' +
       '<p style="margin:0 0 10px;">您正在「' + appName + '」的內建瀏覽器中，Google 登入在這裡無法使用，這是 App 本身的限制，不是網站故障。</p>' +
       '<p style="margin:0 0 6px;font-weight:700;">請這樣做：</p>' +
-      '<ol style="margin:0 0 14px;padding-left:22px;">' +
-      '<li>iPhone：點右下角「⋯」→「在 Safari 中開啟」</li>' +
-      '<li>Android：點右上角「⋮」→「用其他應用程式開啟」→ 選 Chrome</li>' +
+      '<ol style="margin:0 0 12px;padding-left:22px;">' +
+      '<li>先複製本站網址（按下面按鈕）</li>' +
+      '<li>iPhone 打開 Safari，Android 手機打開 Chrome</li>' +
+      '<li>在網址列貼上網址，開啟網站後再登入</li>' +
       '</ol>' +
-      '<p style="margin:0 0 14px;color:#8a7f6a;font-size:.85rem;">小提醒：請在 Safari / Chrome 的網址列手動輸入本站網址，不要直接分享報錯頁面過去。</p>';
+      '<p style="margin:0 0 12px;word-break:break-all;font-size:.82rem;color:#8a7f6a;">' + siteUrl + '</p>';
+    var copyBtn = document.createElement('button');
+    copyBtn.type = 'button';
+    copyBtn.textContent = '複製網站網址';
+    copyBtn.style.cssText = 'font:inherit;cursor:pointer;border-radius:10px;border:1px solid #d8cdb4;' +
+      'background:#fff;color:#2b2620;padding:10px 20px;width:100%;margin-bottom:8px;';
+    var copyMsg = document.createElement('div');
+    copyMsg.style.cssText = 'font-size:.85rem;color:#2e7d32;min-height:1.4em;margin-bottom:8px;text-align:center;';
+    copyBtn.addEventListener('click', function () {
+      function done(ok) {
+        copyMsg.textContent = ok ? '已複製！去 Safari／Chrome 貼上開啟吧。' : '複製失敗，請長按上方網址手動複製。';
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(siteUrl).then(function () { done(true); }, function () { done(false); });
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = siteUrl;
+        ta.style.cssText = 'position:fixed;opacity:0;';
+        document.body.appendChild(ta);
+        ta.select();
+        try { done(document.execCommand('copy')); } catch (e) { done(false); }
+        ta.remove();
+      }
+    });
+    card.appendChild(copyBtn);
+    card.appendChild(copyMsg);
     var btn = document.createElement('button');
     btn.type = 'button';
     btn.textContent = '我知道了';
