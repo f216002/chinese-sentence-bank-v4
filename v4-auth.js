@@ -68,7 +68,30 @@
     return null;
   }
 
-  function showWebviewGuide(appName) {
+  /* ---- 一鍵跳轉系統瀏覽器（2026-10-05） ----
+     Google 自 2021 年起封鎖所有內嵌 webview 內的 Google 登入（403 disallowed_useragent），
+     所以在 LINE 等 App 內建瀏覽器裡「登入」這件事只能去系統瀏覽器做。
+     iOS 用 x-safari- 前綴直接開 Safari；Android 用 intent:// 走預設瀏覽器。
+     跳轉成功使用者即離開此頁；若跳轉失敗（不支援的環境），顯示引導面板作備援。 */
+  function openInSystemBrowser() {
+    var appName = detectInAppBrowser();
+    var url = location.origin + location.pathname;
+    var ua = navigator.userAgent || '';
+    var target = null;
+    if (/iPad|iPhone|iPod/.test(ua)) {
+      target = 'x-safari-' + url;
+    } else if (/Android/.test(ua)) {
+      target = 'intent://' + location.host + location.pathname + '#Intent;scheme=https;end';
+    }
+    if (target) {
+      location.href = target;
+      showWebviewGuide(appName, true);
+    } else {
+      showWebviewGuide(appName, false);
+    }
+  }
+
+  function showWebviewGuide(appName, escapeAttempted) {
     var old = $('v4WebviewGuide');
     if (old) old.remove();
     var siteUrl = location.origin + location.pathname;
@@ -80,9 +103,11 @@
     card.style.cssText = 'background:#fffdf8;border-radius:16px;max-width:420px;width:100%;' +
       'padding:24px;color:#2b2620;font-size:.95rem;line-height:1.7;';
     card.innerHTML =
-      '<h3 style="margin:0 0 10px;font-size:1.1rem;">請用 Safari / Chrome 開啟再登入</h3>' +
+      '<h3 style="margin:0 0 10px;font-size:1.1rem;">' +
+      (escapeAttempted ? '沒有自動跳轉嗎？請手動開啟' : '請用 Safari / Chrome 開啟再登入') + '</h3>' +
       '<p style="margin:0 0 10px;">您正在「' + appName + '」的內建瀏覽器中，Google 登入在這裡無法使用，這是 App 本身的限制，不是網站故障。</p>' +
-      '<p style="margin:0 0 6px;font-weight:700;">請這樣做：</p>' +
+      '<p style="margin:0 0 6px;font-weight:700;">' +
+      (escapeAttempted ? '剛才已嘗試自動開啟系統瀏覽器，若沒有反應，請這樣做：' : '請這樣做：') + '</p>' +
       '<ol style="margin:0 0 12px;padding-left:22px;">' +
       '<li>先複製本站網址（按下面按鈕）</li>' +
       '<li>iPhone 打開 Safari，Android 手機打開 Chrome</li>' +
@@ -164,9 +189,12 @@
   }
 
   if (signInButton) {
+    if (detectInAppBrowser()) {
+      /* 內建瀏覽器：按鈕改為一鍵跳轉系統瀏覽器登入。 */
+      signInButton.innerHTML = '在瀏覽器中開啟並登入 <span class="en-sub">Open in browser to sign in</span>';
+    }
     signInButton.addEventListener('click', function () {
-      var inApp = detectInAppBrowser();
-      if (inApp) { showWebviewGuide(inApp); return; }
+      if (detectInAppBrowser()) { openInSystemBrowser(); return; }
       signInButton.disabled = true;
       setAuthMessage('正在開啟 Google 登入…');
       auth.signInWithPopup(provider).catch(function (error) {
