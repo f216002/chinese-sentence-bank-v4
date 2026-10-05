@@ -44,6 +44,7 @@
   var accountEmail = $('v4AccountEmail');
   var authMessage = $('v4AuthMessage');
   var adminButton = $('v4AdminButton');
+  var learnLangButton = $('v4LearnLangButton');
 
   function setAuthMessage(message, isError) {
     if (!authMessage) return;
@@ -73,6 +74,7 @@
     if (signOutButton) signOutButton.hidden = true;
     if (accountPanel) accountPanel.hidden = true;
     if (adminButton) adminButton.hidden = true;
+    if (learnLangButton) learnLangButton.hidden = true;
     if (accountPhoto) accountPhoto.removeAttribute('src');
     if (accountName) accountName.textContent = '';
     if (accountEmail) accountEmail.textContent = '';
@@ -84,6 +86,7 @@
     if (signOutButton) { signOutButton.hidden = false; signOutButton.disabled = false; }
     if (accountPanel) accountPanel.hidden = false;
     if (adminButton) adminButton.hidden = !isAdminEmail(user.email);
+    if (learnLangButton) learnLangButton.hidden = false;
     if (accountName) accountName.textContent = user.displayName || '老師';
     if (accountEmail) accountEmail.textContent = user.email || '';
     if (accountPhoto) {
