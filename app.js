@@ -208,8 +208,22 @@ async function fetchAllSentences() {
   return sortSentencesBySeq(list);
 }
 
+/* 全量讀取去重（2026-10-05）：iPhone 上 10,777 筆全量讀取很慢，
+   登入時 refreshPersonalLayer 與 loadBank 可能同時觸發全量讀取，
+   併發的兩份 10k 文件會把手機記憶體撐爆，Safari 報「重複發生問題」崩潰。
+   用同一個 in-flight promise 去重，後來者等待進行中的讀取，不另起爐灶。
+   （呼叫時機保證 UID 已確定：loadBank 先等 whenAccessReady，
+   refreshPersonalLayer 由登入事件觸發，故併發者 UID 一致。） */
+let fullLoadPromise = null;
+function loadFullBank() {
+  if (!fullLoadPromise) {
+    fullLoadPromise = fetchAllSentences().finally(() => { fullLoadPromise = null; });
+  }
+  return fullLoadPromise;
+}
+
 async function reloadSentences() {
-  state.sentences = await fetchAllSentences();
+  state.sentences = await loadFullBank();
   personalLayerUid = currentTeacherUid();
   $('sentenceCount').textContent = state.sentences.length;
   saveBankCache(state.bankVersion);
@@ -1883,7 +1897,7 @@ async function loadBank(attempt = 1) {
     if (cached && Array.isArray(cached.sentences) && (cached.bankVersion || null) === serverVersion) {
       sentences = cached.sentences; /* 快取命中：本次只花 1 次讀取 */
     } else {
-      sentences = await fetchAllSentences(); /* 版本變更或無快取：全量抓取 */
+      sentences = await loadFullBank(); /* 版本變更或無快取：全量抓取（去重併發） */
     }
     receiveBank({ success: true, settings, sentences, bankVersion: serverVersion });
     /* 登入狀態已於上方就緒；保留此呼叫以防載入過程中帳號又發生變化
