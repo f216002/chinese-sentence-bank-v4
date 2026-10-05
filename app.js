@@ -256,7 +256,7 @@ function nextCourseSeq(lessonNum) {
 
 function defaultSettings() {
   return {
-    bankName: 'My Chinese Sentence Bank',
+    bankName: 'Bridge Language Academy',
     ownerName: '',
     defaultVoice: 'zh-TW',
     speechRate: 0.85,
@@ -1725,8 +1725,9 @@ function receiveBank(data) {
   if (!data || !data.success) return showApiError('The API returned an error.');
   state.settings = data.settings || {}; state.sentences = data.sentences || [];
   state.categories = String(state.settings.categories || '').split(',').map(s => s.trim()).filter(Boolean);
-  if (state.settings.bankName && state.settings.bankName !== 'My Chinese Sentence Bank') { $('bankName').textContent = state.settings.bankName; document.title = state.settings.bankName; }
-  else { setBilingualText($('bankName'), '我的中文句子庫', 'My Chinese Sentence Bank'); document.title = '我的中文句子庫 My Chinese Sentence Bank'; }
+  const DEFAULT_BANK_NAMES = ['My Chinese Sentence Bank', 'Bridge Language Academy'];
+  if (state.settings.bankName && !DEFAULT_BANK_NAMES.includes(state.settings.bankName)) { $('bankName').textContent = state.settings.bankName; document.title = state.settings.bankName; }
+  else { setBilingualText($('bankName'), '語橋學苑', 'Bridge Language Academy'); document.title = '語橋學苑 Bridge Language Academy'; }
   if (state.settings.ownerName && state.settings.ownerName !== 'Your Name') { setBilingualText($('ownerName'), `為 ${state.settings.ownerName} 製作`, `Made for ${state.settings.ownerName}`); $('ownerName').classList.remove('hidden'); }
   else $('ownerName').classList.add('hidden');
   $('sentenceCount').textContent = state.sentences.length; $('categoryCount').textContent = state.categories.length;
