@@ -95,7 +95,6 @@
     btn.addEventListener('click', function () { overlay.remove(); });
     card.appendChild(btn);
     overlay.appendChild(card);
-    overlay.addEventListener('click', function (e) { if (e.target === overlay) overlay.remove(); });
     document.body.appendChild(overlay);
   }
 
