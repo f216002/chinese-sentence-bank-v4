@@ -311,3 +311,11 @@ button .en-sub { pointer-events: none; }
 .mr-pinyin{color:var(--red);font-weight:600;margin:6px 0}
 .mr-src{color:#46534f;margin:6px 0}
 .mr-expl{white-space:pre-wrap;color:#4b5855;margin:6px 0;line-height:1.7}
+#mergeReviewDialog{width:min(1120px,calc(100vw - 32px));max-height:94vh;display:flex;flex-direction:column}
+#mergeReviewDialog h2{font-size:36px}
+.mr-play-btn{font-size:22px;padding:18px 22px}
+.mr-passage{max-height:none;flex:1;gap:14px}
+.mr-line{padding:18px 20px}
+.mr-text{font-size:30px}
+.mr-speaker{font-size:26px}
+.mr-pinyin{font-size:20px;margin:10px 0 0}
