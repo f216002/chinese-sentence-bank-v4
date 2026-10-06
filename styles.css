@@ -293,3 +293,21 @@ button .en-sub { pointer-events: none; }
 /* 招生頁：上課日期時間欄（2026-10-03） */
 .enroll-time-row{display:flex;align-items:center;gap:10px}
 .enroll-time-row input{flex:1;min-width:0}
+.text-group-btns{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.merge-range{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--muted);flex-wrap:wrap}
+.merge-range input{width:3.4em;height:38px;padding:0 6px;text-align:center}
+.merge-review-btn{padding:10px 16px}
+#mergeReviewDialog{width:min(720px,calc(100% - 32px))}
+.mr-play-btn{width:100%;margin:6px 0 18px;font-size:18px}
+.mr-play-btn.playing{background:var(--red)}
+.mr-passage{display:flex;flex-direction:column;gap:10px;max-height:56vh;overflow-y:auto;padding-right:4px}
+.mr-line{background:#fffdf8;border:1px solid var(--line);border-radius:10px;padding:12px 14px;line-height:1.8}
+.mr-line.mr-playing{background:#fff3d6;box-shadow:inset 0 0 0 2px var(--yellow)}
+.mr-speaker{font-weight:700;color:var(--teal);margin-right:6px}
+.mr-text{font-family:"Noto Sans TC",sans-serif;font-size:21px}
+.mr-line details{margin-top:6px;border-top:1px dashed var(--line);padding-top:8px}
+.mr-line summary{cursor:pointer;color:var(--teal);font-weight:700;font-size:14px;list-style:none;display:flex;justify-content:space-between;gap:8px}
+.mr-line summary::-webkit-details-marker{display:none}
+.mr-pinyin{color:var(--red);font-weight:600;margin:6px 0}
+.mr-src{color:#46534f;margin:6px 0}
+.mr-expl{white-space:pre-wrap;color:#4b5855;margin:6px 0;line-height:1.7}
