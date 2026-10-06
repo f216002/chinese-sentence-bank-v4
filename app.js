@@ -7030,7 +7030,7 @@ async function playNextTextLine() {
 }
 
 /* ---- 合併複習：選範圍 → 整合段落面板 → 連續播放 ---- */
-let mergePlay = { playing: false, lines: [], index: 0, lineEls: [], audioEl: null };
+let mergePlay = { playing: false, lines: [], index: 0, lineEls: [], passageEl: null, audioEl: null };
 function stopMergedReview() {
   mergePlay.playing = false;
   try { speechSynthesis.cancel(); } catch (_) {}
@@ -7043,7 +7043,8 @@ function stopMergedReview() {
 function highlightMergedLine(idx) {
   mergePlay.lineEls.forEach((el, i) => el.classList.toggle('mr-playing', i === idx));
   const el = mergePlay.lineEls[idx];
-  if (el) { try { el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (_) {} }
+  /* 播到哪一句，就把該句提到段落最上面（投影時下方常被擋住）。 */
+  if (el && mergePlay.passageEl) mergePlay.passageEl.prepend(el);
 }
 async function playNextMergedLine() {
   if (!mergePlay.playing) return;
@@ -7073,6 +7074,9 @@ function toggleMergedPlay() {
   try { speechSynthesis.cancel(); } catch (_) {}
   mergePlay.playing = true;
   mergePlay.index = 0;
+  /* 每次從頭播都先恢復原始順序（上一輪可能把句子提到上面過）。 */
+  if (mergePlay.passageEl) mergePlay.lineEls.forEach(el => mergePlay.passageEl.appendChild(el));
+  mergePlay.lineEls.forEach(el => el.classList.remove('mr-playing'));
   const btn = document.querySelector('#mergeReviewDialog .mr-play-btn');
   if (btn) { btn.classList.add('playing'); btn.innerHTML = '⏹ 停止 <span class="en-sub">Stop</span>'; }
   playNextMergedLine();
@@ -7090,16 +7094,9 @@ function openMergeReview(groupName, selLines, fromNum, toNum) {
   const passageHtml = selLines.map(s => {
     const speaker = courseMeta(s).speaker;
     const spk = speaker ? '<span class="mr-speaker">' + escapeHtml(speaker) + '：</span>' : '';
-    const src = displaySource(s) || '';
-    const expl = displayExplanation(s) || '';
     return '<div class="mr-line">' +
       '<div class="mr-line-main">' + spk + '<span class="mr-text" lang="zh-Hant">' + escapeHtml(s.chineseSentence || '') + '</span></div>' +
       (s.pinyin ? '<div class="mr-pinyin">' + escapeHtml(s.pinyin) + '</div>' : '') +
-      ((src || expl) ?
-        '<details><summary>翻譯 <span class="en-sub">Translation</span> <span>＋</span></summary>' +
-        (src ? '<div class="mr-src">' + escapeHtml(src) + '</div>' : '') +
-        (expl ? '<div class="mr-expl">' + escapeHtml(expl) + '</div>' : '') +
-        '</details>' : '') +
       '</div>';
   }).join('');
   dlg.innerHTML =
@@ -7108,7 +7105,7 @@ function openMergeReview(groupName, selLines, fromNum, toNum) {
     '<h2>' + escapeHtml(groupName) + '：第' + fromNum + '–' + toNum + '句 <span class="en-sub">' + selLines.length + ' lines</span></h2>' +
     '<button type="button" class="primary-button mr-play-btn">▶ 連續播放 <span class="en-sub">Play all</span></button>' +
     '<div class="mr-passage">' + passageHtml + '</div>';
-  mergePlay = { playing: false, lines: selLines.slice(), index: 0, lineEls: Array.from(dlg.querySelectorAll('.mr-line')), audioEl: null };
+  mergePlay = { playing: false, lines: selLines.slice(), index: 0, lineEls: Array.from(dlg.querySelectorAll('.mr-line')), passageEl: dlg.querySelector('.mr-passage'), audioEl: null };
   dlg.querySelector('#closeMergeReview').addEventListener('click', () => dlg.close());
   dlg.querySelector('.mr-play-btn').addEventListener('click', toggleMergedPlay);
   dlg.showModal();
