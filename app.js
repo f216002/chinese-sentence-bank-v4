@@ -7092,12 +7092,11 @@ function openMergeReview(groupName, selLines, fromNum, toNum) {
     const spk = speaker ? '<span class="mr-speaker">' + escapeHtml(speaker) + '：</span>' : '';
     const src = displaySource(s) || '';
     const expl = displayExplanation(s) || '';
-    const hasDetail = (s.pinyin || src || expl);
     return '<div class="mr-line">' +
       '<div class="mr-line-main">' + spk + '<span class="mr-text" lang="zh-Hant">' + escapeHtml(s.chineseSentence || '') + '</span></div>' +
-      (hasDetail ?
-        '<details><summary>拼音＋翻譯 <span class="en-sub">Pinyin &amp; translation</span> <span>＋</span></summary>' +
-        (s.pinyin ? '<div class="mr-pinyin">' + escapeHtml(s.pinyin) + '</div>' : '') +
+      (s.pinyin ? '<div class="mr-pinyin">' + escapeHtml(s.pinyin) + '</div>' : '') +
+      ((src || expl) ?
+        '<details><summary>翻譯 <span class="en-sub">Translation</span> <span>＋</span></summary>' +
         (src ? '<div class="mr-src">' + escapeHtml(src) + '</div>' : '') +
         (expl ? '<div class="mr-expl">' + escapeHtml(expl) + '</div>' : '') +
         '</details>' : '') +
