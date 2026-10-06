@@ -6677,7 +6677,33 @@ function renderTextTab(content, recs, lessonNum) {
     playButton.setAttribute('aria-label', bilingualLabel(`連播${groupName}`, `Play ${groupName}`));
     playButton.title = '連播全部 (Play all)';
     playButton.addEventListener('click', () => playTextGroup(lines, playButton));
-    head.appendChild(title); head.appendChild(playButton);
+    /* 合併複習：選範圍（預設整組）→ 整合段落面板 → 連續播放。 */
+    const mergeWrap = document.createElement('span');
+    mergeWrap.className = 'merge-range';
+    const mergeCount = lines.length;
+    mergeWrap.innerHTML =
+      '從第 <input type="number" class="merge-from" min="1" max="' + mergeCount + '" value="1" aria-label="從第幾句"> ' +
+      '句到第 <input type="number" class="merge-to" min="1" max="' + mergeCount + '" value="' + mergeCount + '" aria-label="到第幾句"> 句 ';
+    const mergeBtn = document.createElement('button');
+    mergeBtn.type = 'button';
+    mergeBtn.className = 'secondary-button merge-review-btn';
+    mergeBtn.innerHTML = '合併複習 <span class="en-sub">Review</span>';
+    mergeBtn.setAttribute('aria-label', bilingualLabel(`合併複習${groupName}`, `Merge review ${groupName}`));
+    mergeBtn.title = '選取範圍合併成段落複習 (Merge a range into a passage)';
+    mergeBtn.addEventListener('click', () => {
+      const fromEl = mergeWrap.querySelector('.merge-from');
+      const toEl = mergeWrap.querySelector('.merge-to');
+      let from = Math.max(1, Math.min(mergeCount, parseInt(fromEl.value, 10) || 1));
+      let to = Math.max(1, Math.min(mergeCount, parseInt(toEl.value, 10) || mergeCount));
+      if (from > to) { const t = from; from = to; to = t; }
+      fromEl.value = from; toEl.value = to;
+      openMergeReview(groupName, lines.slice(from - 1, to), from, to);
+    });
+    mergeWrap.appendChild(mergeBtn);
+    const headBtns = document.createElement('div');
+    headBtns.className = 'text-group-btns';
+    headBtns.appendChild(mergeWrap); headBtns.appendChild(playButton);
+    head.appendChild(title); head.appendChild(headBtns);
     section.appendChild(head);
     /* 對話分組＝最小單元：組內編號＋↑↓移動鈕排序（順序存老師個人帳號）。 */
     renderNumberedUnit(section, lines, {
@@ -7001,6 +7027,92 @@ async function playNextTextLine() {
       speechSynthesis.speak(utterance);
     } catch (_) { textPlay.index += 1; playNextTextLine(); }
   }
+}
+
+/* ---- 合併複習：選範圍 → 整合段落面板 → 連續播放 ---- */
+let mergePlay = { playing: false, lines: [], index: 0, lineEls: [], audioEl: null };
+function stopMergedReview() {
+  mergePlay.playing = false;
+  try { speechSynthesis.cancel(); } catch (_) {}
+  try { if (mergePlay.audioEl) mergePlay.audioEl.pause(); } catch (_) {}
+  mergePlay.audioEl = null;
+  mergePlay.lineEls.forEach(el => el.classList.remove('mr-playing'));
+  const btn = document.querySelector('#mergeReviewDialog .mr-play-btn');
+  if (btn) { btn.classList.remove('playing'); btn.innerHTML = '▶ 連續播放 <span class="en-sub">Play all</span>'; }
+}
+function highlightMergedLine(idx) {
+  mergePlay.lineEls.forEach((el, i) => el.classList.toggle('mr-playing', i === idx));
+  const el = mergePlay.lineEls[idx];
+  if (el) { try { el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (_) {} }
+}
+async function playNextMergedLine() {
+  if (!mergePlay.playing) return;
+  if (mergePlay.index >= mergePlay.lines.length) { stopMergedReview(); return; }
+  const s = mergePlay.lines[mergePlay.index];
+  highlightMergedLine(mergePlay.index);
+  const audioUrl = await fetchTeacherAudioUrl(s);
+  if (!mergePlay.playing) return;
+  if (audioUrl) {
+    const audio = new Audio(audioUrl);
+    mergePlay.audioEl = audio;
+    audio.onended = audio.onerror = () => { mergePlay.index += 1; playNextMergedLine(); };
+    try { await audio.play(); } catch (_) { mergePlay.index += 1; playNextMergedLine(); }
+  } else {
+    try {
+      const utterance = new SpeechSynthesisUtterance(s.chineseSentence || '');
+      utterance.lang = state.settings.defaultVoice || 'zh-TW';
+      utterance.rate = Number(state.settings.speechRate) || 0.85;
+      utterance.onend = utterance.onerror = () => { mergePlay.index += 1; playNextMergedLine(); };
+      speechSynthesis.speak(utterance);
+    } catch (_) { mergePlay.index += 1; playNextMergedLine(); }
+  }
+}
+function toggleMergedPlay() {
+  if (mergePlay.playing) { stopMergedReview(); return; }
+  stopTextPlay(); /* 與整組連播互斥 */
+  try { speechSynthesis.cancel(); } catch (_) {}
+  mergePlay.playing = true;
+  mergePlay.index = 0;
+  const btn = document.querySelector('#mergeReviewDialog .mr-play-btn');
+  if (btn) { btn.classList.add('playing'); btn.innerHTML = '⏹ 停止 <span class="en-sub">Stop</span>'; }
+  playNextMergedLine();
+}
+function openMergeReview(groupName, selLines, fromNum, toNum) {
+  stopMergedReview();
+  stopTextPlay();
+  let dlg = document.getElementById('mergeReviewDialog');
+  if (!dlg) {
+    dlg = document.createElement('dialog');
+    dlg.id = 'mergeReviewDialog';
+    document.body.appendChild(dlg);
+    dlg.addEventListener('close', stopMergedReview);
+  }
+  const passageHtml = selLines.map(s => {
+    const speaker = courseMeta(s).speaker;
+    const spk = speaker ? '<span class="mr-speaker">' + escapeHtml(speaker) + '：</span>' : '';
+    const src = displaySource(s) || '';
+    const expl = displayExplanation(s) || '';
+    const hasDetail = (s.pinyin || src || expl);
+    return '<div class="mr-line">' +
+      '<div class="mr-line-main">' + spk + '<span class="mr-text" lang="zh-Hant">' + escapeHtml(s.chineseSentence || '') + '</span></div>' +
+      (hasDetail ?
+        '<details><summary>拼音＋翻譯 <span class="en-sub">Pinyin &amp; translation</span> <span>＋</span></summary>' +
+        (s.pinyin ? '<div class="mr-pinyin">' + escapeHtml(s.pinyin) + '</div>' : '') +
+        (src ? '<div class="mr-src">' + escapeHtml(src) + '</div>' : '') +
+        (expl ? '<div class="mr-expl">' + escapeHtml(expl) + '</div>' : '') +
+        '</details>' : '') +
+      '</div>';
+  }).join('');
+  dlg.innerHTML =
+    '<button class="dialog-close" id="closeMergeReview" aria-label="關閉合併複習視窗">×</button>' +
+    '<span class="step">合併複習 <span class="en-sub">MERGE REVIEW</span></span>' +
+    '<h2>' + escapeHtml(groupName) + '：第' + fromNum + '–' + toNum + '句 <span class="en-sub">' + selLines.length + ' lines</span></h2>' +
+    '<button type="button" class="primary-button mr-play-btn">▶ 連續播放 <span class="en-sub">Play all</span></button>' +
+    '<div class="mr-passage">' + passageHtml + '</div>';
+  mergePlay = { playing: false, lines: selLines.slice(), index: 0, lineEls: Array.from(dlg.querySelectorAll('.mr-line')), audioEl: null };
+  dlg.querySelector('#closeMergeReview').addEventListener('click', () => dlg.close());
+  dlg.querySelector('.mr-play-btn').addEventListener('click', toggleMergedPlay);
+  dlg.showModal();
 }
 
 /* ---- 內容包匯入 ---- */
