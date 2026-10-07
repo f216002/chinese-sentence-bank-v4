@@ -80,6 +80,7 @@
         <button type="button" data-tab="requests" class="active">待審核申請</button>
         <button type="button" data-tab="teachers">核准教師名單</button>
         <button type="button" data-tab="version">版本監控</button>
+        <button type="button" data-tab="stats">使用統計</button>
       </div>
 
       <div id="tabRequests" class="panel">
@@ -118,6 +119,37 @@
         <p class="empty" id="versionHistoryEmpty" hidden>尚無更新記錄。</p>
       </div>
 
+      <div id="tabStats" class="panel" hidden>
+        <h3>使用統計 <span class="en-sub">Usage analytics</span></h3>
+        <p class="hint">每位老師的登入／登出時間、累計使用時長、各頁面停留。流量為估算值（句庫實際下載次數 × 語言檔大小，GitHub Pages 無逐人日誌）。點教師列看每次登入明細。</p>
+        <h4>帳號總覽</h4>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>教師</th><th>登入次數</th><th>累計時長</th><th>最後登入</th><th>操作</th></tr></thead>
+            <tbody id="statsOverviewBody"></tbody>
+          </table>
+        </div>
+        <p class="empty" id="statsOverviewEmpty">尚無使用記錄（老師登入後才會產生）。</p>
+        <div id="statsDetail" hidden>
+          <h4 id="statsDetailTitle"></h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>登入</th><th>登出</th><th>時長</th><th>各頁面停留</th><th>句庫下載</th></tr></thead>
+              <tbody id="statsDetailBody"></tbody>
+            </table>
+          </div>
+          <p><button type="button" id="statsDetailBack" class="ghost">← 回總覽</button></p>
+        </div>
+        <h4>已發布招生網頁</h4>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>教師</th><th>網址</th><th>發布時間</th></tr></thead>
+            <tbody id="enrollListBody"></tbody>
+          </table>
+        </div>
+        <p class="empty" id="enrollListEmpty">尚無已發布的招生網頁。</p>
+      </div>
+
       <p><a class="back-link" href="index.html">← 回句庫首頁</a></p>
     </section>
   </main>
@@ -140,7 +172,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="v4-auth.js?v=20260926-1"></script>
-  <script src="v4-admin.js?v=20260926-2"></script>
+  <script src="v4-admin.js?v=20261007-01"></script>
 </body>
 </html>
 
