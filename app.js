@@ -2724,11 +2724,12 @@ function analyticsSaveProgress() {
 function analyticsCloseOrphans(uid) {
   try {
     fbDb.collection(ANALYTICS_COL)
-      .where('uid', '==', uid).where('logoutAt', '==', null)
+      .where('uid', '==', uid)
       .get().then(function (qsnap) {
         qsnap.forEach(function (doc) {
           if (doc.id === analytics.sessionId) return;
           const d = doc.data() || {};
+          if (d.logoutAt) return; /* 已結算，跳過（單一欄位查詢免複合索引） */
           const loginMs = (d.loginAt && d.loginAt.toMillis) ? d.loginAt.toMillis() : 0;
           const dur = loginMs ? Math.max(0, Math.round((Date.now() - loginMs) / 1000)) : 0;
           doc.ref.update({ logoutAt: new Date(), durationSec: dur, orphanClosed: true }).catch(function () {});
