@@ -2698,7 +2698,8 @@ function renderCourseHome() {
     card.className = 'lesson-card home-option-card';
     card.innerHTML = `
       <span class="home-option-icon">${opt.icon}</span>
-      <span class="home-option-zh" lang="zh-Hant">${opt.zh} <span class="en-sub">${opt.en}</span></span>
+      <span class="home-option-zh" lang="zh-Hant">${opt.zh}</span>
+      <span class="en-sub home-option-en">${opt.en}</span>
       <span class="lesson-topic">${opt.desc}</span>`;
     card.setAttribute('aria-label', opt.aria);
     card.addEventListener('click', () => {
