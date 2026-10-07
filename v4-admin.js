@@ -40,6 +40,14 @@
     currentBankVersion: $('currentBankVersion'),
     versionHistoryBody: $('versionHistoryBody'),
     versionHistoryEmpty: $('versionHistoryEmpty'),
+    statsOverviewBody: $('statsOverviewBody'),
+    statsOverviewEmpty: $('statsOverviewEmpty'),
+    statsDetail: $('statsDetail'),
+    statsDetailTitle: $('statsDetailTitle'),
+    statsDetailBody: $('statsDetailBody'),
+    statsDetailBack: $('statsDetailBack'),
+    enrollListBody: $('enrollListBody'),
+    enrollListEmpty: $('enrollListEmpty'),
     rejectModal: $('rejectModal'),
     rejectNote: $('rejectNote'),
     rejectCancel: $('rejectCancel'),
@@ -248,6 +256,8 @@
     bindAction(els.teachersBody, 'data-suspend', function (id) { return setTeacherStatus(id, false); });
     bindAction(els.teachersBody, 'data-restore', function (id) { return setTeacherStatus(id, true); });
     bindAction(els.teachersBody, 'data-delete-teacher', deleteTeacher);
+    bindAction(els.statsOverviewBody, 'data-stats-detail', function (id) { renderStatsDetail(id); return Promise.resolve(); });
+    if (els.statsDetailBack) els.statsDetailBack.addEventListener('click', function () { if (els.statsDetail) els.statsDetail.hidden = true; });
 
     requestsUnsub = db.collection('v4_accessRequests').orderBy('requestedAt', 'desc')
       .onSnapshot(renderRequests, function (error) {
@@ -272,6 +282,8 @@
     $('tabRequests').hidden = name !== 'requests';
     $('tabTeachers').hidden = name !== 'teachers';
     $('tabVersion').hidden = name !== 'version';
+    $('tabStats').hidden = name !== 'stats';
+    if (name === 'stats') loadUsageStats();
   }
 
   /* ---------- bankVersion 版本監控（2026-10-03） ----------
@@ -312,6 +324,112 @@
       console.error('Version monitor failed:', error);
       if (els.currentBankVersion) els.currentBankVersion.textContent = '讀取失敗';
     });
+  }
+
+  /* ---------- 使用統計（2026-10-07） ----------
+     讀取 v4_analytics_sessions（老師登入登出＋頁面停留）與 enrollPages（已發布招生頁）。
+     延遲載入：第一次切到此分頁才查詢，之後切換不再重查。 */
+  var statsLoaded = false;
+  var statsSessions = [];
+
+  function fmtDuration(sec) {
+    sec = Math.max(0, Math.round(sec || 0));
+    var h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60);
+    if (h > 0) return h + '小時' + m + '分';
+    if (m > 0) return m + '分' + (sec % 60) + '秒';
+    return sec + '秒';
+  }
+  function fmtTs(ts) {
+    if (!ts) return '—';
+    var d = ts.toDate ? ts.toDate() : new Date(ts);
+    try { return d.toLocaleString('zh-TW', { hour12: false }); } catch (_) { return String(d); }
+  }
+  function statsSectionSummary(sections) {
+    if (!sections || !sections.length) return '—';
+    var byName = {};
+    sections.forEach(function (s) {
+      byName[s.name] = (byName[s.name] || 0) + (s.seconds || 0);
+    });
+    return Object.keys(byName).map(function (n) { return n + fmtDuration(byName[n]); }).join('、');
+  }
+  function renderStatsOverview() {
+    var byUid = {};
+    statsSessions.forEach(function (s) {
+      var u = byUid[s.uid] || (byUid[s.uid] = { uid: s.uid, name: '', email: '', count: 0, totalSec: 0, lastLogin: 0 });
+      u.count += 1;
+      u.totalSec += (s.durationSec || 0);
+      if (!u.name && s.displayName) u.name = s.displayName;
+      if (!u.email && s.email) u.email = s.email;
+      var lt = s.loginAt && s.loginAt.toMillis ? s.loginAt.toMillis() : 0;
+      if (lt > u.lastLogin) u.lastLogin = lt;
+    });
+    var list = Object.keys(byUid).map(function (k) { return byUid[k]; });
+    list.sort(function (a, b) { return b.lastLogin - a.lastLogin; });
+    if (els.statsOverviewBody) {
+      els.statsOverviewBody.innerHTML = list.map(function (u) {
+        return '<tr><td><span class="cell-main">' + escapeHtml(u.name || '(未具名)') +
+          '</span><div class="cell-sub">' + escapeHtml(u.email) + '</div></td>' +
+          '<td>' + u.count + '</td><td>' + fmtDuration(u.totalSec) + '</td>' +
+          '<td>' + (u.lastLogin ? new Date(u.lastLogin).toLocaleString('zh-TW', { hour12: false }) : '—') + '</td>' +
+          '<td class="actions"><button type="button" data-stats-detail="' + escapeHtml(u.uid) + '">明細</button></td></tr>';
+      }).join('');
+    }
+    if (els.statsOverviewEmpty) els.statsOverviewEmpty.hidden = list.length > 0;
+    if (els.statsDetail) els.statsDetail.hidden = true;
+  }
+  function renderStatsDetail(uid) {
+    var rows = statsSessions.filter(function (s) { return s.uid === uid; });
+    var first = rows[0] || {};
+    if (els.statsDetailTitle) els.statsDetailTitle.textContent = '登入明細：' + (first.displayName || first.email || uid);
+    if (els.statsDetailBody) {
+      els.statsDetailBody.innerHTML = rows.map(function (s) {
+        var logoutText = s.logoutAt ? fmtTs(s.logoutAt) : (s.orphanClosed ? '異常結束（下次登入時結算）' : '使用中');
+        var dl = s.bankDownloaded ? ('有' + (s.bankLang ? '（' + s.bankLang + '）' : '')) : '無（快取命中）';
+        return '<tr><td>' + escapeHtml(fmtTs(s.loginAt)) + '</td>' +
+          '<td>' + escapeHtml(logoutText) + '</td>' +
+          '<td>' + fmtDuration(s.durationSec) + '</td>' +
+          '<td>' + escapeHtml(statsSectionSummary(s.sections)) + '</td>' +
+          '<td>' + escapeHtml(dl) + '</td></tr>';
+      }).join('');
+    }
+    if (els.statsDetail) els.statsDetail.hidden = false;
+  }
+  function loadEnrollList() {
+    db.collection('enrollPages').where('status', '==', 'published').get()
+      .then(function (qsnap) {
+        var rows = [];
+        qsnap.forEach(function (doc) {
+          var d = doc.data() || {};
+          var slug = d.slug || '';
+          var url = 'enroll/' + slug + '/';
+          rows.push('<tr><td><span class="cell-main">' + escapeHtml(d.nameZh || '(未填姓名)') +
+            '</span><div class="cell-sub mono">' + escapeHtml(doc.id) + '</div></td>' +
+            '<td><a class="mono" href="' + encodeURI(url) + '" target="_blank" rel="noopener">' + escapeHtml(url) + '</a></td>' +
+            '<td>' + escapeHtml(fmtTs(d.publishedAt)) + '</td></tr>');
+        });
+        if (els.enrollListBody) els.enrollListBody.innerHTML = rows.join('');
+        if (els.enrollListEmpty) els.enrollListEmpty.hidden = rows.length > 0;
+      })
+      .catch(function (err) { console.error('Enroll list failed:', err); });
+  }
+  function loadUsageStats() {
+    if (statsLoaded) return;
+    statsLoaded = true;
+    db.collection('v4_analytics_sessions').orderBy('loginAt', 'desc').limit(500).get()
+      .then(function (qsnap) {
+        statsSessions = [];
+        qsnap.forEach(function (doc) {
+          var d = doc.data() || {};
+          d._id = doc.id;
+          statsSessions.push(d);
+        });
+        renderStatsOverview();
+      })
+      .catch(function (err) {
+        console.error('Usage stats failed:', err);
+        showToast('讀取使用統計失敗（可能是 Firestore 規則尚未更新）。', true);
+      });
+    loadEnrollList();
   }
 
   /* ---------- 啟動 ---------- */
