@@ -54,13 +54,15 @@
 
 ``` 
     // V4 使用統計：每位老師的登入登出＋頁面停留（v4_analytics_sessions）。
-    // 老師只能建立／更新自己的 session（uid 須等於本人）；只有管理員可讀全部。
+    // 老師只能建立／讀寫自己的 session（uid 須等於本人），看不到別人的；
+    // 只有管理員可讀取全部（後台「使用統計」分頁）。
     match /v4_analytics_sessions/{sessionId} {
       allow create: if isV4ApprovedTeacher()
         && request.resource.data.uid == request.auth.uid;
       allow update: if isV4ApprovedTeacher()
         && resource.data.uid == request.auth.uid;
-      allow get, list: if isV4Admin();
+      allow get, list: if isV4Admin()
+        || (isV4ApprovedTeacher() && resource.data.uid == request.auth.uid);
     }
 ```
 
