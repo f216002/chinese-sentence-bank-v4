@@ -319,3 +319,4 @@ button .en-sub { pointer-events: none; }
 .mr-text{font-size:30px}
 .mr-speaker{font-size:26px}
 .mr-pinyin{font-size:30px;margin:10px 0 0}
+.home-option-en{display:block;font-size:18px;color:#8a7f6a;margin-top:-4px}
