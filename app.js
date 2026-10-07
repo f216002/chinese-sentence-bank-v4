@@ -286,6 +286,7 @@ async function loadSharedBank(lang) {
   if (!file) throw new Error('no bank file for ' + lang);
   const r = await fetch(VBANK_DIR + file);
   if (!r.ok) throw new Error('bank file ' + r.status);
+  analyticsMarkBankDownload(lang); /* 使用統計：本次真的下載了句庫檔（流量估算用） */
   const j = await r.json();
   const sentences = j.rows.map(row => vbankRowToSentence(j.f, row, lang));
   vbankBankCache[lang] = sentences;
@@ -2655,7 +2656,160 @@ function lessonRecords(n) {
   return state.sentences.filter(s => courseMeta(s).lesson === key);
 }
 
+/* ---- 使用統計：老師登入登出＋頁面停留（管理員儀表板，2026-10-07） ----
+   每個 session 在 v4_analytics_sessions 寫一筆：
+   登入時建立（含帳號、時間），心跳每 5 分鐘更新進度，登出／關頁時結算。
+   上次沒正常登出的 session，下次登入時自動結算（orphanClosed）。
+   流量為估算值：bankDownloaded＝本次真的下載了句庫 JSON（非快取命中）。 */
+const ANALYTICS_COL = 'v4_analytics_sessions';
+const analytics = {
+  sessionId: null, uid: '', loginAt: 0,
+  currentSection: '', sectionEnterAt: 0, sections: [],
+  bankDownloaded: false, bankLang: '', heartbeatTimer: null
+};
+function analyticsSectionName() {
+  try {
+    if (courseState.lesson > 0) return '課本';
+    if (courseState.song) return '歌曲';
+    if (courseState.ritual) return '禮節';
+    const p = courseState.page;
+    if (p === 'books') return '課本';
+    if (p === 'songs') return '歌曲';
+    if (p === 'rituals' || p === 'ritual-group' || p === 'ritual-subgroup') return '禮節';
+  } catch (_) {}
+  return '首頁';
+}
+function analyticsCloseSection(now) {
+  if (analytics.currentSection && analytics.sectionEnterAt) {
+    analytics.sections.push({
+      name: analytics.currentSection,
+      enterAt: new Date(analytics.sectionEnterAt),
+      exitAt: new Date(now),
+      seconds: Math.max(0, Math.round((now - analytics.sectionEnterAt) / 1000))
+    });
+  }
+  analytics.currentSection = '';
+  analytics.sectionEnterAt = 0;
+}
+function analyticsTrackSection() {
+  if (!analytics.sessionId) return;
+  const name = analyticsSectionName();
+  if (name === analytics.currentSection) return;
+  const now = Date.now();
+  analyticsCloseSection(now);
+  analytics.currentSection = name;
+  analytics.sectionEnterAt = now;
+}
+function analyticsSnapshot() {
+  const now = Date.now();
+  return {
+    sections: analytics.sections.slice(),
+    durationSec: Math.max(0, Math.round((now - analytics.loginAt) / 1000)),
+    bankDownloaded: analytics.bankDownloaded,
+    bankLang: analytics.bankLang
+  };
+}
+function analyticsSaveProgress() {
+  if (!analytics.sessionId) return;
+  const snap = analyticsSnapshot();
+  try {
+    fbDb.collection(ANALYTICS_COL).doc(analytics.sessionId).update({
+      sections: snap.sections,
+      durationSec: snap.durationSec,
+      bankDownloaded: snap.bankDownloaded,
+      bankLang: snap.bankLang
+    }).catch(function () {});
+  } catch (_) {}
+}
+function analyticsCloseOrphans(uid) {
+  try {
+    fbDb.collection(ANALYTICS_COL)
+      .where('uid', '==', uid).where('logoutAt', '==', null)
+      .get().then(function (qsnap) {
+        qsnap.forEach(function (doc) {
+          if (doc.id === analytics.sessionId) return;
+          const d = doc.data() || {};
+          const loginMs = (d.loginAt && d.loginAt.toMillis) ? d.loginAt.toMillis() : 0;
+          const dur = loginMs ? Math.max(0, Math.round((Date.now() - loginMs) / 1000)) : 0;
+          doc.ref.update({ logoutAt: new Date(), durationSec: dur, orphanClosed: true }).catch(function () {});
+        });
+      }).catch(function () {});
+  } catch (_) {}
+}
+function analyticsStartSession(user) {
+  const uid = user.uid;
+  const now = Date.now();
+  analyticsCloseOrphans(uid);
+  analytics.sessionId = uid + '_' + now;
+  analytics.uid = uid;
+  analytics.loginAt = now;
+  analytics.currentSection = '';
+  analytics.sectionEnterAt = 0;
+  analytics.sections = [];
+  analytics.bankDownloaded = false;
+  analytics.bankLang = '';
+  analyticsTrackSection();
+  try {
+    fbDb.collection(ANALYTICS_COL).doc(analytics.sessionId).set({
+      uid: uid,
+      email: user.email || '',
+      displayName: user.displayName || '',
+      loginAt: new Date(now),
+      logoutAt: null,
+      durationSec: 0,
+      sections: [],
+      bankDownloaded: false,
+      bankLang: '',
+      userAgent: String(navigator.userAgent || '').slice(0, 200),
+      createdAt: new Date(now)
+    }).catch(function (err) { console.warn('analytics session create failed:', err); });
+  } catch (err) { console.warn('analytics session create failed:', err); }
+  if (analytics.heartbeatTimer) clearInterval(analytics.heartbeatTimer);
+  analytics.heartbeatTimer = setInterval(analyticsSaveProgress, 5 * 60 * 1000);
+}
+function analyticsEndSession() {
+  if (!analytics.sessionId) return;
+  const now = Date.now();
+  analyticsCloseSection(now);
+  const snap = analyticsSnapshot();
+  const id = analytics.sessionId;
+  analytics.sessionId = null;
+  if (analytics.heartbeatTimer) { clearInterval(analytics.heartbeatTimer); analytics.heartbeatTimer = null; }
+  try {
+    fbDb.collection(ANALYTICS_COL).doc(id).update({
+      logoutAt: new Date(now),
+      durationSec: snap.durationSec,
+      sections: snap.sections,
+      bankDownloaded: snap.bankDownloaded,
+      bankLang: snap.bankLang
+    }).catch(function () {});
+  } catch (_) {}
+}
+function analyticsMarkBankDownload(lang) {
+  analytics.bankDownloaded = true;
+  if (lang) analytics.bankLang = lang;
+}
+/* 登入狀態變化 → 開／關 session；關頁時盡力結算。 */
+(function initAnalyticsAuthHook() {
+  let lastUid = null;
+  function onAccess(a) {
+    const user = a && a.user ? a.user : null;
+    const uid = user ? user.uid : '';
+    if (uid === lastUid) return;
+    if (lastUid && analytics.sessionId) analyticsEndSession();
+    lastUid = uid;
+    if (uid && user) analyticsStartSession(user);
+  }
+  try {
+    const cur = window.V4_ACCESS;
+    if (cur && cur.ready) onAccess(cur);
+  } catch (_) {}
+  window.addEventListener('v4-access-changed', function (e) { onAccess(e.detail || {}); });
+  window.addEventListener('pagehide', function () { analyticsEndSession(); });
+})();
+
 function renderCourse() {
+  analyticsTrackSection();
   const lock = $('courseLock'), body = $('courseBody');
   if (!lock || !body) return;
   if (!isCourseUnlocked()) {
