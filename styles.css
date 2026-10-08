@@ -56,6 +56,9 @@
 .sentence-audio-practice .card-record-button{background:#e5f2ee;border-color:#c9dfd8}
 .sentence-audio-practice .card-record-button.recording{background:var(--red);border-color:var(--red);color:white}
 .sentence-audio-practice .card-save-model-button{background:var(--yellow);border-color:#ead17b}
+/* 2026-10-08：存為示範免彈窗——按鍵本身顯示紅色「儲存中…」；圖示卡的💾按鍵在儲存中／已儲存時變成文字膠囊。 */
+.card-save-model-button.saving{color:#c0392b;font-weight:700;white-space:nowrap}
+.icon-button.card-save-model-button.saving,.icon-button.card-save-model-button.saved{width:auto;height:auto;border-radius:10px;padding:9px 13px;white-space:nowrap}
 .chinese-actions{display:flex;gap:8px;align-items:center;flex:none}
 .download-button{flex:none;width:38px;height:38px;border:1px solid var(--line);border-radius:50%;background:#fff;color:var(--ink);cursor:pointer;font-size:16px;line-height:1}
 .download-button:hover{border-color:var(--teal);color:var(--teal)}
