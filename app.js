@@ -376,7 +376,6 @@ const cardRecordings = new Map();
 let activeCardRecorder = null;
 let activeCardStream = null;
 let activeCardButton = null;
-let pendingModelSave = null;
 let pendingDeleteSentence = null;
 let pendingEditSentence = null;
 
@@ -891,6 +890,9 @@ async function toggleCardRecording(node, sentence, preview) {
       playButton.disabled = false;
       /* 有 recordId 即可儲存（歌曲／禮節卡亦同）；AI 預覽無 recordId，保持停用。 */
       saveButton.disabled = !sentence.recordId;
+      /* 有新錄音：清除上一版的「已儲存」標記，按鍵恢復原樣。 */
+      modelSavedRecordIds.delete(sentence.recordId);
+      resetModelSaveButton(saveButton);
       recordButton.classList.remove('recording');
       setBilingualText(recordButton, '● 重新錄音', '● Record again');
       status.textContent = processed.normalized
@@ -916,48 +918,70 @@ function recordingForSentence(sentence) {
   return cardRecordings.get(sentence.recordId || `preview-${sentence.chineseSentence}`);
 }
 
-function openAudioPinDialog(sentence, node) {
-  const recording = recordingForSentence(sentence);
-  if (!recording || !sentence.recordId) return;
-  pendingModelSave = {sentence, node, recording};
-  $('audioSaveMessage').textContent = '';
-  $('audioPinDialog').showModal();
+/* 2026-10-08：存為示範不再彈窗——按鍵直接顯示紅色「儲存中…」，完成顯示「已儲存」。 */
+const modelSavedRecordIds = new Set();
+
+/* 把存為示範按鍵恢復成初始樣子（圖示卡＝💾；句子卡＝存為示範）。 */
+function resetModelSaveButton(button) {
+  button.classList.remove('saving', 'saved');
+  if (button.classList.contains('icon-button')) {
+    button.textContent = '💾';
+  } else {
+    setBilingualText(button, '存為示範', 'Save as model');
+  }
 }
 
-async function submitTeacherAudio() {
-  if (!pendingModelSave) { $('audioPinDialog').close(); return; }
-  const {sentence, recording} = pendingModelSave;
-  const button = $('confirmAudioSave');
-  button.disabled = true;
-  setBilingualText($('audioSaveMessage'), '正在上傳老師錄音…', 'Uploading the teacher recording…');
+/* 卡片建立時：本 session 已存過示範錄音的，顯示「已儲存」。 */
+function paintModelSaveButton(button, sentence) {
+  if (sentence && sentence.recordId && modelSavedRecordIds.has(sentence.recordId)) {
+    setBilingualText(button, '已儲存', 'Saved');
+    button.classList.add('saved');
+  }
+}
 
+/* 老師錄音上傳＋寫入（免彈窗版）：回傳 Promise。 */
+async function uploadModelRecording(sentence, recording) {
+  const me = requireApprovedAccess();
+  const uid = me.uid;
+  const mime = recording.mimeType || 'audio/webm';
+  const ext = mime.includes('mp4') ? 'm4a' : mime.includes('wav') ? 'wav' : 'webm';
+  /* 個人句子→該老師個人音檔區；共版課程錄音→錄音者自己的個人音檔區＋個人覆寫層
+     （管理員也一樣，只影響自己的畫面；共版錄音的變更走內容包）。 */
+  const isPersonal = sentence._owner && sentence._owner !== 'shared';
+  const path = teacherAudioPath(isPersonal ? sentence._owner : uid, sentence.recordId, ext);
+  await fbStorage.ref(path).put(recording.blob, { contentType: mime });
+  const audioFields = { audioPath: path, audioMime: mime, updatedAt: serverTimestamp() };
+  if (isPersonal) {
+    await teacherSentencesRef(sentence._owner).doc(sentence.recordId).update(audioFields);
+  } else {
+    await teacherOverridesRef(uid).doc(sentence.recordId).set(audioFields, { merge: true });
+  }
+  const saved = state.sentences.find(row => row.recordId === sentence.recordId);
+  if (saved) { saved.audioPath = path; saved.audioMime = mime; saved.standardAudioUrl = path; }
+  teacherAudioCache.delete(sentence.recordId);
+}
+
+/* 按下存為示範：按鍵顯示紅色「儲存中…」；完成顯示「已儲存」。不彈窗。 */
+async function saveModelAudioInline(button, sentence, node) {
+  const recording = recordingForSentence(sentence);
+  if (!recording || !sentence.recordId) return;
+  if (button.classList.contains('saving')) return;
+  const status = node.querySelector('.card-recording-status');
+  button.classList.remove('saved');
+  setBilingualText(button, '儲存中…', 'Saving…');
+  button.classList.add('saving');
   try {
-    const me = requireApprovedAccess();
-    const uid = me.uid;
-    const mime = recording.mimeType || 'audio/webm';
-    const ext = mime.includes('mp4') ? 'm4a' : mime.includes('wav') ? 'wav' : 'webm';
-    /* 個人句子→該老師個人音檔區；共版課程錄音→錄音者自己的個人音檔區＋個人覆寫層
-       （管理員也一樣，只影響自己的畫面；共版錄音的變更走內容包）。 */
-    const isPersonal = sentence._owner && sentence._owner !== 'shared';
-    const path = teacherAudioPath(isPersonal ? sentence._owner : uid, sentence.recordId, ext);
-    await fbStorage.ref(path).put(recording.blob, { contentType: mime });
-    const audioFields = { audioPath: path, audioMime: mime, updatedAt: serverTimestamp() };
-    if (isPersonal) {
-      await teacherSentencesRef(sentence._owner).doc(sentence.recordId).update(audioFields);
-    } else {
-      await teacherOverridesRef(uid).doc(sentence.recordId).set(audioFields, { merge: true });
-    }
-    const saved = state.sentences.find(row => row.recordId === sentence.recordId);
-    if (saved) { saved.audioPath = path; saved.audioMime = mime; saved.standardAudioUrl = path; }
-    teacherAudioCache.delete(sentence.recordId);
+    await uploadModelRecording(sentence, recording);
+    modelSavedRecordIds.add(sentence.recordId);
+    button.classList.remove('saving');
+    button.classList.add('saved');
+    setBilingualText(button, '已儲存', 'Saved');
     renderSentences();
-    try { if (typeof renderCourse === 'function') renderCourse(); } catch (_) {} /* 課程課文分頁也要即時重繪，否則下載鍵要等重整才出現 */
-    setBilingualText($('audioSaveMessage'), '老師錄音已儲存！示範按鈕現在會播放你的聲音。', 'Teacher recording saved! The model button now uses your voice.');
-    button.disabled = false;
-    setTimeout(() => $('audioPinDialog').close(), 1300);
+    try { if (typeof renderCourse === 'function') renderCourse(); } catch (_) {}
+    /* 課程課文分頁也要即時重繪，否則下載鍵要等重整才出現。 */
   } catch (err) {
-    button.disabled = false;
-    setBilingualText($('audioSaveMessage'), `老師錄音儲存失敗：${(err && err.message) || '未知錯誤。'}`, `Save failed: ${(err && err.message) || 'Unknown error.'}`);
+    resetModelSaveButton(button);
+    if (status) setBilingualText(status, `老師錄音儲存失敗：${(err && err.message) || '未知錯誤。'}`, `Save failed: ${(err && err.message) || 'Unknown error.'}`);
   }
 }
 
@@ -1265,7 +1289,8 @@ function createCard(sentence, preview = false) {
     const recording = recordingForSentence(sentence);
     if (recording) new Audio(recording.url).play();
   });
-  saveModelButton.addEventListener('click', () => openAudioPinDialog(sentence, node));
+  saveModelButton.addEventListener('click', () => saveModelAudioInline(saveModelButton, sentence, node));
+  paintModelSaveButton(saveModelButton, sentence);
   return node;
 }
 
@@ -2101,8 +2126,6 @@ document.addEventListener('keydown', event => {
   }
 });
 $('saveButton').addEventListener('click', trySaveSentence);
-$('confirmAudioSave').addEventListener('click', submitTeacherAudio);
-$('closeAudioPin').addEventListener('click', () => { pendingModelSave = null; $('audioPinDialog').close(); });
 $('confirmDelete').addEventListener('click', submitDeleteSentence);
 ['confirmMove', 'cancelMove', 'closeMoveConfirm'].forEach(id => {
   const el = $(id);
@@ -6957,7 +6980,9 @@ function createVocabCard(sentence) {
     const recording = recordingForSentence(sentence);
     if (recording) new Audio(recording.url).play();
   });
-  node.querySelector('.card-save-model-button').addEventListener('click', () => openAudioPinDialog(sentence, node));
+  const vocabSaveButton = node.querySelector('.card-save-model-button');
+  vocabSaveButton.addEventListener('click', () => saveModelAudioInline(vocabSaveButton, sentence, node));
+  paintModelSaveButton(vocabSaveButton, sentence);
   node.querySelector('.vocab-edit').addEventListener('click', () => openEditDialog(sentence));
   return node;
 }
@@ -7051,7 +7076,9 @@ function renderInfoTab(content, recs, tabName, lessonNum) {
         const recording = recordingForSentence(s);
         if (recording) new Audio(recording.url).play();
       });
-      card.querySelector('.card-save-model-button').addEventListener('click', () => openAudioPinDialog(s, card));
+      const infoSaveButton = card.querySelector('.card-save-model-button');
+      infoSaveButton.addEventListener('click', () => saveModelAudioInline(infoSaveButton, s, card));
+      paintModelSaveButton(infoSaveButton, s);
       card.querySelector('.info-edit').addEventListener('click', () => openEditDialog(s));
       return card;
     }
