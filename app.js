@@ -429,8 +429,8 @@ async function applyV4LanguageProfile(code) {
   if (select) select.value = profile.code;
   const topSelect = $('v4TopbarLanguage');
   if (topSelect) topSelect.value = profile.code;
-  /* 2026-10-08：新增句子輸入框一律是中文句子（待翻譯與解釋），標籤固定不再隨語言切換。 */
-  if ($('promptInputLabel')) setBilingualText($('promptInputLabel'), '請輸入你要翻譯與解釋的中文句子', 'Chinese sentence needed to be translated and explained');
+  /* 2026-10-08：新增句子輸入框一律是中文句子（待教），標籤固定不再隨語言切換。 */
+  if ($('promptInputLabel')) setBilingualText($('promptInputLabel'), '請輸入你要教的中文句子', 'Chinese sentence you want to teach');
   if ($('promptSentence')) $('promptSentence').placeholder = '';
   if ($('generatedPrompt')) $('generatedPrompt').value = '';
   if ($('generatedPromptPanel')) $('generatedPromptPanel').classList.add('hidden');
