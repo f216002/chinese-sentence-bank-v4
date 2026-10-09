@@ -331,14 +331,19 @@ function renderPage(pd, template, css) {
             '<a class="g-thumb" href="#g' + i + '"><img src="' + escAttr(u) + '" alt="課程照片 ' + (i + 1) + '" loading="lazy"></a>'
           ).join('') +
           '</div>' +
-          pd.images.map((u, i) =>
-            '<div class="lightbox" id="g' + i + '" role="dialog" aria-label="課程照片 ' + (i + 1) + '">' +
+          pd.images.map((u, i) => {
+            const n = pd.images.length;
+            const nav = n > 1
+              ? '<a class="lb-prev" href="#g' + ((i - 1 + n) % n) + '" aria-label="上一張">‹</a>' +
+                '<a class="lb-next" href="#g' + ((i + 1) % n) + '" aria-label="下一張">›</a>'
+              : '';
+            return '<div class="lightbox" id="g' + i + '" role="dialog" aria-label="課程照片 ' + (i + 1) + '">' +
               '<a class="lb-close" href="#!" aria-label="關閉"></a>' +
-              '<a class="lb-x" href="#!" aria-label="關閉">✕</a>' +
+              '<a class="lb-x" href="#!" aria-label="關閉">✕</a>' + nav +
               '<input class="lb-zoom" type="checkbox" id="gz' + i + '" aria-hidden="true" tabindex="-1">' +
               '<label class="lb-stage" for="gz' + i + '"><img src="' + escAttr(u) + '" alt="課程照片 ' + (i + 1) + '" title="點擊放大／縮小"></label>' +
-              '</div>'
-          ).join('')
+              '</div>';
+          }).join('')
       )
     : '';
 
