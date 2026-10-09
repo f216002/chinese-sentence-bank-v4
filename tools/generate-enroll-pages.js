@@ -126,8 +126,36 @@ async function fetchPublished() {
   return docs.filter((p) => p && p.status === 'published' && SLUG_RE.test(p.slug || ''));
 }
 
+/* 從 Google 地圖網址提取經緯度（與後台 enrollExtractMapsLatLng 同規則，另加 /search/lat,lng） */
+function extractLatLng(url) {
+  const u = String(url || '');
+  let m = u.match(/@(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)(?:,|$|[^\d.])/);
+  if (m) return { lat: m[1], lng: m[2] };
+  m = u.match(/[?&](?:q|query|ll)=(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/);
+  if (m) return { lat: m[1], lng: m[2] };
+  m = u.match(/!3d(-?\d+(?:\.\d+)?)!4d(-?\d+(?:\.\d+)?)/);
+  if (m) return { lat: m[1], lng: m[2] };
+  m = u.match(/\/search\/(-?\d+(?:\.\d+)?)[,+\s]*(-?\d+(?:\.\d+)?)/);
+  if (m) return { lat: m[1], lng: m[2] };
+  return null;
+}
+/* 短網址（maps.app.goo.gl／goo.gl）跟隨轉址還原成長網址再取座標；失敗則回退 */
+async function resolveMapsCoords(p) {
+  if (p.mapsLat && p.mapsLng) return { lat: String(p.mapsLat), lng: String(p.mapsLng) };
+  const url = String(p.mapsUrl || '');
+  const direct = extractLatLng(url);
+  if (direct) return direct;
+  if (!/goo\.gl/i.test(url)) return null;
+  try {
+    const res = await fetch(url, { redirect: 'follow' });
+    const c = extractLatLng(res.url || '');
+    if (c) { console.log('短網址還原座標：' + p.slug + ' → ' + c.lat + ',' + c.lng); return c; }
+  } catch (e) { console.warn('短網址還原失敗：' + p.slug); }
+  return null;
+}
+
 /* 整理成樣板需要的資料；回傳 null 表示資料不足、跳過此頁 */
-function buildPageData(p) {
+async function buildPageData(p) {
   if (!p.nameZh && !p.nameEn) return null;
   /* 課程介紹：新 introZh 優先，相容舊 intros.zh；外文用老師手填的 introLocal，舊 AI 譯文 introTranslated 僅作退路 */
   const introZh = String(p.introZh || (p.intros && p.intros.zh) || '').trim();
@@ -160,6 +188,7 @@ function buildPageData(p) {
   const ogTitle = (classNameZh ? classNameZh + '｜' : '') +
     stripNewlines(p.nameZh || p.nameEn) + ' ' + t(displayLang, 'enrollTitle');
   const ogDescription = truncate(introLocal, 140);
+  const coords = await resolveMapsCoords(p);
 
   return {
     slug: p.slug,
@@ -172,8 +201,8 @@ function buildPageData(p) {
     city: stripNewlines(p.city),
     address: stripNewlines(p.address),
     mapsUrl: p.mapsUrl || '',
-    mapsLat: p.mapsLat || '',
-    mapsLng: p.mapsLng || '',
+    mapsLat: (coords && coords.lat) || '',
+    mapsLng: (coords && coords.lng) || '',
     startDate: p.startDate || '',
     weekdays: (Array.isArray(p.weekdays) ? p.weekdays : []).filter((n) => n >= 1 && n <= 7).sort(),
     timeStart: p.timeStart || '',
@@ -410,7 +439,7 @@ async function main() {
 
   const rendered = [];
   for (const p of bySlug.values()) {
-    const pd = buildPageData(p);
+    const pd = await buildPageData(p);
     if (!pd) {
       console.warn('跳過：資料不足（缺姓名或課程介紹），slug=' + p.slug);
       continue;
