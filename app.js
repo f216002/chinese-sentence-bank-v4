@@ -243,7 +243,7 @@ const VBANK_DIR = 'v4-bank/';
 /* ---- 第七冊《五百字說華語》中柬文版（2026-10-09） ----
    高棉文限定教材，不進公開 repo，放 Firebase Storage。
    Cheng 上傳後此 URL 生效；上傳路徑：v4-book7/v4-book7-km.json（公開讀取）。 */
-const BOOK7_URL = 'https://firebasestorage.googleapis.com/v0/b/my-chinese-sentence-bank-v3.appspot.com/o/v4-book7%2Fv4-book7-km.json?alt=media';
+const BOOK7_URL = 'https://firebasestorage.googleapis.com/v0/b/my-chinese-sentence-bank-v3.firebasestorage.app/o/v4-book7%2Fv4-book7-km.json?alt=media&token=01218e6a-f7ff-48d6-af83-f90190c93abe';
 const BOOK7_VERSION = '20261009-01'; /* 第七冊更新時同步 bump，觸發 km 快取失效 */
 let vbankManifestCache = null;
 const vbankBankCache = {}; /* lang -> processed sentences */
