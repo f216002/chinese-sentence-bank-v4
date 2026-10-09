@@ -273,18 +273,22 @@ function renderPage(pd, template, css) {
         )
       : '';
 
-  /* 上課地點：有經緯度就用座標內嵌，否則用地址查詢；按鈕一律連老師原始分享連結 */
+  /* 上課地點：有經緯度就用座標（內嵌＋開啟連結都用座標，確保紅點定位），否則用地址查詢／老師原始連結 */
+  const hasCoords = pd.mapsLat && pd.mapsLng;
+  const mapsOpenUrl = hasCoords
+    ? 'https://www.google.com/maps/search/?api=1&query=' + pd.mapsLat + ',' + pd.mapsLng
+    : pd.mapsUrl;
   const locationHtml = pd.address
     ? renderSection(
         t(lang, 'location'), '上課地點',
         '<p class="map-address">' + escHtml(pd.address) + '</p>' +
           '<div class="map-wrap"><iframe src="' + escAttr(
-            pd.mapsLat && pd.mapsLng
+            hasCoords
               ? 'https://www.google.com/maps?q=' + pd.mapsLat + ',' + pd.mapsLng + '&z=16&output=embed'
               : 'https://www.google.com/maps?q=' + encodeURIComponent(pd.address) + '&output=embed'
           ) + '" title="教室地圖" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>' +
-          (pd.mapsUrl
-            ? '<a class="map-open" href="' + escAttr(pd.mapsUrl) + '" target="_blank" rel="noopener">' +
+          (mapsOpenUrl
+            ? '<a class="map-open" href="' + escAttr(mapsOpenUrl) + '" target="_blank" rel="noopener">' +
               bilingualLabel(t(lang, 'openMap'), '在 Google 地圖開啟') + '</a>'
             : '')
       )
