@@ -240,6 +240,8 @@ function loadFullBank() {
    個人層（老師自己的句子／覆寫）仍走 Firestore（量小）。
    課程元數據（lesson/section 等）已在匯出時預解析，不用再帶 4MB 原文。 */
 const VBANK_DIR = 'v4-bank/';
+/* 六冊遷移 Storage（2026-10-09）：句庫本體改放 Firebase Storage（公開讀取），manifest 留 GitHub Pages。 */
+const VBANK_STORAGE_DIR = 'https://firebasestorage.googleapis.com/v0/b/my-chinese-sentence-bank-v3.firebasestorage.app/o/v4-bank%2F';
 /* ---- 第七冊《五百字說華語》中柬文版（2026-10-09） ----
    高棉文限定教材，不進公開 repo，放 Firebase Storage。
    Cheng 上傳後此 URL 生效；上傳路徑：v4-book7/v4-book7-km.json（公開讀取）。 */
@@ -289,7 +291,7 @@ async function loadSharedBank(lang) {
   const m = await vbankManifest();
   const file = (m.langs && m.langs[lang]) || (m.langs && m.langs.hi);
   if (!file) throw new Error('no bank file for ' + lang);
-  const r = await fetch(VBANK_DIR + file);
+  const r = await fetch(VBANK_STORAGE_DIR + file + '?alt=media');
   if (!r.ok) throw new Error('bank file ' + r.status);
   analyticsMarkBankDownload(lang); /* 使用統計：本次真的下載了句庫檔（流量估算用） */
   const j = await r.json();
