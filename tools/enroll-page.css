@@ -105,6 +105,14 @@ body {
   position: absolute; top: 12px; right: 18px; z-index: 3;
   color: #fff8f0; font-size: 30px; line-height: 1; text-decoration: none; opacity: 0.9;
 }
+.lb-prev, .lb-next {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 3;
+  color: #fff8f0; font-size: 46px; line-height: 1; text-decoration: none;
+  opacity: 0.85; padding: 16px 12px; user-select: none;
+}
+.lb-prev { left: 6px; }
+.lb-next { right: 6px; }
+.lb-prev:hover, .lb-next:hover { opacity: 1; }
 .lb-zoom { position: absolute; width: 1px; height: 1px; opacity: 0; }
 .lb-stage {
   position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
