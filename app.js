@@ -240,6 +240,11 @@ function loadFullBank() {
    個人層（老師自己的句子／覆寫）仍走 Firestore（量小）。
    課程元數據（lesson/section 等）已在匯出時預解析，不用再帶 4MB 原文。 */
 const VBANK_DIR = 'v4-bank/';
+/* ---- 第七冊《五百字說華語》中柬文版（2026-10-09） ----
+   高棉文限定教材，不進公開 repo，放 Firebase Storage。
+   Cheng 上傳後此 URL 生效；上傳路徑：v4-book7/v4-book7-km.json（公開讀取）。 */
+const BOOK7_URL = 'https://firebasestorage.googleapis.com/v0/b/my-chinese-sentence-bank-v3.appspot.com/o/v4-book7%2Fv4-book7-km.json?alt=media';
+const BOOK7_VERSION = '20261009-01'; /* 第七冊更新時同步 bump，觸發 km 快取失效 */
 let vbankManifestCache = null;
 const vbankBankCache = {}; /* lang -> processed sentences */
 async function vbankManifest() {
@@ -289,6 +294,17 @@ async function loadSharedBank(lang) {
   analyticsMarkBankDownload(lang); /* 使用統計：本次真的下載了句庫檔（流量估算用） */
   const j = await r.json();
   const sentences = j.rows.map(row => vbankRowToSentence(j.f, row, lang));
+  /* 第七冊：高棉文模式時從 Storage 加載《五百字說華語》中柬文版（701–730）。 */
+  if (lang === 'km') {
+    try {
+      const b7r = await fetch(BOOK7_URL, {cache: 'no-cache'});
+      if (b7r.ok) {
+        const b7 = await b7r.json();
+        (b7.rows || []).forEach(row => sentences.push(vbankRowToSentence(b7.f, row, 'km')));
+        analyticsMarkBankDownload('km-book7');
+      }
+    } catch (e) { console.warn('Book7 unavailable:', (e && e.message) || e); }
+  }
   vbankBankCache[lang] = sentences;
   return sentences;
 }
@@ -2003,11 +2019,14 @@ async function loadBank(attempt = 1) {
     /* 版本號改用靜態句庫 manifest（2026-10-05）：Firestore 的 bankVersion 從未成功寫入，
        此處以 manifest.version 為準；拿不到 manifest 時退回舊邏輯。 */
     const serverVersion = (manifest && manifest.version) || settings.bankVersion || null;
-    state.bankVersion = serverVersion;
+    /* 第七冊有獨立版本：km 模式時併入版本字串，第七冊更新才會觸發 km 快取失效。 */
+    const effectiveVersion = (state.sourceLanguage === 'km' && serverVersion)
+      ? serverVersion + '|b7-' + BOOK7_VERSION : serverVersion;
+    state.bankVersion = effectiveVersion;
     const cached = loadBankCache();
     let sentences;
     const cacheLang = (cached && cached.lang) || 'hi';
-    if (cached && Array.isArray(cached.sentences) && (cached.bankVersion || null) === serverVersion && cacheLang === (state.sourceLanguage || 'hi')) {
+    if (cached && Array.isArray(cached.sentences) && (cached.bankVersion || null) === effectiveVersion && cacheLang === (state.sourceLanguage || 'hi')) {
       sentences = cached.sentences; /* 快取命中：本次只花 1 次讀取 */
     } else {
       sentences = await loadFullBank(); /* 版本變更或無快取：全量抓取（去重併發） */
@@ -2144,19 +2163,37 @@ loadBank();
 
 /* ================= Course module: 當代中文課程 ================= */
 /* 課號規則：1–15 ＝第二冊，101–115 ＝第一冊（第一冊第 X 課記為 100+X），201–212 ＝第三冊（第三冊第 X 課記為 200+X），301–312 ＝第四冊（第四冊第 X 課記為 300+X），501–510 ＝第五冊（第五冊第 X 課記為 500+X）。 */
-function bookOf(n) { n = Number(n); return n >= 601 ? 6 : (n >= 501 ? 5 : (n >= 301 ? 4 : (n >= 201 ? 3 : (n >= 101 ? 1 : 2)))); }
-function bookLessonNum(n) { n = Number(n); return n >= 601 ? n - 600 : (n >= 501 ? n - 500 : (n >= 301 ? n - 300 : (n >= 201 ? n - 200 : (n >= 101 ? n - 100 : n)))); }
+function bookOf(n) { n = Number(n); return n >= 701 ? 7 : (n >= 601 ? 6 : (n >= 501 ? 5 : (n >= 301 ? 4 : (n >= 201 ? 3 : (n >= 101 ? 1 : 2))))); }
+function bookLessonNum(n) { n = Number(n); return n >= 701 ? n - 700 : (n >= 601 ? n - 600 : (n >= 501 ? n - 500 : (n >= 301 ? n - 300 : (n >= 201 ? n - 200 : (n >= 101 ? n - 100 : n))))); }
 function lessonLabel(n) {
-  const b = bookOf(n);
-  return b === 6 ? `第六冊第 ${bookLessonNum(n)} 課` : (b === 5 ? `第五冊第 ${bookLessonNum(n)} 課` : (b === 4 ? `第四冊第 ${bookLessonNum(n)} 課` : (b === 3 ? `第三冊第 ${bookLessonNum(n)} 課` : (b === 1 ? `第一冊第 ${bookLessonNum(n)} 課` : `第二冊第 ${n} 課`))));
+  const b = bookOf(n), k = bookLessonNum(n);
+  if (b === 7) return `第七冊第 ${k} 課`;
+  if (b === 6) return `第六冊第 ${k} 課`;
+  if (b === 5) return `第五冊第 ${k} 課`;
+  if (b === 4) return `第四冊第 ${k} 課`;
+  if (b === 3) return `第三冊第 ${k} 課`;
+  if (b === 1) return `第一冊第 ${k} 課`;
+  return `第二冊第 ${n} 課`;
 }
 function lessonShortLabel(n) {
-  const b = bookOf(n);
-  return b === 6 ? `第六冊第${bookLessonNum(n)}課` : (b === 5 ? `第五冊第${bookLessonNum(n)}課` : (b === 4 ? `第四冊第${bookLessonNum(n)}課` : (b === 3 ? `第三冊第${bookLessonNum(n)}課` : (b === 1 ? `第一冊第${bookLessonNum(n)}課` : `第二冊第${n}課`))));
+  const b = bookOf(n), k = bookLessonNum(n);
+  if (b === 7) return `第七冊第${k}課`;
+  if (b === 6) return `第六冊第${k}課`;
+  if (b === 5) return `第五冊第${k}課`;
+  if (b === 4) return `第四冊第${k}課`;
+  if (b === 3) return `第三冊第${k}課`;
+  if (b === 1) return `第一冊第${k}課`;
+  return `第二冊第${n}課`;
 }
 function bookTitle(n) {
   const b = bookOf(n);
-  return b === 6 ? '第六冊' : (b === 5 ? '第五冊' : (b === 4 ? '第四冊' : (b === 3 ? '第三冊' : (b === 1 ? '第一冊' : '第二冊'))));
+  if (b === 7) return '第七冊';
+  if (b === 6) return '第六冊';
+  if (b === 5) return '第五冊';
+  if (b === 4) return '第四冊';
+  if (b === 3) return '第三冊';
+  if (b === 1) return '第一冊';
+  return '第二冊';
 }
 const COURSE_LESSONS = [
   { n: 101, zh: '歡迎你來臺灣！', en: 'Welcome to Taiwan!', topic: '自我介紹' },
@@ -2232,11 +2269,41 @@ const COURSE_LESSONS = [
   { n: 607, zh: '感情世界', en: 'The Emotional World', topic: '感情' },
   { n: 608, zh: '奧運黑洞', en: 'The Olympic Black Hole', topic: '奧運' },
   { n: 609, zh: '鄉關何處', en: 'Where Is Home?', topic: '鄉愁' },
-  { n: 610, zh: '智慧與能力', en: 'Wisdom and Ability', topic: '智慧' }
+  { n: 610, zh: '智慧與能力', en: 'Wisdom and Ability', topic: '智慧' },
+  { n: 701, zh: '您早', en: 'Good Morning', topic: '問候', book7: true },
+  { n: 702, zh: '您好嗎？', en: 'How Are You?', topic: '問候', book7: true },
+  { n: 703, zh: '這是什麼？', en: 'What Is This?', topic: '物品', book7: true },
+  { n: 704, zh: '你到哪裡去？', en: 'Where Are You Going?', topic: '方向', book7: true },
+  { n: 705, zh: '誰是老師？', en: 'Who Is the Teacher?', topic: '學校', book7: true },
+  { n: 706, zh: '幾個學生？', en: 'How Many Students?', topic: '學校', book7: true },
+  { n: 707, zh: '學校真大', en: 'The School Is Really Big', topic: '學校', book7: true },
+  { n: 708, zh: '差不多', en: 'More or Less', topic: '程度', book7: true },
+  { n: 709, zh: '介紹', en: 'Introductions', topic: '社交', book7: true },
+  { n: 710, zh: '學了多久？', en: 'How Long Have You Studied?', topic: '學習', book7: true },
+  { n: 711, zh: '一星期幾次？', en: 'How Many Times a Week?', topic: '頻率', book7: true },
+  { n: 712, zh: '唱華語歌', en: 'Singing Chinese Songs', topic: '娛樂', book7: true },
+  { n: 713, zh: '後天幾號？', en: 'What Is the Date the Day After Tomorrow?', topic: '時間', book7: true },
+  { n: 714, zh: '隨你的方便', en: 'Whenever Is Convenient for You', topic: '社交', book7: true },
+  { n: 715, zh: '你喜歡畫畫嗎？', en: 'Do You Like Drawing?', topic: '興趣', book7: true },
+  { n: 716, zh: '到哪裡去買？', en: 'Where to Buy?', topic: '購物', book7: true },
+  { n: 717, zh: '多少錢一枝？', en: 'How Much Is One?', topic: '購物', book7: true },
+  { n: 718, zh: '來不及了', en: 'Running Late', topic: '時間', book7: true },
+  { n: 719, zh: '讓你們久等了', en: 'Sorry to Keep You Waiting', topic: '社交', book7: true },
+  { n: 720, zh: '試試看', en: 'Give It a Try', topic: '嘗試', book7: true },
+  { n: 721, zh: '打電話', en: 'Making a Phone Call', topic: '電話', book7: true },
+  { n: 722, zh: '等他回話', en: 'Waiting for His Reply', topic: '電話', book7: true },
+  { n: 723, zh: '怎麼打不通呢？', en: 'Why Can’t I Get Through?', topic: '電話', book7: true },
+  { n: 724, zh: '我家有六口人', en: 'Six People in My Family', topic: '家庭', book7: true },
+  { n: 725, zh: '到我家來玩', en: 'Come Visit My Home', topic: '家庭', book7: true },
+  { n: 726, zh: '迷路', en: 'Lost', topic: '方向', book7: true },
+  { n: 727, zh: '怎麼走？', en: 'How Do I Get There?', topic: '方向', book7: true },
+  { n: 728, zh: '買衣服', en: 'Buying Clothes', topic: '購物', book7: true },
+  { n: 729, zh: '到海邊去', en: 'Going to the Beach', topic: '旅遊', book7: true },
+  { n: 730, zh: '孩子多大了？', en: 'How Old Are the Children?', topic: '家庭', book7: true }
 ];
-const COURSE_TABS = ['課文', '生詞', '語法', '練習', '文化', '補充'];
+const COURSE_TABS = ['課文', '生詞', '語法', '練習', '文化', '溫習', '應用', '補充'];
 /* 分頁籤顯示用英文（內部 key 保持中文）。 */
-const COURSE_TAB_EN = { '課文': 'Text', '生詞': 'Vocabulary', '語法': 'Grammar', '練習': 'Practice', '文化': 'Culture', '補充': 'Supplement' };
+const COURSE_TAB_EN = { '課文': 'Text', '生詞': 'Vocabulary', '語法': 'Grammar', '練習': 'Practice', '文化': 'Culture', '溫習': 'Review', '應用': 'Application', '補充': 'Supplement' };
 const COURSE_PACK_LESSONS = [101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 601, 602, 603, 604, 605, 606, 607, 608, 609, 610];
 
 /* ---- 中文歌曲（V4 歌曲區）：自製 MV＋逐句歌詞教學 ----
@@ -2914,7 +2981,9 @@ function renderBooksGrid() {
   divider.textContent = '中文課本';
   grid.appendChild(divider);
   let lastBook = 0;
+  const showBook7 = (state.sourceLanguage || 'hi') === 'km'; /* 第七冊只在高棉文出現 */
   COURSE_LESSONS.forEach(lesson => {
+    if (lesson.book7 && !showBook7) return;
     const bk = bookOf(lesson.n);
     if (bk !== lastBook) {
       lastBook = bk;
