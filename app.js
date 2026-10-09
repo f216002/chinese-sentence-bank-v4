@@ -280,7 +280,7 @@ function vbankRowToSentence(fields, row, lang) {
     createdAt: null,
     updatedAt: null,
     seq: (o.seq == null ? null : o.seq),
-    _meta: { lesson: o.lesson || '', section: o.section || '', speaker: o.speaker || '', pos: o.pos || '', zhuyin: o.zhuyin || '' },
+    _meta: { lesson: String(o.lesson || ''), section: o.section || '', speaker: o.speaker || '', pos: o.pos || '', zhuyin: o.zhuyin || '' },
   };
 }
 async function loadSharedBank(lang) {
