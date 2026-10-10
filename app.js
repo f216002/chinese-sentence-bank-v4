@@ -1295,8 +1295,8 @@ function createCard(sentence, preview = false) {
   romanLine.hidden = !roman;
   romanLine.setAttribute('lang', cardProfile.locale + '-Latn');
   const chineseEl = node.querySelector('.chinese');
-  chineseEl.textContent = sentence.chineseSentence;
-  chineseEl.setAttribute('lang', 'zh-Hant');
+  chineseEl.textContent = zhConvert(sentence.chineseSentence);
+  chineseEl.setAttribute('lang', getZhMode() === 'simp' ? 'zh-Hans' : 'zh-Hant');
   node.querySelector('.pinyin').textContent = sentence.pinyin;
   const explanationEl = node.querySelector('.explanation');
   explanationEl.textContent = displayExplanation(sentence) || 'No explanation added.';
@@ -2157,6 +2157,16 @@ $('generatePrompt').addEventListener('click', buildPrompt);
   applyV4LanguageProfile(saved);
   const select = $('v4SourceLanguage');
   if (select) select.addEventListener('change', () => applyV4LanguageProfile(select.value));
+  /* 簡繁切換（2026-10-10，Cheng 要求）：預設繁體，切簡體時所有中文轉簡體。 */
+  const zhModeSelect = $('v4ZhMode');
+  if (zhModeSelect) {
+    zhModeSelect.value = getZhMode();
+    zhModeSelect.addEventListener('change', () => {
+      setZhMode(zhModeSelect.value);
+      renderSentences();
+      if (typeof renderLessons === 'function') renderLessons();
+    });
+  }
 })();
 $('clearPrompt').addEventListener('click', () => {
   $('promptSentence').value = '';
@@ -3068,11 +3078,11 @@ function renderBooksGrid() {
     card.className = 'lesson-card' + (recs.length ? '' : ' lesson-card-empty');
     card.innerHTML = `
       <span class="lesson-num">${lessonLabel(lesson.n)}</span>
-      <span class="lesson-zh" lang="zh-Hant">${lesson.zh}</span>
+      <span class="lesson-zh" lang="${getZhMode() === 'simp' ? 'zh-Hans' : 'zh-Hant'}">${zhConvert(lesson.zh)}</span>
       <span class="lesson-i18n" lang="${titleLang}">${escapeHtml(titleT)}</span>
       <span class="lesson-topic">${lesson.topic}</span>
       <span class="lesson-status">${recs.length ? `已匯入 ${recs.length} 條 <span class="en-sub">${recs.length} imported</span>` : (hasPack ? '尚未匯入' : '準備中')}</span>`;
-    card.setAttribute('aria-label', `${lessonLabel(lesson.n)} ${lesson.zh}`);
+    card.setAttribute('aria-label', `${lessonLabel(lesson.n)} ${zhConvert(lesson.zh)}`);
     if (recs.length) {
       card.addEventListener('click', () => { courseState.lesson = lesson.n; courseState.tab = '課文'; courseState.page = 'books'; renderLessonView(); });
     } else {
@@ -3109,7 +3119,7 @@ function renderSongsGrid() {
     card.innerHTML = `
       <span class="lesson-num">🎵 <span class="en-sub">Song</span></span>
       ${seqHtml}
-      <span class="lesson-zh" lang="zh-Hant">${escapeHtml(song.title)}</span>
+      <span class="lesson-zh" lang="${getZhMode() === 'simp' ? 'zh-Hans' : 'zh-Hant'}">${escapeHtml(zhConvert(song.title))}</span>
       <span class="lesson-topic">${linesLabel}</span>`;
     card.setAttribute('aria-label', `中文歌曲 ${song.title}`);
     card.addEventListener('click', () => { courseState.song = song.id; courseState.lesson = 0; courseState.page = 'songs'; renderCourse(); $('courseSection').scrollIntoView({ behavior: 'smooth' }); });
@@ -6272,7 +6282,7 @@ function renderRitualsGrid() {
     }, 0);
     card.innerHTML = `
       <span class="lesson-num">${group.icon} <span class="en-sub">Ritual</span></span>
-      <span class="lesson-zh" lang="zh-Hant">${escapeHtml(group.title)}</span>
+      <span class="lesson-zh" lang="${getZhMode() === 'simp' ? 'zh-Hans' : 'zh-Hant'}">${escapeHtml(zhConvert(group.title))}</span>
       <span class="lesson-topic">${lineCount} 句 <span class="en-sub">${lineCount} lines</span></span>`;
     card.setAttribute('aria-label', `道場禮節 ${group.title}`);
     card.addEventListener('click', () => {
@@ -6318,7 +6328,7 @@ function renderRitualGroupView(groupId) {
       card.className = 'lesson-card';
       card.innerHTML = `
       <span class="lesson-num">🕯️ <span class="en-sub">Ritual</span></span>
-      <span class="lesson-zh" lang="zh-Hant">${escapeHtml(sg.title)}</span>
+      <span class="lesson-zh" lang="${getZhMode() === 'simp' ? 'zh-Hans' : 'zh-Hant'}">${escapeHtml(zhConvert(sg.title))}</span>
       <span class="lesson-topic">${sg.rituals.length} 個禮節・${lineCount} 句 <span class="en-sub">${sg.rituals.length} rites</span></span>`;
       card.setAttribute('aria-label', `${group.title} ${sg.title}`);
       card.addEventListener('click', () => {
@@ -6339,7 +6349,7 @@ function renderRitualGroupView(groupId) {
     card.className = 'lesson-card';
     card.innerHTML = `
       <span class="lesson-num">🙏 <span class="en-sub">Ritual</span></span>
-      <span class="lesson-zh" lang="zh-Hant">${escapeHtml(ritual.title)}</span>
+      <span class="lesson-zh" lang="${getZhMode() === 'simp' ? 'zh-Hans' : 'zh-Hant'}">${escapeHtml(zhConvert(ritual.title))}</span>
       <span class="lesson-topic">${lineCount} 句 <span class="en-sub">${lineCount} lines</span></span>`;
     card.setAttribute('aria-label', `${group.title} ${ritual.title}`);
     card.addEventListener('click', () => {
@@ -6381,7 +6391,7 @@ function renderRitualSubgroupView(groupId, subgroupId) {
     card.className = 'lesson-card';
     card.innerHTML = `
       <span class="lesson-num">🕯️ <span class="en-sub">Ritual</span></span>
-      <span class="lesson-zh" lang="zh-Hant">${escapeHtml(ritual.title)}</span>
+      <span class="lesson-zh" lang="${getZhMode() === 'simp' ? 'zh-Hans' : 'zh-Hant'}">${escapeHtml(zhConvert(ritual.title))}</span>
       <span class="lesson-topic">${lineCount} 句 <span class="en-sub">${lineCount} lines</span></span>`;
     card.setAttribute('aria-label', `${sg.title} ${ritual.title}`);
     card.addEventListener('click', () => {
@@ -6623,7 +6633,7 @@ function renderLessonView() {
   const titleR = g0 ? displayRoman(g0) : '';
   header.innerHTML = `
     <div class="lesson-header-top"><span class="lesson-num">${lessonLabel(lesson.n)}</span><span class="lesson-topic">${lesson.topic}</span></div>
-    <h3 class="lesson-header-zh" lang="zh-Hant">${lesson.zh}</h3>
+    <h3 class="lesson-header-zh" lang="${getZhMode() === 'simp' ? 'zh-Hans' : 'zh-Hant'}">${zhConvert(lesson.zh)}</h3>
     <p class="lesson-header-en">${lesson.en}</p>
     ${titleT ? `<p class="lesson-header-i18n" lang="${g0p.locale}">${escapeHtml(titleT)}</p>` : ''}
     ${titleR ? `<p class="lesson-header-roman">${escapeHtml(titleR)}</p>` : ''}
@@ -7093,7 +7103,8 @@ function createVocabCard(sentence) {
       <button type="button" class="icon-button vocab-edit" aria-label="Edit" title="Edit">✏️</button>
     </div>
     <div class="card-recording-status vocab-status" aria-live="polite"></div>`;
-  node.querySelector('.vocab-word').textContent = sentence.chineseSentence || '';
+  node.querySelector('.vocab-word').textContent = zhConvert(sentence.chineseSentence) || '';
+  node.querySelector('.vocab-word').setAttribute('lang', getZhMode() === 'simp' ? 'zh-Hans' : 'zh-Hant');
   node.querySelector('.vocab-pinyin').textContent = sentence.pinyin || '';
   const zhuyinEl = node.querySelector('.vocab-zhuyin');
   if (zhuyinEl) zhuyinEl.textContent = meta.zhuyin;
