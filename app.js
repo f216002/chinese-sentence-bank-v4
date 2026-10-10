@@ -3174,11 +3174,10 @@ async function renderSongView(songId) {
         <iframe class="song-youtube" src="https://www.youtube.com/embed/${song.youtubeId}" title="${escapeHtml(song.title)}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>`;
   } else {
-    /* Storage 公開讀取：用 SDK 取下載網址（自動處理中文檔名編碼）。 */
+    /* Storage 鎖死（2026-10-10）：經下載票取影片網址。 */
     let videoUrl = '';
     try {
-      const ref = firebase.storage().ref(song.videoPath);
-      videoUrl = await ref.getDownloadURL();
+      videoUrl = await getBankFileUrl(song.videoPath);
     } catch (e) {
       content.innerHTML = '<p class="section-note">影片載入失敗，請檢查網路後重整。 <span class="en-sub">Video failed to load.</span></p>';
       return;
