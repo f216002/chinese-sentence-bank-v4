@@ -288,10 +288,15 @@ function vbankRowToSentence(fields, row, lang) {
   };
 }
 /* 經 Storage SDK 取得檔案下載網址（2026-10-10，Storage 鎖死後專用）。
-   規則要求 request.auth != null，未登入會拋錯，由呼叫方處理。 */
+   規則要求 request.auth != null，未登入會拋錯，由呼叫方處理。
+   2026-10-10 加快取：同一路徑只向 Firebase 要一次網址，避免電子書每頁等待 3-5 秒。 */
+const _bankUrlCache = {};
 async function getBankFileUrl(path) {
+  if (_bankUrlCache[path]) return _bankUrlCache[path];
   const ref = firebase.storage().ref(path);
-  return await ref.getDownloadURL();
+  const url = await ref.getDownloadURL();
+  _bankUrlCache[path] = url;
+  return url;
 }
 async function loadSharedBank(lang) {
   lang = lang || state.sourceLanguage || 'hi';
@@ -3239,18 +3244,29 @@ async function openHskEbook(n) {
   if (tabs) tabs.innerHTML = '';
   if (content) content.innerHTML = '<p class="section-note">載入電子書… <span class="en-sub">Loading e-book…</span></p>';
   try {
-    await loadHskBank();
-    /* 載入頁面對應檔（目前只有第一課有） */
+    /* 並行載入：句庫＋頁面對應檔同時進行（2026-10-10 優化） */
     const lessonNum = n - 800;
     const pageFile = `v4-hsk/pages/hsk1-l${String(lessonNum).padStart(2, '0')}-pages.json`;
-    let pageData = null;
-    try {
-      const url = await getBankFileUrl(pageFile);
-      const r = await fetch(url);
-      if (r.ok) pageData = await r.json();
-    } catch (e) { /* 沒有對應檔就用句子列表 */ }
+    const [_, pageData] = await Promise.all([
+      loadHskBank(),
+      (async () => {
+        try {
+          const url = await getBankFileUrl(pageFile);
+          const r = await fetch(url);
+          if (r.ok) return await r.json();
+        } catch (e) { /* 沒有對應檔就用句子列表 */ }
+        return null;
+      })(),
+    ]);
     if (pageData && pageData.pages && pageData.pages.length) {
       ebookState = { lesson: n, pageIndex: 0, pages: pageData.pages, title: pageData.title };
+      /* 預載所有頁面圖片（目前只有一頁，未來多頁時也適用） */
+      pageData.pages.forEach(p => {
+        getBankFileUrl(p.image).then(url => {
+          const img = new Image();
+          img.src = url;
+        }).catch(() => {});
+      });
       renderEbookPage();
     } else {
       /* 沒有電子書頁面時，退回句子列表 */
