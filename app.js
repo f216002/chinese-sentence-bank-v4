@@ -389,7 +389,7 @@ function bilingualLabel(zh, en) { return en ? `${zh} (${en})` : zh; }
 function setBilingualText(el, zh, en) {
   if (!el) return;
   el.innerHTML = '';
-  el.appendChild(document.createTextNode(zh));
+  el.appendChild(document.createTextNode(zhConvert(zh)));
   if (en) {
     const sub = document.createElement('span');
     sub.className = 'en-sub';
@@ -2157,7 +2157,7 @@ $('generatePrompt').addEventListener('click', buildPrompt);
   applyV4LanguageProfile(saved);
   const select = $('v4SourceLanguage');
   if (select) select.addEventListener('change', () => applyV4LanguageProfile(select.value));
-  /* 簡繁切換（2026-10-10，Cheng 要求）：預設繁體，切簡體時所有中文轉簡體。 */
+  /* 簡繁切換（2026-10-10，Cheng 要求）：預設繁體，切簡體時全站中文轉簡體。 */
   const zhModeSelect = $('v4ZhMode');
   if (zhModeSelect) {
     zhModeSelect.value = getZhMode();
@@ -2165,7 +2165,13 @@ $('generatePrompt').addEventListener('click', buildPrompt);
       setZhMode(zhModeSelect.value);
       renderSentences();
       if (typeof renderLessons === 'function') renderLessons();
+      /* 全站 UI 文字轉換（含靜態標籤、按鈕、標題等） */
+      setTimeout(applyZhModeToPage, 100);
     });
+    /* 頁面載入時若為簡體模式，轉換全站 */
+    if (getZhMode() === 'simp') {
+      setTimeout(applyZhModeToPage, 500);
+    }
   }
 })();
 $('clearPrompt').addEventListener('click', () => {
