@@ -355,3 +355,7 @@ button .en-sub { pointer-events: none; }
 .sentence-modal-content.ebook-modal{max-width:800px;font-size:150%}
 .sentence-modal-content.ebook-modal .chinese{font-size:1.5em}
 .sentence-modal-content.ebook-modal .pinyin{font-size:1.5em}
+
+/* 電子書選頁下拉（2026-10-10） */
+.ebook-page-select{padding:10px 16px;border:2px solid var(--teal);border-radius:20px;font-size:16px;background:#fff;color:#333;cursor:pointer;max-width:200px}
+.ebook-page-select:focus{outline:none;border-color:#0d7a6e}
