@@ -2817,7 +2817,22 @@ function songLineToSentence(song, line, idx) {
   return s;
 }
 
-const courseState = { lesson: 0, tab: '課文', song: null, ritual: null, ritualGroup: null, page: 'home' };
+const courseState = { lesson: 0, tab: '課文', song: null, ritual: null, ritualGroup: null, page: 'home', viewMode: 'list' };
+/* 電子書可用性檢查（2026-10-10）：台灣第一冊 101-115 有電子書 */
+function hasEbook(lessonN) {
+  return lessonN >= 101 && lessonN <= 115;
+}
+/* 取得老師偏好的檢視模式 */
+function getPreferredViewMode(lessonN) {
+  if (!hasEbook(lessonN)) return 'list';
+  try {
+    return localStorage.getItem('ebookViewMode') || 'ebook';
+  } catch (e) { return 'ebook'; }
+}
+function setPreferredViewMode(mode) {
+  try { localStorage.setItem('ebookViewMode', mode); } catch (e) {}
+  courseState.viewMode = mode;
+}
 
 /* 課程解鎖＝老師審核通過（Google 登入＋管理員核准），取代舊的 PIN。 */
 function isCourseUnlocked() {
@@ -3169,9 +3184,15 @@ function renderBooksGrid() {
     card.setAttribute('aria-label', `${lessonLabel(lesson.n)} ${zhConvert(lesson.zh)}`);
     if (recs.length) {
       card.addEventListener('click', () => {
-        /* 台灣第一冊（101-115）用電子書（2026-10-10） */
-        if (lesson.n >= 101 && lesson.n <= 115) {
-          openTw1Ebook(lesson.n);
+        /* 台灣第一冊（101-115）：依老師偏好進入電子書或課文列表（2026-10-10 雙模式） */
+        if (hasEbook(lesson.n)) {
+          const mode = getPreferredViewMode(lesson.n);
+          courseState.viewMode = mode;
+          if (mode === 'ebook') {
+            openTw1Ebook(lesson.n);
+          } else {
+            courseState.lesson = lesson.n; courseState.tab = '課文'; courseState.page = 'books'; renderLessonView();
+          }
         } else {
           courseState.lesson = lesson.n; courseState.tab = '課文'; courseState.page = 'books'; renderLessonView();
         }
@@ -3320,10 +3341,22 @@ async function renderEbookPage() {
   const header = $('lessonHeader');
   if (header) {
     header.innerHTML = `
-      <div class="lesson-header-top"><span class="lesson-num">${lessonLabel(ebookState.lesson)}</span></div>
+      <div class="lesson-header-top"><span class="lesson-num">${lessonLabel(ebookState.lesson)}</span>
+        <button type="button" class="view-mode-toggle" id="ebookToListBtn" title="切換到課文列表模式">📝 課文列表</button>
+      </div>
       <h3 class="lesson-header-zh">${escapeHtml(lesson ? lesson.zh : '')}</h3>
       <p class="lesson-header-en">${escapeHtml(lesson ? lesson.en : '')} <span class="en-sub">電子書 E-book</span></p>
     `;
+    const toListBtn = $('ebookToListBtn');
+    if (toListBtn) {
+      toListBtn.addEventListener('click', () => {
+        setPreferredViewMode('list');
+        courseState.lesson = ebookState.lesson;
+        courseState.tab = '課文';
+        courseState.page = 'books';
+        renderLessonView();
+      });
+    }
   }
   const tabs = $('lessonTabs');
   if (tabs) tabs.innerHTML = '';
@@ -7003,13 +7036,25 @@ function renderLessonView() {
   const g0p = g0 ? displayProfile(g0) : null;
   const titleT = g0 ? displaySource(g0) : '';
   const titleR = g0 ? displayRoman(g0) : '';
+  /* 雙模式切換（2026-10-10）：有電子書的課顯示切換按鈕 */
+  const modeToggle = hasEbook(lesson.n)
+    ? `<button type="button" class="view-mode-toggle" id="listToEbookBtn" title="切換到電子書模式">📖 電子書</button>`
+    : '';
   header.innerHTML = `
-    <div class="lesson-header-top"><span class="lesson-num">${lessonLabel(lesson.n)}</span><span class="lesson-topic">${lesson.topic}</span></div>
+    <div class="lesson-header-top"><span class="lesson-num">${lessonLabel(lesson.n)}</span><span class="lesson-topic">${lesson.topic}</span>${modeToggle}</div>
     <h3 class="lesson-header-zh" lang="${getZhMode() === 'simp' ? 'zh-Hans' : 'zh-Hant'}">${zhConvert(lesson.zh)}</h3>
     <p class="lesson-header-en">${lesson.en}</p>
     ${titleT ? `<p class="lesson-header-i18n" lang="${g0p.locale}">${escapeHtml(titleT)}</p>` : ''}
     ${titleR ? `<p class="lesson-header-roman">${escapeHtml(titleR)}</p>` : ''}
     ${goals.map(s => { const gp = displayProfile(s); const gt = displayExplanation(s) || displaySource(s); return `<div class="lesson-goals"><strong>學習目標 <span class="en-sub">Learning goals</span></strong><p lang="${gp.locale}">${escapeHtml(gt)}</p></div>`; }).join('')}`;
+  /* 綁定切換到電子書的按鈕 */
+  const toEbookBtn = $('listToEbookBtn');
+  if (toEbookBtn) {
+    toEbookBtn.addEventListener('click', () => {
+      setPreferredViewMode('ebook');
+      openTw1Ebook(courseState.lesson);
+    });
+  }
 
   const tabs = $('lessonTabs');
   tabs.innerHTML = '';
