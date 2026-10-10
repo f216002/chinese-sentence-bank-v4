@@ -264,7 +264,7 @@ function vbankRowToSentence(fields, row, lang) {
   return {
     _owner: 'shared',
     recordId: o.id,
-    sourceLanguage: 'hi',
+    sourceLanguage: lang,
     hindiSentence: o.hindiSentence || '',
     chineseSentence: o.chineseSentence || '',
     pinyin: o.pinyin || '',
@@ -1068,11 +1068,14 @@ function openEditDialog(sentence) {
   $('editHindi').setAttribute('lang', editProfile.locale);
   $('editRoman').setAttribute('lang', editProfile.locale + '-Latn');
   $('editExplanation').setAttribute('lang', editProfile.locale);
-  $('editHindi').value = sentence.hindiSentence || '';
+  /* 課程記錄：編輯框讀取當前語言的翻譯（displaySource/displayRoman/displayExplanation），
+     不是寫死的 hindiSentence 欄位（2026-10-10 修：16 語全有此 bug）。 */
+  const isCourse = isCourseRecord(sentence);
+  $('editHindi').value = isCourse ? displaySource(sentence) : (sentence.hindiSentence || '');
   $('editChinese').value = sentence.chineseSentence || '';
   $('editPinyin').value = sentence.pinyin || '';
-  $('editRoman').value = romanHindiFor(sentence);
-  $('editExplanation').value = sentence.hindiExplanation || '';
+  $('editRoman').value = isCourse ? displayRoman(sentence) : romanHindiFor(sentence);
+  $('editExplanation').value = isCourse ? displayExplanation(sentence) : (sentence.hindiExplanation || '');
   $('editCategory').value = sentence.category || 'Other';
   $('editTags').value = sentence.tags || '';
   $('editAiSource').value = sentence.aiSource || 'ChatGPT / Gemini';
