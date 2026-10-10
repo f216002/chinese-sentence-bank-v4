@@ -351,7 +351,7 @@ button .en-sub { pointer-events: none; }
 .sentence-modal-close{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:50%;background:#f0f0f0;border:none;font-size:18px;cursor:pointer}
 .sentence-modal-close:hover{background:#e0e0e0}
 
-/* 句子卡彈窗放大 200%（2026-10-10） */
-.sentence-modal-content.ebook-modal{max-width:900px;font-size:200%}
-.sentence-modal-content.ebook-modal .chinese{font-size:2em}
-.sentence-modal-content.ebook-modal .pinyin{font-size:1.2em}
+/* 句子卡彈窗放大 150%（2026-10-10，Cheng 要求） */
+.sentence-modal-content.ebook-modal{max-width:800px;font-size:150%}
+.sentence-modal-content.ebook-modal .chinese{font-size:1.5em}
+.sentence-modal-content.ebook-modal .pinyin{font-size:1.5em}
