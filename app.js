@@ -1334,8 +1334,16 @@ function speakChinese(text, button) {
 }
 
 /* 外語發音：經 Cloud Function synthesizeV4Source 走 Azure TTS（2026-10-10 恢復，Cheng 要求）。
-   中文仍用瀏覽器語音（speakChinese），外語才走 Azure。 */
+   中文仍用瀏覽器語音（speakChinese），外語才走 Azure。
+   2026-10-10 音量修正：Azure 各語音原始音量不一致＋神經語音句尾自然衰減，
+   播放時經 Web Audio DynamicsCompressor 即時壓縮，平衡大小聲。 */
 let _synthFn = null;
+let _audioCtx = null;
+function getAudioCtx() {
+  if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (_audioCtx.state === 'suspended') _audioCtx.resume();
+  return _audioCtx;
+}
 async function speakForeign(sentence, button) {
   const text = displaySource(sentence);
   if (!text || !text.trim()) return;
@@ -1352,6 +1360,17 @@ async function speakForeign(sentence, button) {
     if (!data.audioBase64) throw new Error('empty audio');
     const url = 'data:' + (data.contentType || 'audio/mpeg') + ';base64,' + data.audioBase64;
     const audio = new Audio(url);
+    /* 音量平衡：MediaElement → Compressor → 喇叭，壓平忽大忽小。 */
+    const ctx = getAudioCtx();
+    const src = ctx.createMediaElementSource(audio);
+    const comp = ctx.createDynamicsCompressor();
+    comp.threshold.value = -18;
+    comp.knee.value = 12;
+    comp.ratio.value = 4;
+    comp.attack.value = 0.003;
+    comp.release.value = 0.25;
+    src.connect(comp);
+    comp.connect(ctx.destination);
     audio.onended = audio.onerror = () => { button.classList.remove('speaking'); button.disabled = false; };
     await audio.play();
   } catch (err) {
