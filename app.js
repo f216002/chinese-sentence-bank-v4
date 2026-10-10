@@ -2245,10 +2245,11 @@ loadBank();
 
 /* ================= Course module: 當代中文課程 ================= */
 /* 課號規則：1–15 ＝第二冊，101–115 ＝第一冊（第一冊第 X 課記為 100+X），201–212 ＝第三冊（第三冊第 X 課記為 200+X），301–312 ＝第四冊（第四冊第 X 課記為 300+X），501–510 ＝第五冊（第五冊第 X 課記為 500+X）。 */
-function bookOf(n) { n = Number(n); return n >= 701 ? 7 : (n >= 601 ? 6 : (n >= 501 ? 5 : (n >= 301 ? 4 : (n >= 201 ? 3 : (n >= 101 ? 1 : 2))))); }
-function bookLessonNum(n) { n = Number(n); return n >= 701 ? n - 700 : (n >= 601 ? n - 600 : (n >= 501 ? n - 500 : (n >= 301 ? n - 300 : (n >= 201 ? n - 200 : (n >= 101 ? n - 100 : n))))); }
+function bookOf(n) { n = Number(n); if (n >= 801) return 'hsk1'; return n >= 701 ? 7 : (n >= 601 ? 6 : (n >= 501 ? 5 : (n >= 301 ? 4 : (n >= 201 ? 3 : (n >= 101 ? 1 : 2))))); }
+function bookLessonNum(n) { n = Number(n); if (n >= 801) return n - 800; return n >= 701 ? n - 700 : (n >= 601 ? n - 600 : (n >= 501 ? n - 500 : (n >= 301 ? n - 300 : (n >= 201 ? n - 200 : (n >= 101 ? n - 100 : n))))); }
 function lessonLabel(n) {
   const b = bookOf(n), k = bookLessonNum(n);
+  if (b === 'hsk1') return `HSK 1 第 ${k} 課`;
   if (b === 7) return `第七冊第 ${k} 課`;
   if (b === 6) return `第六冊第 ${k} 課`;
   if (b === 5) return `第五冊第 ${k} 課`;
