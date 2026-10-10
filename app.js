@@ -287,17 +287,11 @@ function vbankRowToSentence(fields, row, lang) {
     _meta: { lesson: String(o.lesson || ''), section: o.section || '', speaker: o.speaker || '', pos: o.pos || '', zhuyin: o.zhuyin || '' },
   };
 }
-/* 經 Cloud Function 取得 Storage 檔案的下載票（2026-10-10，Storage 鎖死後專用）。
-   未登入或非核准老師會拋出錯誤，由呼叫方處理（顯示登入提示）。 */
-let _bankUrlFn = null;
+/* 經 Storage SDK 取得檔案下載網址（2026-10-10，Storage 鎖死後專用）。
+   規則要求 request.auth != null，未登入會拋錯，由呼叫方處理。 */
 async function getBankFileUrl(path) {
-  if (!_bankUrlFn) {
-    _bankUrlFn = firebase.app().functions('us-east1').httpsCallable('getBankFileUrl', { timeout: 30000 });
-  }
-  const res = await _bankUrlFn({ path });
-  const url = res && res.data && res.data.url;
-  if (!url) throw new Error('no download url');
-  return url;
+  const ref = firebase.storage().ref(path);
+  return await ref.getDownloadURL();
 }
 async function loadSharedBank(lang) {
   lang = lang || state.sourceLanguage || 'hi';
