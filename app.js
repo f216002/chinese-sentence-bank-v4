@@ -380,7 +380,8 @@ const SAMPLE = `HINDI:\nमुझे बैंक से पैसे निक�
 const AI_PROMPT = `You are a Taiwanese Mandarin teacher for a Hindi-speaking beginner. Convert the Hindi sentence below into natural Traditional Chinese used in Taiwan.\n\nHINDI SENTENCE:\n[Paste one Hindi sentence here]\n\nReturn ONLY the following labelled sections. Do not add an introduction or conclusion. Never insert notes, corrections, or commentary inside a section; each section must contain only what that section asks for. Keep every label exactly as written and do not add Markdown symbols such as ** around the labels.\n\nHINDI:\n[Repeat the original Hindi sentence]\n\nCHINESE:\n[One natural Traditional Chinese sentence used in Taiwan]\n\nPINYIN:\n[Hanyu Pinyin with tone marks for the complete Chinese sentence]\n\nEXPLANATION:\n[Explain every Chinese word and the grammar in clear Hindi. Whenever any Chinese character, word, phrase, or example appears, immediately add its pinyin in parentheses. Use Traditional Chinese only.]\n\nCATEGORY:\n[Choose exactly one: Daily Life, School, Home, Restaurant, Shopping, Bank, Hospital, Travel, Train & Bus, Airport, Work, Friends, Other]\n\nTAGS:\n[Three to five short English keywords separated by commas]\n\nAI SOURCE:\n[Write ChatGPT or Gemini]`;
 
 
-const state = { sentences: [], hiddenShared: [], categories: [], selectedCategories: new Set(), settings: {}, preview: null, sourceLanguage: 'hi', bankVersion: null, unitOrders: {} };
+const state = { sentences: [], hiddenShared: [], categories: [], selectedCategories: new Set(), settings: {}, preview: null, sourceLanguage: 'hi', bankVersion: null, unitOrders: {},
+  bookSet: (() => { try { return localStorage.getItem('v4_bookset') || 'tw'; } catch(e) { return 'tw'; } })() };
 const $ = (id) => document.getElementById(id);
 /* Bilingual UI helper: Chinese (primary) + English (secondary, smaller). */
 /* 中文為主的雙語無障礙標籤，例如：播放德文發音 (Play German pronunciation) */
@@ -3061,6 +3062,31 @@ function renderBooksGrid() {
   divider.className = 'book-divider';
   divider.textContent = '中文課本';
   grid.appendChild(divider);
+  /* 台灣／大陸教材切換（2026-10-10，Cheng 要求） */
+  const setTabs = document.createElement('div');
+  setTabs.className = 'bookset-tabs';
+  setTabs.innerHTML = `
+    <button type="button" class="bookset-tab ${state.bookSet !== 'cn' ? 'active' : ''}" data-set="tw">台灣 1-6 冊</button>
+    <button type="button" class="bookset-tab ${state.bookSet === 'cn' ? 'active' : ''}" data-set="cn">大陸 1-6 冊</button>
+  `;
+  setTabs.querySelectorAll('.bookset-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.bookSet = btn.dataset.set;
+      try { localStorage.setItem('v4_bookset', state.bookSet); } catch(e) {}
+      renderBooksGrid();
+      if (getZhMode() === 'simp') setTimeout(applyZhModeToPage, 100);
+    });
+  });
+  grid.appendChild(setTabs);
+  /* 大陸冊：HSK 教材建置中，先顯示說明 */
+  if (state.bookSet === 'cn') {
+    const note = document.createElement('div');
+    note.className = 'section-note';
+    note.style.cssText = 'text-align:center;padding:40px 20px;';
+    note.innerHTML = '大陸 HSK 教材建置中 <span class="en-sub">HSK materials coming soon</span>';
+    grid.appendChild(note);
+    return;
+  }
   let lastBook = 0;
   const showBook7 = (state.sourceLanguage || 'hi') === 'km'; /* 第七冊只在高棉文出現 */
   COURSE_LESSONS.forEach(lesson => {
