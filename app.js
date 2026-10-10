@@ -3298,11 +3298,13 @@ async function renderEbookPage() {
       const r = await fetch(url);
       if (r.ok) {
         const regionData = await r.json();
-        /* 找到對應頁面的區域 */
-        const pageNum = page.n;
+        /* 找到對應頁面的區域：用 pdf 精確匹配（2026-10-10 修復：之前會把整課所有頁的框全疊上來） */
         regionData.pages.forEach(rp => {
-          /* 簡單匹配：取所有區域（目前每課的區域都在同一 JSON） */
-          if (rp.regions) regions = regions.concat(rp.regions);
+          /* TW1 有 pdf 欄位，直接比對；HSK 無 pdf 則比對 n（課內頁序） */
+          const match = (rp.pdf !== undefined && page.pdf !== undefined)
+            ? (rp.pdf === page.pdf)
+            : (rp.n === page.n);
+          if (match && rp.regions) regions = regions.concat(rp.regions);
         });
       }
     } catch (e) { /* 沒有區域就純瀏覽 */ }
