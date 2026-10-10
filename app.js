@@ -3078,13 +3078,31 @@ function renderBooksGrid() {
     });
   });
   grid.appendChild(setTabs);
-  /* 大陸冊：HSK 教材建置中，先顯示說明 */
+  /* 大陸冊：HSK 教材（2026-10-10，HSK 1 已上架） */
   if (state.bookSet === 'cn') {
-    const note = document.createElement('div');
-    note.className = 'section-note';
-    note.style.cssText = 'text-align:center;padding:40px 20px;';
-    note.innerHTML = '大陸 HSK 教材建置中 <span class="en-sub">HSK materials coming soon</span>';
-    grid.appendChild(note);
+    if (typeof HSK_LESSONS !== 'undefined') {
+      const hskDivider = document.createElement('div');
+      hskDivider.className = 'book-divider';
+      hskDivider.textContent = zhConvert('HSK 1');
+      grid.appendChild(hskDivider);
+      HSK_LESSONS.forEach(lesson => {
+        const card = document.createElement('button');
+        card.className = 'lesson-card';
+        card.innerHTML = `
+          <span class="lesson-n">HSK 1 第 ${lesson.n - 800} 課</span>
+          <span class="lesson-zh" lang="${getZhMode() === 'simp' ? 'zh-Hans' : 'zh-Hant'}">${escapeHtml(zhConvert(lesson.zh))}</span>
+          <span class="lesson-en">${escapeHtml(lesson.en)}</span>
+        `;
+        card.addEventListener('click', () => openHskLesson(lesson.n));
+        grid.appendChild(card);
+      });
+    } else {
+      const note = document.createElement('div');
+      note.className = 'section-note';
+      note.style.cssText = 'text-align:center;padding:40px 20px;';
+      note.innerHTML = '大陸 HSK 教材建置中 <span class="en-sub">HSK materials coming soon</span>';
+      grid.appendChild(note);
+    }
     return;
   }
   let lastBook = 0;
@@ -3173,6 +3191,56 @@ function renderLessonGrid() {
 function openLesson(n) {
   courseState.lesson = n; courseState.tab = '課文'; courseState.page = 'books';
   renderLessonView();
+  $('courseSection').scrollIntoView({ behavior: 'smooth' });
+}
+
+/* HSK 課程：載入句庫並顯示句子卡（2026-10-10） */
+let hskCache = null;
+async function loadHskData() {
+  if (hskCache) return hskCache;
+  const url = await getBankFileUrl('v4-hsk/v4-hsk1.json');
+  const r = await fetch(url);
+  if (!r.ok) throw new Error('HSK data ' + r.status);
+  hskCache = await r.json();
+  return hskCache;
+}
+async function openHskLesson(n) {
+  const lesson = HSK_LESSONS.find(l => l.n === n);
+  if (!lesson) return;
+  $('lessonView').classList.remove('hidden');
+  $('lessonGrid').classList.add('hidden');
+  const view = $('lessonView');
+  view.innerHTML = '<p class="section-note">載入中… <span class="en-sub">Loading…</span></p>';
+  try {
+    const data = await loadHskData();
+    const f = data.f;
+    const sentences = data.rows.filter(row => row[f.lesson] === n);
+    let html = `
+      <button class="back-button" id="hskBack">← 回課程總覽</button>
+      <h2>${escapeHtml(zhConvert(lesson.zh))}</h2>
+      <p class="lesson-en">${escapeHtml(lesson.en)}</p>
+      <p class="section-note">HSK 1 第 ${n - 800} 課・共 ${sentences.length} 句</p>
+      <div class="sentence-list">
+    `;
+    sentences.forEach(s => {
+      html += `
+        <article class="sentence-card">
+          <div class="chinese-row"><h3 class="chinese" lang="${getZhMode() === 'simp' ? 'zh-Hans' : 'zh-Hant'}">${escapeHtml(zhConvert(s[f.chineseSentence]))}</h3></div>
+          <p class="pinyin">${escapeHtml(s[f.pinyin] || '')}</p>
+          <p class="hindi">${escapeHtml(s[f.en] || '')}</p>
+        </article>
+      `;
+    });
+    html += '</div>';
+    view.innerHTML = html;
+    $('hskBack').addEventListener('click', () => {
+      view.classList.add('hidden');
+      renderBooksGrid();
+    });
+    if (getZhMode() === 'simp') setTimeout(applyZhModeToPage, 100);
+  } catch (e) {
+    view.innerHTML = `<p class="section-note">載入失敗：${escapeHtml(e.message)} <span class="en-sub">Load failed</span></p>`;
+  }
   $('courseSection').scrollIntoView({ behavior: 'smooth' });
 }
 
