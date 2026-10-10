@@ -3227,9 +3227,16 @@ function openLesson(n) {
 let ebookState = { lesson: 0, pageIndex: 0, pages: [], regions: [] };
 async function openHskEbook(n) {
   const view = $('lessonView');
-  view.classList.remove('hidden');
-  $('lessonGrid').classList.add('hidden');
-  view.innerHTML = '<p class="section-note">載入電子書… <span class="en-sub">Loading e-book…</span></p>';
+  const grid = $('lessonGrid');
+  if (view) view.classList.remove('hidden');
+  if (grid) grid.classList.add('hidden');
+  /* 保留原有結構，只清空內容區，避免刪除 lessonBackButton */
+  const header = $('lessonHeader');
+  const tabs = $('lessonTabs');
+  const content = $('lessonContent');
+  if (header) header.innerHTML = '';
+  if (tabs) tabs.innerHTML = '';
+  if (content) content.innerHTML = '<p class="section-note">載入電子書… <span class="en-sub">Loading e-book…</span></p>';
   try {
     await loadHskBank();
     /* 載入頁面對應檔（目前只有第一課有） */
@@ -3250,12 +3257,13 @@ async function openHskEbook(n) {
       renderLessonView();
     }
   } catch (e) {
-    view.innerHTML = `<p class="section-note">載入失敗：${escapeHtml(e.message)} <span class="en-sub">Load failed</span></p>`;
+    const content = $('lessonContent');
+    if (content) content.innerHTML = `<p class="section-note">載入失敗：${escapeHtml(e.message)} <span class="en-sub">Load failed</span></p>`;
   }
-  $('courseSection').scrollIntoView({ behavior: 'smooth' });
+  const cs = $('courseSection');
+  if (cs) cs.scrollIntoView({ behavior: 'smooth' });
 }
 async function renderEbookPage() {
-  const view = $('lessonView');
   const page = ebookState.pages[ebookState.pageIndex];
   const imgUrl = await getBankFileUrl(page.image);
   const lesson = HSK_COURSE_LESSONS.find(l => l.n === ebookState.lesson);
@@ -3263,40 +3271,57 @@ async function renderEbookPage() {
   (page.regions || []).forEach((reg, i) => {
     regionsHtml += `<div class="ebook-region" data-idx="${i}" style="left:${reg.x}%;top:${reg.y}%;width:${reg.w}%;height:${reg.h}%;" title="${escapeHtml(reg.zh)}"></div>`;
   });
-  view.innerHTML = `
-    <button class="back-button" id="ebookBack">← 回課程總覽</button>
-    <h2>${escapeHtml(lesson ? lesson.zh : '')} <span class="en-sub">電子書 E-book</span></h2>
-    <div class="ebook-viewer">
-      <div class="ebook-page">
-        <img src="${imgUrl}" alt="課文頁" />
-        ${regionsHtml}
+  /* 使用 lessonContent 區域，不破壞 lessonBackButton */
+  const content = $('lessonContent');
+  const header = $('lessonHeader');
+  if (header) {
+    header.innerHTML = `
+      <div class="lesson-header-top"><span class="lesson-num">HSK 1 第 ${ebookState.lesson - 800} 課</span></div>
+      <h3 class="lesson-header-zh">${escapeHtml(lesson ? lesson.zh : '')}</h3>
+      <p class="lesson-header-en">${escapeHtml(lesson ? lesson.en : '')} <span class="en-sub">電子書 E-book</span></p>
+    `;
+  }
+  const tabs = $('lessonTabs');
+  if (tabs) tabs.innerHTML = '';
+  if (content) {
+    content.innerHTML = `
+      <div class="ebook-viewer">
+        <div class="ebook-page">
+          <img src="${imgUrl}" alt="課文頁" />
+          ${regionsHtml}
+        </div>
+        <div class="ebook-nav">
+          <button id="ebookPrev" ${ebookState.pageIndex === 0 ? 'disabled' : ''}>← 上一頁</button>
+          <span class="ebook-page-num">${ebookState.pageIndex + 1} / ${ebookState.pages.length}</span>
+          <button id="ebookNext" ${ebookState.pageIndex >= ebookState.pages.length - 1 ? 'disabled' : ''}>下一頁 →</button>
+        </div>
       </div>
-      <div class="ebook-nav">
-        <button id="ebookPrev" ${ebookState.pageIndex === 0 ? 'disabled' : ''}>← 上一頁</button>
-        <span class="ebook-page-num">${ebookState.pageIndex + 1} / ${ebookState.pages.length}</span>
-        <button id="ebookNext" ${ebookState.pageIndex >= ebookState.pages.length - 1 ? 'disabled' : ''}>下一頁 →</button>
-      </div>
-    </div>
-    <p class="section-note" style="text-align:center;margin-top:12px;">點句子可看詳細解說 <span class="en-sub">Tap a sentence for details</span></p>
-  `;
-  $('ebookBack').addEventListener('click', () => {
-    view.classList.add('hidden');
-    renderBooksGrid();
-  });
-  const prevBtn = $('ebookPrev');
-  const nextBtn = $('ebookNext');
-  if (prevBtn && !prevBtn.disabled) prevBtn.addEventListener('click', () => {
-    ebookState.pageIndex--; renderEbookPage();
-  });
-  if (nextBtn && !nextBtn.disabled) nextBtn.addEventListener('click', () => {
-    ebookState.pageIndex++; renderEbookPage();
-  });
-  view.querySelectorAll('.ebook-region').forEach(el => {
-    el.addEventListener('click', () => {
-      const reg = page.regions[Number(el.dataset.idx)];
-      openSentenceModal(reg.sentenceId);
+      <p class="section-note" style="text-align:center;margin-top:12px;">點句子可看詳細解說 <span class="en-sub">Tap a sentence for details</span></p>
+    `;
+    const prevBtn = $('ebookPrev');
+    const nextBtn = $('ebookNext');
+    if (prevBtn && !prevBtn.disabled) prevBtn.addEventListener('click', () => {
+      ebookState.pageIndex--; renderEbookPage();
     });
-  });
+    if (nextBtn && !nextBtn.disabled) nextBtn.addEventListener('click', () => {
+      ebookState.pageIndex++; renderEbookPage();
+    });
+    content.querySelectorAll('.ebook-region').forEach(el => {
+      el.addEventListener('click', () => {
+        const reg = page.regions[Number(el.dataset.idx)];
+        openSentenceModal(reg.sentenceId);
+      });
+    });
+  }
+  /* 返回按鈕：回到課程總覽 */
+  const backBtn = $('lessonBackButton');
+  if (backBtn) {
+    backBtn.textContent = '← 回課程總覽';
+    backBtn.onclick = () => {
+      $('lessonView').classList.add('hidden');
+      renderBooksGrid();
+    };
+  }
 }
 /* 句子卡彈窗：用現有 createCard 渲染，關閉回到電子書。 */
 async function openSentenceModal(sentenceId) {
