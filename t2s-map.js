@@ -238,3 +238,84 @@ function setZhMode(m) {
 function zhConvert(text) {
   return getZhMode() === 'simp' ? t2s(text) : text;
 }
+
+/* ===== 全站簡繁切換（2026-10-10） ===== */
+/* 轉換頁面上所有中文文字節點，保留原文以便切回繁體 */
+const ZH_ORIG_ATTR = 'data-zh-orig';
+
+function shouldConvertNode(node) {
+  if (!node || node.nodeType !== 3) return false; // 只處理文字節點
+  const parent = node.parentElement;
+  if (!parent) return false;
+  const tag = parent.tagName.toLowerCase();
+  // 跳過不該轉換的元素
+  if (['script','style','code','pre'].includes(tag)) return false;
+  // 只轉換含中文的文字
+  return /[\u4e00-\u9fff]/.test(node.textContent);
+}
+
+function convertPageToSimp() {
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  while (walker.nextNode()) {
+    const node = walker.currentNode;
+    if (shouldConvertNode(node) && !node.parentElement.hasAttribute(ZH_ORIG_ATTR)) {
+      nodes.push(node);
+    }
+  }
+  nodes.forEach(node => {
+    const parent = node.parentElement;
+    parent.setAttribute(ZH_ORIG_ATTR, parent.innerHTML);
+    node.textContent = t2s(node.textContent);
+  });
+  // 轉換 placeholder、aria-label、title、option
+  document.querySelectorAll('[placeholder]').forEach(el => {
+    if (!el.hasAttribute(ZH_ORIG_ATTR + '-ph')) {
+      el.setAttribute(ZH_ORIG_ATTR + '-ph', el.placeholder);
+      el.placeholder = t2s(el.placeholder);
+    }
+  });
+  document.querySelectorAll('[aria-label]').forEach(el => {
+    const label = el.getAttribute('aria-label');
+    if (label && /[\u4e00-\u9fff]/.test(label) && !el.hasAttribute(ZH_ORIG_ATTR + '-al')) {
+      el.setAttribute(ZH_ORIG_ATTR + '-al', label);
+      el.setAttribute('aria-label', t2s(label));
+    }
+  });
+  document.querySelectorAll('[title]').forEach(el => {
+    const title = el.getAttribute('title');
+    if (title && /[\u4e00-\u9fff]/.test(title) && !el.hasAttribute(ZH_ORIG_ATTR + '-ti')) {
+      el.setAttribute(ZH_ORIG_ATTR + '-ti', title);
+      el.setAttribute('title', t2s(title));
+    }
+  });
+  document.documentElement.setAttribute('lang', 'zh-Hans');
+}
+
+function restorePageToTrad() {
+  document.querySelectorAll('[' + ZH_ORIG_ATTR + ']').forEach(el => {
+    el.innerHTML = el.getAttribute(ZH_ORIG_ATTR);
+    el.removeAttribute(ZH_ORIG_ATTR);
+  });
+  document.querySelectorAll('[' + ZH_ORIG_ATTR + '-ph]').forEach(el => {
+    el.placeholder = el.getAttribute(ZH_ORIG_ATTR + '-ph');
+    el.removeAttribute(ZH_ORIG_ATTR + '-ph');
+  });
+  document.querySelectorAll('[' + ZH_ORIG_ATTR + '-al]').forEach(el => {
+    el.setAttribute('aria-label', el.getAttribute(ZH_ORIG_ATTR + '-al'));
+    el.removeAttribute(ZH_ORIG_ATTR + '-al');
+  });
+  document.querySelectorAll('[' + ZH_ORIG_ATTR + '-ti]').forEach(el => {
+    el.setAttribute('title', el.getAttribute(ZH_ORIG_ATTR + '-ti'));
+    el.removeAttribute(ZH_ORIG_ATTR + '-ti');
+  });
+  document.documentElement.setAttribute('lang', 'zh-Hant');
+}
+
+/* 切換時呼叫：先恢復再轉換（避免重複轉換） */
+function applyZhModeToPage() {
+  restorePageToTrad();
+  if (getZhMode() === 'simp') {
+    convertPageToSimp();
+  }
+}
