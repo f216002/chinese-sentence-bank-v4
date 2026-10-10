@@ -240,12 +240,13 @@ function loadFullBank() {
    個人層（老師自己的句子／覆寫）仍走 Firestore（量小）。
    課程元數據（lesson/section 等）已在匯出時預解析，不用再帶 4MB 原文。 */
 const VBANK_DIR = 'v4-bank/';
-/* 六冊遷移 Storage（2026-10-09）：句庫本體改放 Firebase Storage（公開讀取），manifest 留 GitHub Pages。 */
-const VBANK_STORAGE_DIR = 'https://firebasestorage.googleapis.com/v0/b/my-chinese-sentence-bank-v3.firebasestorage.app/o/v4-bank%2F';
+/* 六冊遷移 Storage（2026-10-09）：句庫本體改放 Firebase Storage；2026-10-10 鎖死：
+   Storage 完全不公開，前端經 Cloud Function getBankFileUrl 驗證老師身份後拿下載票。
+   manifest 留 GitHub Pages（只含檔名與版本，無實際句庫內容）。 */
 /* ---- 第七冊《五百字說華語》中柬文版（2026-10-09） ----
    高棉文限定教材，不進公開 repo，放 Firebase Storage。
    Cheng 上傳後此 URL 生效；上傳路徑：v4-book7/v4-book7-km.json（公開讀取）。 */
-const BOOK7_URL = 'https://firebasestorage.googleapis.com/v0/b/my-chinese-sentence-bank-v3.firebasestorage.app/o/v4-book7%2Fv4-book7-km.json?alt=media&token=86cf0a27-f6c1-49e7-806e-0f933bf17623';
+/* BOOK7_URL 已退役（2026-10-10）：改走 getBankFileUrl 下載票，不再寫死 token。 */
 const BOOK7_VERSION = '20261010-02'; /* 第七冊更新時同步 bump，觸發 km 快取失效 */
 let vbankManifestCache = null;
 const vbankBankCache = {}; /* lang -> processed sentences */
@@ -286,21 +287,35 @@ function vbankRowToSentence(fields, row, lang) {
     _meta: { lesson: String(o.lesson || ''), section: o.section || '', speaker: o.speaker || '', pos: o.pos || '', zhuyin: o.zhuyin || '' },
   };
 }
+/* 經 Cloud Function 取得 Storage 檔案的下載票（2026-10-10，Storage 鎖死後專用）。
+   未登入或非核准老師會拋出錯誤，由呼叫方處理（顯示登入提示）。 */
+let _bankUrlFn = null;
+async function getBankFileUrl(path) {
+  if (!_bankUrlFn) {
+    _bankUrlFn = firebase.app().functions('us-east1').httpsCallable('getBankFileUrl', { timeout: 30000 });
+  }
+  const res = await _bankUrlFn({ path });
+  const url = res && res.data && res.data.url;
+  if (!url) throw new Error('no download url');
+  return url;
+}
 async function loadSharedBank(lang) {
   lang = lang || state.sourceLanguage || 'hi';
   if (vbankBankCache[lang]) return vbankBankCache[lang];
   const m = await vbankManifest();
   const file = (m.langs && m.langs[lang]) || (m.langs && m.langs.hi);
   if (!file) throw new Error('no bank file for ' + lang);
-  const r = await fetch(VBANK_STORAGE_DIR + file + '?alt=media');
+  const signedUrl = await getBankFileUrl('v4-bank/' + file);
+  const r = await fetch(signedUrl);
   if (!r.ok) throw new Error('bank file ' + r.status);
   analyticsMarkBankDownload(lang); /* 使用統計：本次真的下載了句庫檔（流量估算用） */
   const j = await r.json();
   const sentences = j.rows.map(row => vbankRowToSentence(j.f, row, lang));
-  /* 第七冊：高棉文模式時從 Storage 加載《五百字說華語》中柬文版（701–730）。 */
+  /* 第七冊：高棉文模式時經下載票加載《五百字說華語》中柬文版（701–730）。 */
   if (lang === 'km') {
     try {
-      const b7r = await fetch(BOOK7_URL, {cache: 'no-cache'});
+      const b7url = await getBankFileUrl('v4-book7/v4-book7-km.json');
+      const b7r = await fetch(b7url, {cache: 'no-cache'});
       if (b7r.ok) {
         const b7 = await b7r.json();
         (b7.rows || []).forEach(row => sentences.push(vbankRowToSentence(b7.f, row, 'km')));
