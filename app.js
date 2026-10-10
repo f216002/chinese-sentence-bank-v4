@@ -265,6 +265,7 @@ function vbankRowToSentence(fields, row, lang) {
     _owner: 'shared',
     recordId: o.id,
     sourceLanguage: lang,
+    vocabKind: o.vocabKind || '',
     hindiSentence: o.hindiSentence || '',
     chineseSentence: o.chineseSentence || '',
     pinyin: o.pinyin || '',
@@ -2223,7 +2224,7 @@ function lessonShortLabel(n) {
 }
 function bookTitle(n) {
   const b = bookOf(n);
-  if (b === 7) return '第七冊';
+  if (b === 7) return '五百字說華語';
   if (b === 6) return '第六冊';
   if (b === 5) return '第五冊';
   if (b === 4) return '第四冊';
@@ -6603,7 +6604,10 @@ function renderLessonView() {
 
   const tabs = $('lessonTabs');
   tabs.innerHTML = '';
-  COURSE_TABS.forEach(tab => {
+  /* 2026-10-10：溫習／應用只在第七冊顯示（六冊無此分頁，避免空分頁）。 */
+  const isBook7 = bookOf(courseState.lesson) === 7;
+  const visibleTabs = COURSE_TABS.filter(tab => isBook7 || (tab !== '溫習' && tab !== '應用'));
+  visibleTabs.forEach(tab => {
     const count = (bySection[tab] || []).length;
     const button = document.createElement('button');
     button.type = 'button';
@@ -7031,10 +7035,10 @@ function renderVocabTab(content, recs, lessonNum) {
     content.appendChild(head);
     const grid = document.createElement('div');
     grid.className = 'vocab-grid';
-    /* 生詞分組＝最小單元：小卡上方編號＋↑↓移動鈕排序。 */
+    /* 2026-10-10：第七冊單字用緊湊生詞卡，詞組／例句用完整句子卡（依 vocabKind 區分）。 */
     renderNumberedUnit(grid, groups[groupName], {
       unitKey: `L${lessonNum}_vocab_${groupName}`,
-      buildCard: (s) => createVocabCard(s)
+      buildCard: (s) => (s.vocabKind === 'phrase' ? createCard(s) : createVocabCard(s))
     });
     content.appendChild(grid);
   });
