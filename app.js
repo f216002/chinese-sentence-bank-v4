@@ -3422,7 +3422,8 @@ async function openSentenceModal(sentenceId) {
   }
   const body = $('sentenceModalBody');
   body.innerHTML = '';
-  const card = createCard(sentence, true);
+  /* preview=false：顯示編輯／刪除按鈕（只改老師個人帳號，不影響公版教材，與 1-7 冊規則一致） */
+  const card = createCard(sentence, false);
   body.appendChild(card);
   modal.classList.remove('hidden');
 }
