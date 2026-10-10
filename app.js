@@ -3324,6 +3324,15 @@ async function renderEbookPage() {
       const label = p.lesson ? `p${p.n}・HSK1第${p.lesson - 800}課` : `第 ${p.n} 頁`;
       pageOptions += `<option value="${idx}" ${idx === ebookState.pageIndex ? 'selected' : ''}>${label}</option>`;
     });
+    /* 判斷當前頁面屬於哪一課（往前找最近的課） */
+    let currentLesson = ebookState.lesson;
+    for (let i = ebookState.pageIndex; i >= 0; i--) {
+      if (ebookState.pages[i].lesson) {
+        currentLesson = ebookState.pages[i].lesson;
+        break;
+      }
+    }
+    const lessonLabelText = currentLesson >= 801 ? `HSK 1 第 ${currentLesson - 800} 課` : '';
     content.innerHTML = `
       <div class="ebook-viewer" id="ebookViewer">
         <div class="ebook-page">
@@ -3339,8 +3348,19 @@ async function renderEbookPage() {
           <button id="ebookNext" ${ebookState.pageIndex >= ebookState.pages.length - 1 ? 'disabled' : ''}>下一頁 →</button>
         </div>
       </div>
-      <p class="section-note" style="text-align:center;margin-top:12px;">點句子可看詳細解說 <span class="en-sub">Tap a sentence for details</span></p>
+      <div style="display:flex;justify-content:center;gap:12px;margin-top:12px;align-items:center;flex-wrap:wrap;">
+        <span class="section-note">目前：${lessonLabelText || `第 ${page.n} 頁`}</span>
+        <button class="secondary-button" id="ebookAddSentence">＋ 新增句子到${lessonLabelText || '本課'}</button>
+      </div>
+      <p class="section-note" style="text-align:center;margin-top:8px;">點句子可看詳細解說 <span class="en-sub">Tap a sentence for details</span></p>
     `;
+    /* 新增句子：歸到當前頁面所屬的課 */
+    const addBtn = $('ebookAddSentence');
+    if (addBtn) {
+      addBtn.addEventListener('click', () => {
+        goToAiFlowForSection(currentLesson, '補充');
+      });
+    }
     /* 選頁跳轉 */
     const pageSelect = $('ebookPageSelect');
     if (pageSelect) {
