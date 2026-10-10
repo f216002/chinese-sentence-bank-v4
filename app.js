@@ -1273,6 +1273,12 @@ function createCard(sentence, preview = false) {
   const hindiEl = node.querySelector('.hindi');
   hindiEl.textContent = displaySource(sentence);
   hindiEl.setAttribute('lang', cardProfile.locale);
+  /* 外語發音鈕：走 Azure TTS（2026-10-10 恢復）。 */
+  const foreignSpeak = node.querySelector('.speak-foreign-button');
+  if (foreignSpeak) {
+    foreignSpeak.title = '外語發音 (Azure) ' + cardProfile.name;
+    foreignSpeak.addEventListener('click', () => speakForeign(sentence, foreignSpeak));
+  }
   const roman = displayRoman(sentence);
   const romanLine = node.querySelector('.roman-hindi');
   romanLine.textContent = roman ? `${cardProfile.romanizationName}: ${roman}` : '';
@@ -1324,6 +1330,34 @@ function speakChinese(text, button) {
   utterance.onstart = () => button.classList.add('speaking');
   utterance.onend = utterance.onerror = () => button.classList.remove('speaking');
   speechSynthesis.speak(utterance);
+}
+
+/* 外語發音：經 Cloud Function synthesizeV4Source 走 Azure TTS（2026-10-10 恢復，Cheng 要求）。
+   中文仍用瀏覽器語音（speakChinese），外語才走 Azure。 */
+let _synthFn = null;
+async function speakForeign(sentence, button) {
+  const text = displaySource(sentence);
+  if (!text || !text.trim()) return;
+  const profile = displayProfile(sentence);
+  const locale = profile.locale || 'hi-IN';
+  button.disabled = true;
+  button.classList.add('speaking');
+  try {
+    if (!_synthFn) {
+      _synthFn = firebase.app().functions('us-east1').httpsCallable('synthesizeV4Source', { timeout: 60000 });
+    }
+    const res = await _synthFn({ locale, text: text.trim() });
+    const data = (res && res.data) || {};
+    if (!data.audioBase64) throw new Error('empty audio');
+    const url = 'data:' + (data.contentType || 'audio/mpeg') + ';base64,' + data.audioBase64;
+    const audio = new Audio(url);
+    audio.onended = audio.onerror = () => { button.classList.remove('speaking'); button.disabled = false; };
+    await audio.play();
+  } catch (err) {
+    button.classList.remove('speaking');
+    button.disabled = false;
+    alert('外語語音播放失敗：' + ((err && err.message) || '未知錯誤') + '\nForeign voice failed: ' + ((err && err.message) || 'unknown error'));
+  }
 }
 
 
