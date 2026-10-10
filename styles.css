@@ -359,3 +359,7 @@ button .en-sub { pointer-events: none; }
 /* 電子書選頁下拉（2026-10-10） */
 .ebook-page-select{padding:10px 16px;border:2px solid var(--teal);border-radius:20px;font-size:16px;background:#fff;color:#333;cursor:pointer;max-width:200px}
 .ebook-page-select:focus{outline:none;border-color:#0d7a6e}
+
+/* 雙模式切換按鈕（2026-10-10） */
+.view-mode-toggle{padding:8px 16px;border:2px solid var(--teal);border-radius:20px;font-size:14px;background:#fff;color:var(--teal);cursor:pointer;margin-left:12px;font-weight:600}
+.view-mode-toggle:hover{background:var(--teal);color:#fff}
