@@ -3229,14 +3229,22 @@ function openLesson(n) {
 }
 
 /* HSK 課程：載入句庫後用現有課程視圖顯示（2026-10-10，與 1-7 冊同功能）。 */
-/* HSK 電子書閱讀器（2026-10-10）：顯示課文頁圖片，點句子彈出句子卡。 */
-let ebookState = { lesson: 0, pageIndex: 0, pages: [], regions: [] };
+/* HSK 電子書閱讀器（2026-10-10）：整本書 150 頁，對話頁可點句子彈出句子卡。 */
+let ebookState = { lesson: 0, pageIndex: 0, pages: [], regions: [], bookPages: [] };
+let hskBookCache = null;
+async function loadHskBook() {
+  if (hskBookCache) return hskBookCache;
+  const url = await getBankFileUrl('v4-hsk/pages/hsk1-book.json');
+  const r = await fetch(url);
+  if (!r.ok) throw new Error('HSK book ' + r.status);
+  hskBookCache = await r.json();
+  return hskBookCache;
+}
 async function openHskEbook(n) {
   const view = $('lessonView');
   const grid = $('lessonGrid');
   if (view) view.classList.remove('hidden');
   if (grid) grid.classList.add('hidden');
-  /* 保留原有結構，只清空內容區，避免刪除 lessonBackButton */
   const header = $('lessonHeader');
   const tabs = $('lessonTabs');
   const content = $('lessonContent');
@@ -3244,38 +3252,28 @@ async function openHskEbook(n) {
   if (tabs) tabs.innerHTML = '';
   if (content) content.innerHTML = '<p class="section-note">載入電子書… <span class="en-sub">Loading e-book…</span></p>';
   try {
-    /* 並行載入：句庫＋頁面對應檔同時進行（2026-10-10 優化） */
-    const lessonNum = n - 800;
-    const pageFile = `v4-hsk/pages/hsk1-l${String(lessonNum).padStart(2, '0')}-pages.json`;
-    const [_, pageData] = await Promise.all([
+    /* 並行載入：句庫＋整本書目錄 */
+    const [_, book] = await Promise.all([
       loadHskBank(),
-      (async () => {
-        try {
-          const url = await getBankFileUrl(pageFile);
-          const r = await fetch(url);
-          if (r.ok) return await r.json();
-        } catch (e) { /* 沒有對應檔就用句子列表 */ }
-        return null;
-      })(),
+      loadHskBook(),
     ]);
-    if (pageData && pageData.pages && pageData.pages.length) {
-      ebookState = { lesson: n, pageIndex: 0, pages: pageData.pages, title: pageData.title };
-      /* 預載所有頁面圖片（目前只有一頁，未來多頁時也適用） */
-      pageData.pages.forEach(p => {
-        getBankFileUrl(p.image).then(url => {
-          const img = new Image();
-          img.src = url;
-        }).catch(() => {});
-      });
-      renderEbookPage();
-    } else {
-      /* 沒有電子書頁面時，退回句子列表 */
-      courseState.lesson = n; courseState.tab = '課文'; courseState.page = 'books';
-      renderLessonView();
+    /* 找到該課的第一頁 */
+    const lessonNum = n - 800;
+    let startIdx = 0;
+    book.pages.forEach((p, idx) => {
+      if (p.lesson === n && startIdx === 0) startIdx = idx;
+    });
+    ebookState = { lesson: n, pageIndex: startIdx, pages: book.pages, bookPages: book.pages, title: book.title };
+    /* 預載前後幾頁圖片 */
+    for (let i = Math.max(0, startIdx - 2); i < Math.min(book.pages.length, startIdx + 5); i++) {
+      getBankFileUrl(book.pages[i].image).then(url => {
+        const img = new Image(); img.src = url;
+      }).catch(() => {});
     }
+    renderEbookPage();
   } catch (e) {
-    const content = $('lessonContent');
-    if (content) content.innerHTML = `<p class="section-note">載入失敗：${escapeHtml(e.message)} <span class="en-sub">Load failed</span></p>`;
+    const content2 = $('lessonContent');
+    if (content2) content2.innerHTML = `<p class="section-note">載入失敗：${escapeHtml(e.message)} <span class="en-sub">Load failed</span></p>`;
   }
   const cs = $('courseSection');
   if (cs) cs.scrollIntoView({ behavior: 'smooth' });
@@ -3284,10 +3282,29 @@ async function renderEbookPage() {
   const page = ebookState.pages[ebookState.pageIndex];
   const imgUrl = await getBankFileUrl(page.image);
   const lesson = HSK_COURSE_LESSONS.find(l => l.n === ebookState.lesson);
+  /* 載入該頁的句子區域（如果有） */
+  let regions = [];
+  if (page.regions) {
+    try {
+      const url = await getBankFileUrl('v4-hsk/pages/' + page.regions);
+      const r = await fetch(url);
+      if (r.ok) {
+        const regionData = await r.json();
+        /* 找到對應頁面的區域 */
+        const pageNum = page.n;
+        regionData.pages.forEach(rp => {
+          /* 簡單匹配：取所有區域（目前每課的區域都在同一 JSON） */
+          if (rp.regions) regions = regions.concat(rp.regions);
+        });
+      }
+    } catch (e) { /* 沒有區域就純瀏覽 */ }
+  }
   let regionsHtml = '';
-  (page.regions || []).forEach((reg, i) => {
+  regions.forEach((reg, i) => {
     regionsHtml += `<div class="ebook-region" data-idx="${i}" style="left:${reg.x}%;top:${reg.y}%;width:${reg.w}%;height:${reg.h}%;" title="${escapeHtml(reg.zh)}"></div>`;
   });
+  /* 頁碼標籤：顯示書本頁碼和課名 */
+  const pageLabel = page.lesson ? `HSK 1 第 ${page.lesson - 800} 課` : `第 ${page.n} 頁`;
   /* 使用 lessonContent 區域，不破壞 lessonBackButton */
   const content = $('lessonContent');
   const header = $('lessonHeader');
@@ -3301,10 +3318,10 @@ async function renderEbookPage() {
   const tabs = $('lessonTabs');
   if (tabs) tabs.innerHTML = '';
   if (content) {
-    /* 頁碼選單：方便跳頁（2026-10-10，Cheng 要求） */
+    /* 頁碼選單：顯示書本頁碼，課文頁標註課名（2026-10-10，Cheng 要求方便選頁） */
     let pageOptions = '';
     ebookState.pages.forEach((p, idx) => {
-      const label = p.label || `第 ${idx + 1} 頁`;
+      const label = p.lesson ? `p${p.n}・HSK1第${p.lesson - 800}課` : `第 ${p.n} 頁`;
       pageOptions += `<option value="${idx}" ${idx === ebookState.pageIndex ? 'selected' : ''}>${label}</option>`;
     });
     content.innerHTML = `
@@ -3342,8 +3359,8 @@ async function renderEbookPage() {
     });
     content.querySelectorAll('.ebook-region').forEach(el => {
       el.addEventListener('click', () => {
-        const reg = page.regions[Number(el.dataset.idx)];
-        openSentenceModal(reg.sentenceId);
+        const reg = regions[Number(el.dataset.idx)];
+        if (reg) openSentenceModal(reg.sentenceId);
       });
     });
   }
@@ -3394,8 +3411,8 @@ function closeSentenceModal() {
   if (modal) modal.classList.add('hidden');
 }
 async function openHskLesson(n) {
-  /* 第一課有電子書，其他課用句子列表 */
-  if (n === 801) {
+  /* HSK 1 全 15 課都用電子書（2026-10-10，整本書上線） */
+  if (n >= 801 && n <= 815) {
     openHskEbook(n);
   } else {
     try {
