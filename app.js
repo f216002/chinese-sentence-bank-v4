@@ -3301,6 +3301,12 @@ async function renderEbookPage() {
   const tabs = $('lessonTabs');
   if (tabs) tabs.innerHTML = '';
   if (content) {
+    /* 頁碼選單：方便跳頁（2026-10-10，Cheng 要求） */
+    let pageOptions = '';
+    ebookState.pages.forEach((p, idx) => {
+      const label = p.label || `第 ${idx + 1} 頁`;
+      pageOptions += `<option value="${idx}" ${idx === ebookState.pageIndex ? 'selected' : ''}>${label}</option>`;
+    });
     content.innerHTML = `
       <div class="ebook-viewer" id="ebookViewer">
         <div class="ebook-page">
@@ -3309,12 +3315,23 @@ async function renderEbookPage() {
         </div>
         <div class="ebook-nav">
           <button id="ebookPrev" ${ebookState.pageIndex === 0 ? 'disabled' : ''}>← 上一頁</button>
+          <select id="ebookPageSelect" class="ebook-page-select" title="選擇頁面">
+            ${pageOptions}
+          </select>
           <span class="ebook-page-num">${ebookState.pageIndex + 1} / ${ebookState.pages.length}</span>
           <button id="ebookNext" ${ebookState.pageIndex >= ebookState.pages.length - 1 ? 'disabled' : ''}>下一頁 →</button>
         </div>
       </div>
       <p class="section-note" style="text-align:center;margin-top:12px;">點句子可看詳細解說 <span class="en-sub">Tap a sentence for details</span></p>
     `;
+    /* 選頁跳轉 */
+    const pageSelect = $('ebookPageSelect');
+    if (pageSelect) {
+      pageSelect.addEventListener('change', () => {
+        ebookState.pageIndex = Number(pageSelect.value);
+        renderEbookPage();
+      });
+    }
     const prevBtn = $('ebookPrev');
     const nextBtn = $('ebookNext');
     if (prevBtn && !prevBtn.disabled) prevBtn.addEventListener('click', () => {
