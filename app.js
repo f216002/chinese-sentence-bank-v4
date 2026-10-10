@@ -245,8 +245,8 @@ const VBANK_STORAGE_DIR = 'https://firebasestorage.googleapis.com/v0/b/my-chines
 /* ---- 第七冊《五百字說華語》中柬文版（2026-10-09） ----
    高棉文限定教材，不進公開 repo，放 Firebase Storage。
    Cheng 上傳後此 URL 生效；上傳路徑：v4-book7/v4-book7-km.json（公開讀取）。 */
-const BOOK7_URL = 'https://firebasestorage.googleapis.com/v0/b/my-chinese-sentence-bank-v3.firebasestorage.app/o/v4-book7%2Fv4-book7-km.json?alt=media&token=95ce39cf-8f9f-470d-8957-5dcaff44c1c0';
-const BOOK7_VERSION = '20261010-01'; /* 第七冊更新時同步 bump，觸發 km 快取失效 */
+const BOOK7_URL = 'https://firebasestorage.googleapis.com/v0/b/my-chinese-sentence-bank-v3.firebasestorage.app/o/v4-book7%2Fv4-book7-km.json?alt=media&token=86cf0a27-f6c1-49e7-806e-0f933bf17623';
+const BOOK7_VERSION = '20261010-02'; /* 第七冊更新時同步 bump，觸發 km 快取失效 */
 let vbankManifestCache = null;
 const vbankBankCache = {}; /* lang -> processed sentences */
 async function vbankManifest() {
