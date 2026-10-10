@@ -3286,7 +3286,8 @@ async function renderEbookPage() {
   if (tabs) tabs.innerHTML = '';
   if (content) {
     content.innerHTML = `
-      <div class="ebook-viewer">
+      <div class="ebook-viewer" id="ebookViewer">
+        <button class="ebook-fullscreen-btn" id="ebookFullscreen" title="全螢幕 Fullscreen">⛶</button>
         <div class="ebook-page">
           <img src="${imgUrl}" alt="課文頁" />
           ${regionsHtml}
@@ -3299,6 +3300,23 @@ async function renderEbookPage() {
       </div>
       <p class="section-note" style="text-align:center;margin-top:12px;">點句子可看詳細解說 <span class="en-sub">Tap a sentence for details</span></p>
     `;
+    /* 全螢幕切換 */
+    const fsBtn = $('ebookFullscreen');
+    const viewer = $('ebookViewer');
+    if (fsBtn && viewer) {
+      fsBtn.addEventListener('click', () => {
+        viewer.classList.toggle('fullscreen');
+        fsBtn.textContent = viewer.classList.contains('fullscreen') ? '⛶' : '⛶';
+        fsBtn.title = viewer.classList.contains('fullscreen') ? '退出全螢幕 Exit fullscreen' : '全螢幕 Fullscreen';
+      });
+      /* ESC 退出全螢幕 */
+      document.addEventListener('keydown', function escHandler(e) {
+        if (e.key === 'Escape' && viewer.classList.contains('fullscreen')) {
+          viewer.classList.remove('fullscreen');
+          document.removeEventListener('keydown', escHandler);
+        }
+      });
+    }
     const prevBtn = $('ebookPrev');
     const nextBtn = $('ebookNext');
     if (prevBtn && !prevBtn.disabled) prevBtn.addEventListener('click', () => {
@@ -3335,7 +3353,7 @@ async function openSentenceModal(sentenceId) {
     modal.id = 'sentenceModal';
     modal.className = 'sentence-modal hidden';
     modal.innerHTML = `
-      <div class="sentence-modal-content">
+      <div class="sentence-modal-content ebook-modal">
         <button class="sentence-modal-close" id="sentenceModalClose">✕</button>
         <div id="sentenceModalBody"></div>
       </div>
@@ -3345,6 +3363,10 @@ async function openSentenceModal(sentenceId) {
     modal.addEventListener('click', (e) => {
       if (e.target === modal) closeSentenceModal();
     });
+  } else {
+    /* 確保有放大樣式 */
+    const mc = modal.querySelector('.sentence-modal-content');
+    if (mc) mc.classList.add('ebook-modal');
   }
   const body = $('sentenceModalBody');
   body.innerHTML = '';
