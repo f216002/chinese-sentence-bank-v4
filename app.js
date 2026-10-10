@@ -2383,6 +2383,26 @@ const COURSE_LESSONS = [
   { n: 729, zh: '到海邊去', en: 'Going to the Beach', topic: '旅遊', book7: true },
   { n: 730, zh: '孩子多大了？', en: 'How Old Are the Children?', topic: '家庭', book7: true }
 ];
+/* HSK 課程（2026-10-10，大陸教材）。n=801-815 為 HSK 1。 */
+const HSK_COURSE_LESSONS = [
+  { n: 801, zh: '你好', en: 'Hello', topic: '問候', hsk: 1 },
+  { n: 802, zh: '谢谢你', en: 'Thank you', topic: '感謝', hsk: 1 },
+  { n: 803, zh: '你叫什么名字', en: "What's your name", topic: '姓名', hsk: 1 },
+  { n: 804, zh: '她是我的汉语老师', en: 'She is my Chinese teacher', topic: '介紹', hsk: 1 },
+  { n: 805, zh: '她女儿今年二十岁', en: 'Her daughter is 20 years old this year', topic: '年齡', hsk: 1 },
+  { n: 806, zh: '我会说汉语', en: 'I can speak Chinese', topic: '語言', hsk: 1 },
+  { n: 807, zh: '今天几号', en: "What's the date today", topic: '日期', hsk: 1 },
+  { n: 808, zh: '我想喝茶', en: "I'd like some tea", topic: '飲食', hsk: 1 },
+  { n: 809, zh: '你儿子在哪儿工作', en: 'Where does your son work', topic: '工作', hsk: 1 },
+  { n: 810, zh: '我能坐这儿吗', en: 'Can I sit here', topic: '請求', hsk: 1 },
+  { n: 811, zh: '现在几点', en: "What's the time now", topic: '時間', hsk: 1 },
+  { n: 812, zh: '明天天气怎么样', en: 'What will the weather be like tomorrow', topic: '天氣', hsk: 1 },
+  { n: 813, zh: '他在学做中国菜呢', en: 'He is learning to cook Chinese food', topic: '學習', hsk: 1 },
+  { n: 814, zh: '她买了不少衣服', en: 'She has bought quite a few clothes', topic: '購物', hsk: 1 },
+  { n: 815, zh: '我是坐飞机来的', en: 'I came here by air', topic: '交通', hsk: 1 },
+];
+/* 合併到 COURSE_LESSONS，方便現有課程邏輯直接使用。 */
+HSK_COURSE_LESSONS.forEach(l => COURSE_LESSONS.push(l));
 const COURSE_TABS = ['課文', '生詞', '語法', '練習', '文化', '溫習', '應用', '補充'];
 /* 分頁籤顯示用英文（內部 key 保持中文）。 */
 const COURSE_TAB_EN = { '課文': 'Text', '生詞': 'Vocabulary', '語法': 'Grammar', '練習': 'Practice', '文化': 'Culture', '溫習': 'Review', '應用': 'Application', '補充': 'Supplement' };
@@ -2824,8 +2844,24 @@ window.addEventListener('v4-access-changed', () => {
   if (typeof refreshPersonalLayer === 'function') refreshPersonalLayer();
 });
 
+/* HSK 句庫載入（2026-10-10）：大陸教材專用，格式相容 v4-bank。 */
+let hskBankCache = null;
+async function loadHskBank() {
+  if (hskBankCache) return hskBankCache;
+  const url = await getBankFileUrl('v4-hsk/v4-hsk1-bank.json');
+  const r = await fetch(url);
+  if (!r.ok) throw new Error('HSK bank ' + r.status);
+  const data = await r.json();
+  const fields = Object.keys(data.f).sort((a, b) => data.f[a] - data.f[b]);
+  hskBankCache = data.rows.map(row => vbankRowToSentence(fields, row, state.sourceLanguage || 'hi'));
+  return hskBankCache;
+}
 function lessonRecords(n) {
   const key = String(n);
+  /* HSK 課程（801-815）：從 HSK 快取取，否則從主句庫取。 */
+  if (n >= 801 && n <= 815 && hskBankCache) {
+    return hskBankCache.filter(s => courseMeta(s).lesson === key);
+  }
   return state.sentences.filter(s => courseMeta(s).lesson === key);
 }
 
@@ -3078,31 +3114,23 @@ function renderBooksGrid() {
     });
   });
   grid.appendChild(setTabs);
-  /* 大陸冊：HSK 教材（2026-10-10，HSK 1 已上架） */
+  /* 大陸冊：HSK 教材（2026-10-10，HSK 1 已上架，與 1-7 冊同功能）。 */
   if (state.bookSet === 'cn') {
-    if (typeof HSK_LESSONS !== 'undefined') {
-      const hskDivider = document.createElement('div');
-      hskDivider.className = 'book-divider';
-      hskDivider.textContent = zhConvert('HSK 1');
-      grid.appendChild(hskDivider);
-      HSK_LESSONS.forEach(lesson => {
-        const card = document.createElement('button');
-        card.className = 'lesson-card';
-        card.innerHTML = `
-          <span class="lesson-n">HSK 1 第 ${lesson.n - 800} 課</span>
-          <span class="lesson-zh" lang="${getZhMode() === 'simp' ? 'zh-Hans' : 'zh-Hant'}">${escapeHtml(zhConvert(lesson.zh))}</span>
-          <span class="lesson-en">${escapeHtml(lesson.en)}</span>
-        `;
-        card.addEventListener('click', () => openHskLesson(lesson.n));
-        grid.appendChild(card);
-      });
-    } else {
-      const note = document.createElement('div');
-      note.className = 'section-note';
-      note.style.cssText = 'text-align:center;padding:40px 20px;';
-      note.innerHTML = '大陸 HSK 教材建置中 <span class="en-sub">HSK materials coming soon</span>';
-      grid.appendChild(note);
-    }
+    const hskDivider = document.createElement('div');
+    hskDivider.className = 'book-divider';
+    hskDivider.textContent = 'HSK 1';
+    grid.appendChild(hskDivider);
+    HSK_COURSE_LESSONS.forEach(lesson => {
+      const card = document.createElement('button');
+      card.className = 'lesson-card';
+      card.innerHTML = `
+        <span class="lesson-n">HSK 1 第 ${lesson.n - 800} 課</span>
+        <span class="lesson-zh" lang="${getZhMode() === 'simp' ? 'zh-Hans' : 'zh-Hant'}">${escapeHtml(zhConvert(lesson.zh))}</span>
+        <span class="lesson-en">${escapeHtml(lesson.en)}</span>
+      `;
+      card.addEventListener('click', () => openHskLesson(lesson.n));
+      grid.appendChild(card);
+    });
     return;
   }
   let lastBook = 0;
@@ -3194,54 +3222,21 @@ function openLesson(n) {
   $('courseSection').scrollIntoView({ behavior: 'smooth' });
 }
 
-/* HSK 課程：載入句庫並顯示句子卡（2026-10-10） */
-let hskCache = null;
-async function loadHskData() {
-  if (hskCache) return hskCache;
-  const url = await getBankFileUrl('v4-hsk/v4-hsk1.json');
-  const r = await fetch(url);
-  if (!r.ok) throw new Error('HSK data ' + r.status);
-  hskCache = await r.json();
-  return hskCache;
-}
+/* HSK 課程：載入句庫後用現有課程視圖顯示（2026-10-10，與 1-7 冊同功能）。 */
 async function openHskLesson(n) {
-  const lesson = HSK_LESSONS.find(l => l.n === n);
-  if (!lesson) return;
-  $('lessonView').classList.remove('hidden');
-  $('lessonGrid').classList.add('hidden');
-  const view = $('lessonView');
-  view.innerHTML = '<p class="section-note">載入中… <span class="en-sub">Loading…</span></p>';
   try {
-    const data = await loadHskData();
-    const f = data.f;
-    const sentences = data.rows.filter(row => row[f.lesson] === n);
-    let html = `
-      <button class="back-button" id="hskBack">← 回課程總覽</button>
-      <h2>${escapeHtml(zhConvert(lesson.zh))}</h2>
-      <p class="lesson-en">${escapeHtml(lesson.en)}</p>
-      <p class="section-note">HSK 1 第 ${n - 800} 課・共 ${sentences.length} 句</p>
-      <div class="sentence-list">
-    `;
-    sentences.forEach(s => {
-      html += `
-        <article class="sentence-card">
-          <div class="chinese-row"><h3 class="chinese" lang="${getZhMode() === 'simp' ? 'zh-Hans' : 'zh-Hant'}">${escapeHtml(zhConvert(s[f.chineseSentence]))}</h3></div>
-          <p class="pinyin">${escapeHtml(s[f.pinyin] || '')}</p>
-          <p class="hindi">${escapeHtml(s[f.en] || '')}</p>
-        </article>
-      `;
-    });
-    html += '</div>';
-    view.innerHTML = html;
-    $('hskBack').addEventListener('click', () => {
-      view.classList.add('hidden');
-      renderBooksGrid();
-    });
-    if (getZhMode() === 'simp') setTimeout(applyZhModeToPage, 100);
+    await loadHskBank();
+    courseState.lesson = n;
+    courseState.tab = '課文';
+    courseState.page = 'books';
+    renderLessonView();
+    $('courseSection').scrollIntoView({ behavior: 'smooth' });
   } catch (e) {
+    const view = $('lessonView');
+    view.classList.remove('hidden');
+    $('lessonGrid').classList.add('hidden');
     view.innerHTML = `<p class="section-note">載入失敗：${escapeHtml(e.message)} <span class="en-sub">Load failed</span></p>`;
   }
-  $('courseSection').scrollIntoView({ behavior: 'smooth' });
 }
 
 /* 歌曲內頁：上方 MV 播放器（可全螢幕）＋下方逐句歌詞卡片。 */
