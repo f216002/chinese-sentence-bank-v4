@@ -386,7 +386,8 @@ const AI_PROMPT = `You are a Taiwanese Mandarin teacher for a Hindi-speaking beg
 
 
 const state = { sentences: [], hiddenShared: [], categories: [], selectedCategories: new Set(), settings: {}, preview: null, sourceLanguage: 'hi', bankVersion: null, unitOrders: {},
-  bookSet: (() => { try { return localStorage.getItem('v4_bookset') || 'tw'; } catch(e) { return 'tw'; } })() };
+  bookSet: (() => { try { return localStorage.getItem('v4_bookset') || 'tw'; } catch(e) { return 'tw'; } })(),
+  textbookMode: (() => { try { return localStorage.getItem('textbookMode') || null; } catch(e) { return null; } })() };
 const $ = (id) => document.getElementById(id);
 /* Bilingual UI helper: Chinese (primary) + English (secondary, smaller). */
 /* 中文為主的雙語無障礙標籤，例如：播放德文發音 (Play German pronunciation) */
@@ -3108,7 +3109,7 @@ function makeHomeBackButton() {
   return row;
 }
 
-/* 中文課本頁：六冊課程卡（歌曲區已移至中文歌曲頁）。 */
+/* 中文課本頁：先選模式（電子書/課程列表），再選書冊（2026-10-10 Cheng 要求重構） */
 function renderBooksGrid() {
   $('lessonView').classList.add('hidden');
   const grid = $('lessonGrid');
@@ -3119,6 +3120,56 @@ function renderBooksGrid() {
   divider.className = 'book-divider';
   divider.textContent = '中文課本';
   grid.appendChild(divider);
+
+  /* 步驟一：選擇模式（如果還沒選） */
+  if (!state.textbookMode) {
+    const modeCards = document.createElement('div');
+    modeCards.className = 'mode-select-cards';
+    modeCards.innerHTML = `
+      <button type="button" class="mode-card" data-mode="ebook">
+        <span class="mode-icon">📖</span>
+        <span class="mode-title">電子書模式</span>
+        <span class="mode-desc">整本翻閱，點句子彈卡片 <span class="en-sub">E-book</span></span>
+      </button>
+      <button type="button" class="mode-card" data-mode="list">
+        <span class="mode-icon">📝</span>
+        <span class="mode-title">課程列表模式</span>
+        <span class="mode-desc">課文/生詞/語法/文化分頁 <span class="en-sub">Lesson list</span></span>
+      </button>
+    `;
+    modeCards.querySelectorAll('.mode-card').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.textbookMode = btn.dataset.mode;
+        try { localStorage.setItem('textbookMode', state.textbookMode); } catch (e) {}
+        renderBooksGrid();
+      });
+    });
+    grid.appendChild(modeCards);
+    return;
+  }
+
+  /* 模式已選：顯示切換按鈕 + 書冊選擇 */
+  const modeBar = document.createElement('div');
+  modeBar.className = 'textbook-mode-bar';
+  modeBar.innerHTML = `
+    <span class="mode-label">模式：</span>
+    <button type="button" class="mode-toggle ${state.textbookMode === 'ebook' ? 'active' : ''}" data-mode="ebook">📖 電子書</button>
+    <button type="button" class="mode-toggle ${state.textbookMode === 'list' ? 'active' : ''}" data-mode="list">📝 課程列表</button>
+    <button type="button" class="mode-reset" title="重新選擇模式">↺</button>
+  `;
+  modeBar.querySelectorAll('.mode-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.textbookMode = btn.dataset.mode;
+      try { localStorage.setItem('textbookMode', state.textbookMode); } catch (e) {}
+      renderBooksGrid();
+    });
+  });
+  modeBar.querySelector('.mode-reset').addEventListener('click', () => {
+    state.textbookMode = null;
+    try { localStorage.removeItem('textbookMode'); } catch (e) {}
+    renderBooksGrid();
+  });
+  grid.appendChild(modeBar);
   /* 台灣／大陸教材切換（2026-10-10，Cheng 要求） */
   const setTabs = document.createElement('div');
   setTabs.className = 'bookset-tabs';
@@ -3184,15 +3235,9 @@ function renderBooksGrid() {
     card.setAttribute('aria-label', `${lessonLabel(lesson.n)} ${zhConvert(lesson.zh)}`);
     if (recs.length) {
       card.addEventListener('click', () => {
-        /* 台灣第一冊（101-115）：依老師偏好進入電子書或課文列表（2026-10-10 雙模式） */
-        if (hasEbook(lesson.n)) {
-          const mode = getPreferredViewMode(lesson.n);
-          courseState.viewMode = mode;
-          if (mode === 'ebook') {
-            openTw1Ebook(lesson.n);
-          } else {
-            courseState.lesson = lesson.n; courseState.tab = '課文'; courseState.page = 'books'; renderLessonView();
-          }
+        /* 雙模式（2026-10-10）：有電子書的課依 state.textbookMode 決定進入哪種視圖 */
+        if (hasEbook(lesson.n) && state.textbookMode === 'ebook') {
+          openTw1Ebook(lesson.n);
         } else {
           courseState.lesson = lesson.n; courseState.tab = '課文'; courseState.page = 'books'; renderLessonView();
         }
@@ -3350,7 +3395,8 @@ async function renderEbookPage() {
     const toListBtn = $('ebookToListBtn');
     if (toListBtn) {
       toListBtn.addEventListener('click', () => {
-        setPreferredViewMode('list');
+        state.textbookMode = 'list';
+        try { localStorage.setItem('textbookMode', 'list'); } catch (e) {}
         courseState.lesson = ebookState.lesson;
         courseState.tab = '課文';
         courseState.page = 'books';
@@ -7051,7 +7097,8 @@ function renderLessonView() {
   const toEbookBtn = $('listToEbookBtn');
   if (toEbookBtn) {
     toEbookBtn.addEventListener('click', () => {
-      setPreferredViewMode('ebook');
+      state.textbookMode = 'ebook';
+      try { localStorage.setItem('textbookMode', 'ebook'); } catch (e) {}
       openTw1Ebook(courseState.lesson);
     });
   }
