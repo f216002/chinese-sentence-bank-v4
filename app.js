@@ -3223,19 +3223,131 @@ function openLesson(n) {
 }
 
 /* HSK 課程：載入句庫後用現有課程視圖顯示（2026-10-10，與 1-7 冊同功能）。 */
-async function openHskLesson(n) {
+/* HSK 電子書閱讀器（2026-10-10）：顯示課文頁圖片，點句子彈出句子卡。 */
+let ebookState = { lesson: 0, pageIndex: 0, pages: [], regions: [] };
+async function openHskEbook(n) {
+  const view = $('lessonView');
+  view.classList.remove('hidden');
+  $('lessonGrid').classList.add('hidden');
+  view.innerHTML = '<p class="section-note">載入電子書… <span class="en-sub">Loading e-book…</span></p>';
   try {
     await loadHskBank();
-    courseState.lesson = n;
-    courseState.tab = '課文';
-    courseState.page = 'books';
-    renderLessonView();
-    $('courseSection').scrollIntoView({ behavior: 'smooth' });
+    /* 載入頁面對應檔（目前只有第一課有） */
+    const lessonNum = n - 800;
+    const pageFile = `v4-hsk/pages/hsk1-l${String(lessonNum).padStart(2, '0')}-pages.json`;
+    let pageData = null;
+    try {
+      const url = await getBankFileUrl(pageFile);
+      const r = await fetch(url);
+      if (r.ok) pageData = await r.json();
+    } catch (e) { /* 沒有對應檔就用句子列表 */ }
+    if (pageData && pageData.pages && pageData.pages.length) {
+      ebookState = { lesson: n, pageIndex: 0, pages: pageData.pages, title: pageData.title };
+      renderEbookPage();
+    } else {
+      /* 沒有電子書頁面時，退回句子列表 */
+      courseState.lesson = n; courseState.tab = '課文'; courseState.page = 'books';
+      renderLessonView();
+    }
   } catch (e) {
-    const view = $('lessonView');
-    view.classList.remove('hidden');
-    $('lessonGrid').classList.add('hidden');
     view.innerHTML = `<p class="section-note">載入失敗：${escapeHtml(e.message)} <span class="en-sub">Load failed</span></p>`;
+  }
+  $('courseSection').scrollIntoView({ behavior: 'smooth' });
+}
+async function renderEbookPage() {
+  const view = $('lessonView');
+  const page = ebookState.pages[ebookState.pageIndex];
+  const imgUrl = await getBankFileUrl(page.image);
+  const lesson = HSK_COURSE_LESSONS.find(l => l.n === ebookState.lesson);
+  let regionsHtml = '';
+  (page.regions || []).forEach((reg, i) => {
+    regionsHtml += `<div class="ebook-region" data-idx="${i}" style="left:${reg.x}%;top:${reg.y}%;width:${reg.w}%;height:${reg.h}%;" title="${escapeHtml(reg.zh)}"></div>`;
+  });
+  view.innerHTML = `
+    <button class="back-button" id="ebookBack">← 回課程總覽</button>
+    <h2>${escapeHtml(lesson ? lesson.zh : '')} <span class="en-sub">電子書 E-book</span></h2>
+    <div class="ebook-viewer">
+      <div class="ebook-page">
+        <img src="${imgUrl}" alt="課文頁" />
+        ${regionsHtml}
+      </div>
+      <div class="ebook-nav">
+        <button id="ebookPrev" ${ebookState.pageIndex === 0 ? 'disabled' : ''}>← 上一頁</button>
+        <span class="ebook-page-num">${ebookState.pageIndex + 1} / ${ebookState.pages.length}</span>
+        <button id="ebookNext" ${ebookState.pageIndex >= ebookState.pages.length - 1 ? 'disabled' : ''}>下一頁 →</button>
+      </div>
+    </div>
+    <p class="section-note" style="text-align:center;margin-top:12px;">點句子可看詳細解說 <span class="en-sub">Tap a sentence for details</span></p>
+  `;
+  $('ebookBack').addEventListener('click', () => {
+    view.classList.add('hidden');
+    renderBooksGrid();
+  });
+  const prevBtn = $('ebookPrev');
+  const nextBtn = $('ebookNext');
+  if (prevBtn && !prevBtn.disabled) prevBtn.addEventListener('click', () => {
+    ebookState.pageIndex--; renderEbookPage();
+  });
+  if (nextBtn && !nextBtn.disabled) nextBtn.addEventListener('click', () => {
+    ebookState.pageIndex++; renderEbookPage();
+  });
+  view.querySelectorAll('.ebook-region').forEach(el => {
+    el.addEventListener('click', () => {
+      const reg = page.regions[Number(el.dataset.idx)];
+      openSentenceModal(reg.sentenceId);
+    });
+  });
+}
+/* 句子卡彈窗：用現有 createCard 渲染，關閉回到電子書。 */
+async function openSentenceModal(sentenceId) {
+  /* 從 HSK 快取找句子 */
+  const sentence = hskBankCache.find(s => s.recordId === sentenceId);
+  if (!sentence) return;
+  let modal = $('sentenceModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'sentenceModal';
+    modal.className = 'sentence-modal hidden';
+    modal.innerHTML = `
+      <div class="sentence-modal-content">
+        <button class="sentence-modal-close" id="sentenceModalClose">✕</button>
+        <div id="sentenceModalBody"></div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    $('sentenceModalClose').addEventListener('click', closeSentenceModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeSentenceModal();
+    });
+  }
+  const body = $('sentenceModalBody');
+  body.innerHTML = '';
+  const card = createCard(sentence, true);
+  body.appendChild(card);
+  modal.classList.remove('hidden');
+}
+function closeSentenceModal() {
+  const modal = $('sentenceModal');
+  if (modal) modal.classList.add('hidden');
+}
+async function openHskLesson(n) {
+  /* 第一課有電子書，其他課用句子列表 */
+  if (n === 801) {
+    openHskEbook(n);
+  } else {
+    try {
+      await loadHskBank();
+      courseState.lesson = n;
+      courseState.tab = '課文';
+      courseState.page = 'books';
+      renderLessonView();
+      $('courseSection').scrollIntoView({ behavior: 'smooth' });
+    } catch (e) {
+      const view = $('lessonView');
+      view.classList.remove('hidden');
+      $('lessonGrid').classList.add('hidden');
+      view.innerHTML = `<p class="section-note">載入失敗：${escapeHtml(e.message)} <span class="en-sub">Load failed</span></p>`;
+    }
   }
 }
 
