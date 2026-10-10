@@ -323,3 +323,4 @@ button .en-sub { pointer-events: none; }
 .mr-speaker{font-size:26px}
 .mr-pinyin{font-size:30px;margin:10px 0 0}
 .home-option-en{display:block;font-size:18px;color:#8a7f6a;margin-top:-4px}
+.speak-foreign-button{flex:none;width:38px;height:38px;border:0;border-radius:50%;background:#e5f2ee;color:var(--teal);cursor:pointer;font-size:14px}.speak-foreign-button.speaking{animation:pulse 1s infinite}.speak-foreign-button:disabled{opacity:.5;cursor:wait}
