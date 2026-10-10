@@ -1181,12 +1181,9 @@ async function submitEdit() {
     romanHindi: $('editRoman').value.trim(),
     hindiExplanation: $('editExplanation').value.trim(),
   };
-  const editRequired = [[editSaveProfile.name, edited.hindiSentence], ['Chinese', edited.chineseSentence], ['Pinyin', edited.pinyin], ['Explanation', edited.hindiExplanation]];
-  if (editSaveProfile.requiresRomanization) editRequired.splice(3, 0, [editSaveProfile.romanizationName, edited.romanHindi]);
-  const missing = editRequired
-    .filter(([, value]) => !value).map(([label]) => label);
-  if (missing.length) { setBilingualText($('editMessage'), `請補填：${missing.join('、')}。`, `Please fill in: ${missing.join(', ')}.`); return; }
-  const exactDupe = state.sentences.find(s => s.recordId !== original.recordId && (s.chineseSentence || '').trim() === edited.chineseSentence);
+  /* 2026-10-10：允許空白欄位儲存（老師可能只改部分欄位，如第七冊解說尚未補上時）。
+     重複檢查保留（資料完整性）。 */
+  const exactDupe = state.sentences.find(s => s.recordId !== original.recordId && (s.chineseSentence || '').trim() === edited.chineseSentence && edited.chineseSentence);
   if (exactDupe) { setBilingualText($('editMessage'), `已擋下：這個中文句子已存在（記錄 ${exactDupe.recordId || '另一筆記錄'}）。`, `Blocked: this Chinese sentence already exists as record ${exactDupe.recordId || 'another record'}.`); return; }
 
   const button = $('confirmEdit');
