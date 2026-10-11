@@ -3386,10 +3386,17 @@ async function renderEbookPage() {
         const regionData = await r.json();
         /* 找到對應頁面的區域：用 pdf 精確匹配（2026-10-10 修復：之前會把整課所有頁的框全疊上來） */
         regionData.pages.forEach(rp => {
-          /* TW1 有 pdf 欄位，直接比對；HSK 無 pdf 則比對 n（課內頁序） */
-          const match = (rp.pdf !== undefined && page.pdf !== undefined)
-            ? (rp.pdf === page.pdf)
-            : (rp.n === page.n);
+          /* TW1/TW2 有 pdf 欄位，直接比對；
+             HSK 無 pdf：book 頁用 regions 指標指向整課檔案，直接取該檔案所有區域（2026-10-11 修復 HSK 點擊失效） */
+          let match = false;
+          if (rp.pdf !== undefined && page.pdf !== undefined) {
+            match = (rp.pdf === page.pdf);
+          } else if (page.regions && !rp.pdf) {
+            /* HSK：book 頁有 regions 指標，該檔案的所有區域都屬於此頁 */
+            match = true;
+          } else {
+            match = (rp.n === page.n);
+          }
           if (match && rp.regions) regions = regions.concat(rp.regions);
         });
       }
