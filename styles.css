@@ -379,3 +379,21 @@ button .en-sub { pointer-events: none; }
 .mode-toggle.active{border-color:var(--teal);background:var(--teal);color:#fff;font-weight:600}
 .mode-reset{padding:8px 12px;border:none;background:none;font-size:18px;cursor:pointer;color:#999}
 .mode-reset:hover{color:var(--teal)}
+
+/* 電子書側邊箭頭（2026-10-11） */
+.ebook-viewer{position:relative}
+.ebook-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:10;width:56px;height:80px;border:none;background:rgba(255,255,255,.85);color:var(--teal);font-size:48px;font-weight:300;line-height:1;cursor:pointer;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.15);transition:all .2s}
+.ebook-arrow:hover:not(:disabled){background:var(--teal);color:#fff}
+.ebook-arrow:disabled{opacity:.25;cursor:not-allowed}
+.ebook-arrow-left{left:12px}
+.ebook-arrow-right{right:12px}
+
+/* 翻頁動畫（2026-10-11） */
+.ebook-page{position:relative;overflow:hidden}
+.ebook-page.flip-next{animation:flipNext .35s ease-out}
+.ebook-page.flip-prev{animation:flipPrev .35s ease-out}
+@keyframes flipNext{0%{transform:translateX(40px);opacity:0}100%{transform:translateX(0);opacity:1}}
+@keyframes flipPrev{0%{transform:translateX(-40px);opacity:0}100%{transform:translateX(0);opacity:1}}
+
+/* 底部導航列調整（移除按鈕後置中） */
+.ebook-nav{justify-content:center;gap:16px}
