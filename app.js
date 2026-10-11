@@ -3433,7 +3433,8 @@ async function renderEbookPage() {
       let label;
       if (p.lesson) {
         if (p.lesson >= 801) label = `p${p.n}・HSK1第${p.lesson - 800}課`;
-        else label = `p${p.n}・第${p.lesson - 100}課`;
+        else if (p.lesson >= 101) label = `p${p.n}・第${p.lesson - 100}課`;
+        else label = `p${p.n}・第${p.lesson}課`;
       } else {
         label = `第 ${p.n} 頁`;
       }
