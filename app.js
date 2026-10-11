@@ -3522,9 +3522,18 @@ async function openSentenceModal(sentenceId, fallbackZh) {
   /* 從對應的句庫找句子：HSK 用 hskBankCache，台灣冊用 state.sentences */
   let sentence = null;
   if (ebookState.isTw1 || ebookState.isTw2) {
-    /* 優先用中文匹配（2026-10-11：ID 系統不一致，中文最可靠） */
+    /* 優先用中文+課別匹配（2026-10-11：避免同句多課重複導致錯位） */
     if (fallbackZh) {
-      sentence = state.sentences.find(s => s.chineseSentence === fallbackZh);
+      const lessonN = ebookState.lesson;
+      /* 先嘗試精確匹配中文+課別 */
+      sentence = state.sentences.find(s => 
+        s.chineseSentence === fallbackZh && 
+        s.tags && s.tags.includes(`第${lessonN >= 101 ? lessonN - 100 : lessonN}課`)
+      );
+      /* 找不到再只用中文匹配 */
+      if (!sentence) {
+        sentence = state.sentences.find(s => s.chineseSentence === fallbackZh);
+      }
     }
     /* 中文找不到才用 ID */
     if (!sentence) {
