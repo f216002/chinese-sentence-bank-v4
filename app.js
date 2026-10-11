@@ -2821,8 +2821,8 @@ function songLineToSentence(song, line, idx) {
 const courseState = { lesson: 0, tab: '課文', song: null, ritual: null, ritualGroup: null, page: 'home', viewMode: 'list' };
 /* 電子書可用性檢查（2026-10-10）：台灣第一冊 101-115 有電子書 */
 function hasEbook(lessonN) {
-  /* 台灣第1冊 101-115、第2冊 1-15；第7冊 701-730 僅高棉文模式 */
-  if ((lessonN >= 101 && lessonN <= 115) || (lessonN >= 1 && lessonN <= 15)) return true;
+  /* 台灣第1冊 101-115、第2冊 1-15、第3冊 201-212；第7冊 701-730 僅高棉文模式 */
+  if ((lessonN >= 101 && lessonN <= 115) || (lessonN >= 1 && lessonN <= 15) || (lessonN >= 201 && lessonN <= 212)) return true;
   if (lessonN >= 701 && lessonN <= 730 && (state.sourceLanguage || 'hi') === 'km') return true;
   return false;
 }
@@ -3244,6 +3244,8 @@ function renderBooksGrid() {
             openTw1Ebook(lesson.n);
           } else if (lesson.n >= 1 && lesson.n <= 15) {
             openTw2Ebook(lesson.n);
+          } else if (lesson.n >= 201 && lesson.n <= 212) {
+            openTw3Ebook(lesson.n);
           } else if (lesson.n >= 701 && lesson.n <= 730) {
             openB7Ebook(lesson.n);
           }
@@ -3384,7 +3386,7 @@ async function renderEbookPage() {
   let regions = [];
   if (page.regions) {
     try {
-      const basePath = ebookState.isTw1 ? 'v4-book-tw1/pages/' : (ebookState.isTw2 ? 'v4-book-tw2/pages/' : (ebookState.isB7 ? 'v4-book7/pages/' : 'v4-hsk/pages/'));
+      const basePath = ebookState.isTw1 ? 'v4-book-tw1/pages/' : (ebookState.isTw2 ? 'v4-book-tw2/pages/' : (ebookState.isTw3 ? 'v4-book-tw3/pages/' : (ebookState.isB7 ? 'v4-book7/pages/' : 'v4-hsk/pages/')));
       const url = await getBankFileUrl(basePath + page.regions);
       const r = await fetch(url);
       if (r.ok) {
@@ -3533,14 +3535,15 @@ async function renderEbookPage() {
 async function openSentenceModal(sentenceId, fallbackZh) {
   /* 從對應的句庫找句子：HSK 用 hskBankCache，台灣冊用 state.sentences */
   let sentence = null;
-  if (ebookState.isTw1 || ebookState.isTw2 || ebookState.isB7) {
+  if (ebookState.isTw1 || ebookState.isTw2 || ebookState.isTw3 || ebookState.isB7) {
     /* 優先用中文+課別匹配（2026-10-11：避免同句多課重複導致錯位） */
     if (fallbackZh) {
       const lessonN = ebookState.lesson;
       /* 先嘗試精確匹配中文+課別 */
+      const displayLesson = lessonN >= 701 ? lessonN - 700 : (lessonN >= 201 ? lessonN - 200 : (lessonN >= 101 ? lessonN - 100 : lessonN));
       sentence = state.sentences.find(s => 
         s.chineseSentence === fallbackZh && 
-        s.tags && s.tags.includes(`第${lessonN >= 101 ? lessonN - 100 : lessonN}課`)
+        s.tags && s.tags.includes(`第${displayLesson}課`)
       );
       /* 找不到再只用中文匹配 */
       if (!sentence) {
@@ -3699,6 +3702,47 @@ async function openB7Ebook(n) {
       if (p.lesson === n && startIdx === 0) startIdx = idx;
     });
     ebookState = { lesson: n, pageIndex: startIdx, pages: book.pages, bookPages: book.pages, title: book.title, isB7: true };
+    for (let i = Math.max(0, startIdx - 2); i < Math.min(book.pages.length, startIdx + 5); i++) {
+      getBankFileUrl(book.pages[i].image).then(url => {
+        const img = new Image(); img.src = url;
+      }).catch(() => {});
+    }
+    renderEbookPage();
+  } catch (e) {
+    const content2 = $('lessonContent');
+    if (content2) content2.innerHTML = `<p class="section-note">載入失敗：${escapeHtml(e.message)} <span class="en-sub">Load failed</span></p>`;
+  }
+  const cs = $('courseSection');
+  if (cs) cs.scrollIntoView({ behavior: 'smooth' });
+}
+/* 台灣第三冊電子書（2026-10-11）：課號 201-212 */
+let tw3BookCache = null;
+async function loadTw3Book() {
+  if (tw3BookCache) return tw3BookCache;
+  const url = await getBankFileUrl('v4-book-tw3/pages/tw3-book.json');
+  const r = await fetch(url);
+  if (!r.ok) throw new Error('TW3 book ' + r.status);
+  tw3BookCache = await r.json();
+  return tw3BookCache;
+}
+async function openTw3Ebook(n) {
+  const view = $('lessonView');
+  const grid = $('lessonGrid');
+  if (view) view.classList.remove('hidden');
+  if (grid) grid.classList.add('hidden');
+  const header = $('lessonHeader');
+  const tabs = $('lessonTabs');
+  const content = $('lessonContent');
+  if (header) header.innerHTML = '';
+  if (tabs) tabs.innerHTML = '';
+  if (content) content.innerHTML = '<p class="section-note">載入電子書… <span class="en-sub">Loading e-book…</span></p>';
+  try {
+    const book = await loadTw3Book();
+    let startIdx = 0;
+    book.pages.forEach((p, idx) => {
+      if (p.lesson === n && startIdx === 0) startIdx = idx;
+    });
+    ebookState = { lesson: n, pageIndex: startIdx, pages: book.pages, bookPages: book.pages, title: book.title, isTw3: true };
     for (let i = Math.max(0, startIdx - 2); i < Math.min(book.pages.length, startIdx + 5); i++) {
       getBankFileUrl(book.pages[i].image).then(url => {
         const img = new Image(); img.src = url;
