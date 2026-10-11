@@ -3522,10 +3522,13 @@ async function openSentenceModal(sentenceId, fallbackZh) {
   /* 從對應的句庫找句子：HSK 用 hskBankCache，台灣冊用 state.sentences */
   let sentence = null;
   if (ebookState.isTw1 || ebookState.isTw2) {
-    sentence = state.sentences.find(s => s.recordId === sentenceId);
-    /* 備援：如果 ID 找不到，用中文匹配（2026-10-11，修復 ID 系統不一致導致的錯位） */
-    if (!sentence && fallbackZh) {
+    /* 優先用中文匹配（2026-10-11：ID 系統不一致，中文最可靠） */
+    if (fallbackZh) {
       sentence = state.sentences.find(s => s.chineseSentence === fallbackZh);
+    }
+    /* 中文找不到才用 ID */
+    if (!sentence) {
+      sentence = state.sentences.find(s => s.recordId === sentenceId);
     }
   } else {
     sentence = hskBankCache ? hskBankCache.find(s => s.recordId === sentenceId) : null;
