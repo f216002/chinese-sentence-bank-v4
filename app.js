@@ -3357,7 +3357,23 @@ async function openHskEbook(n) {
 }
 async function renderEbookPage() {
   const page = ebookState.pages[ebookState.pageIndex];
+  /* 圖片快取（2026-10-11）：避免翻頁時重新下載 */
+  if (!window._ebookImgCache) window._ebookImgCache = new Map();
   const imgUrl = await getBankFileUrl(page.image);
+  /* 預載前後頁 */
+  [-2, -1, 1, 2].forEach(offset => {
+    const idx = ebookState.pageIndex + offset;
+    if (idx >= 0 && idx < ebookState.pages.length) {
+      const p = ebookState.pages[idx];
+      getBankFileUrl(p.image).then(url => {
+        if (!window._ebookImgCache.has(url)) {
+          const img = new Image();
+          img.src = url;
+          window._ebookImgCache.set(url, img);
+        }
+      }).catch(() => {});
+    }
+  });
   const lesson = (ebookState.isTw1 || ebookState.isTw2 ? COURSE_LESSONS : HSK_COURSE_LESSONS).find(l => l.n === ebookState.lesson);
   /* 載入該頁的句子區域（如果有） */
   let regions = [];
@@ -3434,17 +3450,17 @@ async function renderEbookPage() {
     const lessonLabelText = currentLesson ? lessonLabel(currentLesson) : '';
     content.innerHTML = `
       <div class="ebook-viewer" id="ebookViewer">
-        <div class="ebook-page">
+        <button id="ebookPrev" class="ebook-arrow ebook-arrow-left" ${ebookState.pageIndex === 0 ? 'disabled' : ''} title="上一頁">‹</button>
+        <div class="ebook-page" id="ebookPage">
           <img src="${imgUrl}" alt="課文頁" />
           ${regionsHtml}
         </div>
+        <button id="ebookNext" class="ebook-arrow ebook-arrow-right" ${ebookState.pageIndex >= ebookState.pages.length - 1 ? 'disabled' : ''} title="下一頁">›</button>
         <div class="ebook-nav">
-          <button id="ebookPrev" ${ebookState.pageIndex === 0 ? 'disabled' : ''}>← 上一頁</button>
           <select id="ebookPageSelect" class="ebook-page-select" title="選擇頁面">
             ${pageOptions}
           </select>
           <span class="ebook-page-num">${ebookState.pageIndex + 1} / ${ebookState.pages.length}</span>
-          <button id="ebookNext" ${ebookState.pageIndex >= ebookState.pages.length - 1 ? 'disabled' : ''}>下一頁 →</button>
         </div>
       </div>
       <div style="display:flex;justify-content:center;gap:12px;margin-top:12px;align-items:center;flex-wrap:wrap;">
@@ -3470,12 +3486,19 @@ async function renderEbookPage() {
     }
     const prevBtn = $('ebookPrev');
     const nextBtn = $('ebookNext');
-    if (prevBtn && !prevBtn.disabled) prevBtn.addEventListener('click', () => {
-      ebookState.pageIndex--; renderEbookPage();
-    });
-    if (nextBtn && !nextBtn.disabled) nextBtn.addEventListener('click', () => {
-      ebookState.pageIndex++; renderEbookPage();
-    });
+    /* 翻頁動畫（2026-10-11） */
+    const flipPage = (direction) => {
+      const pageEl = $('ebookPage');
+      if (pageEl) {
+        pageEl.classList.remove('flip-next', 'flip-prev');
+        void pageEl.offsetWidth; // 觸發重排以重啟動畫
+        pageEl.classList.add(direction > 0 ? 'flip-next' : 'flip-prev');
+      }
+      ebookState.pageIndex += direction;
+      renderEbookPage();
+    };
+    if (prevBtn && !prevBtn.disabled) prevBtn.addEventListener('click', () => flipPage(-1));
+    if (nextBtn && !nextBtn.disabled) nextBtn.addEventListener('click', () => flipPage(1));
     content.querySelectorAll('.ebook-region').forEach(el => {
       el.addEventListener('click', () => {
         const reg = regions[Number(el.dataset.idx)];
