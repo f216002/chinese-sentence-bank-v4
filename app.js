@@ -3503,7 +3503,7 @@ async function renderEbookPage() {
     content.querySelectorAll('.ebook-region').forEach(el => {
       el.addEventListener('click', () => {
         const reg = regions[Number(el.dataset.idx)];
-        if (reg) openSentenceModal(reg.sentenceId);
+        if (reg) openSentenceModal(reg.sentenceId, reg.zh);
       });
     });
   }
@@ -3518,11 +3518,15 @@ async function renderEbookPage() {
   }
 }
 /* 句子卡彈窗：用現有 createCard 渲染，關閉回到電子書。 */
-async function openSentenceModal(sentenceId) {
+async function openSentenceModal(sentenceId, fallbackZh) {
   /* 從對應的句庫找句子：HSK 用 hskBankCache，台灣冊用 state.sentences */
   let sentence = null;
   if (ebookState.isTw1 || ebookState.isTw2) {
     sentence = state.sentences.find(s => s.recordId === sentenceId);
+    /* 備援：如果 ID 找不到，用中文匹配（2026-10-11，修復 ID 系統不一致導致的錯位） */
+    if (!sentence && fallbackZh) {
+      sentence = state.sentences.find(s => s.chineseSentence === fallbackZh);
+    }
   } else {
     sentence = hskBankCache ? hskBankCache.find(s => s.recordId === sentenceId) : null;
   }
