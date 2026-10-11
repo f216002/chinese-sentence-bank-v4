@@ -2821,8 +2821,8 @@ function songLineToSentence(song, line, idx) {
 const courseState = { lesson: 0, tab: '課文', song: null, ritual: null, ritualGroup: null, page: 'home', viewMode: 'list' };
 /* 電子書可用性檢查（2026-10-10）：台灣第一冊 101-115 有電子書 */
 function hasEbook(lessonN) {
-  /* 台灣第1冊 101-115、第2冊 1-15、第3冊 201-212、第4冊 301-312；第7冊 701-730 僅高棉文模式 */
-  if ((lessonN >= 101 && lessonN <= 115) || (lessonN >= 1 && lessonN <= 15) || (lessonN >= 201 && lessonN <= 212) || (lessonN >= 301 && lessonN <= 312)) return true;
+  /* 台灣第1冊 101-115、第2冊 1-15、第3冊 201-212、第4冊 301-312、第5冊 501-510；第7冊 701-730 僅高棉文模式 */
+  if ((lessonN >= 101 && lessonN <= 115) || (lessonN >= 1 && lessonN <= 15) || (lessonN >= 201 && lessonN <= 212) || (lessonN >= 301 && lessonN <= 312) || (lessonN >= 501 && lessonN <= 510)) return true;
   if (lessonN >= 701 && lessonN <= 730 && (state.sourceLanguage || 'hi') === 'km') return true;
   return false;
 }
@@ -3248,6 +3248,8 @@ function renderBooksGrid() {
             openTw3Ebook(lesson.n);
           } else if (lesson.n >= 301 && lesson.n <= 312) {
             openTw4Ebook(lesson.n);
+          } else if (lesson.n >= 501 && lesson.n <= 510) {
+            openTw5Ebook(lesson.n);
           } else if (lesson.n >= 701 && lesson.n <= 730) {
             openB7Ebook(lesson.n);
           }
@@ -3383,12 +3385,12 @@ async function renderEbookPage() {
       }).catch(() => {});
     }
   });
-  const lesson = (ebookState.isTw1 || ebookState.isTw2 || ebookState.isTw3 || ebookState.isTw4 ? COURSE_LESSONS : HSK_COURSE_LESSONS).find(l => l.n === ebookState.lesson);
+  const lesson = (ebookState.isTw1 || ebookState.isTw2 || ebookState.isTw3 || ebookState.isTw4 || ebookState.isTw5 ? COURSE_LESSONS : HSK_COURSE_LESSONS).find(l => l.n === ebookState.lesson);
   /* 載入該頁的句子區域（如果有） */
   let regions = [];
   if (page.regions) {
     try {
-      const basePath = ebookState.isTw1 ? 'v4-book-tw1/pages/' : (ebookState.isTw2 ? 'v4-book-tw2/pages/' : (ebookState.isTw3 ? 'v4-book-tw3/pages/' : (ebookState.isTw4 ? 'v4-book-tw4/pages/' : (ebookState.isB7 ? 'v4-book7/pages/' : 'v4-hsk/pages/'))));
+      const basePath = ebookState.isTw1 ? 'v4-book-tw1/pages/' : (ebookState.isTw2 ? 'v4-book-tw2/pages/' : (ebookState.isTw3 ? 'v4-book-tw3/pages/' : (ebookState.isTw4 ? 'v4-book-tw4/pages/' : (ebookState.isTw5 ? 'v4-book-tw5/pages/' : (ebookState.isB7 ? 'v4-book7/pages/' : 'v4-hsk/pages/')))));
       const url = await getBankFileUrl(basePath + page.regions);
       const r = await fetch(url);
       if (r.ok) {
@@ -3450,6 +3452,7 @@ async function renderEbookPage() {
       if (p.lesson) {
         if (p.lesson >= 801) label = `p${p.n}・HSK1第${p.lesson - 800}課`;
         else if (p.lesson >= 701) label = `p${p.n}・第${p.lesson - 700}課`;
+        else if (p.lesson >= 501) label = `p${p.n}・第${p.lesson - 500}課`;
         else if (p.lesson >= 301) label = `p${p.n}・第${p.lesson - 300}課`;
         else if (p.lesson >= 201) label = `p${p.n}・第${p.lesson - 200}課`;
         else if (p.lesson >= 101) label = `p${p.n}・第${p.lesson - 100}課`;
@@ -3540,12 +3543,12 @@ async function renderEbookPage() {
 async function openSentenceModal(sentenceId, fallbackZh) {
   /* 從對應的句庫找句子：HSK 用 hskBankCache，台灣冊用 state.sentences */
   let sentence = null;
-  if (ebookState.isTw1 || ebookState.isTw2 || ebookState.isTw3 || ebookState.isTw4 || ebookState.isB7) {
+  if (ebookState.isTw1 || ebookState.isTw2 || ebookState.isTw3 || ebookState.isTw4 || ebookState.isTw5 || ebookState.isB7) {
     /* 優先用中文+課別匹配（2026-10-11：避免同句多課重複導致錯位） */
     if (fallbackZh) {
       const lessonN = ebookState.lesson;
       /* 先嘗試精確匹配中文+課別 */
-      const displayLesson = lessonN >= 701 ? lessonN - 700 : (lessonN >= 301 ? lessonN - 300 : (lessonN >= 201 ? lessonN - 200 : (lessonN >= 101 ? lessonN - 100 : lessonN)));
+      const displayLesson = lessonN >= 701 ? lessonN - 700 : (lessonN >= 501 ? lessonN - 500 : (lessonN >= 301 ? lessonN - 300 : (lessonN >= 201 ? lessonN - 200 : (lessonN >= 101 ? lessonN - 100 : lessonN))));
       sentence = state.sentences.find(s => 
         s.chineseSentence === fallbackZh && 
         s.tags && s.tags.includes(`第${displayLesson}課`)
@@ -3789,6 +3792,47 @@ async function openTw4Ebook(n) {
       if (p.lesson === n && startIdx === 0) startIdx = idx;
     });
     ebookState = { lesson: n, pageIndex: startIdx, pages: book.pages, bookPages: book.pages, title: book.title, isTw4: true };
+    for (let i = Math.max(0, startIdx - 2); i < Math.min(book.pages.length, startIdx + 5); i++) {
+      getBankFileUrl(book.pages[i].image).then(url => {
+        const img = new Image(); img.src = url;
+      }).catch(() => {});
+    }
+    renderEbookPage();
+  } catch (e) {
+    const content2 = $('lessonContent');
+    if (content2) content2.innerHTML = `<p class="section-note">載入失敗：${escapeHtml(e.message)} <span class="en-sub">Load failed</span></p>`;
+  }
+  const cs = $('courseSection');
+  if (cs) cs.scrollIntoView({ behavior: 'smooth' });
+}
+/* 台灣第五冊電子書（2026-10-11）：課號 501-510 */
+let tw5BookCache = null;
+async function loadTw5Book() {
+  if (tw5BookCache) return tw5BookCache;
+  const url = await getBankFileUrl('v4-book-tw5/pages/tw5-book.json');
+  const r = await fetch(url);
+  if (!r.ok) throw new Error('TW5 book ' + r.status);
+  tw5BookCache = await r.json();
+  return tw5BookCache;
+}
+async function openTw5Ebook(n) {
+  const view = $('lessonView');
+  const grid = $('lessonGrid');
+  if (view) view.classList.remove('hidden');
+  if (grid) grid.classList.add('hidden');
+  const header = $('lessonHeader');
+  const tabs = $('lessonTabs');
+  const content = $('lessonContent');
+  if (header) header.innerHTML = '';
+  if (tabs) tabs.innerHTML = '';
+  if (content) content.innerHTML = '<p class="section-note">載入電子書… <span class="en-sub">Loading e-book…</span></p>';
+  try {
+    const book = await loadTw5Book();
+    let startIdx = 0;
+    book.pages.forEach((p, idx) => {
+      if (p.lesson === n && startIdx === 0) startIdx = idx;
+    });
+    ebookState = { lesson: n, pageIndex: startIdx, pages: book.pages, bookPages: book.pages, title: book.title, isTw5: true };
     for (let i = Math.max(0, startIdx - 2); i < Math.min(book.pages.length, startIdx + 5); i++) {
       getBankFileUrl(book.pages[i].image).then(url => {
         const img = new Image(); img.src = url;
