@@ -3900,23 +3900,19 @@ async function openTw6Ebook(n) {
   if (cs) cs.scrollIntoView({ behavior: 'smooth' });
 }
 async function openHskLesson(n) {
-  /* HSK 1 全 15 課都用電子書（2026-10-10，整本書上線） */
-  if (n >= 801 && n <= 815) {
-    openHskEbook(n);
-  } else {
-    try {
-      await loadHskBank();
-      courseState.lesson = n;
-      courseState.tab = '課文';
-      courseState.page = 'books';
-      renderLessonView();
-      $('courseSection').scrollIntoView({ behavior: 'smooth' });
-    } catch (e) {
-      const view = $('lessonView');
-      view.classList.remove('hidden');
-      $('lessonGrid').classList.add('hidden');
-      view.innerHTML = `<p class="section-note">載入失敗：${escapeHtml(e.message)} <span class="en-sub">Load failed</span></p>`;
-    }
+  /* HSK 1：課程列表用句子視圖（與 1-7 冊一致）；電子書走專屬入口 openHskEbook。 */
+  try {
+    await loadHskBank();
+    courseState.lesson = n;
+    courseState.tab = '課文';
+    courseState.page = 'books';
+    renderLessonView();
+    $('courseSection').scrollIntoView({ behavior: 'smooth' });
+  } catch (e) {
+    const view = $('lessonView');
+    view.classList.remove('hidden');
+    $('lessonGrid').classList.add('hidden');
+    view.innerHTML = `<p class="section-note">載入失敗：${escapeHtml(e.message)} <span class="en-sub">Load failed</span></p>`;
   }
 }
 
