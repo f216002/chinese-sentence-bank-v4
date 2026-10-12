@@ -2869,23 +2869,32 @@ window.addEventListener('v4-access-changed', () => {
   if (typeof refreshPersonalLayer === 'function') refreshPersonalLayer();
 });
 
-/* HSK 句庫載入（2026-10-10）：大陸教材專用，格式相容 v4-bank。 */
-let hskBankCache = null;
+/* HSK 句庫載入（2026-10-10）：大陸教材專用，格式相容 v4-bank。
+   2026-10-12：按學生母語分檔快取（hi 用舊檔 v4-hsk1-bank.json，其餘用 v4-hsk1-bank-{lang}.json）。 */
+let hskBankCache = {}; /* lang -> sentences */
 async function loadHskBank() {
-  if (hskBankCache) return hskBankCache;
-  const url = await getBankFileUrl('v4-hsk/v4-hsk1-bank.json');
+  const lang = state.sourceLanguage || 'hi';
+  if (hskBankCache[lang]) return hskBankCache[lang];
+  const file = lang === 'hi' ? 'v4-hsk/v4-hsk1-bank.json' : 'v4-hsk/v4-hsk1-bank-' + lang + '.json';
+  const url = await getBankFileUrl(file);
   const r = await fetch(url);
   if (!r.ok) throw new Error('HSK bank ' + r.status);
   const data = await r.json();
   const fields = Object.keys(data.f).sort((a, b) => data.f[a] - data.f[b]);
-  hskBankCache = data.rows.map(row => vbankRowToSentence(fields, row, state.sourceLanguage || 'hi'));
-  return hskBankCache;
+  hskBankCache[lang] = data.rows.map(row => vbankRowToSentence(fields, row, lang));
+  return hskBankCache[lang];
+}
+/* 取當前語言的 HSK 句子（未載入回 null）。 */
+function hskSentences() {
+  const lang = state.sourceLanguage || 'hi';
+  return hskBankCache[lang] || null;
 }
 function lessonRecords(n) {
   const key = String(n);
   /* HSK 課程（801-815）：從 HSK 快取取，否則從主句庫取。 */
-  if (n >= 801 && n <= 815 && hskBankCache) {
-    return hskBankCache.filter(s => courseMeta(s).lesson === key);
+  const hsk = hskSentences();
+  if (n >= 801 && n <= 815 && hsk) {
+    return hsk.filter(s => courseMeta(s).lesson === key);
   }
   return state.sentences.filter(s => courseMeta(s).lesson === key);
 }
@@ -3544,7 +3553,7 @@ async function renderEbookPage() {
 }
 /* 句子卡彈窗：用現有 createCard 渲染，關閉回到電子書。 */
 async function openSentenceModal(sentenceId, fallbackZh) {
-  /* 從對應的句庫找句子：HSK 用 hskBankCache，台灣冊用 state.sentences */
+  /* 從對應的句庫找句子：HSK 用 hskSentences()，台灣冊用 state.sentences */
   let sentence = null;
   if (ebookState.isTw1 || ebookState.isTw2 || ebookState.isTw3 || ebookState.isTw4 || ebookState.isTw5 || ebookState.isTw6 || ebookState.isB7) {
     /* 優先用中文+課別匹配（2026-10-11：避免同句多課重複導致錯位） */
@@ -3566,7 +3575,7 @@ async function openSentenceModal(sentenceId, fallbackZh) {
       sentence = state.sentences.find(s => s.recordId === sentenceId);
     }
   } else {
-    sentence = hskBankCache ? hskBankCache.find(s => s.recordId === sentenceId) : null;
+    sentence = hskSentences() ? hskSentences().find(s => s.recordId === sentenceId) : null;
   }
   if (!sentence) return;
   let modal = $('sentenceModal');
