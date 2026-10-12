@@ -2876,7 +2876,7 @@ async function loadHskBank() {
   const lang = state.sourceLanguage || 'hi';
   if (hskBankCache[lang]) return hskBankCache[lang];
   const file = lang === 'hi' ? 'v4-hsk/v4-hsk1-bank.json' : 'v4-hsk/v4-hsk1-bank-' + lang + '.json';
-  const url = await getBankFileUrl(file);
+  const url = (await getBankFileUrl(file)) + '&v=20261012-02'; /* 強制重抓，避開瀏覽器快取舊檔 */
   const r = await fetch(url);
   if (!r.ok) throw new Error('HSK bank ' + r.status);
   const data = await r.json();
