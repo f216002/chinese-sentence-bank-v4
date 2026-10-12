@@ -1012,8 +1012,12 @@ async function saveModelAudioInline(button, sentence, node) {
     button.classList.remove('saving');
     button.classList.add('saved');
     setBilingualText(button, '已儲存', 'Saved');
-    renderSentences();
-    try { if (typeof renderCourse === 'function') renderCourse(); } catch (_) {}
+    /* 電子書彈窗中不重繪課程（否則電子書會被洗掉回到課程列表）。 */
+    const inEbookModal = $('sentenceModal') && !$('sentenceModal').classList.contains('hidden');
+    if (!inEbookModal) {
+      renderSentences();
+      try { if (typeof renderCourse === 'function') renderCourse(); } catch (_) {}
+    }
     /* 課程課文分頁也要即時重繪，否則下載鍵要等重整才出現。 */
   } catch (err) {
     resetModelSaveButton(button);
