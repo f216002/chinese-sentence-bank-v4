@@ -2754,6 +2754,32 @@ const V4_SONGS = [
     ],
   },
   {
+    id: 'mamahao',
+    title: '世上只有媽媽好',
+    videoType: 'youtube',
+    youtubeId: 't7J87fhD5wg',
+    lines: [
+      { zh: '世上只有媽媽好', py: 'shì shàng zhǐ yǒu mā ma hǎo' },
+      { zh: '有媽的孩子像個寶', py: 'yǒu mā de hái zi xiàng gè bǎo' },
+      { zh: '投進媽媽的懷抱', py: 'tóu jìn mā ma de huái bào' },
+      { zh: '幸福享不了', py: 'xìng fú xiǎng bù liǎo' },
+      { zh: '沒有媽媽最苦惱', py: 'méi yǒu mā ma zuì kǔ nǎo' },
+      { zh: '沒媽的孩子像根草', py: 'méi mā de hái zi xiàng gēn cǎo' },
+      { zh: '離開媽媽的懷抱', py: 'lí kāi mā ma de huái bào' },
+      { zh: '幸福哪裡找', py: 'xìng fú nǎ lǐ zhǎo' },
+      { zh: '世上只有媽媽好', py: 'shì shàng zhǐ yǒu mā ma hǎo' },
+      { zh: '有媽的孩子不知道', py: 'yǒu mā de hái zi bù zhī dào' },
+      { zh: '要是他們知道', py: 'yào shì tā men zhī dào' },
+      { zh: '夢裡也會笑', py: 'mèng lǐ yě huì xiào' },
+      { zh: '世上只有媽媽好', py: 'shì shàng zhǐ yǒu mā ma hǎo' },
+      { zh: '有媽的孩子不知道', py: 'yǒu mā de hái zi bù zhī dào' },
+      { zh: '要是他們知道', py: 'yào shì tā men zhī dào' },
+      { zh: '夢裡也會笑', py: 'mèng lǐ yě huì xiào' },
+      { zh: '要是他們知道', py: 'yào shì tā men zhī dào' },
+      { zh: '夢裡也會笑', py: 'mèng lǐ yě huì xiào' },
+    ],
+  },
+  {
     id: 'yuer',
     title: '魚兒魚兒水中游',
     videoType: 'youtube',
@@ -8186,7 +8212,7 @@ function renderInfoTab(content, recs, tabName, lessonNum) {
         <div class="info-hi-row"><p class="info-hi" lang="hi"></p></div>
         <p class="info-explain" lang="hi"></p>
         <div class="info-actions">
-          <button type="button" class="icon-button info-download" aria-label="下載老師錄音 (Download recording)" title="下載老師錄音 (Download recording)" hidden>⤓</button>
+          <button type="button" class="icon-button info-download" aria-label="下載老師錄音 (Download recording)" title="下載老師錄音 (Download recording)" hidden>⬇</button>
           <button type="button" class="icon-button card-record-button" aria-label="錄下你的聲音 (Record your voice)" title="錄音 (Record)">🎙</button>
           <button type="button" class="icon-button card-play-button" aria-label="播放我的錄音 (Play my recording)" title="播放錄音 (Play recording)">▶</button>
           <button type="button" class="icon-button card-save-model-button" aria-label="存為示範 (Save as teacher model)" title="存為示範 (Save as teacher model)">💾</button>
