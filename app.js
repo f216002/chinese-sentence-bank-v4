@@ -3263,6 +3263,22 @@ function renderBooksGrid() {
       card.addEventListener('click', () => openHskLesson(lesson.n));
       grid.appendChild(card);
     });
+    /* HSK 2 (2026-10-13) */
+    const hsk2Divider = document.createElement('div');
+    hsk2Divider.className = 'book-divider';
+    hsk2Divider.textContent = 'HSK 2';
+    grid.appendChild(hsk2Divider);
+    HSK2_COURSE_LESSONS.forEach(lesson => {
+      const card = document.createElement('button');
+      card.className = 'lesson-card';
+      card.innerHTML = `
+        <span class="lesson-n">HSK 2 第 ${lesson.n - 900} 課</span>
+        <span class="lesson-zh" lang="${getZhMode() === 'simp' ? 'zh-Hans' : 'zh-Hant'}">${escapeHtml(zhConvert(lesson.zh))}</span>
+        <span class="lesson-en">${escapeHtml(lesson.en)}</span>
+      `;
+      card.addEventListener('click', () => openHskLesson(lesson.n));
+      grid.appendChild(card);
+    });
     return;
   }
   let lastBook = 0;
@@ -3949,9 +3965,10 @@ async function openTw6Ebook(n) {
   if (cs) cs.scrollIntoView({ behavior: 'smooth' });
 }
 async function openHskLesson(n) {
-  /* HSK 1：課程列表用句子視圖（與 1-7 冊一致）；電子書走專屬入口 openHskEbook。 */
+  /* HSK 1/2：課程列表用句子視圖（與 1-7 冊一致）；電子書走專屬入口 openHskEbook。 */
   try {
-    await loadHskBank();
+    if (n >= 901) await loadHsk2Bank();
+    else await loadHskBank();
     courseState.lesson = n;
     courseState.tab = '課文';
     courseState.page = 'books';
