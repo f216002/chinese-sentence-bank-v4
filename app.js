@@ -2915,7 +2915,7 @@ async function loadHsk2Bank() {
   const lang = state.sourceLanguage || 'hi';
   if (hsk2BankCache[lang]) return hsk2BankCache[lang];
   const file = 'v4-hsk/v4-hsk2-bank-' + lang + '.json';
-  const url = (await getBankFileUrl(file)) + '&v=20261013-08';
+  const url = (await getBankFileUrl(file)) + '&v=20261013-09';
   const r = await fetch(url);
   if (!r.ok) throw new Error('HSK2 bank ' + r.status);
   const data = await r.json();
@@ -3418,11 +3418,11 @@ async function loadHskBook() {
   hskBookCache = await r.json();
   return hskBookCache;
 }
-/* HSK2 電子書目錄（2026-10-13）：照台灣冊模式，manifest 在 pages/ 下 */
+/* HSK2 電子書目錄（2026-10-13）：用直接公開網址（Firebase SDK 對 v4-book-hsk2/ 報 unauthorized，台灣冊路徑則正常） */
 let hsk2BookCache = null;
 async function loadHsk2Book() {
   if (hsk2BookCache) return hsk2BookCache;
-  const url = await getBankFileUrl('v4-book-hsk2/pages/hsk2-book.json');
+  const url = 'https://storage.googleapis.com/my-chinese-sentence-bank-v3.firebasestorage.app/v4-book-hsk2/pages/hsk2-book.json';
   const r = await fetch(url);
   if (!r.ok) throw new Error('HSK2 book ' + r.status);
   hsk2BookCache = await r.json();
@@ -3489,11 +3489,10 @@ async function openHsk2Ebook(n) {
       if (p.lesson === n && startIdx === 0) startIdx = idx;
     });
     ebookState = { lesson: n, pageIndex: startIdx, pages: book.pages, bookPages: book.pages, title: book.title, isHsk2: true };
-    /* 預載前後幾頁（台灣冊模式：getBankFileUrl） */
+    /* 預載前後幾頁 */
     for (let i = Math.max(0, startIdx - 2); i < Math.min(book.pages.length, startIdx + 5); i++) {
-      getBankFileUrl(book.pages[i].image).then(url => {
-        const img = new Image(); img.src = url;
-      }).catch(() => {});
+      const img = new Image();
+      img.src = 'https://storage.googleapis.com/my-chinese-sentence-bank-v3.firebasestorage.app/' + book.pages[i].image;
     }
     renderEbookPage();
   } catch (e) {
@@ -3507,13 +3506,19 @@ async function renderEbookPage() {
   const page = ebookState.pages[ebookState.pageIndex];
   /* 圖片快取（2026-10-11）：避免翻頁時重新下載 */
   if (!window._ebookImgCache) window._ebookImgCache = new Map();
-  const imgUrl = await getBankFileUrl(page.image);
+  /* HSK2 用直接公開網址（SDK 對 v4-book-hsk2/ 報 unauthorized） */
+  const imgUrl = ebookState.isHsk2
+    ? 'https://storage.googleapis.com/my-chinese-sentence-bank-v3.firebasestorage.app/' + page.image
+    : await getBankFileUrl(page.image);
   /* 預載前後頁 */
   [-2, -1, 1, 2].forEach(offset => {
     const idx = ebookState.pageIndex + offset;
     if (idx >= 0 && idx < ebookState.pages.length) {
       const p = ebookState.pages[idx];
-      getBankFileUrl(p.image).then(url => {
+      const pUrl = ebookState.isHsk2
+        ? 'https://storage.googleapis.com/my-chinese-sentence-bank-v3.firebasestorage.app/' + p.image
+        : null;
+      (pUrl ? Promise.resolve(pUrl) : getBankFileUrl(p.image)).then(url => {
         if (!window._ebookImgCache.has(url)) {
           const img = new Image();
           img.src = url;
