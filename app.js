@@ -2915,7 +2915,7 @@ async function loadHsk2Bank() {
   const lang = state.sourceLanguage || 'hi';
   if (hsk2BankCache[lang]) return hsk2BankCache[lang];
   const file = 'v4-hsk/v4-hsk2-bank-' + lang + '.json';
-  const url = (await getBankFileUrl(file)) + '&v=20261013-10';
+  const url = (await getBankFileUrl(file)) + '&v=20261013-11';
   const r = await fetch(url);
   if (!r.ok) throw new Error('HSK2 bank ' + r.status);
   const data = await r.json();
@@ -3674,7 +3674,8 @@ async function renderEbookPage() {
     content.querySelectorAll('.ebook-region').forEach(el => {
       el.addEventListener('click', () => {
         const reg = regions[Number(el.dataset.idx)];
-        if (reg) openSentenceModal(reg.sentenceId, reg.zh);
+        /* HSK2 的 regions 用 id 欄位（台灣冊用 sentenceId） */
+        if (reg) openSentenceModal(reg.sentenceId || reg.id, reg.zh);
       });
     });
   }
@@ -3711,6 +3712,9 @@ async function openSentenceModal(sentenceId, fallbackZh) {
     if (!sentence) {
       sentence = state.sentences.find(s => s.recordId === sentenceId);
     }
+  } else if (ebookState.isHsk2) {
+    /* HSK2：從 HSK2 句庫找 */
+    sentence = hsk2Sentences() ? hsk2Sentences().find(s => s.recordId === sentenceId) : null;
   } else {
     sentence = hskSentences() ? hskSentences().find(s => s.recordId === sentenceId) : null;
   }
