@@ -2915,7 +2915,7 @@ async function loadHsk2Bank() {
   const lang = state.sourceLanguage || 'hi';
   if (hsk2BankCache[lang]) return hsk2BankCache[lang];
   const file = 'v4-hsk/v4-hsk2-bank-' + lang + '.json';
-  const url = (await getBankFileUrl(file)) + '&v=20261013-05';
+  const url = (await getBankFileUrl(file)) + '&v=20261013-06';
   const r = await fetch(url);
   if (!r.ok) throw new Error('HSK2 bank ' + r.status);
   const data = await r.json();
@@ -3262,7 +3262,14 @@ function renderBooksGrid() {
         <span class="lesson-zh" lang="${getZhMode() === 'simp' ? 'zh-Hans' : 'zh-Hant'}">${escapeHtml(zhConvert(lesson.zh))}</span>
         <span class="lesson-en">${escapeHtml(lesson.en)}</span>
       `;
-      card.addEventListener('click', () => openHskLesson(lesson.n));
+      card.addEventListener('click', () => {
+        /* 尊重模式選擇：電子書模式直接開電子書，否則開課文列表 */
+        if (state.textbookMode === 'ebook' && hasEbook(lesson.n)) {
+          openHskEbook(lesson.n);
+        } else {
+          openHskLesson(lesson.n);
+        }
+      });
       grid.appendChild(card);
     });
     /* HSK 2 (2026-10-13) */
@@ -3278,7 +3285,13 @@ function renderBooksGrid() {
         <span class="lesson-zh" lang="${getZhMode() === 'simp' ? 'zh-Hans' : 'zh-Hant'}">${escapeHtml(zhConvert(lesson.zh))}</span>
         <span class="lesson-en">${escapeHtml(lesson.en)}</span>
       `;
-      card.addEventListener('click', () => openHskLesson(lesson.n));
+      card.addEventListener('click', () => {
+        if (state.textbookMode === 'ebook' && hasEbook(lesson.n)) {
+          openHsk2Ebook(lesson.n);
+        } else {
+          openHskLesson(lesson.n);
+        }
+      });
       grid.appendChild(card);
     });
     return;
@@ -3409,7 +3422,8 @@ async function loadHskBook() {
 let hsk2BookCache = null;
 async function loadHsk2Book() {
   if (hsk2BookCache) return hsk2BookCache;
-  const url = await getBankFileUrl('v4-book-hsk2/hsk2-book.json');
+  /* 直接用公開網址，繞過 Firebase SDK 的 storage/unauthorized 問題 */
+  const url = 'https://storage.googleapis.com/my-chinese-sentence-bank-v3.firebasestorage.app/v4-book-hsk2/hsk2-book.json';
   const r = await fetch(url);
   if (!r.ok) throw new Error('HSK2 book ' + r.status);
   hsk2BookCache = await r.json();
@@ -3476,9 +3490,8 @@ async function openHsk2Ebook(n) {
     });
     ebookState = { lesson: n, pageIndex: startIdx, pages: book.pages, bookPages: book.pages, title: book.title, isHsk2: true };
     for (let i = Math.max(0, startIdx - 2); i < Math.min(book.pages.length, startIdx + 5); i++) {
-      getBankFileUrl(book.pages[i].image).then(url => {
-        const img = new Image(); img.src = url;
-      }).catch(() => {});
+      const img = new Image();
+      img.src = 'https://storage.googleapis.com/my-chinese-sentence-bank-v3.firebasestorage.app/' + book.pages[i].image;
     }
     renderEbookPage();
   } catch (e) {
@@ -3492,13 +3505,19 @@ async function renderEbookPage() {
   const page = ebookState.pages[ebookState.pageIndex];
   /* 圖片快取（2026-10-11）：避免翻頁時重新下載 */
   if (!window._ebookImgCache) window._ebookImgCache = new Map();
-  const imgUrl = await getBankFileUrl(page.image);
+  /* HSK2 用直接公開網址（繞過 SDK 權限問題） */
+  const imgUrl = ebookState.isHsk2
+    ? 'https://storage.googleapis.com/my-chinese-sentence-bank-v3.firebasestorage.app/' + page.image
+    : await getBankFileUrl(page.image);
   /* 預載前後頁 */
   [-2, -1, 1, 2].forEach(offset => {
     const idx = ebookState.pageIndex + offset;
     if (idx >= 0 && idx < ebookState.pages.length) {
       const p = ebookState.pages[idx];
-      getBankFileUrl(p.image).then(url => {
+      const pUrl = ebookState.isHsk2
+        ? 'https://storage.googleapis.com/my-chinese-sentence-bank-v3.firebasestorage.app/' + p.image
+        : null;
+      (pUrl ? Promise.resolve(pUrl) : getBankFileUrl(p.image)).then(url => {
         if (!window._ebookImgCache.has(url)) {
           const img = new Image();
           img.src = url;
@@ -7516,8 +7535,9 @@ function renderLessonView() {
   const g0p = g0 ? displayProfile(g0) : null;
   const titleT = g0 ? displaySource(g0) : '';
   const titleR = g0 ? displayRoman(g0) : '';
-  /* 雙模式切換（2026-10-10）：有電子書的課顯示切換按鈕 */
-  const modeToggle = hasEbook(lesson.n)
+  /* 雙模式切換（2026-10-10）：有電子書的課顯示切換按鈕；HSK 課程由課程列表模式決定，不在此顯示（2026-10-13） */
+  const isHsk = (lesson.n >= 801 && lesson.n <= 815) || (lesson.n >= 901 && lesson.n <= 915);
+  const modeToggle = (!isHsk && hasEbook(lesson.n))
     ? `<button type="button" class="view-mode-toggle" id="listToEbookBtn" title="切換到電子書模式">📖 電子書</button>`
     : '';
   header.innerHTML = `
