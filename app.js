@@ -1306,6 +1306,14 @@ function createCard(sentence, preview = false) {
     foreignSpeak.title = '外語發音 (Azure) ' + cardProfile.name;
     foreignSpeak.addEventListener('click', () => speakForeign(sentence, foreignSpeak));
   }
+  /* 外語下載鈕（2026-10-13）：有外文才顯示，點擊經 Azure 合成後下載 MP3。 */
+  const foreignDl = node.querySelector('.download-foreign-button');
+  if (foreignDl) {
+    const ftext = displaySource(sentence);
+    foreignDl.hidden = !(ftext && ftext.trim());
+    foreignDl.title = '下載外語發音 (Azure) ' + cardProfile.name;
+    foreignDl.addEventListener('click', () => downloadForeignAudio(sentence, foreignDl));
+  }
   const roman = displayRoman(sentence);
   const romanLine = node.querySelector('.roman-hindi');
   romanLine.textContent = roman ? `${cardProfile.romanizationName}: ${roman}` : '';
@@ -1403,6 +1411,43 @@ async function speakForeign(sentence, button) {
     button.classList.remove('speaking');
     button.disabled = false;
     alert('外語語音播放失敗：' + ((err && err.message) || '未知錯誤') + '\nForeign voice failed: ' + ((err && err.message) || 'unknown error'));
+  }
+}
+
+/* 外語發音下載（2026-10-13，Cheng 要求）：經 Azure TTS 合成後存檔。
+   Azure 回傳 MP3（audio/mpeg），手機、電腦皆可直接播放。 */
+async function downloadForeignAudio(sentence, button) {
+  const text = displaySource(sentence);
+  if (!text || !text.trim()) return;
+  const profile = displayProfile(sentence);
+  const locale = profile.locale || 'hi-IN';
+  try {
+    if (button) { button.disabled = true; button.textContent = '…'; }
+    if (!_synthFn) {
+      _synthFn = firebase.app().functions('us-east1').httpsCallable('synthesizeV4Source', { timeout: 60000 });
+    }
+    const res = await _synthFn({ locale, text: text.trim() });
+    const data = (res && res.data) || {};
+    if (!data.audioBase64) throw new Error('empty audio');
+    const contentType = data.contentType || 'audio/mpeg';
+    const bin = atob(data.audioBase64);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    const blob = new Blob([bytes], { type: contentType });
+    const ext = contentType.includes('wav') ? 'wav' : contentType.includes('mp4') ? 'm4a' : 'mp3';
+    let baseName = String(text).replace(/[\\/:*?"<>|]/g, '').replace(/\s+/g, ' ').trim().slice(0, 10) || 'foreign';
+    const objUrl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = objUrl;
+    a.download = baseName + '.' + ext;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(objUrl), 10000);
+  } catch (err) {
+    alert('外語語音下載失敗：' + ((err && err.message) || '未知錯誤') + '\nForeign audio download failed: ' + ((err && err.message) || 'unknown error'));
+  } finally {
+    if (button) { button.disabled = false; button.textContent = '⬇'; }
   }
 }
 
