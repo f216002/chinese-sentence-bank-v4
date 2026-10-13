@@ -2255,10 +2255,11 @@ loadBank();
 
 /* ================= Course module: 當代中文課程 ================= */
 /* 課號規則：1–15 ＝第二冊，101–115 ＝第一冊（第一冊第 X 課記為 100+X），201–212 ＝第三冊（第三冊第 X 課記為 200+X），301–312 ＝第四冊（第四冊第 X 課記為 300+X），501–510 ＝第五冊（第五冊第 X 課記為 500+X）。 */
-function bookOf(n) { n = Number(n); if (n >= 801) return 'hsk1'; return n >= 701 ? 7 : (n >= 601 ? 6 : (n >= 501 ? 5 : (n >= 301 ? 4 : (n >= 201 ? 3 : (n >= 101 ? 1 : 2))))); }
-function bookLessonNum(n) { n = Number(n); if (n >= 801) return n - 800; return n >= 701 ? n - 700 : (n >= 601 ? n - 600 : (n >= 501 ? n - 500 : (n >= 301 ? n - 300 : (n >= 201 ? n - 200 : (n >= 101 ? n - 100 : n))))); }
+function bookOf(n) { n = Number(n); if (n >= 901) return 'hsk2'; if (n >= 801) return 'hsk1'; return n >= 701 ? 7 : (n >= 601 ? 6 : (n >= 501 ? 5 : (n >= 301 ? 4 : (n >= 201 ? 3 : (n >= 101 ? 1 : 2))))); }
+function bookLessonNum(n) { n = Number(n); if (n >= 901) return n - 900; if (n >= 801) return n - 800; return n >= 701 ? n - 700 : (n >= 601 ? n - 600 : (n >= 501 ? n - 500 : (n >= 301 ? n - 300 : (n >= 201 ? n - 200 : (n >= 101 ? n - 100 : n))))); }
 function lessonLabel(n) {
   const b = bookOf(n), k = bookLessonNum(n);
+  if (b === 'hsk2') return `HSK 2 第 ${k} 課`;
   if (b === 'hsk1') return `HSK 1 第 ${k} 課`;
   if (b === 7) return `第七冊第 ${k} 課`;
   if (b === 6) return `第六冊第 ${k} 課`;
@@ -2412,8 +2413,27 @@ const HSK_COURSE_LESSONS = [
   { n: 814, zh: '她买了不少衣服', en: 'She has bought quite a few clothes', topic: '購物', hsk: 1 },
   { n: 815, zh: '我是坐飞机来的', en: 'I came here by air', topic: '交通', hsk: 1 },
 ];
+/* HSK 2 課程（2026-10-13，大陸教材第二冊）。n=901-915 為 HSK 2。 */
+const HSK2_COURSE_LESSONS = [
+  { n: 901, zh: '九月去北京旅游', en: 'September trip to Beijing', topic: '旅遊', hsk: 2 },
+  { n: 902, zh: '他每天六点起床', en: 'He gets up at six every day', topic: '日常', hsk: 2 },
+  { n: 903, zh: '你吃了吗', en: 'Have you eaten', topic: '問候', hsk: 2 },
+  { n: 904, zh: '她学了很长时间汉语', en: 'She has studied Chinese for a long time', topic: '學習', hsk: 2 },
+  { n: 905, zh: '我去北京看朋友', en: "I'm going to Beijing to see friends", topic: '探訪', hsk: 2 },
+  { n: 906, zh: '天气越来越冷了', en: "It's getting colder", topic: '天氣', hsk: 2 },
+  { n: 907, zh: '你会做什么菜', en: 'What dishes can you cook', topic: '飲食', hsk: 2 },
+  { n: 908, zh: '我去超市买东西', en: "I'm going to the supermarket", topic: '購物', hsk: 2 },
+  { n: 909, zh: '他比我高', en: 'He is taller than me', topic: '比較', hsk: 2 },
+  { n: 910, zh: '我身体不太好', en: "I'm not feeling well", topic: '健康', hsk: 2 },
+  { n: 911, zh: '你去哪儿了', en: 'Where did you go', topic: '詢問', hsk: 2 },
+  { n: 912, zh: '我很快就要回国了', en: "I'll be going home soon", topic: '告別', hsk: 2 },
+  { n: 913, zh: '他正在看书', en: 'He is reading', topic: '動作', hsk: 2 },
+  { n: 914, zh: '我把书放在桌子上了', en: 'I put the book on the table', topic: '處置', hsk: 2 },
+  { n: 915, zh: '再见', en: 'Goodbye', topic: '告別', hsk: 2 },
+];
 /* 合併到 COURSE_LESSONS，方便現有課程邏輯直接使用。 */
 HSK_COURSE_LESSONS.forEach(l => COURSE_LESSONS.push(l));
+HSK2_COURSE_LESSONS.forEach(l => COURSE_LESSONS.push(l));
 const COURSE_TABS = ['課文', '生詞', '語法', '練習', '文化', '溫習', '應用', '補充'];
 /* 分頁籤顯示用英文（內部 key 保持中文）。 */
 const COURSE_TAB_EN = { '課文': 'Text', '生詞': 'Vocabulary', '語法': 'Grammar', '練習': 'Practice', '文化': 'Culture', '溫習': 'Review', '應用': 'Application', '補充': 'Supplement' };
@@ -2888,10 +2908,29 @@ async function loadHskBank() {
   hskBankCache[lang] = data.rows.map(row => vbankRowToSentence(fields, row, lang));
   return hskBankCache[lang];
 }
+/* HSK 2 句庫載入（2026-10-13）。 */
+let hsk2BankCache = {};
+async function loadHsk2Bank() {
+  const lang = state.sourceLanguage || 'hi';
+  if (hsk2BankCache[lang]) return hsk2BankCache[lang];
+  const file = 'v4-hsk/v4-hsk2-bank-' + lang + '.json';
+  const url = (await getBankFileUrl(file)) + '&v=20261013-02';
+  const r = await fetch(url);
+  if (!r.ok) throw new Error('HSK2 bank ' + r.status);
+  const data = await r.json();
+  const fields = Object.keys(data.f).sort((a, b) => data.f[a] - data.f[b]);
+  hsk2BankCache[lang] = data.rows.map(row => vbankRowToSentence(fields, row, lang));
+  return hsk2BankCache[lang];
+}
 /* 取當前語言的 HSK 句子（未載入回 null）。 */
 function hskSentences() {
   const lang = state.sourceLanguage || 'hi';
   return hskBankCache[lang] || null;
+}
+/* 取當前語言的 HSK2 句子（未載入回 null）。 */
+function hsk2Sentences() {
+  const lang = state.sourceLanguage || 'hi';
+  return hsk2BankCache[lang] || null;
 }
 function lessonRecords(n) {
   const key = String(n);
@@ -2899,6 +2938,11 @@ function lessonRecords(n) {
   const hsk = hskSentences();
   if (n >= 801 && n <= 815 && hsk) {
     return hsk.filter(s => courseMeta(s).lesson === key);
+  }
+  /* HSK2 課程（901-915）：從 HSK2 快取取。 */
+  const hsk2 = hsk2Sentences();
+  if (n >= 901 && n <= 915 && hsk2) {
+    return hsk2.filter(s => courseMeta(s).lesson === key);
   }
   return state.sentences.filter(s => courseMeta(s).lesson === key);
 }
@@ -3465,7 +3509,8 @@ async function renderEbookPage() {
     ebookState.pages.forEach((p, idx) => {
       let label;
       if (p.lesson) {
-        if (p.lesson >= 801) label = `p${p.n}・HSK1第${p.lesson - 800}課`;
+        if (p.lesson >= 901) label = `p${p.n}・HSK2第${p.lesson - 900}課`;
+        else if (p.lesson >= 801) label = `p${p.n}・HSK1第${p.lesson - 800}課`;
         else if (p.lesson >= 701) label = `p${p.n}・第${p.lesson - 700}課`;
         else if (p.lesson >= 601) label = `p${p.n}・第${p.lesson - 600}課`;
         else if (p.lesson >= 501) label = `p${p.n}・第${p.lesson - 500}課`;
