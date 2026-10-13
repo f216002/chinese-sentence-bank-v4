@@ -2845,9 +2845,10 @@ function songLineToSentence(song, line, idx) {
 const courseState = { lesson: 0, tab: '課文', song: null, ritual: null, ritualGroup: null, page: 'home', viewMode: 'list' };
 /* 電子書可用性檢查（2026-10-10）：台灣第一冊 101-115 有電子書 */
 function hasEbook(lessonN) {
-  /* 台灣第1冊 101-115、第2冊 1-15、第3冊 201-212、第4冊 301-312、第5冊 501-510、第6冊 601-610；第7冊 701-730 僅高棉文模式 */
+  /* 台灣第1冊 101-115、第2冊 1-15、第3冊 201-212、第4冊 301-312、第5冊 501-510、第6冊 601-610；第7冊 701-730 僅高棉文模式；HSK1 801-815、HSK2 901-915 */
   if ((lessonN >= 101 && lessonN <= 115) || (lessonN >= 1 && lessonN <= 15) || (lessonN >= 201 && lessonN <= 212) || (lessonN >= 301 && lessonN <= 312) || (lessonN >= 501 && lessonN <= 510) || (lessonN >= 601 && lessonN <= 610)) return true;
   if (lessonN >= 701 && lessonN <= 730 && (state.sourceLanguage || 'hi') === 'km') return true;
+  if ((lessonN >= 801 && lessonN <= 815) || (lessonN >= 901 && lessonN <= 915)) return true;
   return false;
 }
 /* 取得老師偏好的檢視模式 */
@@ -2914,7 +2915,7 @@ async function loadHsk2Bank() {
   const lang = state.sourceLanguage || 'hi';
   if (hsk2BankCache[lang]) return hsk2BankCache[lang];
   const file = 'v4-hsk/v4-hsk2-bank-' + lang + '.json';
-  const url = (await getBankFileUrl(file)) + '&v=20261013-04';
+  const url = (await getBankFileUrl(file)) + '&v=20261013-05';
   const r = await fetch(url);
   if (!r.ok) throw new Error('HSK2 bank ' + r.status);
   const data = await r.json();
@@ -3404,6 +3405,16 @@ async function loadHskBook() {
   hskBookCache = await r.json();
   return hskBookCache;
 }
+/* HSK2 電子書目錄（2026-10-13） */
+let hsk2BookCache = null;
+async function loadHsk2Book() {
+  if (hsk2BookCache) return hsk2BookCache;
+  const url = await getBankFileUrl('v4-book-hsk2/hsk2-book.json');
+  const r = await fetch(url);
+  if (!r.ok) throw new Error('HSK2 book ' + r.status);
+  hsk2BookCache = await r.json();
+  return hsk2BookCache;
+}
 async function openHskEbook(n) {
   const view = $('lessonView');
   const grid = $('lessonGrid');
@@ -3429,6 +3440,41 @@ async function openHskEbook(n) {
     });
     ebookState = { lesson: n, pageIndex: startIdx, pages: book.pages, bookPages: book.pages, title: book.title };
     /* 預載前後幾頁圖片 */
+    for (let i = Math.max(0, startIdx - 2); i < Math.min(book.pages.length, startIdx + 5); i++) {
+      getBankFileUrl(book.pages[i].image).then(url => {
+        const img = new Image(); img.src = url;
+      }).catch(() => {});
+    }
+    renderEbookPage();
+  } catch (e) {
+    const content2 = $('lessonContent');
+    if (content2) content2.innerHTML = `<p class="section-note">載入失敗：${escapeHtml(e.message)} <span class="en-sub">Load failed</span></p>`;
+  }
+  const cs = $('courseSection');
+  if (cs) cs.scrollIntoView({ behavior: 'smooth' });
+}
+/* HSK2 電子書（2026-10-13） */
+async function openHsk2Ebook(n) {
+  const view = $('lessonView');
+  const grid = $('lessonGrid');
+  if (view) view.classList.remove('hidden');
+  if (grid) grid.classList.add('hidden');
+  const header = $('lessonHeader');
+  const tabs = $('lessonTabs');
+  const content = $('lessonContent');
+  if (header) header.innerHTML = '';
+  if (tabs) tabs.innerHTML = '';
+  if (content) content.innerHTML = '<p class="section-note">載入電子書… <span class="en-sub">Loading e-book…</span></p>';
+  try {
+    const [_, book] = await Promise.all([
+      loadHsk2Bank(),
+      loadHsk2Book(),
+    ]);
+    let startIdx = 0;
+    book.pages.forEach((p, idx) => {
+      if (p.lesson === n && startIdx === 0) startIdx = idx;
+    });
+    ebookState = { lesson: n, pageIndex: startIdx, pages: book.pages, bookPages: book.pages, title: book.title, isHsk2: true };
     for (let i = Math.max(0, startIdx - 2); i < Math.min(book.pages.length, startIdx + 5); i++) {
       getBankFileUrl(book.pages[i].image).then(url => {
         const img = new Image(); img.src = url;
@@ -7492,6 +7538,10 @@ function renderLessonView() {
         openTw1Ebook(n);
       } else if (n >= 1 && n <= 15) {
         openTw2Ebook(n);
+      } else if (n >= 801 && n <= 815) {
+        openHskEbook(n);
+      } else if (n >= 901 && n <= 915) {
+        openHsk2Ebook(n);
       }
     });
   }
