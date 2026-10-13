@@ -2915,7 +2915,7 @@ async function loadHsk2Bank() {
   const lang = state.sourceLanguage || 'hi';
   if (hsk2BankCache[lang]) return hsk2BankCache[lang];
   const file = 'v4-hsk/v4-hsk2-bank-' + lang + '.json';
-  const url = (await getBankFileUrl(file)) + '&v=20261013-06';
+  const url = (await getBankFileUrl(file)) + '&v=20261013-07';
   const r = await fetch(url);
   if (!r.ok) throw new Error('HSK2 bank ' + r.status);
   const data = await r.json();
@@ -3484,14 +3484,25 @@ async function openHsk2Ebook(n) {
       loadHsk2Bank(),
       loadHsk2Book(),
     ]);
+    /* 找該課第一頁：用 regions 的 ID 前綴（相容無 lesson 欄位的舊版 manifest） */
+    const prefix = `hsk2-${n}-`;
     let startIdx = 0;
-    book.pages.forEach((p, idx) => {
-      if (p.lesson === n && startIdx === 0) startIdx = idx;
-    });
-    ebookState = { lesson: n, pageIndex: startIdx, pages: book.pages, bookPages: book.pages, title: book.title, isHsk2: true };
-    for (let i = Math.max(0, startIdx - 2); i < Math.min(book.pages.length, startIdx + 5); i++) {
+    for (let idx = 0; idx < book.pages.length; idx++) {
+      const p = book.pages[idx];
+      if (p.regions && p.regions.some(r => (r.id || '').startsWith(prefix))) {
+        startIdx = idx;
+        break;
+      }
+    }
+    /* 圖片路徑：manifest 存檔名，補上完整路徑 */
+    const pages = book.pages.map(p => ({
+      ...p,
+      image: 'v4-book-hsk2/pages/' + p.image.replace(/^v4-book-hsk2\/pages\//, '')
+    }));
+    ebookState = { lesson: n, pageIndex: startIdx, pages: pages, bookPages: pages, title: book.title, isHsk2: true };
+    for (let i = Math.max(0, startIdx - 2); i < Math.min(pages.length, startIdx + 5); i++) {
       const img = new Image();
-      img.src = 'https://storage.googleapis.com/my-chinese-sentence-bank-v3.firebasestorage.app/' + book.pages[i].image;
+      img.src = 'https://storage.googleapis.com/my-chinese-sentence-bank-v3.firebasestorage.app/' + pages[i].image;
     }
     renderEbookPage();
   } catch (e) {
