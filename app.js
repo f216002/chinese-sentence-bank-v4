@@ -994,6 +994,8 @@ async function uploadModelRecording(sentence, recording) {
   }
   const saved = state.sentences.find(row => row.recordId === sentence.recordId);
   if (saved) { saved.audioPath = path; saved.audioMime = mime; saved.standardAudioUrl = path; }
+  /* 同步更新傳入的句子物件本身（電子書彈窗的句子可能不是 state.sentences 的同一物件）。 */
+  sentence.audioPath = path; sentence.audioMime = mime; sentence.standardAudioUrl = path;
   teacherAudioCache.delete(sentence.recordId);
 }
 
@@ -1012,6 +1014,10 @@ async function saveModelAudioInline(button, sentence, node) {
     button.classList.remove('saving');
     button.classList.add('saved');
     setBilingualText(button, '已儲存', 'Saved');
+    /* 存檔成功：本卡的下載鈕即時出現（電子書彈窗不重繪，之前要重開彈窗才看得到）。 */
+    if (node) {
+      node.querySelectorAll('.download-button, .vocab-download').forEach(dl => { dl.hidden = false; });
+    }
     /* 電子書彈窗中不重繪課程（否則電子書會被洗掉回到課程列表）。 */
     const inEbookModal = $('sentenceModal') && !$('sentenceModal').classList.contains('hidden');
     if (!inEbookModal) {
@@ -8033,7 +8039,7 @@ function createVocabCard(sentence) {
     <div class="vocab-example"></div>
     <div class="vocab-actions">
       <button type="button" class="icon-button vocab-speak" aria-label="播放中文發音 (Play Chinese)" title="播放中文發音 (Play Chinese)">🔊</button>
-      <button type="button" class="icon-button vocab-download" aria-label="下載老師錄音 (Download recording)" title="下載老師錄音 (Download recording)" hidden>⤓</button>
+      <button type="button" class="icon-button vocab-download" aria-label="下載老師錄音 (Download recording)" title="下載老師錄音 (Download recording)" hidden>⬇</button>
       <button type="button" class="icon-button card-record-button" aria-label="錄下你的聲音 (Record your voice)" title="錄音 (Record)">🎙</button>
       <button type="button" class="icon-button card-play-button" aria-label="播放我的錄音 (Play my recording)" title="播放錄音 (Play recording)">▶</button>
       <button type="button" class="icon-button card-save-model-button" aria-label="Save as teacher model" title="Save as teacher model">💾</button>
@@ -8241,16 +8247,27 @@ async function downloadTeacherAudio(sentence, button) {
   // 檔名用中文句子（清理不合法字元，過長截斷）
   const rawSentence = sentence.chineseSentence || sentence.recordId || 'recording';
   let baseName = String(rawSentence).replace(/[\\/:*?"<>|]/g, '').trim().slice(0, 10) || 'recording';
-  let fileName = baseName;
-  // 根據實際音檔格式修正副檔名（舊檔可能存成.webm但內容是wav）
   try {
     if (button) button.disabled = true;
     const resp = await fetch(url);
     if (!resp.ok) throw new Error('fetch failed');
-    const blob = await resp.blob();
+    let blob = await resp.blob();
     const actualMime = blob.type || sentence.audioMime || '';
-    const correctExt = actualMime.includes('wav') ? 'wav' : actualMime.includes('mp4') ? 'm4a' : actualMime.includes('webm') ? 'webm' : 'wav';
-    fileName = fileName.replace(/\.(webm|wav|m4a|mp3)$/i, '') + '.' + correctExt;
+    let ext = actualMime.includes('wav') ? 'wav' : actualMime.includes('mp4') ? 'm4a' : actualMime.includes('mpeg') ? 'mp3' : actualMime.includes('webm') ? 'webm' : actualMime.includes('ogg') ? 'ogg' : 'wav';
+    /* WebM/Ogg 在 iPhone 等部分手機無法播放：下載前轉成 WAV（手機、電腦通吃）。 */
+    if (ext === 'webm' || ext === 'ogg') {
+      try {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) {
+          const ctx = new AC();
+          const audioBuffer = await ctx.decodeAudioData((await blob.arrayBuffer()).slice(0));
+          blob = encodeMonoWav(audioBuffer, 1);
+          ext = 'wav';
+          await ctx.close();
+        }
+      } catch (_) { /* 轉檔失敗就照原格式下載 */ }
+    }
+    const fileName = baseName + '.' + ext;
     const objUrl = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = objUrl;
