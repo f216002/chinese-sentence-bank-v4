@@ -3,6 +3,1484 @@
    16 語全齊：hi/ta/th/km/vi/id/ne/bn/es/en/de/my/ko/ja/si/fa
    舊 3 首（buyuge/lanhuacao/talang）原樣保留；新增 12 首（83 句）2026-09-29 */
 const V4_SONGS_I18N = {
+  mamahao: [
+    {
+      hi: {
+        s: "इस दुनिया में माँ से अच्छा कोई नहीं,",
+        r: "is duniyā meṁ māṁ se acchā koī nahīṁ,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      en: {
+        s: "There's no one in this world as good as Mom,",
+        r: "",
+        e: "shìshàng = in the world; zhǐyǒu…hǎo = nothing is better than…"
+      },
+      ta: {
+        s: "உலகில் அம்மாவைப் போல் நல்லவர் யாரும் இல்லை,",
+        r: "ulakil ammāvaip pōl nallavar yārum illai,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      th: {
+        s: "ในโลกนี้ไม่มีใครดีเท่าแม่,",
+        r: "nai lok ni mai mi khrai di thao mae,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      km: {
+        s: "នៅលើលោកនេះ គ្មានអ្នកណាល្អដូចម្ដាយ,",
+        r: "nəw ləə look nih kmian nĕək naa l'a douch mdai,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      vi: {
+        s: "Trên đời này không ai tốt bằng mẹ,",
+        r: "",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      id: {
+        s: "Di dunia ini tak ada yang sebaik ibu,",
+        r: "",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      ne: {
+        s: "संसारमा आमा जस्तो असल कोही छैन,",
+        r: "saṁsāramā āmā jasto asal kohī chaina,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      bn: {
+        s: "এই পৃথিবীতে মায়ের মতো ভালো কেউ নেই,",
+        r: "ei pr̥thibīte māẏer mato bhālo keu nei,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      es: {
+        s: "En este mundo no hay nadie tan bueno como mamá,",
+        r: "",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      de: {
+        s: "Auf dieser Welt ist niemand so gut wie Mama,",
+        r: "",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      my: {
+        s: "ဤကမ္ဘာမှာ အမေလောက် ကောင်းတဲ့သူ မရှိဘူး,",
+        r: "i kambha hma a-me lauk kaung: te thu ma-shi bu,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      ko: {
+        s: "세상에서 엄마만큼 좋은 분은 없어,",
+        r: "sesang-eseo eomma-mankeum jo-eun bun-eun eopseo,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      ja: {
+        s: "この世でお母さんほどいい人はいない,",
+        r: "kono yo de okāsan hodo ii hito wa inai,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      si: {
+        s: "මේ ලෝකේ අම්මා වගේ හොඳ කෙනෙක් නැහැ,",
+        r: "mē lōkē ammā vagē hon̆da kenek næhæ,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      fa: {
+        s: "در این دنیا هیچ‌کس به خوبی مادر نیست،",
+        r: "dar in donyâ hich-kas be khubi-ye mâdar nist,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      }
+    },
+    {
+      hi: {
+        s: "माँ वाला बच्चा ख़ज़ाने जैसा है,",
+        r: "māṁ vālā baccā khazāne jaisā hai,",
+        e: "像個寶＝像寶貝一樣珍貴；形容有媽媽的孩子最幸福。"
+      },
+      en: {
+        s: "A child with a mom is like a treasure,",
+        r: "",
+        e: "xiàng ge bǎo = like a treasure; a child with a mom is precious."
+      },
+      ta: {
+        s: "அம்மா உள்ள குழந்தை பொக்கிஷம் போல,",
+        r: "ammā uḷḷa kuḻantai pokkiṣam pōla,",
+        e: "像個寶＝像寶貝一樣珍貴；形容有媽媽的孩子最幸福。"
+      },
+      th: {
+        s: "เด็กที่มีแม่เหมือนของล้ำค่า,",
+        r: "dek thi mi mae muean khong lamkha,",
+        e: "像個寶＝像寶貝一樣珍貴；形容有媽媽的孩子最幸福。"
+      },
+      km: {
+        s: "កូនដែលមានម្ដាយ ដូចជាកំណប់,",
+        r: "koun dael mien mdai douch chea kɑmnɑp,",
+        e: "像個寶＝像寶貝一樣珍貴；形容有媽媽的孩子最幸福。"
+      },
+      vi: {
+        s: "Trẻ có mẹ như báu vật,",
+        r: "",
+        e: "像個寶＝像寶貝一樣珍貴；形容有媽媽的孩子最幸福。"
+      },
+      id: {
+        s: "Anak yang punya ibu bagaikan harta karun,",
+        r: "",
+        e: "像個寶＝像寶貝一樣珍貴；形容有媽媽的孩子最幸福。"
+      },
+      ne: {
+        s: "आमा भएको बच्चा खजाना जस्तै हो,",
+        r: "āmā bhaeko baccā khajānā jastai ho,",
+        e: "像個寶＝像寶貝一樣珍貴；形容有媽媽的孩子最幸福。"
+      },
+      bn: {
+        s: "মা আছে যার সে শিশু রত্নের মতো,",
+        r: "mā āche yār se śiśu ratner mato,",
+        e: "像個寶＝像寶貝一樣珍貴；形容有媽媽的孩子最幸福。"
+      },
+      es: {
+        s: "El niño que tiene mamá es como un tesoro,",
+        r: "",
+        e: "像個寶＝像寶貝一樣珍貴；形容有媽媽的孩子最幸福。"
+      },
+      de: {
+        s: "Ein Kind mit Mama ist wie ein Schatz,",
+        r: "",
+        e: "像個寶＝像寶貝一樣珍貴；形容有媽媽的孩子最幸福。"
+      },
+      my: {
+        s: "အမေရှိတဲ့ ကလေးဟာ ရတနာလို,",
+        r: "a-me shi te ka-le: ha ratana lo,",
+        e: "像個寶＝像寶貝一樣珍貴；形容有媽媽的孩子最幸福。"
+      },
+      ko: {
+        s: "엄마 있는 아이는 보물 같아,",
+        r: "eomma inneun ai-neun bomul gata,",
+        e: "像個寶＝像寶貝一樣珍貴；形容有媽媽的孩子最幸福。"
+      },
+      ja: {
+        s: "お母さんのいる子は宝物のよう,",
+        r: "okāsan no iru ko wa takaramono no yō,",
+        e: "像個寶＝像寶貝一樣珍貴；形容有媽媽的孩子最幸福。"
+      },
+      si: {
+        s: "අම්මා ඉන්න දරුවා නිධානයක් වගේ,",
+        r: "ammā inna daruvā nidhānayak vagē,",
+        e: "像個寶＝像寶貝一樣珍貴；形容有媽媽的孩子最幸福。"
+      },
+      fa: {
+        s: "بچه‌ای که مادر دارد مثل گنج است،",
+        r: "bache-i ke mâdar dârad mesl-e ganj ast,",
+        e: "像個寶＝像寶貝一樣珍貴；形容有媽媽的孩子最幸福。"
+      }
+    },
+    {
+      hi: {
+        s: "माँ की गोद में समा जाओ,",
+        r: "māṁ kī god meṁ samā jāo,",
+        e: "投進＝撲進（懷裡）；懷抱＝擁抱。"
+      },
+      en: {
+        s: "Snuggling into Mommy's warm embrace,",
+        r: "",
+        e: "tóujìn = to throw oneself into; huáibào = embrace."
+      },
+      ta: {
+        s: "அம்மாவின் அணைப்பில் சாய்ந்திடு,",
+        r: "ammāviṉ aṇaippil cāyntiṭu,",
+        e: "投進＝撲進（懷裡）；懷抱＝擁抱。"
+      },
+      th: {
+        s: "ซบลงในอ้อมกอดของแม่,",
+        r: "sop long nai omkot khong mae,",
+        e: "投進＝撲進（懷裡）；懷抱＝擁抱。"
+      },
+      km: {
+        s: "ឱបចូលក្នុងដៃម្ដាយ,",
+        r: "oup choul knong dai mdai,",
+        e: "投進＝撲進（懷裡）；懷抱＝擁抱。"
+      },
+      vi: {
+        s: "Hãy nép vào vòng tay của mẹ,",
+        r: "",
+        e: "投進＝撲進（懷裡）；懷抱＝擁抱。"
+      },
+      id: {
+        s: "Menyelinap ke dalam pelukan ibu,",
+        r: "",
+        e: "投進＝撲進（懷裡）；懷抱＝擁抱。"
+      },
+      ne: {
+        s: "आमाको काखमा लुक,",
+        r: "āmāko kākhma luka,",
+        e: "投進＝撲進（懷裡）；懷抱＝擁抱。"
+      },
+      bn: {
+        s: "মায়ের কোলে লুকিয়ে পড়ো,",
+        r: "māẏer kole lukiẏe paṛo,",
+        e: "投進＝撲進（懷裡）；懷抱＝擁抱。"
+      },
+      es: {
+        s: "Refúgiate en los brazos de mamá,",
+        r: "",
+        e: "投進＝撲進（懷裡）；懷抱＝擁抱。"
+      },
+      de: {
+        s: "Kuschle dich in Mamas Arme,",
+        r: "",
+        e: "投進＝撲進（懷裡）；懷抱＝擁抱。"
+      },
+      my: {
+        s: "အမေ့ရင်ခွင်ထဲ ခိုဝင်,",
+        r: "a-me. yang khwin hte khowin,",
+        e: "投進＝撲進（懷裡）；懷抱＝擁抱。"
+      },
+      ko: {
+        s: "엄마 품에 안기어,",
+        r: "eomma pum-e angieo,",
+        e: "投進＝撲進（懷裡）；懷抱＝擁抱。"
+      },
+      ja: {
+        s: "お母さんの胸に飛び込んで,",
+        r: "okāsan no mune ni tobikonde,",
+        e: "投進＝撲進（懷裡）；懷抱＝擁抱。"
+      },
+      si: {
+        s: "අම්මාගේ තුරුළට පැනගන්න,",
+        r: "ammāgē turuḷaṭa pænaganna,",
+        e: "投進＝撲進（懷裡）；懷抱＝擁抱。"
+      },
+      fa: {
+        s: "به آغوش مادر پناه ببر،",
+        r: "be âghush-e mâdar panâh bebar,",
+        e: "投進＝撲進（懷裡）；懷抱＝擁抱。"
+      }
+    },
+    {
+      hi: {
+        s: "ख़ुशियाँ कभी ख़त्म न हों।",
+        r: "khuśiyāṁ kabhī khatm na hoṁ.",
+        e: "享不了＝享受不完；幸福多到用不完。"
+      },
+      en: {
+        s: "Happiness that never ends.",
+        r: "",
+        e: "xiǎng buliǎo = can't finish enjoying; happiness is endless."
+      },
+      ta: {
+        s: "மகிழ்ச்சி தீரவே தீராது.",
+        r: "makiḻcci tīravē tīrātu.",
+        e: "享不了＝享受不完；幸福多到用不完。"
+      },
+      th: {
+        s: "ความสุขไม่มีวันหมด",
+        r: "khwam suk mai mi wan mot",
+        e: "享不了＝享受不完；幸福多到用不完。"
+      },
+      km: {
+        s: "សុភមង្គលគ្មានថ្ងៃអស់។",
+        r: "sophamɔŋkul kmian tngai ɑɑh.",
+        e: "享不了＝享受不完；幸福多到用不完。"
+      },
+      vi: {
+        s: "Hạnh phúc hưởng mãi không hết.",
+        r: "",
+        e: "享不了＝享受不完；幸福多到用不完。"
+      },
+      id: {
+        s: "Kebahagiaan takkan pernah habis.",
+        r: "",
+        e: "享不了＝享受不完；幸福多到用不完。"
+      },
+      ne: {
+        s: "खुसी कहिल्यै सकिँदैन।",
+        r: "khusī kahilyai sakiṁdaina.",
+        e: "享不了＝享受不完；幸福多到用不完。"
+      },
+      bn: {
+        s: "সুখ কখনো ফুরোবে না।",
+        r: "sukh kakhano phurobe nā.",
+        e: "享不了＝享受不完；幸福多到用不完。"
+      },
+      es: {
+        s: "La felicidad nunca se acaba.",
+        r: "",
+        e: "享不了＝享受不完；幸福多到用不完。"
+      },
+      de: {
+        s: "Das Glück nimmt kein Ende.",
+        r: "",
+        e: "享不了＝享受不完；幸福多到用不完。"
+      },
+      my: {
+        s: "ပျော်ရွှင်မှု ကုန်မှာ မဟုတ်ဘူး။",
+        r: "pyaw hwin hmu koun hma ma-hout bu.",
+        e: "享不了＝享受不完；幸福多到用不完。"
+      },
+      ko: {
+        s: "행복은 끝이 없어라.",
+        r: "haengbog-eun kkeut-i eopseora.",
+        e: "享不了＝享受不完；幸福多到用不完。"
+      },
+      ja: {
+        s: "幸せは尽きることがない。",
+        r: "shiawase wa tsukiru koto ga nai.",
+        e: "享不了＝享受不完；幸福多到用不完。"
+      },
+      si: {
+        s: "සතුට කවදාවත් ඉවර වෙන්නේ නැහැ.",
+        r: "satuṭa kavadāvat ivara vennē næhæ.",
+        e: "享不了＝享受不完；幸福多到用不完。"
+      },
+      fa: {
+        s: "خوشبختی هرگز تمام نمی‌شود.",
+        r: "khoshbakhti hargez tamâm nemishavad.",
+        e: "享不了＝享受不完；幸福多到用不完。"
+      }
+    },
+    {
+      hi: {
+        s: "माँ बिना सबसे दुखी,",
+        r: "māṁ binā sabse dukhī,",
+        e: "苦惱＝痛苦煩惱；最苦惱＝最可憐。"
+      },
+      en: {
+        s: "But a child without a mom is full of woe,",
+        r: "",
+        e: "kǔnǎo = misery; zuì kǔnǎo = the most miserable."
+      },
+      ta: {
+        s: "அம்மா இல்லாதது மிகவும் துயரம்,",
+        r: "ammā illātatu mikavum tuyaram,",
+        e: "苦惱＝痛苦煩惱；最苦惱＝最可憐。"
+      },
+      th: {
+        s: "ไม่มีแม่ทุกข์ที่สุด,",
+        r: "mai mi mae thuk thisut,",
+        e: "苦惱＝痛苦煩惱；最苦惱＝最可憐。"
+      },
+      km: {
+        s: "គ្មានម្ដាយ ពិបាកចិត្តបំផុត,",
+        r: "kmian mdai pibak chet bɑmphot,",
+        e: "苦惱＝痛苦煩惱；最苦惱＝最可憐。"
+      },
+      vi: {
+        s: "Không có mẹ là khổ nhất,",
+        r: "",
+        e: "苦惱＝痛苦煩惱；最苦惱＝最可憐。"
+      },
+      id: {
+        s: "Tanpa ibu, hidup paling menderita,",
+        r: "",
+        e: "苦惱＝痛苦煩惱；最苦惱＝最可憐。"
+      },
+      ne: {
+        s: "आमा नहुनु सबैभन्दा दुःख,",
+        r: "āmā nahunu sabhaibhandā duḥkha,",
+        e: "苦惱＝痛苦煩惱；最苦惱＝最可憐。"
+      },
+      bn: {
+        s: "মা না থাকা সবচেয়ে কষ্টের,",
+        r: "mā nā thākā sabceẏe kaṣṭer,",
+        e: "苦惱＝痛苦煩惱；最苦惱＝最可憐。"
+      },
+      es: {
+        s: "Sin mamá, la vida es la más triste,",
+        r: "",
+        e: "苦惱＝痛苦煩惱；最苦惱＝最可憐。"
+      },
+      de: {
+        s: "Ohne Mama ist das Leben am traurigsten,",
+        r: "",
+        e: "苦惱＝痛苦煩惱；最苦惱＝最可憐。"
+      },
+      my: {
+        s: "အမေ မရှိတာ အဆိုးဆုံး,",
+        r: "a-me ma-shi ta a-hsou: hsoun:,",
+        e: "苦惱＝痛苦煩惱；最苦惱＝最可憐。"
+      },
+      ko: {
+        s: "엄마 없이는 가장 괴로워,",
+        r: "eomma eopsineun gajang goerowo,",
+        e: "苦惱＝痛苦煩惱；最苦惱＝最可憐。"
+      },
+      ja: {
+        s: "お母さんがいないのは一番つらい,",
+        r: "okāsan ga inai no wa ichiban tsurai,",
+        e: "苦惱＝痛苦煩惱；最苦惱＝最可憐。"
+      },
+      si: {
+        s: "අම්මා නැති එක තමයි ලොකුම දුක,",
+        r: "ammā næti eka tamayi lokuma duka,",
+        e: "苦惱＝痛苦煩惱；最苦惱＝最可憐。"
+      },
+      fa: {
+        s: "بی‌مادر بودن سخت‌ترین درد است،",
+        r: "bi-mâdar budan sakht-tarin dard ast,",
+        e: "苦惱＝痛苦煩惱；最苦惱＝最可憐。"
+      }
+    },
+    {
+      hi: {
+        s: "बिन माँ का बच्चा घास जैसा है,",
+        r: "bin māṁ kā baccā ghās jaisā hai,",
+        e: "像根草＝像小草一樣；形容沒媽媽的孩子孤單沒人疼。"
+      },
+      en: {
+        s: "Like a lonely little blade of grass,",
+        r: "",
+        e: "xiàng gēn cǎo = like a blade of grass; a motherless child is lonely and uncared for."
+      },
+      ta: {
+        s: "அம்மா இல்லா குழந்தை புல் போல,",
+        r: "ammā illā kuḻantai pul pōla,",
+        e: "像根草＝像小草一樣；形容沒媽媽的孩子孤單沒人疼。"
+      },
+      th: {
+        s: "เด็กที่ไม่มีแม่เหมือนต้นหญ้า,",
+        r: "dek thi mai mi mae muean ton ya,",
+        e: "像根草＝像小草一樣；形容沒媽媽的孩子孤單沒人疼。"
+      },
+      km: {
+        s: "កូនគ្មានម្ដាយ ដូចជាស្មៅ,",
+        r: "koun kmian mdai douch chea smao,",
+        e: "像根草＝像小草一樣；形容沒媽媽的孩子孤單沒人疼。"
+      },
+      vi: {
+        s: "Trẻ không mẹ như ngọn cỏ,",
+        r: "",
+        e: "像根草＝像小草一樣；形容沒媽媽的孩子孤單沒人疼。"
+      },
+      id: {
+        s: "Anak tanpa ibu bagaikan sehelai rumput,",
+        r: "",
+        e: "像根草＝像小草一樣；形容沒媽媽的孩子孤單沒人疼。"
+      },
+      ne: {
+        s: "आमा नभएको बच्चा घाँस जस्तै,",
+        r: "āmā nabhaeko baccā ghāṁsa jastai,",
+        e: "像根草＝像小草一樣；形容沒媽媽的孩子孤單沒人疼。"
+      },
+      bn: {
+        s: "মা-হারা শিশু ঘাসের মতো,",
+        r: "mā-hārā śiśu ghāser mato,",
+        e: "像根草＝像小草一樣；形容沒媽媽的孩子孤單沒人疼。"
+      },
+      es: {
+        s: "El niño sin mamá es como una hierba,",
+        r: "",
+        e: "像根草＝像小草一樣；形容沒媽媽的孩子孤單沒人疼。"
+      },
+      de: {
+        s: "Ein Kind ohne Mama ist wie ein Grashalm,",
+        r: "",
+        e: "像根草＝像小草一樣；形容沒媽媽的孩子孤單沒人疼。"
+      },
+      my: {
+        s: "အမေ မရှိတဲ့ ကလေး မြက်ပင်လို,",
+        r: "a-me ma-shi te ka-le: myet pin lo,",
+        e: "像根草＝像小草一樣；形容沒媽媽的孩子孤單沒人疼。"
+      },
+      ko: {
+        s: "엄마 없는 아이는 풀잎 같아,",
+        r: "eomma eomneun ai-neun purip gata,",
+        e: "像根草＝像小草一樣；形容沒媽媽的孩子孤單沒人疼。"
+      },
+      ja: {
+        s: "お母さんのいない子は草のよう,",
+        r: "okāsan no inai ko wa kusa no yō,",
+        e: "像根草＝像小草一樣；形容沒媽媽的孩子孤單沒人疼。"
+      },
+      si: {
+        s: "අම්මා නැති දරුවා තණකොළ වගේ,",
+        r: "ammā næti daruvā taṇakoḷa vagē,",
+        e: "像根草＝像小草一樣；形容沒媽媽的孩子孤單沒人疼。"
+      },
+      fa: {
+        s: "بچه بی‌مادر مثل علف است،",
+        r: "bache-ye bi-mâdar mesl-e alaf ast,",
+        e: "像根草＝像小草一樣；形容沒媽媽的孩子孤單沒人疼。"
+      }
+    },
+    {
+      hi: {
+        s: "माँ की गोद से दूर होकर,",
+        r: "māṁ kī god se dūr hokar,",
+        e: "離開＝離去；懷抱＝擁抱。"
+      },
+      en: {
+        s: "Away from Mommy's warm embrace,",
+        r: "",
+        e: "líkāi = to leave; huáibào = embrace."
+      },
+      ta: {
+        s: "அம்மாவின் அணைப்பை விட்டு விலகி,",
+        r: "ammāviṉ aṇaippai viṭṭu vilaki,",
+        e: "離開＝離去；懷抱＝擁抱。"
+      },
+      th: {
+        s: "ห่างจากอ้อมกอดของแม่,",
+        r: "hang chak omkot khong mae,",
+        e: "離開＝離去；懷抱＝擁抱。"
+      },
+      km: {
+        s: "ចាកចេញពីដៃម្ដាយ,",
+        r: "cheak chenh pi dai mdai,",
+        e: "離開＝離去；懷抱＝擁抱。"
+      },
+      vi: {
+        s: "Rời xa vòng tay của mẹ,",
+        r: "",
+        e: "離開＝離去；懷抱＝擁抱。"
+      },
+      id: {
+        s: "Jauh dari pelukan ibu,",
+        r: "",
+        e: "離開＝離去；懷抱＝擁抱。"
+      },
+      ne: {
+        s: "आमाको काखबाट टाढा भएर,",
+        r: "āmāko kākhbāṭa ṭāḍhā bhaera,",
+        e: "離開＝離去；懷抱＝擁抱。"
+      },
+      bn: {
+        s: "মায়ের কোল ছেড়ে দূরে গিয়ে,",
+        r: "māẏer kol cheṛe dūre giẏe,",
+        e: "離開＝離去；懷抱＝擁抱。"
+      },
+      es: {
+        s: "Lejos de los brazos de mamá,",
+        r: "",
+        e: "離開＝離去；懷抱＝擁抱。"
+      },
+      de: {
+        s: "Fern von Mamas Armen,",
+        r: "",
+        e: "離開＝離去；懷抱＝擁抱。"
+      },
+      my: {
+        s: "အမေ့ရင်ခွင်နဲ့ ဝေးကွာ,",
+        r: "a-me. yang khwin ne. we: kwa,",
+        e: "離開＝離去；懷抱＝擁抱。"
+      },
+      ko: {
+        s: "엄마 품을 떠나,",
+        r: "eomma pum-eul tteona,",
+        e: "離開＝離去；懷抱＝擁抱。"
+      },
+      ja: {
+        s: "お母さんの胸を離れて,",
+        r: "okāsan no mune o hanarete,",
+        e: "離開＝離去；懷抱＝擁抱。"
+      },
+      si: {
+        s: "අම්මාගේ තුරුළෙන් ඈත් වෙලා,",
+        r: "ammāgē turuḷen ǣt velā,",
+        e: "離開＝離去；懷抱＝擁抱。"
+      },
+      fa: {
+        s: "دور از آغوش مادر،",
+        r: "dur az âghush-e mâdar,",
+        e: "離開＝離去；懷抱＝擁抱。"
+      }
+    },
+    {
+      hi: {
+        s: "ख़ुशियाँ कहाँ मिलेंगी?",
+        r: "khuśiyāṁ kahāṁ mileṁgī?",
+        e: "哪裡找＝到哪裡去找；反問句，表示找不到。"
+      },
+      en: {
+        s: "Where could happiness be found?",
+        r: "",
+        e: "nǎlǐ zhǎo = where to find; a rhetorical question meaning 'nowhere'."
+      },
+      ta: {
+        s: "மகிழ்ச்சியை எங்கே தேடுவது?",
+        r: "makiḻcciyai eṅkē tēṭuvatu?",
+        e: "哪裡找＝到哪裡去找；反問句，表示找不到。"
+      },
+      th: {
+        s: "จะหาความสุขได้ที่ไหน?",
+        r: "cha ha khwam suk dai thinae?",
+        e: "哪裡找＝到哪裡去找；反問句，表示找不到。"
+      },
+      km: {
+        s: "រកសុភមង្គលនៅឯណា?",
+        r: "rɔk sophamɔŋkul nŏw aenaa?",
+        e: "哪裡找＝到哪裡去找；反問句，表示找不到。"
+      },
+      vi: {
+        s: "Hạnh phúc tìm ở đâu?",
+        r: "",
+        e: "哪裡找＝到哪裡去找；反問句，表示找不到。"
+      },
+      id: {
+        s: "Di mana kebahagiaan bisa ditemukan?",
+        r: "",
+        e: "哪裡找＝到哪裡去找；反問句，表示找不到。"
+      },
+      ne: {
+        s: "खुसी कहाँ खोज्ने?",
+        r: "khusī kahāṁ khojne?",
+        e: "哪裡找＝到哪裡去找；反問句，表示找不到。"
+      },
+      bn: {
+        s: "সুখ কোথায় খুঁজবে?",
+        r: "sukh kothāẏ khuṁjbe?",
+        e: "哪裡找＝到哪裡去找；反問句，表示找不到。"
+      },
+      es: {
+        s: "¿Dónde se puede encontrar la felicidad?",
+        r: "",
+        e: "哪裡找＝到哪裡去找；反問句，表示找不到。"
+      },
+      de: {
+        s: "Wo wäre das Glück zu finden?",
+        r: "",
+        e: "哪裡找＝到哪裡去找；反問句，表示找不到。"
+      },
+      my: {
+        s: "ပျော်ရွှင်မှုကို ဘယ်မှာ ရှာမလဲ?",
+        r: "pyaw hwin hmu ko bhe hma sha ma le?",
+        e: "哪裡找＝到哪裡去找；反問句，表示找不到。"
+      },
+      ko: {
+        s: "행복을 어디서 찾을까?",
+        r: "haengbog-eul eodiseo chajeulkka?",
+        e: "哪裡找＝到哪裡去找；反問句，表示找不到。"
+      },
+      ja: {
+        s: "幸せはどこで見つかるの?",
+        r: "shiawase wa doko de mitsukaru no?",
+        e: "哪裡找＝到哪裡去找；反問句，表示找不到。"
+      },
+      si: {
+        s: "සතුට කොහෙන්ද හොයාගන්නේ?",
+        r: "satuṭa kohenda hoyāgannē?",
+        e: "哪裡找＝到哪裡去找；反問句，表示找不到。"
+      },
+      fa: {
+        s: "خوشبختی را کجا می‌توان یافت؟",
+        r: "khoshbakhti râ kojâ mitavân yâft?",
+        e: "哪裡找＝到哪裡去找；反問句，表示找不到。"
+      }
+    },
+    {
+      hi: {
+        s: "इस दुनिया में माँ से अच्छा कोई नहीं,",
+        r: "is duniyā meṁ māṁ se acchā koī nahīṁ,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      en: {
+        s: "There's no one in this world as good as Mom,",
+        r: "",
+        e: "shìshàng = in the world; zhǐyǒu…hǎo = nothing is better than…"
+      },
+      ta: {
+        s: "உலகில் அம்மாவைப் போல் நல்லவர் யாரும் இல்லை,",
+        r: "ulakil ammāvaip pōl nallavar yārum illai,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      th: {
+        s: "ในโลกนี้ไม่มีใครดีเท่าแม่,",
+        r: "nai lok ni mai mi khrai di thao mae,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      km: {
+        s: "នៅលើលោកនេះ គ្មានអ្នកណាល្អដូចម្ដាយ,",
+        r: "nəw ləə look nih kmian nĕək naa l'a douch mdai,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      vi: {
+        s: "Trên đời này không ai tốt bằng mẹ,",
+        r: "",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      id: {
+        s: "Di dunia ini tak ada yang sebaik ibu,",
+        r: "",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      ne: {
+        s: "संसारमा आमा जस्तो असल कोही छैन,",
+        r: "saṁsāramā āmā jasto asal kohī chaina,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      bn: {
+        s: "এই পৃথিবীতে মায়ের মতো ভালো কেউ নেই,",
+        r: "ei pr̥thibīte māẏer mato bhālo keu nei,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      es: {
+        s: "En este mundo no hay nadie tan bueno como mamá,",
+        r: "",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      de: {
+        s: "Auf dieser Welt ist niemand so gut wie Mama,",
+        r: "",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      my: {
+        s: "ဤကမ္ဘာမှာ အမေလောက် ကောင်းတဲ့သူ မရှိဘူး,",
+        r: "i kambha hma a-me lauk kaung: te thu ma-shi bu,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      ko: {
+        s: "세상에서 엄마만큼 좋은 분은 없어,",
+        r: "sesang-eseo eomma-mankeum jo-eun bun-eun eopseo,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      ja: {
+        s: "この世でお母さんほどいい人はいない,",
+        r: "kono yo de okāsan hodo ii hito wa inai,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      si: {
+        s: "මේ ලෝකේ අම්මා වගේ හොඳ කෙනෙක් නැහැ,",
+        r: "mē lōkē ammā vagē hon̆da kenek næhæ,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      fa: {
+        s: "در این دنیا هیچ‌کس به خوبی مادر نیست،",
+        r: "dar in donyâ hich-kas be khubi-ye mâdar nist,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      }
+    },
+    {
+      hi: {
+        s: "माँ वाला बच्चा जानता नहीं,",
+        r: "māṁ vālā baccā jāntā nahīṁ,",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      en: {
+        s: "A child with a mom just doesn't know,",
+        r: "",
+        e: "bù zhīdào = doesn't know (how blessed they are); taking blessings for granted."
+      },
+      ta: {
+        s: "அம்மா உள்ள குழந்தை அறியாது,",
+        r: "ammā uḷḷa kuḻantai aṟiyātu,",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      th: {
+        s: "เด็กที่มีแม่ไม่รู้หรอก,",
+        r: "dek thi mi mae mai ru rok,",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      km: {
+        s: "កូនដែលមានម្ដាយ មិនដឹងទេ,",
+        r: "koun dael mien mdai mɨn dɨng te,",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      vi: {
+        s: "Trẻ có mẹ mà không biết,",
+        r: "",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      id: {
+        s: "Anak yang punya ibu tak menyadarinya,",
+        r: "",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      ne: {
+        s: "आमा भएको बच्चालाई थाहा छैन,",
+        r: "āmā bhaeko baccālāi thāhā chaina,",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      bn: {
+        s: "মা আছে যার সে জানে না,",
+        r: "mā āche yār se jāne nā,",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      es: {
+        s: "El niño que tiene mamá no lo sabe,",
+        r: "",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      de: {
+        s: "Ein Kind mit Mama weiß es nicht,",
+        r: "",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      my: {
+        s: "အမေရှိတဲ့ ကလေး မသိဘူး,",
+        r: "a-me shi te ka-le: ma-thi bu,",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      ko: {
+        s: "엄마 있는 아이는 몰라,",
+        r: "eomma inneun ai-neun molla,",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      ja: {
+        s: "お母さんのいる子は知らない,",
+        r: "okāsan no iru ko wa shiranai,",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      si: {
+        s: "අම්මා ඉන්න දරුවා දන්නේ නැහැ,",
+        r: "ammā inna daruvā dannē næhæ,",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      fa: {
+        s: "بچه‌ای که مادر دارد نمی‌داند،",
+        r: "bache-i ke mâdar dârad nemidânad,",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      }
+    },
+    {
+      hi: {
+        s: "काश वे जानते,",
+        r: "kāś ve jānte,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      en: {
+        s: "If only they knew,",
+        r: "",
+        e: "yàoshi = if; tāmen = the children with moms."
+      },
+      ta: {
+        s: "அவர்கள் அறிந்தால்,",
+        r: "avarkaḷ aṟintāl,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      th: {
+        s: "ถ้าพวกเขารู้,",
+        r: "tha phuak khao ru,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      km: {
+        s: "បើពួកគេដឹង,",
+        r: "bəə puok kee dɨng,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      vi: {
+        s: "Giá như chúng biết,",
+        r: "",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      id: {
+        s: "Andai saja mereka tahu,",
+        r: "",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      ne: {
+        s: "तिनीहरूलाई थाहा भएको भए,",
+        r: "tinīharūlāī thāhā bhaeko bhae,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      bn: {
+        s: "তারা যদি জানত,",
+        r: "tārā yadi jānta,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      es: {
+        s: "Si ellos lo supieran,",
+        r: "",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      de: {
+        s: "Wenn sie es nur wüssten,",
+        r: "",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      my: {
+        s: "သူတို့ သိရင်,",
+        r: "thu to. thi yin,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      ko: {
+        s: "그들이 알기만 한다면,",
+        r: "geudeur-i algiman handamyeon,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      ja: {
+        s: "もし彼らが知っていたら,",
+        r: "moshi karera ga shitte itara,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      si: {
+        s: "ඔවුන් දැනගත්තොත්,",
+        r: "ovun dænagattot,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      fa: {
+        s: "اگر آن‌ها می‌دانستند،",
+        r: "agar ânhâ midânestand,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      }
+    },
+    {
+      hi: {
+        s: "सपनों में भी मुस्कुराएँगे।",
+        r: "sapnoṁ meṁ bhī muskurāeṁge.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      en: {
+        s: "They'd be smiling even in their dreams.",
+        r: "",
+        e: "mèng lǐ = in dreams; yě huì xiào = would even laugh; pure joy."
+      },
+      ta: {
+        s: "கனவிலும் சிரிப்பார்கள்.",
+        r: "kaṉavilum cirippārkaḷ.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      th: {
+        s: "แม้ในฝันก็ยังยิ้มได้",
+        r: "mae nai fan ko yang yim dai",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      km: {
+        s: "សូម្បីក្នុងសុបិន ក៏ញញឹម។",
+        r: "soumpii knong sopɨn kɑɑ nheunhɨm.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      vi: {
+        s: "Trong mơ cũng sẽ mỉm cười.",
+        r: "",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      id: {
+        s: "Dalam mimpi pun mereka akan tersenyum.",
+        r: "",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      ne: {
+        s: "सपनामा पनि मुसुक्क हाँस्नेछन्।",
+        r: "sapanāmā pani musukka hāṁsnechan.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      bn: {
+        s: "স্বপ্নেও হাসবে।",
+        r: "sbapneo hāsbe.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      es: {
+        s: "Sonreirían hasta en sus sueños.",
+        r: "",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      de: {
+        s: "Sie würden sogar im Traum lächeln.",
+        r: "",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      my: {
+        s: "အိပ်မက်ထဲမှာတောင် ပြုံးနေမယ်။",
+        r: "eikmet hte hma taung pyoun: ne me.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      ko: {
+        s: "꿈속에서도 웃을 거야.",
+        r: "kkumsog-eseodo useul geoya.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      ja: {
+        s: "夢の中でも笑うだろう。",
+        r: "yume no naka demo warau darō.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      si: {
+        s: "හීනෙනුත් හිනා වෙයි.",
+        r: "hīnenut hinā veyi.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      fa: {
+        s: "حتی در خواب هم لبخند می‌زنند.",
+        r: "hattâ dar khâb ham labkhand mizanand.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      }
+    },
+    {
+      hi: {
+        s: "इस दुनिया में माँ से अच्छा कोई नहीं,",
+        r: "is duniyā meṁ māṁ se acchā koī nahīṁ,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      en: {
+        s: "There's no one in this world as good as Mom,",
+        r: "",
+        e: "shìshàng = in the world; zhǐyǒu…hǎo = nothing is better than…"
+      },
+      ta: {
+        s: "உலகில் அம்மாவைப் போல் நல்லவர் யாரும் இல்லை,",
+        r: "ulakil ammāvaip pōl nallavar yārum illai,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      th: {
+        s: "ในโลกนี้ไม่มีใครดีเท่าแม่,",
+        r: "nai lok ni mai mi khrai di thao mae,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      km: {
+        s: "នៅលើលោកនេះ គ្មានអ្នកណាល្អដូចម្ដាយ,",
+        r: "nəw ləə look nih kmian nĕək naa l'a douch mdai,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      vi: {
+        s: "Trên đời này không ai tốt bằng mẹ,",
+        r: "",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      id: {
+        s: "Di dunia ini tak ada yang sebaik ibu,",
+        r: "",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      ne: {
+        s: "संसारमा आमा जस्तो असल कोही छैन,",
+        r: "saṁsāramā āmā jasto asal kohī chaina,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      bn: {
+        s: "এই পৃথিবীতে মায়ের মতো ভালো কেউ নেই,",
+        r: "ei pr̥thibīte māẏer mato bhālo keu nei,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      es: {
+        s: "En este mundo no hay nadie tan bueno como mamá,",
+        r: "",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      de: {
+        s: "Auf dieser Welt ist niemand so gut wie Mama,",
+        r: "",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      my: {
+        s: "ဤကမ္ဘာမှာ အမေလောက် ကောင်းတဲ့သူ မရှိဘူး,",
+        r: "i kambha hma a-me lauk kaung: te thu ma-shi bu,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      ko: {
+        s: "세상에서 엄마만큼 좋은 분은 없어,",
+        r: "sesang-eseo eomma-mankeum jo-eun bun-eun eopseo,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      ja: {
+        s: "この世でお母さんほどいい人はいない,",
+        r: "kono yo de okāsan hodo ii hito wa inai,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      si: {
+        s: "මේ ලෝකේ අම්මා වගේ හොඳ කෙනෙක් නැහැ,",
+        r: "mē lōkē ammā vagē hon̆da kenek næhæ,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      },
+      fa: {
+        s: "در این دنیا هیچ‌کس به خوبی مادر نیست،",
+        r: "dar in donyâ hich-kas be khubi-ye mâdar nist,",
+        e: "世上＝世界上；只有…好＝沒有比…更好的。"
+      }
+    },
+    {
+      hi: {
+        s: "माँ वाला बच्चा जानता नहीं,",
+        r: "māṁ vālā baccā jāntā nahīṁ,",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      en: {
+        s: "A child with a mom just doesn't know,",
+        r: "",
+        e: "bù zhīdào = doesn't know (how blessed they are); taking blessings for granted."
+      },
+      ta: {
+        s: "அம்மா உள்ள குழந்தை அறியாது,",
+        r: "ammā uḷḷa kuḻantai aṟiyātu,",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      th: {
+        s: "เด็กที่มีแม่ไม่รู้หรอก,",
+        r: "dek thi mi mae mai ru rok,",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      km: {
+        s: "កូនដែលមានម្ដាយ មិនដឹងទេ,",
+        r: "koun dael mien mdai mɨn dɨng te,",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      vi: {
+        s: "Trẻ có mẹ mà không biết,",
+        r: "",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      id: {
+        s: "Anak yang punya ibu tak menyadarinya,",
+        r: "",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      ne: {
+        s: "आमा भएको बच्चालाई थाहा छैन,",
+        r: "āmā bhaeko baccālāi thāhā chaina,",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      bn: {
+        s: "মা আছে যার সে জানে না,",
+        r: "mā āche yār se jāne nā,",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      es: {
+        s: "El niño que tiene mamá no lo sabe,",
+        r: "",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      de: {
+        s: "Ein Kind mit Mama weiß es nicht,",
+        r: "",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      my: {
+        s: "အမေရှိတဲ့ ကလေး မသိဘူး,",
+        r: "a-me shi te ka-le: ma-thi bu,",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      ko: {
+        s: "엄마 있는 아이는 몰라,",
+        r: "eomma inneun ai-neun molla,",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      ja: {
+        s: "お母さんのいる子は知らない,",
+        r: "okāsan no iru ko wa shiranai,",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      si: {
+        s: "අම්මා ඉන්න දරුවා දන්නේ නැහැ,",
+        r: "ammā inna daruvā dannē næhæ,",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      },
+      fa: {
+        s: "بچه‌ای که مادر دارد نمی‌داند،",
+        r: "bache-i ke mâdar dârad nemidânad,",
+        e: "不知道＝不知道自己多幸福；身在福中不知福。"
+      }
+    },
+    {
+      hi: {
+        s: "काश वे जानते,",
+        r: "kāś ve jānte,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      en: {
+        s: "If only they knew,",
+        r: "",
+        e: "yàoshi = if; tāmen = the children with moms."
+      },
+      ta: {
+        s: "அவர்கள் அறிந்தால்,",
+        r: "avarkaḷ aṟintāl,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      th: {
+        s: "ถ้าพวกเขารู้,",
+        r: "tha phuak khao ru,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      km: {
+        s: "បើពួកគេដឹង,",
+        r: "bəə puok kee dɨng,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      vi: {
+        s: "Giá như chúng biết,",
+        r: "",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      id: {
+        s: "Andai saja mereka tahu,",
+        r: "",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      ne: {
+        s: "तिनीहरूलाई थाहा भएको भए,",
+        r: "tinīharūlāī thāhā bhaeko bhae,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      bn: {
+        s: "তারা যদি জানত,",
+        r: "tārā yadi jānta,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      es: {
+        s: "Si ellos lo supieran,",
+        r: "",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      de: {
+        s: "Wenn sie es nur wüssten,",
+        r: "",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      my: {
+        s: "သူတို့ သိရင်,",
+        r: "thu to. thi yin,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      ko: {
+        s: "그들이 알기만 한다면,",
+        r: "geudeur-i algiman handamyeon,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      ja: {
+        s: "もし彼らが知っていたら,",
+        r: "moshi karera ga shitte itara,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      si: {
+        s: "ඔවුන් දැනගත්තොත්,",
+        r: "ovun dænagattot,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      fa: {
+        s: "اگر آن‌ها می‌دانستند،",
+        r: "agar ânhâ midânestand,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      }
+    },
+    {
+      hi: {
+        s: "सपनों में भी मुस्कुराएँगे।",
+        r: "sapnoṁ meṁ bhī muskurāeṁge.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      en: {
+        s: "They'd be smiling even in their dreams.",
+        r: "",
+        e: "mèng lǐ = in dreams; yě huì xiào = would even laugh; pure joy."
+      },
+      ta: {
+        s: "கனவிலும் சிரிப்பார்கள்.",
+        r: "kaṉavilum cirippārkaḷ.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      th: {
+        s: "แม้ในฝันก็ยังยิ้มได้",
+        r: "mae nai fan ko yang yim dai",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      km: {
+        s: "សូម្បីក្នុងសុបិន ក៏ញញឹម។",
+        r: "soumpii knong sopɨn kɑɑ nheunhɨm.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      vi: {
+        s: "Trong mơ cũng sẽ mỉm cười.",
+        r: "",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      id: {
+        s: "Dalam mimpi pun mereka akan tersenyum.",
+        r: "",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      ne: {
+        s: "सपनामा पनि मुसुक्क हाँस्नेछन्।",
+        r: "sapanāmā pani musukka hāṁsnechan.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      bn: {
+        s: "স্বপ্নেও হাসবে।",
+        r: "sbapneo hāsbe.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      es: {
+        s: "Sonreirían hasta en sus sueños.",
+        r: "",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      de: {
+        s: "Sie würden sogar im Traum lächeln.",
+        r: "",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      my: {
+        s: "အိပ်မက်ထဲမှာတောင် ပြုံးနေမယ်။",
+        r: "eikmet hte hma taung pyoun: ne me.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      ko: {
+        s: "꿈속에서도 웃을 거야.",
+        r: "kkumsog-eseodo useul geoya.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      ja: {
+        s: "夢の中でも笑うだろう。",
+        r: "yume no naka demo warau darō.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      si: {
+        s: "හීනෙනුත් හිනා වෙයි.",
+        r: "hīnenut hinā veyi.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      fa: {
+        s: "حتی در خواب هم لبخند می‌زنند.",
+        r: "hattâ dar khâb ham labkhand mizanand.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      }
+    },
+    {
+      hi: {
+        s: "काश वे जानते,",
+        r: "kāś ve jānte,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      en: {
+        s: "If only they knew,",
+        r: "",
+        e: "yàoshi = if; tāmen = the children with moms."
+      },
+      ta: {
+        s: "அவர்கள் அறிந்தால்,",
+        r: "avarkaḷ aṟintāl,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      th: {
+        s: "ถ้าพวกเขารู้,",
+        r: "tha phuak khao ru,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      km: {
+        s: "បើពួកគេដឹង,",
+        r: "bəə puok kee dɨng,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      vi: {
+        s: "Giá như chúng biết,",
+        r: "",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      id: {
+        s: "Andai saja mereka tahu,",
+        r: "",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      ne: {
+        s: "तिनीहरूलाई थाहा भएको भए,",
+        r: "tinīharūlāī thāhā bhaeko bhae,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      bn: {
+        s: "তারা যদি জানত,",
+        r: "tārā yadi jānta,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      es: {
+        s: "Si ellos lo supieran,",
+        r: "",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      de: {
+        s: "Wenn sie es nur wüssten,",
+        r: "",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      my: {
+        s: "သူတို့ သိရင်,",
+        r: "thu to. thi yin,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      ko: {
+        s: "그들이 알기만 한다면,",
+        r: "geudeur-i algiman handamyeon,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      ja: {
+        s: "もし彼らが知っていたら,",
+        r: "moshi karera ga shitte itara,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      si: {
+        s: "ඔවුන් දැනගත්තොත්,",
+        r: "ovun dænagattot,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      },
+      fa: {
+        s: "اگر آن‌ها می‌دانستند،",
+        r: "agar ânhâ midânestand,",
+        e: "要是＝如果；他們＝指有媽媽的孩子們。"
+      }
+    },
+    {
+      hi: {
+        s: "सपनों में भी मुस्कुराएँगे।",
+        r: "sapnoṁ meṁ bhī muskurāeṁge.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      en: {
+        s: "They'd be smiling even in their dreams.",
+        r: "",
+        e: "mèng lǐ = in dreams; yě huì xiào = would even laugh; pure joy."
+      },
+      ta: {
+        s: "கனவிலும் சிரிப்பார்கள்.",
+        r: "kaṉavilum cirippārkaḷ.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      th: {
+        s: "แม้ในฝันก็ยังยิ้มได้",
+        r: "mae nai fan ko yang yim dai",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      km: {
+        s: "សូម្បីក្នុងសុបិន ក៏ញញឹម។",
+        r: "soumpii knong sopɨn kɑɑ nheunhɨm.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      vi: {
+        s: "Trong mơ cũng sẽ mỉm cười.",
+        r: "",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      id: {
+        s: "Dalam mimpi pun mereka akan tersenyum.",
+        r: "",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      ne: {
+        s: "सपनामा पनि मुसुक्क हाँस्नेछन्।",
+        r: "sapanāmā pani musukka hāṁsnechan.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      bn: {
+        s: "স্বপ্নেও হাসবে।",
+        r: "sbapneo hāsbe.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      es: {
+        s: "Sonreirían hasta en sus sueños.",
+        r: "",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      de: {
+        s: "Sie würden sogar im Traum lächeln.",
+        r: "",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      my: {
+        s: "အိပ်မက်ထဲမှာတောင် ပြုံးနေမယ်။",
+        r: "eikmet hte hma taung pyoun: ne me.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      ko: {
+        s: "꿈속에서도 웃을 거야.",
+        r: "kkumsog-eseodo useul geoya.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      ja: {
+        s: "夢の中でも笑うだろう。",
+        r: "yume no naka demo warau darō.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      si: {
+        s: "හීනෙනුත් හිනා වෙයි.",
+        r: "hīnenut hinā veyi.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      },
+      fa: {
+        s: "حتی در خواب هم لبخند می‌زنند.",
+        r: "hattâ dar khâb ham labkhand mizanand.",
+        e: "夢裡＝在夢中；也會笑＝連做夢都會笑，表示非常開心。"
+      }
+    }
+  ],
   buyuge: [
     {
       hi: {
