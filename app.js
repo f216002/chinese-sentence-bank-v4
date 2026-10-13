@@ -2915,7 +2915,7 @@ async function loadHsk2Bank() {
   const lang = state.sourceLanguage || 'hi';
   if (hsk2BankCache[lang]) return hsk2BankCache[lang];
   const file = 'v4-hsk/v4-hsk2-bank-' + lang + '.json';
-  const url = (await getBankFileUrl(file)) + '&v=20261013-09';
+  const url = (await getBankFileUrl(file)) + '&v=20261013-10';
   const r = await fetch(url);
   if (!r.ok) throw new Error('HSK2 bank ' + r.status);
   const data = await r.json();
@@ -3531,6 +3531,10 @@ async function renderEbookPage() {
   /* 載入該頁的句子區域（如果有） */
   let regions = [];
   if (page.regions) {
+    /* HSK2：regions 直接內嵌為陣列（2026-10-13） */
+    if (Array.isArray(page.regions)) {
+      regions = page.regions;
+    } else {
     try {
       const basePath = ebookState.isTw1 ? 'v4-book-tw1/pages/' : (ebookState.isTw2 ? 'v4-book-tw2/pages/' : (ebookState.isTw3 ? 'v4-book-tw3/pages/' : (ebookState.isTw4 ? 'v4-book-tw4/pages/' : (ebookState.isTw5 ? 'v4-book-tw5/pages/' : (ebookState.isTw6 ? 'v4-book-tw6/pages/' : (ebookState.isB7 ? 'v4-book7/pages/' : 'v4-hsk/pages/'))))));
       const url = await getBankFileUrl(basePath + page.regions);
@@ -3554,6 +3558,7 @@ async function renderEbookPage() {
         });
       }
     } catch (e) { /* 沒有區域就純瀏覽 */ }
+    } /* end else */
   }
   let regionsHtml = '';
   regions.forEach((reg, i) => {
