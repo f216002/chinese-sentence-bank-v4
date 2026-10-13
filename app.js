@@ -2914,7 +2914,7 @@ async function loadHsk2Bank() {
   const lang = state.sourceLanguage || 'hi';
   if (hsk2BankCache[lang]) return hsk2BankCache[lang];
   const file = 'v4-hsk/v4-hsk2-bank-' + lang + '.json';
-  const url = (await getBankFileUrl(file)) + '&v=20261013-02';
+  const url = (await getBankFileUrl(file)) + '&v=20261013-03';
   const r = await fetch(url);
   if (!r.ok) throw new Error('HSK2 bank ' + r.status);
   const data = await r.json();
@@ -2939,10 +2939,11 @@ function lessonRecords(n) {
   if (n >= 801 && n <= 815 && hsk) {
     return hsk.filter(s => courseMeta(s).lesson === key);
   }
-  /* HSK2 課程（901-915）：從 HSK2 快取取。 */
+  /* HSK2 課程（901-915）：從 HSK2 快取取，用 ID 前綴過濾（courseMeta 無法解析 HSK2）。 */
   const hsk2 = hsk2Sentences();
   if (n >= 901 && n <= 915 && hsk2) {
-    return hsk2.filter(s => courseMeta(s).lesson === key);
+    const prefix = `hsk2-${n}-`;
+    return hsk2.filter(s => (s.recordId || '').startsWith(prefix));
   }
   return state.sentences.filter(s => courseMeta(s).lesson === key);
 }
