@@ -2915,7 +2915,7 @@ async function loadHsk2Bank() {
   const lang = state.sourceLanguage || 'hi';
   if (hsk2BankCache[lang]) return hsk2BankCache[lang];
   const file = 'v4-hsk/v4-hsk2-bank-' + lang + '.json';
-  const url = (await getBankFileUrl(file)) + '&v=20261013-07';
+  const url = (await getBankFileUrl(file)) + '&v=20261013-08';
   const r = await fetch(url);
   if (!r.ok) throw new Error('HSK2 bank ' + r.status);
   const data = await r.json();
@@ -3418,12 +3418,11 @@ async function loadHskBook() {
   hskBookCache = await r.json();
   return hskBookCache;
 }
-/* HSK2 電子書目錄（2026-10-13） */
+/* HSK2 電子書目錄（2026-10-13）：照台灣冊模式，manifest 在 pages/ 下 */
 let hsk2BookCache = null;
 async function loadHsk2Book() {
   if (hsk2BookCache) return hsk2BookCache;
-  /* 直接用公開網址，繞過 Firebase SDK 的 storage/unauthorized 問題 */
-  const url = 'https://storage.googleapis.com/my-chinese-sentence-bank-v3.firebasestorage.app/v4-book-hsk2/hsk2-book.json';
+  const url = await getBankFileUrl('v4-book-hsk2/pages/hsk2-book.json');
   const r = await fetch(url);
   if (!r.ok) throw new Error('HSK2 book ' + r.status);
   hsk2BookCache = await r.json();
@@ -3467,7 +3466,7 @@ async function openHskEbook(n) {
   const cs = $('courseSection');
   if (cs) cs.scrollIntoView({ behavior: 'smooth' });
 }
-/* HSK2 電子書（2026-10-13） */
+/* HSK2 電子書（2026-10-13）：照台灣冊模式 */
 async function openHsk2Ebook(n) {
   const view = $('lessonView');
   const grid = $('lessonGrid');
@@ -3484,25 +3483,17 @@ async function openHsk2Ebook(n) {
       loadHsk2Bank(),
       loadHsk2Book(),
     ]);
-    /* 找該課第一頁：用 regions 的 ID 前綴（相容無 lesson 欄位的舊版 manifest） */
-    const prefix = `hsk2-${n}-`;
+    /* 找到該課的第一頁（台灣冊模式：p.lesson === n） */
     let startIdx = 0;
-    for (let idx = 0; idx < book.pages.length; idx++) {
-      const p = book.pages[idx];
-      if (p.regions && p.regions.some(r => (r.id || '').startsWith(prefix))) {
-        startIdx = idx;
-        break;
-      }
-    }
-    /* 圖片路徑：manifest 存檔名，補上完整路徑 */
-    const pages = book.pages.map(p => ({
-      ...p,
-      image: 'v4-book-hsk2/pages/' + p.image.replace(/^v4-book-hsk2\/pages\//, '')
-    }));
-    ebookState = { lesson: n, pageIndex: startIdx, pages: pages, bookPages: pages, title: book.title, isHsk2: true };
-    for (let i = Math.max(0, startIdx - 2); i < Math.min(pages.length, startIdx + 5); i++) {
-      const img = new Image();
-      img.src = 'https://storage.googleapis.com/my-chinese-sentence-bank-v3.firebasestorage.app/' + pages[i].image;
+    book.pages.forEach((p, idx) => {
+      if (p.lesson === n && startIdx === 0) startIdx = idx;
+    });
+    ebookState = { lesson: n, pageIndex: startIdx, pages: book.pages, bookPages: book.pages, title: book.title, isHsk2: true };
+    /* 預載前後幾頁（台灣冊模式：getBankFileUrl） */
+    for (let i = Math.max(0, startIdx - 2); i < Math.min(book.pages.length, startIdx + 5); i++) {
+      getBankFileUrl(book.pages[i].image).then(url => {
+        const img = new Image(); img.src = url;
+      }).catch(() => {});
     }
     renderEbookPage();
   } catch (e) {
@@ -3516,19 +3507,13 @@ async function renderEbookPage() {
   const page = ebookState.pages[ebookState.pageIndex];
   /* 圖片快取（2026-10-11）：避免翻頁時重新下載 */
   if (!window._ebookImgCache) window._ebookImgCache = new Map();
-  /* HSK2 用直接公開網址（繞過 SDK 權限問題） */
-  const imgUrl = ebookState.isHsk2
-    ? 'https://storage.googleapis.com/my-chinese-sentence-bank-v3.firebasestorage.app/' + page.image
-    : await getBankFileUrl(page.image);
+  const imgUrl = await getBankFileUrl(page.image);
   /* 預載前後頁 */
   [-2, -1, 1, 2].forEach(offset => {
     const idx = ebookState.pageIndex + offset;
     if (idx >= 0 && idx < ebookState.pages.length) {
       const p = ebookState.pages[idx];
-      const pUrl = ebookState.isHsk2
-        ? 'https://storage.googleapis.com/my-chinese-sentence-bank-v3.firebasestorage.app/' + p.image
-        : null;
-      (pUrl ? Promise.resolve(pUrl) : getBankFileUrl(p.image)).then(url => {
+      getBankFileUrl(p.image).then(url => {
         if (!window._ebookImgCache.has(url)) {
           const img = new Image();
           img.src = url;
