@@ -3743,8 +3743,8 @@ async function renderEbookPage() {
           if (rp.pdf !== undefined && page.pdf !== undefined) {
             match = (rp.pdf === page.pdf);
           } else if (page.regions && !rp.pdf) {
-            /* HSK：book 頁有 regions 指標，該檔案的所有區域都屬於此頁 */
-            match = true;
+            /* HSK：用 regionPage 精確匹配檔案內的頁（2026-10-14 修復多頁課文疊框；無 regionPage 預設 1） */
+            match = (rp.n === (page.regionPage || 1));
           } else {
             match = (rp.n === page.n);
           }
