@@ -1323,15 +1323,7 @@ function createCard(sentence, preview = false) {
   chineseEl.textContent = zhConvert(sentence.chineseSentence);
   chineseEl.setAttribute('lang', getZhMode() === 'simp' ? 'zh-Hans' : 'zh-Hant');
   node.querySelector('.pinyin').textContent = sentence.pinyin;
-  const explanationEl = node.querySelector('.explanation');
-  explanationEl.textContent = displayExplanation(sentence) || 'No explanation added.';
-  explanationEl.setAttribute('lang', cardProfile.locale);
-  /* 解說區標題跟隨顯示語言（模板預設寫 "Hindi explanation"）。 */
-  const explSummary = node.querySelector('details summary');
-  if (explSummary) {
-    const nameZh = cardProfile.nameZh || cardProfile.name;
-    explSummary.innerHTML = escapeHtml(nameZh) + '解說 <span class="en-sub">' + escapeHtml(cardProfile.name) + ' explanation</span> <span>＋</span>';
-  }
+  /* 句子卡解說區塊已移除（2026-10-15，Cheng 指示：實際操作用不到）；解說資料本身保留於句庫與編輯框。 */
   const tags = [...new Set(String(sentence.tags || '').split(/[,;|]/).map(t => t.trim().toLowerCase()).filter(Boolean))];
   node.querySelector('.tags').innerHTML = tags.map(tag => `<span class="tag"></span>`).join('');
   node.querySelectorAll('.tag').forEach((el, i) => { el.textContent = tags[i]; });
@@ -3945,7 +3937,7 @@ async function renderEbookPage() {
         <span class="section-note">目前：${lessonLabelText || `第 ${page.n} 頁`}</span>
         <button class="secondary-button" id="ebookAddSentence">＋ 新增句子到${lessonLabelText || '本課'}</button>
       </div>
-      <p class="section-note" style="text-align:center;margin-top:8px;">點句子可看詳細解說 <span class="en-sub">Tap a sentence for details</span></p>
+      <p class="section-note" style="text-align:center;margin-top:8px;">點句子可看句子卡 <span class="en-sub">Tap a sentence to see its card</span></p>
     `;
     /* 新增句子：歸到當前頁面所屬的課 */
     const addBtn = $('ebookAddSentence');
