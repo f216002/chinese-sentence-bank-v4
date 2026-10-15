@@ -3085,7 +3085,7 @@ function loadTest2Bank() {
   if (test2BankCache[lang]) return Promise.resolve(test2BankCache[lang]);
   if (test2BankPromise[lang]) return test2BankPromise[lang];
   test2BankPromise[lang] = (async () => {
-    const file = 'v4-test2/v4-test2-bank-' + lang + '.json';
+    const file = 'v4-hsk/v4-test2-bank-' + lang + '.json';
     const url = (await getBankFileUrl(file)) + '&v=20261015-01';
     const r = await fetch(url);
     if (!r.ok) throw new Error('Test2 bank ' + r.status);
