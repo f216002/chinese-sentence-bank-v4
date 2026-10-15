@@ -2298,10 +2298,11 @@ loadBank();
 
 /* ================= Course module: 當代中文課程 ================= */
 /* 課號規則：1–15 ＝第二冊，101–115 ＝第一冊（第一冊第 X 課記為 100+X），201–212 ＝第三冊（第三冊第 X 課記為 200+X），301–312 ＝第四冊（第四冊第 X 課記為 300+X），501–510 ＝第五冊（第五冊第 X 課記為 500+X）。 */
-function bookOf(n) { n = Number(n); if (n >= 2001 && n <= 2015) return 'test2'; if (n >= 1001) return 'hsk3'; if (n >= 901) return 'hsk2'; if (n >= 801) return 'hsk1'; return n >= 701 ? 7 : (n >= 601 ? 6 : (n >= 501 ? 5 : (n >= 301 ? 4 : (n >= 201 ? 3 : (n >= 101 ? 1 : 2))))); }
-function bookLessonNum(n) { n = Number(n); if (n >= 2001 && n <= 2015) return n - 2000; if (n >= 1001) return n - 1000; if (n >= 901) return n - 900; if (n >= 801) return n - 800; return n >= 701 ? n - 700 : (n >= 601 ? n - 600 : (n >= 501 ? n - 500 : (n >= 301 ? n - 300 : (n >= 201 ? n - 200 : (n >= 101 ? n - 100 : n))))); }
+function bookOf(n) { n = Number(n); if (n >= 3001 && n <= 3012) return 'test3'; if (n >= 2001 && n <= 2015) return 'test2'; if (n >= 1001) return 'hsk3'; if (n >= 901) return 'hsk2'; if (n >= 801) return 'hsk1'; return n >= 701 ? 7 : (n >= 601 ? 6 : (n >= 501 ? 5 : (n >= 301 ? 4 : (n >= 201 ? 3 : (n >= 101 ? 1 : 2))))); }
+function bookLessonNum(n) { n = Number(n); if (n >= 3001 && n <= 3012) return n - 3000; if (n >= 2001 && n <= 2015) return n - 2000; if (n >= 1001) return n - 1000; if (n >= 901) return n - 900; if (n >= 801) return n - 800; return n >= 701 ? n - 700 : (n >= 601 ? n - 600 : (n >= 501 ? n - 500 : (n >= 301 ? n - 300 : (n >= 201 ? n - 200 : (n >= 101 ? n - 100 : n))))); }
 function lessonLabel(n) {
   const b = bookOf(n), k = bookLessonNum(n);
+  if (b === 'test3') return `TEST3 第 ${k} 課`;
   if (b === 'test2') return `Test2 第 ${k} 課`;
   if (b === 'hsk3') return `HSK 3 第 ${k} 課`;
   if (b === 'hsk2') return `HSK 2 第 ${k} 課`;
@@ -2316,6 +2317,7 @@ function lessonLabel(n) {
 }
 function lessonShortLabel(n) {
   const b = bookOf(n), k = bookLessonNum(n);
+  if (b === 'test3') return `TEST3第${k}課`;
   if (b === 'test2') return `Test2第${k}課`;
   if (b === 7) return `第七冊第${k}課`;
   if (b === 6) return `第六冊第${k}課`;
@@ -2327,6 +2329,7 @@ function lessonShortLabel(n) {
 }
 function bookTitle(n) {
   const b = bookOf(n);
+  if (b === 'test3') return 'TEST3';
   if (b === 'test2') return 'Test2';
   if (b === 7) return '五百字說華語';
   if (b === 6) return '第六冊';
@@ -2500,6 +2503,21 @@ const HSK3_COURSE_LESSONS = [
   { n: 1018, zh: '我相信他们会同意的', en: 'I believe they will agree', topic: '信任', hsk: 3 },
   { n: 1019, zh: '你没看出来吗', en: "Can't you tell", topic: '觀察', hsk: 3 },
   { n: 1020, zh: '我被他影响了', en: "I've been influenced by him", topic: '影響', hsk: 3 },
+];
+/* TEST3 課程（2026-10-15）：《當代中文課程 3》新版，獨立書目（課號 3001–3012），句庫與電子書皆獨立檔案，不併主靜態句庫。 */
+const TEST3_COURSE_LESSONS = [
+  { n: 3001, zh: '開學了', en: "The new school term has begun", topic: '開學', test3: true },
+  { n: 3002, zh: '八折起', en: "Up to 20% off", topic: '購物', test3: true },
+  { n: 3003, zh: '外套帶了沒有？', en: "Did you bring your jacket?", topic: '衣著', test3: true },
+  { n: 3004, zh: '我愛台灣的人情味', en: "I Love the Warmth of the Taiwanese People", topic: '人情味', test3: true },
+  { n: 3005, zh: '現在流行什麼？', en: "What's Trending Now?", topic: '流行', test3: true },
+  { n: 3006, zh: '到鄉下住一晚！', en: "Spend a Night in the Countryside!", topic: '鄉村', test3: true },
+  { n: 3007, zh: '我最親的家「人」', en: "My Closest Family Members", topic: '家人', test3: true },
+  { n: 3008, zh: '我想做自己', en: "I Want to Be Myself", topic: '自我', test3: true },
+  { n: 3009, zh: '網購時代', en: "The Age of Online Shopping", topic: '網購', test3: true },
+  { n: 3010, zh: '我住院了', en: "I'm in the Hospital", topic: '健康', test3: true },
+  { n: 3011, zh: '台灣故事', en: "Stories of Taiwan", topic: '歷史', test3: true },
+  { n: 3012, zh: '我要去投票', en: "I'm Going to Vote", topic: '選舉', test3: true },
 ];
 /* Test2 已併入第2冊（2026-10-15，Cheng 指示取代原第2冊）：不再另設書目；電子書改由第2冊入口開啟新版內容。 */
 const COURSE_TABS = ['課文', '生詞', '語法', '練習', '文化', '溫習', '應用', '補充'];
@@ -2943,6 +2961,7 @@ function hasEbook(lessonN) {
   if ((lessonN >= 101 && lessonN <= 115) || (lessonN >= 1 && lessonN <= 15) || (lessonN >= 201 && lessonN <= 212) || (lessonN >= 301 && lessonN <= 312) || (lessonN >= 501 && lessonN <= 510) || (lessonN >= 601 && lessonN <= 610)) return true;
   if (lessonN >= 701 && lessonN <= 730 && (state.sourceLanguage || 'hi') === 'km') return true;
   if ((lessonN >= 801 && lessonN <= 815) || (lessonN >= 901 && lessonN <= 915) || (lessonN >= 1001 && lessonN <= 1020)) return true;
+  if (lessonN >= 3001 && lessonN <= 3012) return true;
   return false;
 }
 /* 取得老師偏好的檢視模式 */
@@ -3071,6 +3090,31 @@ function test2Sentences() {
   const lang = state.sourceLanguage || 'hi';
   return test2BankCache[lang] || null;
 }
+/* Test3 句庫載入（2026-10-15）：《當代中文課程 3》新版，獨立檔案 v4-hsk/（走 SDK），不併主靜態句庫。 */
+let test3BankCache = {};
+let test3BankPromise = {};
+function loadTest3Bank() {
+  const lang = state.sourceLanguage || 'hi';
+  if (test3BankCache[lang]) return Promise.resolve(test3BankCache[lang]);
+  if (test3BankPromise[lang]) return test3BankPromise[lang];
+  test3BankPromise[lang] = (async () => {
+    const file = 'v4-hsk/v4-test3-bank-' + lang + '.json';
+    const url = (await getBankFileUrl(file)) + '&v=20261015-05';
+    const r = await fetch(url);
+    if (!r.ok) throw new Error('Test3 bank ' + r.status);
+    const data = await r.json();
+    const fields = Array.isArray(data.f) ? data.f : Object.keys(data.f).sort((a, b) => data.f[a] - data.f[b]);
+    test3BankCache[lang] = data.rows.map(row => vbankRowToSentence(fields, row, lang));
+    return test3BankCache[lang];
+  })();
+  test3BankPromise[lang].catch(() => { delete test3BankPromise[lang]; });
+  return test3BankPromise[lang];
+}
+/* 取當前語言的 Test3 句子（未載入回 null）。 */
+function test3Sentences() {
+  const lang = state.sourceLanguage || 'hi';
+  return test3BankCache[lang] || null;
+}
 function lessonRecords(n) {
   const key = String(n);
   /* HSK 課程（801-815）：從 HSK 快取取，否則從主句庫取。 */
@@ -3089,6 +3133,12 @@ function lessonRecords(n) {
   if (n >= 1001 && n <= 1020 && hsk3) {
     const prefix = `hsk3-${n}-`;
     return hsk3.filter(s => (s.recordId || '').startsWith(prefix));
+  }
+  /* TEST3 課程（3001-3012）：從 TEST3 快取取，用 ID 前綴過濾（同 HSK2/HSK3 模式）。 */
+  const test3 = test3Sentences();
+  if (n >= 3001 && n <= 3012 && test3) {
+    const prefix = `test3-${n}-`;
+    return test3.filter(s => (s.recordId || '').startsWith(prefix));
   }
   return state.sentences.filter(s => courseMeta(s).lesson === key);
 }
@@ -3519,6 +3569,29 @@ function renderBooksGrid() {
     }
     grid.appendChild(card);
   });
+  /* TEST3（2026-10-15）：《當代中文課程 3》新版獨立書目，照 HSK 書目模式渲染。 */
+  const t3Divider = document.createElement('div');
+  t3Divider.className = 'book-divider';
+  t3Divider.textContent = 'TEST3《當代中文課程 3》';
+  grid.appendChild(t3Divider);
+  TEST3_COURSE_LESSONS.forEach(lesson => {
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'lesson-card';
+    card.innerHTML = `
+      <span class="lesson-n">TEST3 第 ${lesson.n - 3000} 課</span>
+      <span class="lesson-zh" lang="${getZhMode() === 'simp' ? 'zh-Hans' : 'zh-Hant'}">${escapeHtml(zhConvert(lesson.zh))}</span>
+      <span class="lesson-en">${escapeHtml(lesson.en)}</span>
+    `;
+    card.addEventListener('click', () => {
+      if (state.textbookMode === 'ebook' && hasEbook(lesson.n)) {
+        openTest3Ebook(lesson.n);
+      } else {
+        openTest3Lesson(lesson.n);
+      }
+    });
+    grid.appendChild(card);
+  });
 }
 
 /* 中文歌曲頁：歌曲卡。 */
@@ -3713,6 +3786,51 @@ async function openHsk3Ebook(n) {
   const cs = $('courseSection');
   if (cs) cs.scrollIntoView({ behavior: 'smooth' });
 }
+/* Test3 電子書目錄（2026-10-15）：同 HSK2，用直接公開網址 */
+let test3BookCache = null;
+async function loadTest3Book() {
+  if (test3BookCache) return test3BookCache;
+  const url = 'https://storage.googleapis.com/my-chinese-sentence-bank-v3.firebasestorage.app/v4-book-test3/pages/test3-book.json';
+  const r = await fetch(url);
+  if (!r.ok) throw new Error('Test3 book ' + r.status);
+  test3BookCache = await r.json();
+  return test3BookCache;
+}
+/* Test3 電子書（2026-10-15）：照 HSK3 模式 */
+async function openTest3Ebook(n) {
+  const view = $('lessonView');
+  const grid = $('lessonGrid');
+  if (view) view.classList.remove('hidden');
+  if (grid) grid.classList.add('hidden');
+  const header = $('lessonHeader');
+  const tabs = $('lessonTabs');
+  const content = $('lessonContent');
+  if (header) header.innerHTML = '';
+  if (tabs) tabs.innerHTML = '';
+  if (content) content.innerHTML = '<p class="section-note">載入電子書… <span class="en-sub">Loading e-book…</span></p>';
+  try {
+    const [_, book] = await Promise.all([
+      loadTest3Bank(),
+      loadTest3Book(),
+    ]);
+    let startIdx = 0;
+    book.pages.forEach((p, idx) => {
+      if (p.lesson === n && startIdx === 0) startIdx = idx;
+    });
+    ebookState = { lesson: n, pageIndex: startIdx, pages: book.pages, bookPages: book.pages, title: book.title, isTest3: true };
+    /* 預載前後幾頁 */
+    for (let i = Math.max(0, startIdx - 2); i < Math.min(book.pages.length, startIdx + 5); i++) {
+      const img = new Image();
+      img.src = 'https://storage.googleapis.com/my-chinese-sentence-bank-v3.firebasestorage.app/' + book.pages[i].image;
+    }
+    renderEbookPage();
+  } catch (e) {
+    const content2 = $('lessonContent');
+    if (content2) content2.innerHTML = `<p class="section-note">載入失敗：${escapeHtml(e.message)} <span class="en-sub">Load failed</span></p>`;
+  }
+  const cs = $('courseSection');
+  if (cs) cs.scrollIntoView({ behavior: 'smooth' });
+}
 /* Test2 電子書目錄（2026-10-15）：同 HSK2，用直接公開網址 */
 let test2BookCache = null;
 async function loadTest2Book() {
@@ -3763,7 +3881,7 @@ async function renderEbookPage() {
   /* 圖片快取（2026-10-11）：避免翻頁時重新下載 */
   if (!window._ebookImgCache) window._ebookImgCache = new Map();
   /* HSK2/HSK3 用直接公開網址（SDK 對 v4-book-hsk2/ 報 unauthorized） */
-  const imgUrl = (ebookState.isHsk2 || ebookState.isHsk3 || ebookState.isTest2)
+  const imgUrl = (ebookState.isHsk2 || ebookState.isHsk3 || ebookState.isTest2 || ebookState.isTest3)
     ? 'https://storage.googleapis.com/my-chinese-sentence-bank-v3.firebasestorage.app/' + page.image
     : await getBankFileUrl(page.image);
   /* 預載前後頁 */
@@ -3771,7 +3889,7 @@ async function renderEbookPage() {
     const idx = ebookState.pageIndex + offset;
     if (idx >= 0 && idx < ebookState.pages.length) {
       const p = ebookState.pages[idx];
-      const pUrl = (ebookState.isHsk2 || ebookState.isHsk3 || ebookState.isTest2)
+      const pUrl = (ebookState.isHsk2 || ebookState.isHsk3 || ebookState.isTest2 || ebookState.isTest3)
         ? 'https://storage.googleapis.com/my-chinese-sentence-bank-v3.firebasestorage.app/' + p.image
         : null;
       (pUrl ? Promise.resolve(pUrl) : getBankFileUrl(p.image)).then(url => {
@@ -3783,7 +3901,7 @@ async function renderEbookPage() {
       }).catch(() => {});
     }
   });
-  const lesson = COURSE_LESSONS.find(l => l.n === ebookState.lesson);
+  const lesson = COURSE_LESSONS.concat(TEST3_COURSE_LESSONS).find(l => l.n === ebookState.lesson);
   /* 載入該頁的句子區域（如果有） */
   let regions = [];
   if (page.regions) {
@@ -3821,9 +3939,11 @@ async function renderEbookPage() {
     regionsHtml += `<div class="ebook-region" data-idx="${i}" style="left:${reg.x}%;top:${reg.y}%;width:${reg.w}%;height:${reg.h}%;" title="${escapeHtml(reg.zh)}"></div>`;
   });
   /* 頁碼標籤：顯示書本頁碼和課名 */
-  const pageLabel = ebookState.isTest2
+  const pageLabel = ebookState.isTest3
+    ? (page.lesson ? `TEST3 第 ${page.lesson - 3000} 課` : `第 ${page.n} 頁`)
+    : (ebookState.isTest2
     ? (page.lesson ? `第2冊第 ${page.lesson - 2000} 課` : `第 ${page.n} 頁`)
-    : (page.lesson ? `HSK 1 第 ${page.lesson - 800} 課` : `第 ${page.n} 頁`);
+    : (page.lesson ? `HSK 1 第 ${page.lesson - 800} 課` : `第 ${page.n} 頁`));
   /* 使用 lessonContent 區域，不破壞 lessonBackButton */
   const content = $('lessonContent');
   const header = $('lessonHeader');
@@ -3855,7 +3975,8 @@ async function renderEbookPage() {
     ebookState.pages.forEach((p, idx) => {
       let label;
       if (p.lesson) {
-        if (p.lesson >= 2001) label = `p${p.n}・第2冊第${p.lesson - 2000}課`;
+        if (p.lesson >= 3001) label = `p${p.n}・TEST3第${p.lesson - 3000}課`;
+        else if (p.lesson >= 2001) label = `p${p.n}・第2冊第${p.lesson - 2000}課`;
         else if (p.lesson >= 1001) label = `p${p.n}・HSK3第${p.lesson - 1000}課`;
         else if (p.lesson >= 901) label = `p${p.n}・HSK2第${p.lesson - 900}課`;
         else if (p.lesson >= 801) label = `p${p.n}・HSK1第${p.lesson - 800}課`;
@@ -3979,6 +4100,9 @@ async function openSentenceModal(sentenceId, fallbackZh) {
   } else if (ebookState.isHsk3) {
     /* HSK3：從 HSK3 句庫找 */
     sentence = hsk3Sentences() ? hsk3Sentences().find(s => s.recordId === sentenceId) : null;
+  } else if (ebookState.isTest3) {
+    /* TEST3：從 TEST3 句庫找 */
+    sentence = test3Sentences() ? test3Sentences().find(s => s.recordId === sentenceId) : null;
   } else if (ebookState.isTest2) {
     /* 第2冊新版電子書：先找 Test2 卡，再以 seq 對應回主句庫的第2冊原卡（同句同內容），
        讓老師的覆寫／錄音正確掛回原卡；找不到原卡才用 Test2 卡。 */
@@ -4314,6 +4438,22 @@ async function openTw6Ebook(n) {
   }
   const cs = $('courseSection');
   if (cs) cs.scrollIntoView({ behavior: 'smooth' });
+}
+/* TEST3 課程：載入句庫後用現有課程視圖顯示（2026-10-15，同 HSK 模式）。 */
+async function openTest3Lesson(n) {
+  try {
+    await loadTest3Bank();
+    courseState.lesson = n;
+    courseState.tab = '課文';
+    courseState.page = 'books';
+    renderLessonView();
+    $('courseSection').scrollIntoView({ behavior: 'smooth' });
+  } catch (e) {
+    const view = $('lessonView');
+    view.classList.remove('hidden');
+    $('lessonGrid').classList.add('hidden');
+    view.innerHTML = `<p class="section-note">載入失敗：${escapeHtml(e.message)} <span class="en-sub">Load failed</span></p>`;
+  }
 }
 async function openHskLesson(n) {
   /* HSK 1/2：課程列表用句子視圖（與 1-7 冊一致）；電子書走專屬入口 openHskEbook。 */
@@ -7799,7 +7939,7 @@ ${rows}
 
 function renderLessonView() {
   const n = courseState.lesson;
-  const lesson = COURSE_LESSONS.find(l => l.n === n);
+  const lesson = COURSE_LESSONS.concat(TEST3_COURSE_LESSONS).find(l => l.n === n);
   if (!lesson) { renderLessonGrid(); return; }
   /* 進入／重繪課程頁時清除上次「新增句子」的分頁指定，避免誤歸類。 */
   if (typeof courseState !== 'undefined') courseState.pendingSection = null;
@@ -7848,6 +7988,8 @@ function renderLessonView() {
         openHskEbook(n);
       } else if (n >= 901 && n <= 915) {
         openHsk2Ebook(n);
+      } else if (n >= 3001 && n <= 3012) {
+        openTest3Ebook(n);
       }
     });
   }
