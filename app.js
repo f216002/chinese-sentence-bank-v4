@@ -2501,29 +2501,7 @@ const HSK3_COURSE_LESSONS = [
   { n: 1019, zh: '你没看出来吗', en: "Can't you tell", topic: '觀察', hsk: 3 },
   { n: 1020, zh: '我被他影响了', en: "I've been influenced by him", topic: '影響', hsk: 3 },
 ];
-/* Test2 課程（2026-10-15）：《當代中文課程 2》新版（與既有第二冊同書不同版次），n=2001-2015。課名照課本目錄繁體。 */
-const TEST2_COURSE_LESSONS = [
-  { n: 2001, zh: '請問，到師大怎麼走？', en: 'Excuse Me. How Do You Get to Shida?', topic: '問路' },
-  { n: 2002, zh: '還是坐捷運吧！', en: 'Take the MRT Instead!', topic: '交通' },
-  { n: 2003, zh: '你的中文進步了！', en: 'Your Chinese Has Improved!', topic: '學習' },
-  { n: 2004, zh: '我打工，我教法文', en: 'I Work Part-time. I Teach French.', topic: '打工' },
-  { n: 2005, zh: '吃喜酒', en: 'Attending a Wedding Reception', topic: '婚宴' },
-  { n: 2006, zh: '我打算搬到學校附近', en: 'I Plan to Move Closer to School', topic: '租屋' },
-  { n: 2007, zh: '垃圾車來了！', en: 'The Garbage Truck Is Here!', topic: '環保' },
-  { n: 2008, zh: '學功夫', en: 'Learning Kungfu', topic: '功夫' },
-  { n: 2009, zh: '那個城市好漂亮', en: 'That City Is Really Beautiful', topic: '旅遊' },
-  { n: 2010, zh: '歡迎到我家來包餃子', en: 'Come to My Home to Make Dumplings', topic: '飲食' },
-  { n: 2011, zh: '台灣好玩的地方真多', en: 'So Many Fun Places in Taiwan', topic: '旅遊' },
-  { n: 2012, zh: '怎麼吃才健康？', en: 'How to Eat Healthily?', topic: '健康' },
-  { n: 2013, zh: '我的手機掉了', en: 'I Lost My Cell Phone', topic: '生活' },
-  { n: 2014, zh: '我要開始找工作了', en: 'I Am Going to Start Looking for a Job', topic: '求職' },
-  { n: 2015, zh: '過春節', en: 'Lunar New Year', topic: '節慶' },
-];
-/* 合併到 COURSE_LESSONS，方便現有課程邏輯直接使用。 */
-HSK_COURSE_LESSONS.forEach(l => COURSE_LESSONS.push(l));
-HSK2_COURSE_LESSONS.forEach(l => COURSE_LESSONS.push(l));
-HSK3_COURSE_LESSONS.forEach(l => COURSE_LESSONS.push(l));
-TEST2_COURSE_LESSONS.forEach(l => COURSE_LESSONS.push(l));
+/* Test2 已併入第2冊（2026-10-15，Cheng 指示取代原第2冊）：不再另設書目；電子書改由第2冊入口開啟新版內容。 */
 const COURSE_TABS = ['課文', '生詞', '語法', '練習', '文化', '溫習', '應用', '補充'];
 /* 分頁籤顯示用英文（內部 key 保持中文）。 */
 const COURSE_TAB_EN = { '課文': 'Text', '生詞': 'Vocabulary', '語法': 'Grammar', '練習': 'Practice', '文化': 'Culture', '溫習': 'Review', '應用': 'Application', '補充': 'Supplement' };
@@ -2965,7 +2943,6 @@ function hasEbook(lessonN) {
   if ((lessonN >= 101 && lessonN <= 115) || (lessonN >= 1 && lessonN <= 15) || (lessonN >= 201 && lessonN <= 212) || (lessonN >= 301 && lessonN <= 312) || (lessonN >= 501 && lessonN <= 510) || (lessonN >= 601 && lessonN <= 610)) return true;
   if (lessonN >= 701 && lessonN <= 730 && (state.sourceLanguage || 'hi') === 'km') return true;
   if ((lessonN >= 801 && lessonN <= 815) || (lessonN >= 901 && lessonN <= 915) || (lessonN >= 1001 && lessonN <= 1020)) return true;
-  if (lessonN >= 2001 && lessonN <= 2015) return true;
   return false;
 }
 /* 取得老師偏好的檢視模式 */
@@ -3078,7 +3055,7 @@ function loadTest2Bank() {
   if (test2BankPromise[lang]) return test2BankPromise[lang];
   test2BankPromise[lang] = (async () => {
     const file = 'v4-hsk/v4-test2-bank-' + lang + '.json';
-    const url = (await getBankFileUrl(file)) + '&v=20261015-01';
+    const url = (await getBankFileUrl(file)) + '&v=20261015-04';
     const r = await fetch(url);
     if (!r.ok) throw new Error('Test2 bank ' + r.status);
     const data = await r.json();
@@ -3112,12 +3089,6 @@ function lessonRecords(n) {
   if (n >= 1001 && n <= 1020 && hsk3) {
     const prefix = `hsk3-${n}-`;
     return hsk3.filter(s => (s.recordId || '').startsWith(prefix));
-  }
-  /* Test2 課程（2001-2015）：同 HSK2 模式，用 ID 前綴過濾。 */
-  const test2 = test2Sentences();
-  if (n >= 2001 && n <= 2015 && test2) {
-    const prefix = `test2-${n}-`;
-    return test2.filter(s => (s.recordId || '').startsWith(prefix));
   }
   return state.sentences.filter(s => courseMeta(s).lesson === key);
 }
@@ -3491,13 +3462,6 @@ function renderBooksGrid() {
     });
     return;
   }
-  /* Test2（2026-10-15）：快取未載入時觸發載入，完成後若仍在總覽就重繪讓卡片可點 */
-  if (!test2Sentences()) {
-    loadTest2Bank().then(() => {
-      const gridEl = $('lessonGrid');
-      if (gridEl && !gridEl.classList.contains('hidden')) renderBooksGrid();
-    }).catch(() => {});
-  }
   let lastBook = 0;
   const showBook7 = (state.sourceLanguage || 'hi') === 'km'; /* 第七冊只在高棉文出現 */
   COURSE_LESSONS.forEach(lesson => {
@@ -3533,7 +3497,7 @@ function renderBooksGrid() {
           if (lesson.n >= 101 && lesson.n <= 115) {
             openTw1Ebook(lesson.n);
           } else if (lesson.n >= 1 && lesson.n <= 15) {
-            openTw2Ebook(lesson.n);
+            openTest2Ebook(lesson.n); /* 第2冊電子書＝新版（Test2）內容（2026-10-15 取代） */
           } else if (lesson.n >= 201 && lesson.n <= 212) {
             openTw3Ebook(lesson.n);
           } else if (lesson.n >= 301 && lesson.n <= 312) {
@@ -3542,8 +3506,6 @@ function renderBooksGrid() {
             openTw5Ebook(lesson.n);
           } else if (lesson.n >= 601 && lesson.n <= 610) {
             openTw6Ebook(lesson.n);
-          } else if (lesson.n >= 2001 && lesson.n <= 2015) {
-            openTest2Ebook(lesson.n);
           } else if (lesson.n >= 701 && lesson.n <= 730) {
             openB7Ebook(lesson.n);
           }
@@ -3780,7 +3742,7 @@ async function openTest2Ebook(n) {
     ]);
     let startIdx = 0;
     book.pages.forEach((p, idx) => {
-      if (p.lesson === n && startIdx === 0) startIdx = idx;
+      if (p.lesson === n + 2000 && startIdx === 0) startIdx = idx;
     });
     ebookState = { lesson: n, pageIndex: startIdx, pages: book.pages, bookPages: book.pages, title: book.title, isTest2: true };
     /* 預載前後幾頁 */
@@ -3860,7 +3822,7 @@ async function renderEbookPage() {
   });
   /* 頁碼標籤：顯示書本頁碼和課名 */
   const pageLabel = ebookState.isTest2
-    ? (page.lesson ? `Test2 第 ${page.lesson - 2000} 課` : `第 ${page.n} 頁`)
+    ? (page.lesson ? `第2冊第 ${page.lesson - 2000} 課` : `第 ${page.n} 頁`)
     : (page.lesson ? `HSK 1 第 ${page.lesson - 800} 課` : `第 ${page.n} 頁`);
   /* 使用 lessonContent 區域，不破壞 lessonBackButton */
   const content = $('lessonContent');
@@ -3893,7 +3855,7 @@ async function renderEbookPage() {
     ebookState.pages.forEach((p, idx) => {
       let label;
       if (p.lesson) {
-        if (p.lesson >= 2001) label = `p${p.n}・Test2第${p.lesson - 2000}課`;
+        if (p.lesson >= 2001) label = `p${p.n}・第2冊第${p.lesson - 2000}課`;
         else if (p.lesson >= 1001) label = `p${p.n}・HSK3第${p.lesson - 1000}課`;
         else if (p.lesson >= 901) label = `p${p.n}・HSK2第${p.lesson - 900}課`;
         else if (p.lesson >= 801) label = `p${p.n}・HSK1第${p.lesson - 800}課`;
@@ -3917,7 +3879,8 @@ async function renderEbookPage() {
         break;
       }
     }
-    const lessonLabelText = currentLesson ? lessonLabel(currentLesson) : '';
+    const displayLessonN = (ebookState.isTest2 && currentLesson >= 2001) ? currentLesson - 2000 : currentLesson;
+    const lessonLabelText = currentLesson ? lessonLabel(displayLessonN) : '';
     content.innerHTML = `
       <div class="ebook-viewer" id="ebookViewer">
         <button id="ebookPrev" class="ebook-arrow ebook-arrow-left" ${ebookState.pageIndex === 0 ? 'disabled' : ''} title="上一頁">‹</button>
@@ -3943,7 +3906,7 @@ async function renderEbookPage() {
     const addBtn = $('ebookAddSentence');
     if (addBtn) {
       addBtn.addEventListener('click', () => {
-        goToAiFlowForSection(currentLesson, '補充');
+        goToAiFlowForSection(displayLessonN, '補充');
       });
     }
     /* 選頁跳轉 */
@@ -4017,8 +3980,16 @@ async function openSentenceModal(sentenceId, fallbackZh) {
     /* HSK3：從 HSK3 句庫找 */
     sentence = hsk3Sentences() ? hsk3Sentences().find(s => s.recordId === sentenceId) : null;
   } else if (ebookState.isTest2) {
-    /* Test2：從 Test2 句庫找 */
-    sentence = test2Sentences() ? test2Sentences().find(s => s.recordId === sentenceId) : null;
+    /* 第2冊新版電子書：先找 Test2 卡，再以 seq 對應回主句庫的第2冊原卡（同句同內容），
+       讓老師的覆寫／錄音正確掛回原卡；找不到原卡才用 Test2 卡。 */
+    const t2 = test2Sentences() ? test2Sentences().find(s => s.recordId === sentenceId) : null;
+    if (t2 && t2.seq != null) {
+      const ln = Math.floor(t2.seq / 10000) - 2000;
+      const twinSeq = ln * 100000 + (t2.seq % 10000);
+      sentence = state.sentences.find(s => s.seq === twinSeq) || t2;
+    } else {
+      sentence = t2;
+    }
   } else {
     sentence = hskSentences() ? hskSentences().find(s => s.recordId === sentenceId) : null;
   }
@@ -4344,27 +4315,10 @@ async function openTw6Ebook(n) {
   const cs = $('courseSection');
   if (cs) cs.scrollIntoView({ behavior: 'smooth' });
 }
-/* Test2 課程列表（2026-10-15）：比照 openHskLesson。 */
-async function openTest2Lesson(n) {
-  try {
-    await loadTest2Bank();
-    courseState.lesson = n;
-    courseState.tab = '課文';
-    courseState.page = 'books';
-    renderLessonView();
-    $('courseSection').scrollIntoView({ behavior: 'smooth' });
-  } catch (e) {
-    const view = $('lessonView');
-    view.classList.remove('hidden');
-    $('lessonGrid').classList.add('hidden');
-    view.innerHTML = `<p class="section-note">載入失敗：${escapeHtml(e.message)} <span class="en-sub">Load failed</span></p>`;
-  }
-}
 async function openHskLesson(n) {
   /* HSK 1/2：課程列表用句子視圖（與 1-7 冊一致）；電子書走專屬入口 openHskEbook。 */
   try {
-    if (n >= 2001 && n <= 2015) await loadTest2Bank();
-    else if (n >= 1001) await loadHsk3Bank();
+    if (n >= 1001) await loadHsk3Bank();
     else if (n >= 901) await loadHsk2Bank();
     else await loadHskBank();
     courseState.lesson = n;
@@ -7889,13 +7843,11 @@ function renderLessonView() {
       if (n >= 101 && n <= 115) {
         openTw1Ebook(n);
       } else if (n >= 1 && n <= 15) {
-        openTw2Ebook(n);
+        openTest2Ebook(n); /* 第2冊電子書＝新版（Test2）內容（2026-10-15 取代） */
       } else if (n >= 801 && n <= 815) {
         openHskEbook(n);
       } else if (n >= 901 && n <= 915) {
         openHsk2Ebook(n);
-      } else if (n >= 2001 && n <= 2015) {
-        openTest2Ebook(n);
       }
     });
   }
