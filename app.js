@@ -3892,7 +3892,7 @@ async function renderEbookPage() {
       }).catch(() => {});
     }
   });
-  const lesson = COURSE_LESSONS.concat(TEST3_COURSE_LESSONS, HSK_COURSE_LESSONS).find(l => l.n === ebookState.lesson);
+  const lesson = COURSE_LESSONS.concat(TEST3_COURSE_LESSONS, HSK_COURSE_LESSONS, HSK2_COURSE_LESSONS, HSK3_COURSE_LESSONS).find(l => l.n === ebookState.lesson);
   /* 載入該頁的句子區域（如果有） */
   let regions = [];
   if (page.regions) {
@@ -7923,7 +7923,7 @@ ${rows}
 
 function renderLessonView() {
   const n = courseState.lesson;
-  const lesson = COURSE_LESSONS.concat(TEST3_COURSE_LESSONS, HSK_COURSE_LESSONS).find(l => l.n === n);
+  const lesson = COURSE_LESSONS.concat(TEST3_COURSE_LESSONS, HSK_COURSE_LESSONS, HSK2_COURSE_LESSONS, HSK3_COURSE_LESSONS).find(l => l.n === n);
   if (!lesson) { renderLessonGrid(); return; }
   /* 進入／重繪課程頁時清除上次「新增句子」的分頁指定，避免誤歸類。 */
   if (typeof courseState !== 'undefined') courseState.pendingSection = null;
