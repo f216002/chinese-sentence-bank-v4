@@ -3549,7 +3549,7 @@ function renderBooksGrid() {
           } else if (lesson.n >= 1 && lesson.n <= 15) {
             openTest2Ebook(lesson.n); /* 第2冊電子書＝新版（Test2）內容（2026-10-15 取代） */
           } else if (lesson.n >= 201 && lesson.n <= 212) {
-            openTw3Ebook(lesson.n);
+            openTest3Ebook(lesson.n - 200); /* 第3冊電子書＝新版（TEST3）內容（2026-10-16 取代） */
           } else if (lesson.n >= 301 && lesson.n <= 312) {
             openTw4Ebook(lesson.n);
           } else if (lesson.n >= 501 && lesson.n <= 510) {
@@ -3569,29 +3569,7 @@ function renderBooksGrid() {
     }
     grid.appendChild(card);
   });
-  /* TEST3（2026-10-15）：《當代中文課程 3》新版獨立書目，照 HSK 書目模式渲染。 */
-  const t3Divider = document.createElement('div');
-  t3Divider.className = 'book-divider';
-  t3Divider.textContent = 'TEST3《當代中文課程 3》';
-  grid.appendChild(t3Divider);
-  TEST3_COURSE_LESSONS.forEach(lesson => {
-    const card = document.createElement('button');
-    card.type = 'button';
-    card.className = 'lesson-card';
-    card.innerHTML = `
-      <span class="lesson-n">TEST3 第 ${lesson.n - 3000} 課</span>
-      <span class="lesson-zh" lang="${getZhMode() === 'simp' ? 'zh-Hans' : 'zh-Hant'}">${escapeHtml(zhConvert(lesson.zh))}</span>
-      <span class="lesson-en">${escapeHtml(lesson.en)}</span>
-    `;
-    card.addEventListener('click', () => {
-      if (state.textbookMode === 'ebook' && hasEbook(lesson.n)) {
-        openTest3Ebook(lesson.n);
-      } else {
-        openTest3Lesson(lesson.n);
-      }
-    });
-    grid.appendChild(card);
-  });
+  /* TEST3 已併入第3冊（2026-10-16，Cheng 指示取代原第3冊）：不再另設書目；電子書改由第3冊入口開啟新版內容，課程卡維持主句庫原卡。 */
 }
 
 /* 中文歌曲頁：歌曲卡。 */
@@ -3796,7 +3774,7 @@ async function loadTest3Book() {
   test3BookCache = await r.json();
   return test3BookCache;
 }
-/* Test3 電子書（2026-10-15）：照 HSK3 模式 */
+/* Test3 電子書（2026-10-15；2026-10-16 併入第3冊：n＝第3冊課序 1–12，照 Test2 併入第2冊模式） */
 async function openTest3Ebook(n) {
   const view = $('lessonView');
   const grid = $('lessonGrid');
@@ -3815,9 +3793,9 @@ async function openTest3Ebook(n) {
     ]);
     let startIdx = 0;
     book.pages.forEach((p, idx) => {
-      if (p.lesson === n && startIdx === 0) startIdx = idx;
+      if (p.lesson === n + 3000 && startIdx === 0) startIdx = idx;
     });
-    ebookState = { lesson: n, pageIndex: startIdx, pages: book.pages, bookPages: book.pages, title: book.title, isTest3: true };
+    ebookState = { lesson: n + 200, pageIndex: startIdx, pages: book.pages, bookPages: book.pages, title: book.title, isTest3: true };
     /* 預載前後幾頁 */
     for (let i = Math.max(0, startIdx - 2); i < Math.min(book.pages.length, startIdx + 5); i++) {
       const img = new Image();
@@ -3940,7 +3918,7 @@ async function renderEbookPage() {
   });
   /* 頁碼標籤：顯示書本頁碼和課名 */
   const pageLabel = ebookState.isTest3
-    ? (page.lesson ? `TEST3 第 ${page.lesson - 3000} 課` : `第 ${page.n} 頁`)
+    ? (page.lesson ? `第三冊第 ${page.lesson - 3000} 課` : `第 ${page.n} 頁`)
     : (ebookState.isTest2
     ? (page.lesson ? `第2冊第 ${page.lesson - 2000} 課` : `第 ${page.n} 頁`)
     : (page.lesson ? `HSK 1 第 ${page.lesson - 800} 課` : `第 ${page.n} 頁`));
@@ -3975,7 +3953,7 @@ async function renderEbookPage() {
     ebookState.pages.forEach((p, idx) => {
       let label;
       if (p.lesson) {
-        if (p.lesson >= 3001) label = `p${p.n}・TEST3第${p.lesson - 3000}課`;
+        if (p.lesson >= 3001) label = `p${p.n}・第3冊第${p.lesson - 3000}課`;
         else if (p.lesson >= 2001) label = `p${p.n}・第2冊第${p.lesson - 2000}課`;
         else if (p.lesson >= 1001) label = `p${p.n}・HSK3第${p.lesson - 1000}課`;
         else if (p.lesson >= 901) label = `p${p.n}・HSK2第${p.lesson - 900}課`;
@@ -4000,7 +3978,7 @@ async function renderEbookPage() {
         break;
       }
     }
-    const displayLessonN = (ebookState.isTest2 && currentLesson >= 2001) ? currentLesson - 2000 : currentLesson;
+    const displayLessonN = (ebookState.isTest2 && currentLesson >= 2001) ? currentLesson - 2000 : ((ebookState.isTest3 && currentLesson >= 3001) ? currentLesson - 2800 : currentLesson);
     const lessonLabelText = currentLesson ? lessonLabel(displayLessonN) : '';
     content.innerHTML = `
       <div class="ebook-viewer" id="ebookViewer">
@@ -4101,8 +4079,16 @@ async function openSentenceModal(sentenceId, fallbackZh) {
     /* HSK3：從 HSK3 句庫找 */
     sentence = hsk3Sentences() ? hsk3Sentences().find(s => s.recordId === sentenceId) : null;
   } else if (ebookState.isTest3) {
-    /* TEST3：從 TEST3 句庫找 */
-    sentence = test3Sentences() ? test3Sentences().find(s => s.recordId === sentenceId) : null;
+    /* 第3冊新版電子書：先找 TEST3 卡，再以 seq 對應回主句庫的第3冊原卡（同句同內容），
+       讓老師的覆寫／錄音正確掛回原卡；找不到原卡才用 TEST3 卡。 */
+    const t3 = test3Sentences() ? test3Sentences().find(s => s.recordId === sentenceId) : null;
+    if (t3 && t3.seq != null) {
+      const ln = Math.floor(t3.seq / 10000) - 2800;
+      const twinSeq = ln * 100000 + (t3.seq % 10000);
+      sentence = state.sentences.find(s => s.seq === twinSeq) || t3;
+    } else {
+      sentence = t3;
+    }
   } else if (ebookState.isTest2) {
     /* 第2冊新版電子書：先找 Test2 卡，再以 seq 對應回主句庫的第2冊原卡（同句同內容），
        讓老師的覆寫／錄音正確掛回原卡；找不到原卡才用 Test2 卡。 */
@@ -4439,22 +4425,7 @@ async function openTw6Ebook(n) {
   const cs = $('courseSection');
   if (cs) cs.scrollIntoView({ behavior: 'smooth' });
 }
-/* TEST3 課程：載入句庫後用現有課程視圖顯示（2026-10-15，同 HSK 模式）。 */
-async function openTest3Lesson(n) {
-  try {
-    await loadTest3Bank();
-    courseState.lesson = n;
-    courseState.tab = '課文';
-    courseState.page = 'books';
-    renderLessonView();
-    $('courseSection').scrollIntoView({ behavior: 'smooth' });
-  } catch (e) {
-    const view = $('lessonView');
-    view.classList.remove('hidden');
-    $('lessonGrid').classList.add('hidden');
-    view.innerHTML = `<p class="section-note">載入失敗：${escapeHtml(e.message)} <span class="en-sub">Load failed</span></p>`;
-  }
-}
+/* TEST3 已併入第3冊（2026-10-16）：原 openTest3Lesson 獨立入口已移除，課程視圖走主句庫第3冊原卡。 */
 async function openHskLesson(n) {
   /* HSK 1/2：課程列表用句子視圖（與 1-7 冊一致）；電子書走專屬入口 openHskEbook。 */
   try {
@@ -7988,8 +7959,8 @@ function renderLessonView() {
         openHskEbook(n);
       } else if (n >= 901 && n <= 915) {
         openHsk2Ebook(n);
-      } else if (n >= 3001 && n <= 3012) {
-        openTest3Ebook(n);
+      } else if (n >= 201 && n <= 212) {
+        openTest3Ebook(n - 200); /* 第3冊電子書＝新版（TEST3）內容（2026-10-16 取代） */
       }
     });
   }
