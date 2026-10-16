@@ -3032,8 +3032,18 @@ async function loadHsk2Bank() {
   const r = await fetch(url);
   if (!r.ok) throw new Error('HSK2 bank ' + r.status);
   const data = await r.json();
-  const fields = Object.keys(data.f).sort((a, b) => data.f[a] - data.f[b]);
-  hsk2BankCache[lang] = data.rows.map(row => vbankRowToSentence(fields, row, lang));
+  const rawFields = Object.keys(data.f).sort((a, b) => data.f[a] - data.f[b]);
+  /* HSK2 句庫檔用精簡欄位名（chinese／s／e），與 vbankRowToSentence 讀的全名（chineseSentence／i18n_s／i18n_e）對不上：
+     不正規化會建成中文與翻譯皆空的句子物件（2026-10-16 修）。 */
+  const FULL = ['id', 'seq', 'lesson', 'section', 'chineseSentence', 'pinyin', 'i18n_s', 'i18n_r', 'i18n_e', 'category', 'tags', 'speaker', 'vocabKind', 'hindiSentence', 'romanHindi', 'hindiExplanation', 'audioPath'];
+  hsk2BankCache[lang] = data.rows.map(row => {
+    const o = {};
+    rawFields.forEach((f, i) => { o[f] = row[i]; });
+    o.chineseSentence = o.chineseSentence || o.chinese || '';
+    o.i18n_s = o.i18n_s || o.s || '';
+    o.i18n_e = o.i18n_e || o.e || '';
+    return vbankRowToSentence(FULL, FULL.map(f => o[f]), lang);
+  });
   return hsk2BankCache[lang];
 }
 /* 取當前語言的 HSK 句子（未載入回 null）。 */
