@@ -3858,10 +3858,13 @@ async function renderEbookPage() {
   const page = ebookState.pages[ebookState.pageIndex];
   /* 圖片快取（2026-10-11）：避免翻頁時重新下載 */
   if (!window._ebookImgCache) window._ebookImgCache = new Map();
+  /* 第七冊 manifest 的 image 是裸檔名（b7-book-p001.jpg），須補完整 Storage 路徑
+     （2026-10-16 修復：原本直接拿裸檔名要下載網址會失敗，畫面永遠停在載入中） */
+  const ebookImgPath = (pg) => ebookState.isB7 ? 'v4-book7/pages/' + pg.image : pg.image;
   /* HSK2/HSK3 用直接公開網址（SDK 對 v4-book-hsk2/ 報 unauthorized） */
   const imgUrl = (ebookState.isHsk2 || ebookState.isHsk3 || ebookState.isTest2 || ebookState.isTest3)
     ? 'https://storage.googleapis.com/my-chinese-sentence-bank-v3.firebasestorage.app/' + page.image
-    : await getBankFileUrl(page.image);
+    : await getBankFileUrl(ebookImgPath(page));
   /* 預載前後頁 */
   [-2, -1, 1, 2].forEach(offset => {
     const idx = ebookState.pageIndex + offset;
@@ -3870,7 +3873,7 @@ async function renderEbookPage() {
       const pUrl = (ebookState.isHsk2 || ebookState.isHsk3 || ebookState.isTest2 || ebookState.isTest3)
         ? 'https://storage.googleapis.com/my-chinese-sentence-bank-v3.firebasestorage.app/' + p.image
         : null;
-      (pUrl ? Promise.resolve(pUrl) : getBankFileUrl(p.image)).then(url => {
+      (pUrl ? Promise.resolve(pUrl) : getBankFileUrl(ebookImgPath(p))).then(url => {
         if (!window._ebookImgCache.has(url)) {
           const img = new Image();
           img.src = url;
@@ -4249,7 +4252,7 @@ async function openB7Ebook(n) {
     });
     ebookState = { lesson: n, pageIndex: startIdx, pages: book.pages, bookPages: book.pages, title: book.title, isB7: true };
     for (let i = Math.max(0, startIdx - 2); i < Math.min(book.pages.length, startIdx + 5); i++) {
-      getBankFileUrl(book.pages[i].image).then(url => {
+      getBankFileUrl('v4-book7/pages/' + book.pages[i].image).then(url => {
         const img = new Image(); img.src = url;
       }).catch(() => {});
     }
