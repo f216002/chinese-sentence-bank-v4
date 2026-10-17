@@ -200,6 +200,11 @@
 .topbar-lang{display:flex;align-items:center;gap:6px;border:1px solid var(--line);background:white;border-radius:999px;padding:0 8px 0 12px;height:42px;cursor:pointer;font-size:16px}
 .topbar-lang select{border:0;background:transparent;height:100%;width:auto;max-width:176px;padding:0 2px;font-size:14px;font-weight:700;cursor:pointer;text-overflow:ellipsis}
 @media(max-width:700px){.topbar-lang{height:38px;padding-left:9px}.topbar-lang select{max-width:120px;font-size:13px}}
+/* 手機頂欄（2026-10-17）：品牌＋兩個語言選單＋刷新＋登入鈕原本合計約 640px、
+   不換行也不縮小，390px 螢幕上登入鈕被擠出右邊框外。改為頂欄可換行成兩列、
+   登入鈕只留中文、品牌英文副題隱藏；再加 overflow-x:clip 全域防護，
+   任何過寬元素都不許把頁面撐出水平捲動（clip 不影響 sticky 頂欄）。 */
+@media(max-width:700px){html,body{overflow-x:clip}.topbar{flex-wrap:wrap;height:auto;min-height:68px;padding-top:8px;padding-bottom:8px;row-gap:6px}.brand strong .en-sub{display:none}.topbar-actions{flex-wrap:wrap;row-gap:6px}.topbar-lang select{max-width:100px}.v4-auth{flex-wrap:wrap;row-gap:6px}.v4-auth-button .en-sub{display:none}}
 
 /* Bilingual UI: Chinese (primary) + English (secondary, smaller) */
 .en-sub {
