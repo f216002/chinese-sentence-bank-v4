@@ -1,5 +1,7 @@
 /* ---- V4 Google 登入（移植自 V3，獨立運作） ----
-   V4 部署於 GitHub Pages，一律使用彈出視窗登入（signInWithPopup）。
+   電腦版用彈出視窗登入（signInWithPopup）；手機／平板瀏覽器改用整頁跳轉登入
+   （signInWithRedirect，2026-10-17）：iOS Safari 的彈出視窗登入會在驗證完成、
+   視窗交回憑證時遺失 opener 連結，表現為「驗證完仍跳回未登入首頁」。
    Firebase app 由此檔初始化（window.V4_FIREBASE_CONFIG），app.js 沿用。
    登入狀態發布到 window.V4_AUTH，並觸發 v4-auth-changed 事件。 */
 (function () {
@@ -53,6 +55,27 @@
 
   function isAdminEmail(email) {
     return String(email || '').toLowerCase() === String(window.V4_ADMIN_EMAIL).toLowerCase();
+  }
+
+  /* ---- 行動裝置偵測（2026-10-17） ----
+     iOS 所有瀏覽器皆為 WebKit，彈出視窗登入的憑證交回不可靠；
+     Android Chrome 彈出視窗亦常遭系統回收。一律改走整頁跳轉登入。 */
+  function isMobileBrowser() {
+    var ua = navigator.userAgent || '';
+    if (/Android|iPhone|iPad|iPod|Mobile/i.test(ua)) return true;
+    /* iPadOS 13+ 謊報 Mac UA：以觸控點數判別。 */
+    return navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1;
+  }
+
+  var REDIRECT_FLAG = 'v4RedirectSignInPending';
+  function markRedirectPending() {
+    try { sessionStorage.setItem(REDIRECT_FLAG, '1'); } catch (e) {}
+  }
+  function clearRedirectPending() {
+    try { sessionStorage.removeItem(REDIRECT_FLAG); } catch (e) {}
+  }
+  function redirectPending() {
+    try { return sessionStorage.getItem(REDIRECT_FLAG) === '1'; } catch (e) { return false; }
   }
 
   /* ---- 內建瀏覽器偵測（2026-10-05） ----
@@ -196,6 +219,17 @@
     signInButton.addEventListener('click', function () {
       if (detectInAppBrowser()) { openInSystemBrowser(); return; }
       signInButton.disabled = true;
+      if (isMobileBrowser()) {
+        /* 手機：整頁跳轉登入。跳轉後本頁會重新載入並由 getRedirectResult 收尾。 */
+        setAuthMessage('正在前往 Google 登入…');
+        markRedirectPending();
+        auth.signInWithRedirect(provider).catch(function (error) {
+          clearRedirectPending();
+          signInButton.disabled = false;
+          setAuthMessage('Google 登入失敗：' + ((error && error.message) || (error && error.code) || ''), true);
+        });
+        return;
+      }
       setAuthMessage('正在開啟 Google 登入…');
       auth.signInWithPopup(provider).catch(function (error) {
         var code = (error && error.code) || '';
@@ -227,6 +261,17 @@
     });
   }
 
+  /* 整頁跳轉登入的回程收尾（2026-10-17）：成功時 onAuthStateChanged 會接手；
+     失敗（例如瀏覽器阻擋跨站儲存）把 Firebase 的實際錯誤顯示出來，不再靜默回到未登入。 */
+  if (auth.getRedirectResult) {
+    auth.getRedirectResult().then(function (result) {
+      if (result && result.user) clearRedirectPending();
+    }).catch(function (error) {
+      clearRedirectPending();
+      setAuthMessage('Google 登入失敗：' + ((error && error.message) || (error && error.code) || ''), true);
+    });
+  }
+
   window.V4_AUTH = Object.freeze({ ready: false, user: null });
   auth.onAuthStateChanged(function (user) {
     if (user && user.isAnonymous) {
@@ -234,7 +279,17 @@
       auth.signOut();
       return;
     }
-    if (user) showSignedIn(user); else showSignedOut();
+    if (user) {
+      clearRedirectPending();
+      showSignedIn(user);
+    } else {
+      showSignedOut();
+      if (redirectPending()) {
+        /* 跳轉回來了卻仍未登入、且沒有回報錯誤：多半是瀏覽器擋下登入所需的儲存空間。 */
+        clearRedirectPending();
+        setAuthMessage('登入未完成：瀏覽器可能阻擋了登入所需的儲存空間。請確認 Safari 未開啟「私密瀏覽」，並在「設定 → Safari → 隱私權」關閉「阻擋所有 Cookie」後再試一次。', true);
+      }
+    }
     publishAuthState(user);
   });
 })();
