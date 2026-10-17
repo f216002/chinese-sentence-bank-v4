@@ -172,6 +172,10 @@ function applyOverlay(sentence, overlay) {
    未登入或無權限時只載入共版課程。 */
 async function fetchAllSentences() {
   const uid = currentTeacherUid();
+  /* 登入閘門（2026-10-17）：未登入直接回空清單（理由同 loadBank）——
+     擋下所有未登入路徑（refreshPersonalLayer、reloadSentences 等）觸發的
+     靜態句庫下載與 Firestore 全量讀取。 */
+  if (!uid) return [];
   const lang = state.sourceLanguage || 'hi';
   /* 共版句庫：優先用靜態 JSON（快）；失敗才退回 Firestore 全量讀取。 */
   let sharedSentences;
@@ -2130,6 +2134,18 @@ async function loadBank(attempt = 1) {
     handleBankFailure(attempt, MAX_ATTEMPTS, `Firebase could not start: ${firebaseInitError}`);
     return;
   }
+  /* 登入閘門（2026-10-17）：先等登入狀態確定；未登入／未核准就直接返回、不載入句庫。
+     未登入時 getDownloadURL 必然失敗，fetchAllSentences 會退回 Firestore 全量讀取
+     v4_sentences（10,980 筆，規則公開可讀）——手機記憶體爆量崩潰（「重複發生問題」）、
+     且每次白燒約 NT$1–2 讀取費。內容自 2026-10-10 起本就需登入核准才開放；
+     登入核准後 refreshPersonalLayer 會接手完整載入，這裡直接返回即可。 */
+  await whenAccessReady();
+  const accessNow = window.V4_ACCESS;
+  if (!accessNow || !accessNow.ready || accessNow.status !== 'approved') {
+    $('apiStatus').className = 'live-status';
+    $('apiStatus').innerHTML = '<i></i> 請先登入 <span class="en-sub">Please sign in</span>';
+    return;
+  }
   try {
     /* 省錢機制（2026-10-02）：先只讀 1 筆設定檔比對 bankVersion，
        版本一致就用本機快取（本次載入僅 1 次讀取），版本變了才全量抓取。
@@ -2141,7 +2157,6 @@ async function loadBank(attempt = 1) {
     const [manifest, settingsSnap] = await Promise.all([
       vbankManifest().catch(() => null),
       fbDb.collection(META_COL).doc(SETTINGS_DOC).get(),
-      whenAccessReady(),
     ]);
     personalLayerUid = currentTeacherUid();
     const settings = settingsSnap.exists ? { ...defaultSettings(), ...settingsSnap.data() } : defaultSettings();
