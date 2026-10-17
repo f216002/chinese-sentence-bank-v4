@@ -1,7 +1,8 @@
 /* ---- V4 Google 登入（移植自 V3，獨立運作） ----
-   電腦版用彈出視窗登入（signInWithPopup）；手機／平板瀏覽器改用整頁跳轉登入
-   （signInWithRedirect，2026-10-17）：iOS Safari 的彈出視窗登入會在驗證完成、
-   視窗交回憑證時遺失 opener 連結，表現為「驗證完仍跳回未登入首頁」。
+   全平台使用彈出視窗登入（signInWithPopup）。2026-10-17 曾短暫改為手機用
+   整頁跳轉登入（signInWithRedirect），實測 iPhone Safari 跳轉回來後登入結果
+   遺失（跨站儲存被擋），同日晚間改回 popup（Cheng 手機 2026-10-05～10-16
+   實測可用的路徑）；getRedirectResult 收尾保留，處理殘留的跳轉結果。
    Firebase app 由此檔初始化（window.V4_FIREBASE_CONFIG），app.js 沿用。
    登入狀態發布到 window.V4_AUTH，並觸發 v4-auth-changed 事件。 */
 (function () {
@@ -219,17 +220,11 @@
     signInButton.addEventListener('click', function () {
       if (detectInAppBrowser()) { openInSystemBrowser(); return; }
       signInButton.disabled = true;
-      if (isMobileBrowser()) {
-        /* 手機：整頁跳轉登入。跳轉後本頁會重新載入並由 getRedirectResult 收尾。 */
-        setAuthMessage('正在前往 Google 登入…');
-        markRedirectPending();
-        auth.signInWithRedirect(provider).catch(function (error) {
-          clearRedirectPending();
-          signInButton.disabled = false;
-          setAuthMessage('Google 登入失敗：' + ((error && error.message) || (error && error.code) || ''), true);
-        });
-        return;
-      }
+      /* 一律彈出視窗登入（2026-10-17 晚修正）：今早曾改手機用整頁跳轉，
+         實測 iPhone Safari 跳轉回來後登入結果遺失（跨站儲存被擋），
+         故恢復全平台 popup——此路徑在 Cheng 手機上 2026-10-05～10-16 實測可用；
+         頁面已減重＋未登入不預載句庫（app.js 登入閘門），原頁分頁不再被系統回收，
+         popup 的憑證交回得以完成。 */
       setAuthMessage('正在開啟 Google 登入…');
       auth.signInWithPopup(provider).catch(function (error) {
         var code = (error && error.code) || '';
