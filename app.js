@@ -2024,6 +2024,16 @@ function bankCacheKey() {
 }
 function saveBankCache(bankVersion) {
   try {
+    /* 2026-10-17：localStorage 上限約 5MB（iOS Safari）。整套句庫（10,980 句物件）
+       字串化後必然超限、寫入注定失敗，但字串化本身會在手機上造成數十 MB 的
+       記憶體尖峰（登入後最吃緊的時刻），可能觸發 WebKit 程序被回收、頁面崩潰。
+       先以抽樣估算序列化大小，預估超限就直接跳過，不做注定失敗的大字串化。 */
+    const sampleN = Math.min(100, state.sentences.length);
+    if (sampleN > 0) {
+      const sampleLen = JSON.stringify(state.sentences.slice(0, sampleN)).length;
+      const est = (sampleLen / sampleN) * state.sentences.length;
+      if (est > 4200000) return;
+    }
     localStorage.setItem(bankCacheKey(), JSON.stringify({
       settings: state.settings, sentences: state.sentences,
       categories: state.categories, savedAt: Date.now(),
@@ -2920,14 +2930,20 @@ const V4_SONGS = [
   }
 ];
 
-/* 合併歌曲翻譯：v4-songs-i18n.js 的 V4_SONGS_I18N 寫入各行 line.i18n。 */
-if (typeof V4_SONGS_I18N !== 'undefined') {
+/* 合併歌曲翻譯：v4-songs-i18n.js 的 V4_SONGS_I18N 寫入各行 line.i18n。
+   2026-10-17 起改為可重複呼叫的函式：翻譯檔改為延後載入（見 loadDeferredI18n），
+   載入完成時再呼叫一次完成合併。 */
+let songsI18nMerged = false;
+function mergeSongsI18n() {
+  if (songsI18nMerged || typeof V4_SONGS_I18N === 'undefined') return;
+  songsI18nMerged = true;
   V4_SONGS.forEach(song => {
     const arr = V4_SONGS_I18N[song.id];
     if (!arr) return;
     song.lines.forEach((line, i) => { if (arr[i]) line.i18n = arr[i]; });
   });
 }
+mergeSongsI18n();
 
 /* 歌詞行轉句子物件：供 createCard() 使用；搜尋時亦納入（見 renderBank 歌曲搜尋段）。 */
 function songLineToSentence(song, line, idx) {
@@ -3308,6 +3324,10 @@ function analyticsMarkBankDownload(lang) {
 
 function renderCourse() {
   analyticsTrackSection();
+  /* 進入歌曲／禮節區時，立即啟動翻譯檔延後載入（不等 idle 計時）。 */
+  if (courseState.song || courseState.ritual || ['songs', 'rituals', 'ritual-group', 'ritual-subgroup'].includes(courseState.page)) {
+    try { loadDeferredI18n(); } catch (_) {}
+  }
   const lock = $('courseLock'), body = $('courseBody');
   if (!lock || !body) return;
   if (!isCourseUnlocked()) {
@@ -7534,8 +7554,12 @@ const V4_RITUAL_GROUPS = [
   },
 ];
 
-/* 合併禮節翻譯：v4-rituals-i18n.js 的 V4_RITUALS_I18N 寫入各行 line.i18n（依 sections 扁平順序）。 */
-if (typeof V4_RITUALS_I18N !== 'undefined') {
+/* 合併禮節翻譯：v4-rituals-i18n.js 的 V4_RITUALS_I18N 寫入各行 line.i18n（依 sections 扁平順序）。
+   2026-10-17 起改為可重複呼叫的函式，配合翻譯檔延後載入。 */
+let ritualsI18nMerged = false;
+function mergeRitualsI18n() {
+  if (ritualsI18nMerged || typeof V4_RITUALS_I18N === 'undefined') return;
+  ritualsI18nMerged = true;
   V4_RITUALS.forEach(ritual => {
     const arr = V4_RITUALS_I18N[ritual.id];
     if (!arr) return;
@@ -7545,6 +7569,39 @@ if (typeof V4_RITUALS_I18N !== 'undefined') {
     });
   });
 }
+mergeRitualsI18n();
+
+/* ---- 歌曲／禮節翻譯檔延後載入（2026-10-17） ----
+   v4-songs-i18n.js（約 0.6MB）與 v4-rituals-i18n.js（約 2.3MB）不再於首頁同步載入：
+   手機（尤其 App 內建瀏覽器）記憶體有限，進站同時解析近 3MB 翻譯資料又下載整套句庫，
+   WebKit 程序會被系統回收，頁面反覆崩潰（「重複發生問題」）。改為頁面穩定後背景依序載入，
+   載入完成自動合併；若使用者正停留在歌曲／禮節頁面，立即開始載入並於完成後重繪。 */
+let deferredI18nStarted = false;
+function loadDeferredI18n() {
+  if (deferredI18nStarted) return;
+  deferredI18nStarted = true;
+  const jobs = [
+    { src: 'v4-songs-i18n.js?v=20261013-01', done: mergeSongsI18n },
+    { src: 'v4-rituals-i18n.js?v=20260930-6', done: mergeRitualsI18n },
+  ];
+  let i = 0;
+  const next = () => {
+    if (i >= jobs.length) {
+      if (courseState.song || courseState.ritual || ['songs', 'rituals', 'ritual-group', 'ritual-subgroup'].includes(courseState.page)) {
+        try { renderCourse(); } catch (_) {}
+      }
+      return;
+    }
+    const job = jobs[i++];
+    const sc = document.createElement('script');
+    sc.src = job.src;
+    sc.onload = () => { try { job.done(); } catch (_) {} next(); };
+    sc.onerror = () => next();
+    document.head.appendChild(sc);
+  };
+  next();
+}
+window.addEventListener('load', () => { setTimeout(loadDeferredI18n, 1500); });
 
 /* 禮節行轉句子物件：供 createCard() 使用（非課程記錄，不進搜尋）。 */
 function ritualLineToSentence(ritual, line, idx) {
