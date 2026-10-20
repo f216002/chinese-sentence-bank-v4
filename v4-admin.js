@@ -42,6 +42,9 @@
     versionHistoryEmpty: $('versionHistoryEmpty'),
     statsOverviewBody: $('statsOverviewBody'),
     statsOverviewEmpty: $('statsOverviewEmpty'),
+    statsModeToday: $('statsModeToday'),
+    statsModeAll: $('statsModeAll'),
+    statsDurationHead: $('statsDurationHead'),
     statsDetail: $('statsDetail'),
     statsDetailTitle: $('statsDetailTitle'),
     statsDetailBody: $('statsDetailBody'),
@@ -258,6 +261,8 @@
     bindAction(els.teachersBody, 'data-delete-teacher', deleteTeacher);
     bindAction(els.statsOverviewBody, 'data-stats-detail', function (id) { renderStatsDetail(id); return Promise.resolve(); });
     if (els.statsDetailBack) els.statsDetailBack.addEventListener('click', function () { if (els.statsDetail) els.statsDetail.hidden = true; });
+    if (els.statsModeToday) els.statsModeToday.addEventListener('click', function () { setStatsMode('today'); });
+    if (els.statsModeAll) els.statsModeAll.addEventListener('click', function () { setStatsMode('all'); });
 
     requestsUnsub = db.collection('v4_accessRequests').orderBy('requestedAt', 'desc')
       .onSnapshot(renderRequests, function (error) {
@@ -326,11 +331,36 @@
     });
   }
 
-  /* ---------- 使用統計（2026-10-07） ----------
+  /* ---------- 使用統計（2026-10-07；2026-10-20 加「今日／累積」切換） ----------
      讀取 v4_analytics_sessions（老師登入登出＋頁面停留）與 enrollPages（已發布招生頁）。
-     延遲載入：第一次切到此分頁才查詢，之後切換不再重查。 */
+     延遲載入：第一次切到此分頁才查詢，之後切換不再重查。
+     範圍切換：statsMode='today' 只計登入時間落在今天（瀏覽器本地日期）的 session；
+     'all' 為累積至今全部。開啟預設 'today'。跨午夜的 session 歸入其登入日。 */
   var statsLoaded = false;
   var statsSessions = [];
+  var statsMode = 'today';
+
+  function sessionLoginMillis(s) {
+    if (!s || !s.loginAt) return 0;
+    if (s.loginAt.toMillis) return s.loginAt.toMillis();
+    var t = new Date(s.loginAt).getTime();
+    return isNaN(t) ? 0 : t;
+  }
+  function isTodayMillis(ms) {
+    if (!ms) return false;
+    var d = new Date(ms), now = new Date();
+    return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth() && d.getDate() === now.getDate();
+  }
+  function statsScopedSessions() {
+    if (statsMode !== 'today') return statsSessions;
+    return statsSessions.filter(function (s) { return isTodayMillis(sessionLoginMillis(s)); });
+  }
+  function setStatsMode(mode) {
+    statsMode = mode === 'all' ? 'all' : 'today';
+    if (els.statsModeToday) els.statsModeToday.classList.toggle('active', statsMode === 'today');
+    if (els.statsModeAll) els.statsModeAll.classList.toggle('active', statsMode === 'all');
+    renderStatsOverview();
+  }
 
   function fmtDuration(sec) {
     sec = Math.max(0, Math.round(sec || 0));
@@ -354,13 +384,13 @@
   }
   function renderStatsOverview() {
     var byUid = {};
-    statsSessions.forEach(function (s) {
+    statsScopedSessions().forEach(function (s) {
       var u = byUid[s.uid] || (byUid[s.uid] = { uid: s.uid, name: '', email: '', count: 0, totalSec: 0, lastLogin: 0 });
       u.count += 1;
       u.totalSec += (s.durationSec || 0);
       if (!u.name && s.displayName) u.name = s.displayName;
       if (!u.email && s.email) u.email = s.email;
-      var lt = s.loginAt && s.loginAt.toMillis ? s.loginAt.toMillis() : 0;
+      var lt = sessionLoginMillis(s);
       if (lt > u.lastLogin) u.lastLogin = lt;
     });
     var list = Object.keys(byUid).map(function (k) { return byUid[k]; });
@@ -374,13 +404,17 @@
           '<td class="actions"><button type="button" data-stats-detail="' + escapeHtml(u.uid) + '">明細</button></td></tr>';
       }).join('');
     }
-    if (els.statsOverviewEmpty) els.statsOverviewEmpty.hidden = list.length > 0;
+    if (els.statsDurationHead) els.statsDurationHead.textContent = statsMode === 'today' ? '今日時長' : '累計時長';
+    if (els.statsOverviewEmpty) {
+      els.statsOverviewEmpty.textContent = statsMode === 'today' ? '今日尚無使用記錄。' : '尚無使用記錄（老師登入後才會產生）。';
+      els.statsOverviewEmpty.hidden = list.length > 0;
+    }
     if (els.statsDetail) els.statsDetail.hidden = true;
   }
   function renderStatsDetail(uid) {
-    var rows = statsSessions.filter(function (s) { return s.uid === uid; });
+    var rows = statsScopedSessions().filter(function (s) { return s.uid === uid; });
     var first = rows[0] || {};
-    if (els.statsDetailTitle) els.statsDetailTitle.textContent = '登入明細：' + (first.displayName || first.email || uid);
+    if (els.statsDetailTitle) els.statsDetailTitle.textContent = '登入明細（' + (statsMode === 'today' ? '今日' : '累積') + '）：' + (first.displayName || first.email || uid);
     if (els.statsDetailBody) {
       els.statsDetailBody.innerHTML = rows.map(function (s) {
         var logoutText = s.logoutAt ? fmtTs(s.logoutAt) : (s.orphanClosed ? '異常結束（下次登入時結算）' : '使用中');
