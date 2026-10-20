@@ -26,6 +26,8 @@
     .blocked h2 { margin-top: 0; }
     .tabs { display: flex; gap: 8px; margin: 0 0 16px; }
     .tabs button.active { background: #2b2620; color: #fff; border-color: #2b2620; }
+    .seg-toggle { display: inline-flex; gap: 6px; margin: 2px 0 10px; }
+    .seg-toggle button.active { background: #2b2620; color: #fff; border-color: #2b2620; }
     .table-wrap { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; font-size: .9rem; }
     th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #efe8d8; vertical-align: top; }
@@ -121,15 +123,19 @@
 
       <div id="tabStats" class="panel" hidden>
         <h3>使用統計 <span class="en-sub">Usage analytics</span></h3>
-        <p class="hint">每位老師的登入／登出時間、累計使用時長、各頁面停留。流量為估算值（句庫實際下載次數 × 語言檔大小，GitHub Pages 無逐人日誌）。點教師列看每次登入明細。</p>
+        <p class="hint">每位老師的登入／登出時間、使用時長、各頁面停留。流量為估算值（句庫實際下載次數 × 語言檔大小，GitHub Pages 無逐人日誌）。點教師列看每次登入明細。</p>
+        <div class="seg-toggle" role="group" aria-label="統計範圍">
+          <button type="button" id="statsModeToday" class="active">今日</button>
+          <button type="button" id="statsModeAll">累積</button>
+        </div>
         <h4>帳號總覽</h4>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>教師</th><th>登入次數</th><th>累計時長</th><th>最後登入</th><th>操作</th></tr></thead>
+            <thead><tr><th>教師</th><th>登入次數</th><th id="statsDurationHead">今日時長</th><th>最後登入</th><th>操作</th></tr></thead>
             <tbody id="statsOverviewBody"></tbody>
           </table>
         </div>
-        <p class="empty" id="statsOverviewEmpty">尚無使用記錄（老師登入後才會產生）。</p>
+        <p class="empty" id="statsOverviewEmpty">今日尚無使用記錄。</p>
         <div id="statsDetail" hidden>
           <h4 id="statsDetailTitle"></h4>
           <div class="table-wrap">
@@ -172,7 +178,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="v4-auth.js?v=20260926-1"></script>
-  <script src="v4-admin.js?v=20261007-01"></script>
+  <script src="v4-admin.js?v=20261020-01"></script>
 </body>
 </html>
 
