@@ -12097,5 +12097,5589 @@ const V4_SONGS_I18N = {
         e: "朋友＝friend；永遠＝forever，永恆不變；祝福您＝給予美好的祝願；「您」是敬語，表示尊敬。"
       }
     }
+  ],
+  ainiyo: [
+    {
+      hi: {
+        s: "तुम धूप की तरह चमकदार हो",
+        r: "tum dhūp kī tarah camakdār ho",
+        e: "像＝好像；陽光＝太陽的光；燦爛＝明亮耀眼。"
+      },
+      en: {
+        s: "You shine like the bright sunshine",
+        r: "",
+        e: "像＝好像；陽光＝太陽的光；燦爛＝明亮耀眼。"
+      },
+      ta: {
+        s: "நீ கதிரவனின் ஒளிபோல் பிரகாசமாக இருக்கிறாய்",
+        r: "nī katiravaṉiṉ oḷipōl pirakācamāka irukkiṟāy",
+        e: "像＝好像；陽光＝太陽的光；燦爛＝明亮耀眼。"
+      },
+      th: {
+        s: "เธอเปล่งประกายเหมือนแสงแดด",
+        r: "thoe pleng prakai muean saeng daet",
+        e: "像＝好像；陽光＝太陽的光；燦爛＝明亮耀眼。"
+      },
+      km: {
+        s: "អ្នកភ្លឺថ្លាដូចពន្លឺព្រះអាទិត្យ",
+        r: "anak phlue thla doch ponlue preah atit",
+        e: "像＝好像；陽光＝太陽的光；燦爛＝明亮耀眼。"
+      },
+      vi: {
+        s: "Bạn rực rỡ như ánh nắng mặt trời",
+        r: "",
+        e: "像＝好像；陽光＝太陽的光；燦爛＝明亮耀眼。"
+      },
+      id: {
+        s: "Kamu bersinar seperti sinar matahari",
+        r: "",
+        e: "像＝好像；陽光＝太陽的光；燦爛＝明亮耀眼。"
+      },
+      ne: {
+        s: "तिमी घामजस्तै चम्किला छौ",
+        r: "timī ghāmjastai camkilā chau",
+        e: "像＝好像；陽光＝太陽的光；燦爛＝明亮耀眼。"
+      },
+      bn: {
+        s: "তুমি রোদের মতো ঝলমলে",
+        r: "tumi roder mato jhalamale",
+        e: "像＝好像；陽光＝太陽的光；燦爛＝明亮耀眼。"
+      },
+      es: {
+        s: "Brillas como la luz del sol",
+        r: "",
+        e: "像＝好像；陽光＝太陽的光；燦爛＝明亮耀眼。"
+      },
+      de: {
+        s: "Du strahlst wie der Sonnenschein",
+        r: "",
+        e: "像＝好像；陽光＝太陽的光；燦爛＝明亮耀眼。"
+      },
+      my: {
+        s: "မင်းက နေရောင်ခြည်လို တောက်ပနေတယ်",
+        r: "min-ga nay-yaung-chi lo tauk-pa nay-de",
+        e: "像＝好像；陽光＝太陽的光；燦爛＝明亮耀眼。"
+      },
+      ko: {
+        s: "너는 햇살처럼 눈부셔",
+        r: "neoneun haetsalcheoreom nunbusyeo",
+        e: "像＝好像；陽光＝太陽的光；燦爛＝明亮耀眼。"
+      },
+      ja: {
+        s: "あなたは太陽の光のように輝いている",
+        r: "anata wa taiyō no hikari no yō ni kagayaite iru",
+        e: "像＝好像；陽光＝太陽的光；燦爛＝明亮耀眼。"
+      },
+      si: {
+        s: "ඔබ හිරු එළිය වාගේ දිදුලනවා",
+        r: "oba hiru eḷiya vāgē didulanavā",
+        e: "像＝好像；陽光＝太陽的光；燦爛＝明亮耀眼。"
+      },
+      fa: {
+        s: "تو مثل نور خورشید می‌درخشی",
+        r: "to mesl-e nur-e khorshid miderakhshi",
+        e: "像＝好像；陽光＝太陽的光；燦爛＝明亮耀眼。"
+      }
+    },
+    {
+      hi: {
+        s: "तुम बसंत की तरह गर्माहट भरे हो",
+        r: "tum basaṅt kī tarah garmāhaṭ bhare ho",
+        e: "春天＝四季的第一季；溫暖＝暖和、讓人舒服。"
+      },
+      en: {
+        s: "You are warm like the springtime",
+        r: "",
+        e: "春天＝四季的第一季；溫暖＝暖和、讓人舒服。"
+      },
+      ta: {
+        s: "நீ வசந்த காலம் போல் இதமாக இருக்கிறாய்",
+        r: "nī vasanta kālam pōl itamāka irukkiṟāy",
+        e: "春天＝四季的第一季；溫暖＝暖和、讓人舒服。"
+      },
+      th: {
+        s: "เธออบอุ่นเหมือนฤดูใบไม้ผลิ",
+        r: "thoe op-un muean ruedu bai-mai phli",
+        e: "春天＝四季的第一季；溫暖＝暖和、讓人舒服。"
+      },
+      km: {
+        s: "អ្នកកក់ក្តៅដូចរដូវផ្ការីក",
+        r: "anak kak kdau doch rodau phka rik",
+        e: "春天＝四季的第一季；溫暖＝暖和、讓人舒服。"
+      },
+      vi: {
+        s: "Bạn ấm áp như mùa xuân",
+        r: "",
+        e: "春天＝四季的第一季；溫暖＝暖和、讓人舒服。"
+      },
+      id: {
+        s: "Kamu hangat seperti musim semi",
+        r: "",
+        e: "春天＝四季的第一季；溫暖＝暖和、讓人舒服。"
+      },
+      ne: {
+        s: "तिमी वसन्तजस्तै न्यानो छौ",
+        r: "timī vasantajastai nyāno chau",
+        e: "春天＝四季的第一季；溫暖＝暖和、讓人舒服。"
+      },
+      bn: {
+        s: "তুমি বসন্তের মতো উষ্ণ",
+        r: "tumi basanter mato uṣṇa",
+        e: "春天＝四季的第一季；溫暖＝暖和、讓人舒服。"
+      },
+      es: {
+        s: "Eres cálido como la primavera",
+        r: "",
+        e: "春天＝四季的第一季；溫暖＝暖和、讓人舒服。"
+      },
+      de: {
+        s: "Du bist warm wie der Frühling",
+        r: "",
+        e: "春天＝四季的第一季；溫暖＝暖和、讓人舒服。"
+      },
+      my: {
+        s: "မင်းက နွေဦးရာသီလို နွေးထွေးတယ်",
+        r: "min-ga nway-u ya-thi lo nway-htway-de",
+        e: "春天＝四季的第一季；溫暖＝暖和、讓人舒服。"
+      },
+      ko: {
+        s: "너는 봄처럼 따뜻해",
+        r: "neoneun bomcheoreom ttatteuthae",
+        e: "春天＝四季的第一季；溫暖＝暖和、讓人舒服。"
+      },
+      ja: {
+        s: "あなたは春のように温かい",
+        r: "anata wa haru no yō ni atatakai",
+        e: "春天＝四季的第一季；溫暖＝暖和、讓人舒服。"
+      },
+      si: {
+        s: "ඔබ වසන්තය වාගේ උණුසුම්",
+        r: "oba vasantaya vāgē uṇusum",
+        e: "春天＝四季的第一季；溫暖＝暖和、讓人舒服。"
+      },
+      fa: {
+        s: "تو مثل بهار گرم و دلنشینی",
+        r: "to mesl-e bahār garm o delneshini",
+        e: "春天＝四季的第一季；溫暖＝暖和、讓人舒服。"
+      }
+    },
+    {
+      hi: {
+        s: "तुम हवा की तरह कोमल हो",
+        r: "tum havā kī tarah komal ho",
+        e: "風兒＝微風（兒為輕聲）；溫柔＝柔和親切。"
+      },
+      en: {
+        s: "You are gentle like the breeze",
+        r: "",
+        e: "風兒＝微風（兒為輕聲）；溫柔＝柔和親切。"
+      },
+      ta: {
+        s: "நீ தென்றல் போல் மென்மையாக இருக்கிறாய்",
+        r: "nī teṉṟal pōl meṉmaiyāka irukkiṟāy",
+        e: "風兒＝微風（兒為輕聲）；溫柔＝柔和親切。"
+      },
+      th: {
+        s: "เธออ่อนโยนเหมือนสายลม",
+        r: "thoe on-yon muean sai lom",
+        e: "風兒＝微風（兒為輕聲）；溫柔＝柔和親切。"
+      },
+      km: {
+        s: "អ្នកទន់ភ្លន់ដូចខ្យល់បក់រំភើយ",
+        r: "anak ton phlon doch khyal bak romphoey",
+        e: "風兒＝微風（兒為輕聲）；溫柔＝柔和親切。"
+      },
+      vi: {
+        s: "Bạn dịu dàng như làn gió",
+        r: "",
+        e: "風兒＝微風（兒為輕聲）；溫柔＝柔和親切。"
+      },
+      id: {
+        s: "Kamu lembut seperti angin sepoi-sepoi",
+        r: "",
+        e: "風兒＝微風（兒為輕聲）；溫柔＝柔和親切。"
+      },
+      ne: {
+        s: "तिमी हावाजस्तै कोमल छौ",
+        r: "timī hāvājastai komal chau",
+        e: "風兒＝微風（兒為輕聲）；溫柔＝柔和親切。"
+      },
+      bn: {
+        s: "তুমি হাওয়ার মতো কোমল",
+        r: "tumi hāoẏār mato komal",
+        e: "風兒＝微風（兒為輕聲）；溫柔＝柔和親切。"
+      },
+      es: {
+        s: "Eres suave como la brisa",
+        r: "",
+        e: "風兒＝微風（兒為輕聲）；溫柔＝柔和親切。"
+      },
+      de: {
+        s: "Du bist sanft wie ein Lüftchen",
+        r: "",
+        e: "風兒＝微風（兒為輕聲）；溫柔＝柔和親切。"
+      },
+      my: {
+        s: "မင်းက လေပြည်လို နူးညံ့တယ်",
+        r: "min-ga lay-pyi lo nu-nyant-de",
+        e: "風兒＝微風（兒為輕聲）；溫柔＝柔和親切。"
+      },
+      ko: {
+        s: "너는 바람처럼 다정해",
+        r: "neoneun baramcheoreom dajeonghae",
+        e: "風兒＝微風（兒為輕聲）；溫柔＝柔和親切。"
+      },
+      ja: {
+        s: "あなたはそよ風のように優しい",
+        r: "anata wa soyokaze no yō ni yasashii",
+        e: "風兒＝微風（兒為輕聲）；溫柔＝柔和親切。"
+      },
+      si: {
+        s: "ඔබ සුළඟ වාගේ මෘදුයි",
+        r: "oba suḷaṁga vāgē mṛduyi",
+        e: "風兒＝微風（兒為輕聲）；溫柔＝柔和親切。"
+      },
+      fa: {
+        s: "تو مثل نسیم مهربان و لطیفی",
+        r: "to mesl-e nasim mehrabān o latifi",
+        e: "風兒＝微風（兒為輕聲）；溫柔＝柔和親切。"
+      }
+    },
+    {
+      hi: {
+        s: "तुम मेरी सारी चिंताएँ दूर कर देते हो",
+        r: "tum merī sārī cintāeṅ dūr kar dete ho",
+        e: "把＝處置句型（把＋受詞＋動詞）；煩惱＝不開心的事；驅散＝趕走、使消失。"
+      },
+      en: {
+        s: "You chase away all my worries",
+        r: "",
+        e: "把＝處置句型（把＋受詞＋動詞）；煩惱＝不開心的事；驅散＝趕走、使消失。"
+      },
+      ta: {
+        s: "என் கவலைகளை எல்லாம் நீ விரட்டி விடுகிறாய்",
+        r: "eṉ kavalaikaḷai ellām nī viraṭṭi viṭukiṟāy",
+        e: "把＝處置句型（把＋受詞＋動詞）；煩惱＝不開心的事；驅散＝趕走、使消失。"
+      },
+      th: {
+        s: "เธอขับไล่ความกังวลของฉันไปหมด",
+        r: "thoe khap-lai khwam kangwon khong chan pai mot",
+        e: "把＝處置句型（把＋受詞＋動詞）；煩惱＝不開心的事；驅散＝趕走、使消失。"
+      },
+      km: {
+        s: "អ្នកបណ្តេញកង្វល់របស់ខ្ញុំឱ្យបាត់អស់",
+        r: "anak bondenh kongvol robsa khnhom aoy bat os",
+        e: "把＝處置句型（把＋受詞＋動詞）；煩惱＝不開心的事；驅散＝趕走、使消失。"
+      },
+      vi: {
+        s: "Bạn xua tan mọi phiền muộn của tôi",
+        r: "",
+        e: "把＝處置句型（把＋受詞＋動詞）；煩惱＝不開心的事；驅散＝趕走、使消失。"
+      },
+      id: {
+        s: "Kamu mengusir semua kekhawatiranku",
+        r: "",
+        e: "把＝處置句型（把＋受詞＋動詞）；煩惱＝不開心的事；驅散＝趕走、使消失。"
+      },
+      ne: {
+        s: "तिमीले मेरा सबै चिन्ता दूर गर्छौ",
+        r: "timīle merā sabai cintā dūr garchau",
+        e: "把＝處置句型（把＋受詞＋動詞）；煩惱＝不開心的事；驅散＝趕走、使消失。"
+      },
+      bn: {
+        s: "তুমি আমার সব দুশ্চিন্তা দূর করে দাও",
+        r: "tumi āmār sab duścintā dūr kare dāo",
+        e: "把＝處置句型（把＋受詞＋動詞）；煩惱＝不開心的事；驅散＝趕走、使消失。"
+      },
+      es: {
+        s: "Tú ahuyentas todas mis preocupaciones",
+        r: "",
+        e: "把＝處置句型（把＋受詞＋動詞）；煩惱＝不開心的事；驅散＝趕走、使消失。"
+      },
+      de: {
+        s: "Du vertreibst alle meine Sorgen",
+        r: "",
+        e: "把＝處置句型（把＋受詞＋動詞）；煩惱＝不開心的事；驅散＝趕走、使消失。"
+      },
+      my: {
+        s: "မင်းက ငါ့စိုးရိမ်ပူပန်မှုတွေကို မောင်းထုတ်ပေးတယ်",
+        r: "min-ga nga so-yein pu-pan-hmu-tway go maung-htout pay-de",
+        e: "把＝處置句型（把＋受詞＋動詞）；煩惱＝不開心的事；驅散＝趕走、使消失。"
+      },
+      ko: {
+        s: "너는 내 모든 걱정을 날려 보내",
+        r: "neoneun nae modeun geokjeongeul nallyeo bonae",
+        e: "把＝處置句型（把＋受詞＋動詞）；煩惱＝不開心的事；驅散＝趕走、使消失。"
+      },
+      ja: {
+        s: "あなたは私の悩みを全部吹き飛ばしてくれる",
+        r: "anata wa watashi no nayami o zenbu fukitobashite kureru",
+        e: "把＝處置句型（把＋受詞＋動詞）；煩惱＝不開心的事；驅散＝趕走、使消失。"
+      },
+      si: {
+        s: "ඔබ මගේ සියලු කරදර දුරු කරනවා",
+        r: "oba magē siyalu karadara duru karanavā",
+        e: "把＝處置句型（把＋受詞＋動詞）；煩惱＝不開心的事；驅散＝趕走、使消失。"
+      },
+      fa: {
+        s: "تو همه نگرانی‌هایم را از بین می‌بری",
+        r: "to hame negarānihāyam rā az beyn mibari",
+        e: "把＝處置句型（把＋受詞＋動詞）；煩惱＝不開心的事；驅散＝趕走、使消失。"
+      }
+    },
+    {
+      hi: {
+        s: "तुम्हारी भौंहों के बीच",
+        r: "tumhārī bhauṅhoṅ ke bīc",
+        e: "眉宇＝眉毛與眼睛之間的部位；之間＝中間。"
+      },
+      en: {
+        s: "Between your brows",
+        r: "",
+        e: "眉宇＝眉毛與眼睛之間的部位；之間＝中間。"
+      },
+      ta: {
+        s: "உன் புருவங்களுக்கு இடையே",
+        r: "uṉ puruvaṅkaḷukku iṭaiyē",
+        e: "眉宇＝眉毛與眼睛之間的部位；之間＝中間。"
+      },
+      th: {
+        s: "ระหว่างคิ้วของเธอ",
+        r: "rawang khiu khong thoe",
+        e: "眉宇＝眉毛與眼睛之間的部位；之間＝中間。"
+      },
+      km: {
+        s: "នៅចន្លោះចិញ្ចើមរបស់អ្នក",
+        r: "nov chonloh chenhchem robsa anak",
+        e: "眉宇＝眉毛與眼睛之間的部位；之間＝中間。"
+      },
+      vi: {
+        s: "Giữa đôi lông mày của bạn",
+        r: "",
+        e: "眉宇＝眉毛與眼睛之間的部位；之間＝中間。"
+      },
+      id: {
+        s: "Di antara alismu",
+        r: "",
+        e: "眉宇＝眉毛與眼睛之間的部位；之間＝中間。"
+      },
+      ne: {
+        s: "तिम्रा आँखीभौंको बीचमा",
+        r: "timrā āṅkhībhaunko bīcmā",
+        e: "眉宇＝眉毛與眼睛之間的部位；之間＝中間。"
+      },
+      bn: {
+        s: "তোমার ভ্রূর মাঝে",
+        r: "tomār bhrūr mājhe",
+        e: "眉宇＝眉毛與眼睛之間的部位；之間＝中間。"
+      },
+      es: {
+        s: "Entre tus cejas",
+        r: "",
+        e: "眉宇＝眉毛與眼睛之間的部位；之間＝中間。"
+      },
+      de: {
+        s: "Zwischen deinen Augenbrauen",
+        r: "",
+        e: "眉宇＝眉毛與眼睛之間的部位；之間＝中間。"
+      },
+      my: {
+        s: "မင်းမျက်ခုံးနှစ်ခုကြားမှာ",
+        r: "min myet-khon hna-khu kyar hma",
+        e: "眉宇＝眉毛與眼睛之間的部位；之間＝中間。"
+      },
+      ko: {
+        s: "너의 눈썹 사이에는",
+        r: "neoui nunsseop saieneun",
+        e: "眉宇＝眉毛與眼睛之間的部位；之間＝中間。"
+      },
+      ja: {
+        s: "あなたの眉間には",
+        r: "anata no miken ni wa",
+        e: "眉宇＝眉毛與眼睛之間的部位；之間＝中間。"
+      },
+      si: {
+        s: "ඔබේ බැම අතර",
+        r: "obē bæma atara",
+        e: "眉宇＝眉毛與眼睛之間的部位；之間＝中間。"
+      },
+      fa: {
+        s: "میان ابروهایت",
+        r: "miyān-e abruhāyat",
+        e: "眉宇＝眉毛與眼睛之間的部位；之間＝中間。"
+      }
+    },
+    {
+      hi: {
+        s: "भरपूर प्यार झलकता है",
+        r: "bharpūr pyār jhalaktā hai",
+        e: "流露＝自然地表現出來；愛心＝關愛別人的心；滿滿＝非常多。"
+      },
+      en: {
+        s: "There shines a heart full of love",
+        r: "",
+        e: "流露＝自然地表現出來；愛心＝關愛別人的心；滿滿＝非常多。"
+      },
+      ta: {
+        s: "அன்பு நிறைந்து வழிகிறது",
+        r: "aṉpu niṟaintu vaḻikiṟatu",
+        e: "流露＝自然地表現出來；愛心＝關愛別人的心；滿滿＝非常多。"
+      },
+      th: {
+        s: "ความรักเอ่อล้นออกมา",
+        r: "khwam rak oe-lon ok ma",
+        e: "流露＝自然地表現出來；愛心＝關愛別人的心；滿滿＝非常多。"
+      },
+      km: {
+        s: "បង្ហាញក្តីស្រឡាញ់ពេញបេះដូង",
+        r: "bangheanh kdei sralanh penh behdong",
+        e: "流露＝自然地表現出來；愛心＝關愛別人的心；滿滿＝非常多。"
+      },
+      vi: {
+        s: "Tràn đầy tình yêu thương",
+        r: "",
+        e: "流露＝自然地表現出來；愛心＝關愛別人的心；滿滿＝非常多。"
+      },
+      id: {
+        s: "Terpancar cinta yang melimpah",
+        r: "",
+        e: "流露＝自然地表現出來；愛心＝關愛別人的心；滿滿＝非常多。"
+      },
+      ne: {
+        s: "माया भरिपूर्ण झल्कन्छ",
+        r: "māyā bharipūrṇa jhalkancha",
+        e: "流露＝自然地表現出來；愛心＝關愛別人的心；滿滿＝非常多。"
+      },
+      bn: {
+        s: "ভালোবাসা উপচে পড়ে",
+        r: "bhālobāsā upce paṛe",
+        e: "流露＝自然地表現出來；愛心＝關愛別人的心；滿滿＝非常多。"
+      },
+      es: {
+        s: "Se desborda un amor inmenso",
+        r: "",
+        e: "流露＝自然地表現出來；愛心＝關愛別人的心；滿滿＝非常多。"
+      },
+      de: {
+        s: "Dort strahlt überströmende Liebe",
+        r: "",
+        e: "流露＝自然地表現出來；愛心＝關愛別人的心；滿滿＝非常多。"
+      },
+      my: {
+        s: "အချစ်တွေ အပြည့်အဝ ပေါ်လွင်နေတယ်",
+        r: "a-chit-tway a-pyayt-a-wa paw-lwin nay-de",
+        e: "流露＝自然地表現出來；愛心＝關愛別人的心；滿滿＝非常多。"
+      },
+      ko: {
+        s: "사랑이 가득 넘쳐흘러",
+        r: "sarangi gadeuk neomchyeoheulleo",
+        e: "流露＝自然地表現出來；愛心＝關愛別人的心；滿滿＝非常多。"
+      },
+      ja: {
+        s: "愛情があふれ出ている",
+        r: "aijō ga afuredete iru",
+        e: "流露＝自然地表現出來；愛心＝關愛別人的心；滿滿＝非常多。"
+      },
+      si: {
+        s: "ආදරය පිරි ඉතිරී යනවා",
+        r: "ādaraya piri itirī yanavā",
+        e: "流露＝自然地表現出來；愛心＝關愛別人的心；滿滿＝非常多。"
+      },
+      fa: {
+        s: "عشقی سرشار از آن پیداست",
+        r: "eshghi-ye sarshār az ān peydāst",
+        e: "流露＝自然地表現出來；愛心＝關愛別人的心；滿滿＝非常多。"
+      }
+    },
+    {
+      hi: {
+        s: "तुम्हारी आँखों के अंदर",
+        r: "tumhārī āṅkhoṅ ke aṅdar",
+        e: "裏面＝內部（裏為「裡」的異體字）；眼睛＝看東西的器官。"
+      },
+      en: {
+        s: "Deep inside your eyes",
+        r: "",
+        e: "裏面＝內部（裏為「裡」的異體字）；眼睛＝看東西的器官。"
+      },
+      ta: {
+        s: "உன் கண்களுக்குள்",
+        r: "uṉ kaṇkaḷukkuḷ",
+        e: "裏面＝內部（裏為「裡」的異體字）；眼睛＝看東西的器官。"
+      },
+      th: {
+        s: "ในดวงตาของเธอ",
+        r: "nai duang ta khong thoe",
+        e: "裏面＝內部（裏為「裡」的異體字）；眼睛＝看東西的器官。"
+      },
+      km: {
+        s: "នៅក្នុងភ្នែករបស់អ្នក",
+        r: "knong phnek robsa anak",
+        e: "裏面＝內部（裏為「裡」的異體字）；眼睛＝看東西的器官。"
+      },
+      vi: {
+        s: "Trong đôi mắt của bạn",
+        r: "",
+        e: "裏面＝內部（裏為「裡」的異體字）；眼睛＝看東西的器官。"
+      },
+      id: {
+        s: "Di dalam matamu",
+        r: "",
+        e: "裏面＝內部（裏為「裡」的異體字）；眼睛＝看東西的器官。"
+      },
+      ne: {
+        s: "तिम्रा आँखाभित्र",
+        r: "timrā āṅkhābhitra",
+        e: "裏面＝內部（裏為「裡」的異體字）；眼睛＝看東西的器官。"
+      },
+      bn: {
+        s: "তোমার চোখের ভেতরে",
+        r: "tomār cokher bhetare",
+        e: "裏面＝內部（裏為「裡」的異體字）；眼睛＝看東西的器官。"
+      },
+      es: {
+        s: "Dentro de tus ojos",
+        r: "",
+        e: "裏面＝內部（裏為「裡」的異體字）；眼睛＝看東西的器官。"
+      },
+      de: {
+        s: "In deinen Augen",
+        r: "",
+        e: "裏面＝內部（裏為「裡」的異體字）；眼睛＝看東西的器官。"
+      },
+      my: {
+        s: "မင်းမျက်လုံးထဲမှာ",
+        r: "min myet-lone hte hma",
+        e: "裏面＝內部（裏為「裡」的異體字）；眼睛＝看東西的器官。"
+      },
+      ko: {
+        s: "너의 눈 속에는",
+        r: "neoui nun soge-neun",
+        e: "裏面＝內部（裏為「裡」的異體字）；眼睛＝看東西的器官。"
+      },
+      ja: {
+        s: "あなたの瞳の奥には",
+        r: "anata no hitomi no oku ni wa",
+        e: "裏面＝內部（裏為「裡」的異體字）；眼睛＝看東西的器官。"
+      },
+      si: {
+        s: "ඔබේ ඇස් තුළ",
+        r: "obē æs tuḷa",
+        e: "裏面＝內部（裏為「裡」的異體字）；眼睛＝看東西的器官。"
+      },
+      fa: {
+        s: "در چشمانت",
+        r: "dar cheshmānat",
+        e: "裏面＝內部（裏為「裡」的異體字）；眼睛＝看東西的器官。"
+      }
+    },
+    {
+      hi: {
+        s: "सबसे सच्चा स्नेह है",
+        r: "sabse saccā sneh hai",
+        e: "眷戀＝深深的愛與不捨；最真＝最真誠。"
+      },
+      en: {
+        s: "Lies the truest, deepest affection",
+        r: "",
+        e: "眷戀＝深深的愛與不捨；最真＝最真誠。"
+      },
+      ta: {
+        s: "மிக உண்மையான பாசம் இருக்கிறது",
+        r: "mika uṇmaiyāṉa pācam irukkiṟatu",
+        e: "眷戀＝深深的愛與不捨；最真＝最真誠。"
+      },
+      th: {
+        s: "มีความผูกพันที่จริงแท้ที่สุด",
+        r: "mi khwam phuk-phan thi ching thae thi sut",
+        e: "眷戀＝深深的愛與不捨；最真＝最真誠。"
+      },
+      km: {
+        s: "មានក្តីស្រឡាញ់ដ៏ស្មោះបំផុត",
+        r: "mean kdei sralanh da smoh bomphot",
+        e: "眷戀＝深深的愛與不捨；最真＝最真誠。"
+      },
+      vi: {
+        s: "Có tình cảm chân thành nhất",
+        r: "",
+        e: "眷戀＝深深的愛與不捨；最真＝最真誠。"
+      },
+      id: {
+        s: "Ada kasih sayang yang paling tulus",
+        r: "",
+        e: "眷戀＝深深的愛與不捨；最真＝最真誠。"
+      },
+      ne: {
+        s: "सबैभन्दा साँचो माया छ",
+        r: "sabaibhandā sāṅco māyā cha",
+        e: "眷戀＝深深的愛與不捨；最真＝最真誠。"
+      },
+      bn: {
+        s: "আছে সবচেয়ে সত্যিকারের মায়া",
+        r: "āche sabceẏe satyikārer māẏā",
+        e: "眷戀＝深深的愛與不捨；最真＝最真誠。"
+      },
+      es: {
+        s: "Está el cariño más sincero",
+        r: "",
+        e: "眷戀＝深深的愛與不捨；最真＝最真誠。"
+      },
+      de: {
+        s: "Wohnt die ehrlichste Zuneigung",
+        r: "",
+        e: "眷戀＝深深的愛與不捨；最真＝最真誠。"
+      },
+      my: {
+        s: "အစစ်မှန်ဆုံး ချစ်ခင်တွယ်တာမှု ရှိတယ်",
+        r: "a-sit-hman-sone chit-khin twe-ta-hmu shi-de",
+        e: "眷戀＝深深的愛與不捨；最真＝最真誠。"
+      },
+      ko: {
+        s: "가장 진실한 그리움이 있어",
+        r: "gajang jinsilhan geuriumi isseo",
+        e: "眷戀＝深深的愛與不捨；最真＝最真誠。"
+      },
+      ja: {
+        s: "一番本当の慕わしさがある",
+        r: "ichiban hontō no shitawashisa ga aru",
+        e: "眷戀＝深深的愛與不捨；最真＝最真誠。"
+      },
+      si: {
+        s: "ඇත්තේ ඉතාම සත්‍යವಾದ ආදර හැඟීමයි",
+        r: "ættē itāma satyavāda ādara hæṅgīmayi",
+        e: "眷戀＝深深的愛與不捨；最真＝最真誠。"
+      },
+      fa: {
+        s: "راستین‌ترین دلبستگی آنجاست",
+        r: "rāstintarin delbastegi ānjāst",
+        e: "眷戀＝深深的愛與不捨；最真＝最真誠。"
+      }
+    },
+    {
+      hi: {
+        s: "तुमसे प्यार है ना",
+        r: "tumse pyār hai nā",
+        e: "喲＝語氣詞，表示親暱、撒嬌的語氣。"
+      },
+      en: {
+        s: "I love you, oh yes I do",
+        r: "",
+        e: "喲＝語氣詞，表示親暱、撒嬌的語氣。"
+      },
+      ta: {
+        s: "உன்னை நேசிக்கிறேன் அன்பே",
+        r: "uṉṉai nēcikkiṟēṉ aṉpē",
+        e: "喲＝語氣詞，表示親暱、撒嬌的語氣。"
+      },
+      th: {
+        s: "รักเธอจังเลย",
+        r: "rak thoe chang loei",
+        e: "喲＝語氣詞，表示親暱、撒嬌的語氣。"
+      },
+      km: {
+        s: "ស្រឡាញ់អ្នកណាស់",
+        r: "sralanh anak nas",
+        e: "喲＝語氣詞，表示親暱、撒嬌的語氣。"
+      },
+      vi: {
+        s: "Yêu bạn lắm đó",
+        r: "",
+        e: "喲＝語氣詞，表示親暱、撒嬌的語氣。"
+      },
+      id: {
+        s: "Aku sayang kamu, lho",
+        r: "",
+        e: "喲＝語氣詞，表示親暱、撒嬌的語氣。"
+      },
+      ne: {
+        s: "तिमीलाई माया गर्छु नि",
+        r: "timīlāī māyā garchu ni",
+        e: "喲＝語氣詞，表示親暱、撒嬌的語氣。"
+      },
+      bn: {
+        s: "তোমায় ভালোবাসি গো",
+        r: "tomāẏ bhālobāsi go",
+        e: "喲＝語氣詞，表示親暱、撒嬌的語氣。"
+      },
+      es: {
+        s: "Te quiero, ¡sí, te quiero!",
+        r: "",
+        e: "喲＝語氣詞，表示親暱、撒嬌的語氣。"
+      },
+      de: {
+        s: "Ich hab dich lieb, ja wirklich",
+        r: "",
+        e: "喲＝語氣詞，表示親暱、撒嬌的語氣。"
+      },
+      my: {
+        s: "မင်းကို ချစ်တယ်နော်",
+        r: "min go chit-te naw",
+        e: "喲＝語氣詞，表示親暱、撒嬌的語氣。"
+      },
+      ko: {
+        s: "사랑해요, 정말 사랑해",
+        r: "saranghaeyo, jeongmal saranghae",
+        e: "喲＝語氣詞，表示親暱、撒嬌的語氣。"
+      },
+      ja: {
+        s: "大好きだよ",
+        r: "daisuki da yo",
+        e: "喲＝語氣詞，表示親暱、撒嬌的語氣。"
+      },
+      si: {
+        s: "මම ඔබට ආදරෙයි නේ",
+        r: "mama obaṭa ādarei nē",
+        e: "喲＝語氣詞，表示親暱、撒嬌的語氣。"
+      },
+      fa: {
+        s: "دوستت دارم، آره دوستت دارم",
+        r: "dustat dāram, āre dustat dāram",
+        e: "喲＝語氣詞，表示親暱、撒嬌的語氣。"
+      }
+    },
+    {
+      hi: {
+        s: "कितना भी प्यार करूँ, कम ही लगता है",
+        r: "kitnā bhī pyār karūṅ, kam hī lagtā hai",
+        e: "怎麽…都＝無論怎樣；不夠＝不足、還想要更多。"
+      },
+      en: {
+        s: "No matter how much I love you, it's never enough",
+        r: "",
+        e: "怎麽…都＝無論怎樣；不夠＝不足、還想要更多。"
+      },
+      ta: {
+        s: "எவ்வளவு நேசித்தாலும் போதாது",
+        r: "evvaḷavu nēcittālum pōtātu",
+        e: "怎麽…都＝無論怎樣；不夠＝不足、還想要更多。"
+      },
+      th: {
+        s: "รักเธอเท่าไรก็ไม่พอ",
+        r: "rak thoe thao-rai ko mai pho",
+        e: "怎麽…都＝無論怎樣；不夠＝不足、還想要更多。"
+      },
+      km: {
+        s: "ស្រឡាញ់អ្នកប៉ុនណាក៏មិនគ្រប់គ្រាន់",
+        r: "sralanh anak ponna ka min krobkran",
+        e: "怎麽…都＝無論怎樣；不夠＝不足、還想要更多。"
+      },
+      vi: {
+        s: "Yêu bạn bao nhiêu cũng không đủ",
+        r: "",
+        e: "怎麽…都＝無論怎樣；不夠＝不足、還想要更多。"
+      },
+      id: {
+        s: "Sebesar apa pun sayangku, rasanya tak pernah cukup",
+        r: "",
+        e: "怎麽…都＝無論怎樣；不夠＝不足、還想要更多。"
+      },
+      ne: {
+        s: "जति माया गरे पनि पुग्दैन",
+        r: "jati māyā gare pani pugdaina",
+        e: "怎麽…都＝無論怎樣；不夠＝不足、還想要更多。"
+      },
+      bn: {
+        s: "যতই ভালোবাসি, তবু কম মনে হয়",
+        r: "yatai bhālobāsi, tabu kam mane haẏ",
+        e: "怎麽…都＝無論怎樣；不夠＝不足、還想要更多。"
+      },
+      es: {
+        s: "Por mucho que te quiera, nunca es suficiente",
+        r: "",
+        e: "怎麽…都＝無論怎樣；不夠＝不足、還想要更多。"
+      },
+      de: {
+        s: "Wie sehr ich dich auch liebe, es ist nie genug",
+        r: "",
+        e: "怎麽…都＝無論怎樣；不夠＝不足、還想要更多。"
+      },
+      my: {
+        s: "ဘယ်လောက်ချစ်ချစ် မလုံလောက်ဘူး",
+        r: "be-louk chit-chit ma-lone-louk-bu",
+        e: "怎麽…都＝無論怎樣；不夠＝不足、還想要更多。"
+      },
+      ko: {
+        s: "아무리 사랑해도 부족해",
+        r: "amuri saranghaedo bujokhae",
+        e: "怎麽…都＝無論怎樣；不夠＝不足、還想要更多。"
+      },
+      ja: {
+        s: "どんなに愛してもまだ足りない",
+        r: "donna ni aishite mo mada tarinai",
+        e: "怎麽…都＝無論怎樣；不夠＝不足、還想要更多。"
+      },
+      si: {
+        s: "කොපමණ ආදරය කළත් මදි",
+        r: "kopamaṇa ādaraya kaḷāt madi",
+        e: "怎麽…都＝無論怎樣；不夠＝不足、還想要更多。"
+      },
+      fa: {
+        s: "هر چقدر دوستت داشته باشم باز هم کم است",
+        r: "har cheghadr dustat dāshte bāsham bāz ham kam ast",
+        e: "怎麽…都＝無論怎樣；不夠＝不足、還想要更多。"
+      }
+    },
+    {
+      hi: {
+        s: "तुम मेरा पूरा ब्रह्मांड हो",
+        r: "tum merā pūrā brahmāṇḍ ho",
+        e: "全宇宙＝整個世界、我的一切。"
+      },
+      en: {
+        s: "You are my whole universe",
+        r: "",
+        e: "全宇宙＝整個世界、我的一切。"
+      },
+      ta: {
+        s: "நீதான் என் முழு பிரபஞ்சம்",
+        r: "nītāṉ eṉ muḻu pirapañcam",
+        e: "全宇宙＝整個世界、我的一切。"
+      },
+      th: {
+        s: "เธอคือจักรวาลทั้งหมดของฉัน",
+        r: "thoe khue chakkrawan thang-mot khong chan",
+        e: "全宇宙＝整個世界、我的一切。"
+      },
+      km: {
+        s: "អ្នកគឺជាចក្រវាលទាំងមូលរបស់ខ្ញុំ",
+        r: "anak kuchea chakravan teangmoul robsa khnhom",
+        e: "全宇宙＝整個世界、我的一切。"
+      },
+      vi: {
+        s: "Bạn là cả vũ trụ của tôi",
+        r: "",
+        e: "全宇宙＝整個世界、我的一切。"
+      },
+      id: {
+        s: "Kamu adalah seluruh semestaku",
+        r: "",
+        e: "全宇宙＝整個世界、我的一切。"
+      },
+      ne: {
+        s: "तिमी मेरो सारा ब्रह्माण्ड हौ",
+        r: "timī mero sārā brahmāṇḍa hau",
+        e: "全宇宙＝整個世界、我的一切。"
+      },
+      bn: {
+        s: "তুমি আমার সারা বিশ্বব্রহ্মাণ্ড",
+        r: "tumi āmār sārā biśvabrahmāṇḍa",
+        e: "全宇宙＝整個世界、我的一切。"
+      },
+      es: {
+        s: "Eres todo mi universo",
+        r: "",
+        e: "全宇宙＝整個世界、我的一切。"
+      },
+      de: {
+        s: "Du bist mein ganzes Universum",
+        r: "",
+        e: "全宇宙＝整個世界、我的一切。"
+      },
+      my: {
+        s: "မင်းက ငါ့ရဲ့စကြဝဠာတစ်ခုလုံးပဲ",
+        r: "min ga nga ye sakya-wa-la ta-khu-lone pe",
+        e: "全宇宙＝整個世界、我的一切。"
+      },
+      ko: {
+        s: "너는 나의 온 우주야",
+        r: "neoneun naui on ujuya",
+        e: "全宇宙＝整個世界、我的一切。"
+      },
+      ja: {
+        s: "あなたは私の全宇宙",
+        r: "anata wa watashi no zen uchū",
+        e: "全宇宙＝整個世界、我的一切。"
+      },
+      si: {
+        s: "ඔබයි මගේ මුළු විශ්වයම",
+        r: "obayi magē muḷu viśvayama",
+        e: "全宇宙＝整個世界、我的一切。"
+      },
+      fa: {
+        s: "تو همه کائنات منی",
+        r: "to hame kāenāt-e mani",
+        e: "全宇宙＝整個世界、我的一切。"
+      }
+    },
+    {
+      hi: {
+        s: "छोटा हाथ बड़े हाथ को थामे",
+        r: "choṭā hāth baṛe hāth ko thāme",
+        e: "牽＝拉著、握著；小手牽大手＝小孩的手拉著大人的手。"
+      },
+      en: {
+        s: "Little hands holding big hands",
+        r: "",
+        e: "牽＝拉著、握著；小手牽大手＝小孩的手拉著大人的手。"
+      },
+      ta: {
+        s: "சின்னக் கை பெரிய கையைப் பிடித்து",
+        r: "ciṉṉak kai periya kaiyaip piṭittu",
+        e: "牽＝拉著、握著；小手牽大手＝小孩的手拉著大人的手。"
+      },
+      th: {
+        s: "มือเล็ก ๆ จับมือใหญ่ไว้",
+        r: "mue lek lek chap mue yai wai",
+        e: "牽＝拉著、握著；小手牽大手＝小孩的手拉著大人的手。"
+      },
+      km: {
+        s: "ដៃតូចកាន់ដៃធំ",
+        r: "dai toch kan dai thom",
+        e: "牽＝拉著、握著；小手牽大手＝小孩的手拉著大人的手。"
+      },
+      vi: {
+        s: "Bàn tay nhỏ nắm bàn tay lớn",
+        r: "",
+        e: "牽＝拉著、握著；小手牽大手＝小孩的手拉著大人的手。"
+      },
+      id: {
+        s: "Tangan kecil menggenggam tangan besar",
+        r: "",
+        e: "牽＝拉著、握著；小手牽大手＝小孩的手拉著大人的手。"
+      },
+      ne: {
+        s: "सानो हातले ठूलो हात समातेको",
+        r: "sāno hātle ṭhūlo hāt samāteko",
+        e: "牽＝拉著、握著；小手牽大手＝小孩的手拉著大人的手。"
+      },
+      bn: {
+        s: "ছোট্ট হাতে বড় হাত ধরে",
+        r: "choṭṭa hāte baṛa hāt dhare",
+        e: "牽＝拉著、握著；小手牽大手＝小孩的手拉著大人的手。"
+      },
+      es: {
+        s: "Manitas agarradas de manos grandes",
+        r: "",
+        e: "牽＝拉著、握著；小手牽大手＝小孩的手拉著大人的手。"
+      },
+      de: {
+        s: "Kleine Hände halten große Hände",
+        r: "",
+        e: "牽＝拉著、握著；小手牽大手＝小孩的手拉著大人的手。"
+      },
+      my: {
+        s: "လက်သေးသေးလေးက လက်ကြီးကို ဆုပ်ကိုင်ထား",
+        r: "let-thay-thay lay ga let-gyi go hsout-kain htar",
+        e: "牽＝拉著、握著；小手牽大手＝小孩的手拉著大人的手。"
+      },
+      ko: {
+        s: "작은 손이 큰 손을 잡고",
+        r: "jageun soni keun soneul japgo",
+        e: "牽＝拉著、握著；小手牽大手＝小孩的手拉著大人的手。"
+      },
+      ja: {
+        s: "小さな手が大きな手を握って",
+        r: "chiisana te ga ōkina te o nigitte",
+        e: "牽＝拉著、握著；小手牽大手＝小孩的手拉著大人的手。"
+      },
+      si: {
+        s: "කුඩා අතින් ලොකු අත අල්ලාගෙන",
+        r: "kuḍā atin loku ata allāgena",
+        e: "牽＝拉著、握著；小手牽大手＝小孩的手拉著大人的手。"
+      },
+      fa: {
+        s: "دست‌های کوچک، دست‌های بزرگ را گرفته‌اند",
+        r: "dasthā-ye kuchek, dasthā-ye bozorg rā gerefteand",
+        e: "牽＝拉著、握著；小手牽大手＝小孩的手拉著大人的手。"
+      }
+    },
+    {
+      hi: {
+        s: "तुम्हारे लिए एक गीत गाने आया हूँ",
+        r: "tumhāre lie ek gīt gāne āyā hūṅ",
+        e: "爲＝為了（爲是「為」的異體字）；首＝歌曲的量詞，一首歌。"
+      },
+      en: {
+        s: "I sing a song just for you",
+        r: "",
+        e: "爲＝為了（爲是「為」的異體字）；首＝歌曲的量詞，一首歌。"
+      },
+      ta: {
+        s: "உனக்காக ஒரு பாடல் பாட வந்தேன்",
+        r: "uṉakkāka oru pāṭal pāṭa vantēṉ",
+        e: "爲＝為了（爲是「為」的異體字）；首＝歌曲的量詞，一首歌。"
+      },
+      th: {
+        s: "มาร้องเพลงหนึ่งเพลงให้เธอฟัง",
+        r: "ma rong phleng nueng phleng hai thoe fang",
+        e: "爲＝為了（爲是「為」的異體字）；首＝歌曲的量詞，一首歌。"
+      },
+      km: {
+        s: "មកច្រៀងចម្រៀងមួយបទជូនអ្នក",
+        r: "mok chrieng chamrieng muoy bot chun anak",
+        e: "爲＝為了（爲是「為」的異體字）；首＝歌曲的量詞，一首歌。"
+      },
+      vi: {
+        s: "Đến hát tặng bạn một bài ca",
+        r: "",
+        e: "爲＝為了（爲是「為」的異體字）；首＝歌曲的量詞，一首歌。"
+      },
+      id: {
+        s: "Datang menyanyikan sebuah lagu untukmu",
+        r: "",
+        e: "爲＝為了（爲是「為」的異體字）；首＝歌曲的量詞，一首歌。"
+      },
+      ne: {
+        s: "तिम्रो लागि एउटा गीत गाउन आएको छु",
+        r: "timro lāgi euṭā gīt gāuna āeko chu",
+        e: "爲＝為了（爲是「為」的異體字）；首＝歌曲的量詞，一首歌。"
+      },
+      bn: {
+        s: "তোমার জন্যে একটি গান গাইতে এসেছি",
+        r: "tomār janye ekṭi gān gāite esechi",
+        e: "爲＝為了（爲是「為」的異體字）；首＝歌曲的量詞，一首歌。"
+      },
+      es: {
+        s: "Vengo a cantarte una canción",
+        r: "",
+        e: "爲＝為了（爲是「為」的異體字）；首＝歌曲的量詞，一首歌。"
+      },
+      de: {
+        s: "Ich singe dir ein Lied",
+        r: "",
+        e: "爲＝為了（爲是「為」的異體字）；首＝歌曲的量詞，一首歌。"
+      },
+      my: {
+        s: "မင်းအတွက် သီချင်းတစ်ပုဒ် ဆိုပြဖို့လာတာ",
+        r: "min a-twet thi-chin ta-pout hso-pya pho la-da",
+        e: "爲＝為了（爲是「為」的異體字）；首＝歌曲的量詞，一首歌。"
+      },
+      ko: {
+        s: "너를 위해 노래 한 곡 부르러 왔어",
+        r: "neoreul wihae norae han gok bureureo wasseo",
+        e: "爲＝為了（爲是「為」的異體字）；首＝歌曲的量詞，一首歌。"
+      },
+      ja: {
+        s: "あなたのために一曲歌いに来たよ",
+        r: "anata no tame ni ikkyoku utai ni kita yo",
+        e: "爲＝為了（爲是「為」的異體字）；首＝歌曲的量詞，一首歌。"
+      },
+      si: {
+        s: "ඔබට ගීතයක් ගායනා කරන්න ආවා",
+        r: "obaṭa gītayak gāyanā karanna āvā",
+        e: "爲＝為了（爲是「為」的異體字）；首＝歌曲的量詞，一首歌。"
+      },
+      fa: {
+        s: "آمده‌ام برایت یک ترانه بخوانم",
+        r: "āmadeam barāyat yek tarāne bekhānam",
+        e: "爲＝為了（爲是「為」的異體字）；首＝歌曲的量詞，一首歌。"
+      }
+    },
+    {
+      hi: {
+        s: "जाना चाहता हूँ नीले समुद्र और नीले आकाश की ओर",
+        r: "jānā cāhtā hūṅ nīle samudra aur nīle ākāś kī or",
+        e: "碧海＝青綠色的海；藍天＝藍色的天空。"
+      },
+      en: {
+        s: "I want to go to the azure sea and blue sky",
+        r: "",
+        e: "碧海＝青綠色的海；藍天＝藍色的天空。"
+      },
+      ta: {
+        s: "நீலக் கடலுக்கும் நீல வானத்துக்கும் போக ஆசை",
+        r: "nīlak kaṭalukkum nīla vāṉattukkum pōka ācai",
+        e: "碧海＝青綠色的海；藍天＝藍色的天空。"
+      },
+      th: {
+        s: "อยากไปทะเลสีครามกับท้องฟ้าสีฟ้า",
+        r: "yak pai thale si khram kap thong fa si fa",
+        e: "碧海＝青綠色的海；藍天＝藍色的天空。"
+      },
+      km: {
+        s: "ចង់ទៅសមុទ្រខៀវស្រងាត់ និងមេឃពណ៌ខៀវ",
+        r: "chong tov samut khiev srangat ning mek por khiev",
+        e: "碧海＝青綠色的海；藍天＝藍色的天空。"
+      },
+      vi: {
+        s: "Muốn đến biển xanh và bầu trời xanh",
+        r: "",
+        e: "碧海＝青綠色的海；藍天＝藍色的天空。"
+      },
+      id: {
+        s: "Ingin pergi ke laut biru dan langit biru",
+        r: "",
+        e: "碧海＝青綠色的海；藍天＝藍色的天空。"
+      },
+      ne: {
+        s: "नीलो समुद्र र नीलो आकाशतिर जान मन छ",
+        r: "nīlo samudra ra nīlo ākāśtira jāna man cha",
+        e: "碧海＝青綠色的海；藍天＝藍色的天空。"
+      },
+      bn: {
+        s: "যেতে চাই নীল সাগরে আর নীল আকাশে",
+        r: "yete cāi nīl sāgare ār nīl ākāśe",
+        e: "碧海＝青綠色的海；藍天＝藍色的天空。"
+      },
+      es: {
+        s: "Quiero ir al mar azul y al cielo azul",
+        r: "",
+        e: "碧海＝青綠色的海；藍天＝藍色的天空。"
+      },
+      de: {
+        s: "Ich will ans blaue Meer und zum blauen Himmel",
+        r: "",
+        e: "碧海＝青綠色的海；藍天＝藍色的天空。"
+      },
+      my: {
+        s: "ပင်လယ်ပြာနဲ့ ကောင်းကင်ပြာဆီ သွားချင်တယ်",
+        r: "pin-le pya ne kaung-kin pya hsi thwar-chin-de",
+        e: "碧海＝青綠色的海；藍天＝藍色的天空。"
+      },
+      ko: {
+        s: "푸른 바다와 푸른 하늘에 가고 싶어",
+        r: "pureun badawa pureun haneure gago sipeo",
+        e: "碧海＝青綠色的海；藍天＝藍色的天空。"
+      },
+      ja: {
+        s: "碧い海と青い空へ行きたい",
+        r: "aoi umi to aoi sora e ikitai",
+        e: "碧海＝青綠色的海；藍天＝藍色的天空。"
+      },
+      si: {
+        s: "නිල් සයුරට හා නිල් අහසට යන්න ආසයි",
+        r: "nil sayuraṭa hā nil ahasaṭa yanna āsayi",
+        e: "碧海＝青綠色的海；藍天＝藍色的天空。"
+      },
+      fa: {
+        s: "دلم می‌خواهد به دریای آبی و آسمان آبی بروم",
+        r: "delam mikhāhad be daryā-ye ābi o āsemān-e ābi beravam",
+        e: "碧海＝青綠色的海；藍天＝藍色的天空。"
+      }
+    },
+    {
+      hi: {
+        s: "सुनहरे रेतीले किनारे जाना चाहता हूँ",
+        r: "sunehre retīle kināre jānā cāhtā hūṅ",
+        e: "金色＝像黃金一樣的顏色；沙灘＝海邊的沙地。"
+      },
+      en: {
+        s: "I want to go to the golden sandy beach",
+        r: "",
+        e: "金色＝像黃金一樣的顏色；沙灘＝海邊的沙地。"
+      },
+      ta: {
+        s: "தங்க நிற மணற்கரைக்குப் போக ஆசை",
+        r: "taṅka niṟa maṇaṟkaraikkup pōka ācai",
+        e: "金色＝像黃金一樣的顏色；沙灘＝海邊的沙地。"
+      },
+      th: {
+        s: "อยากไปชายหาดทรายสีทอง",
+        r: "yak pai chai-hat sai si thong",
+        e: "金色＝像黃金一樣的顏色；沙灘＝海邊的沙地。"
+      },
+      km: {
+        s: "ចង់ទៅឆ្នេរខ្សាច់ពណ៌មាស",
+        r: "chong tov chhner khsach por meas",
+        e: "金色＝像黃金一樣的顏色；沙灘＝海邊的沙地。"
+      },
+      vi: {
+        s: "Muốn đến bãi cát vàng",
+        r: "",
+        e: "金色＝像黃金一樣的顏色；沙灘＝海邊的沙地。"
+      },
+      id: {
+        s: "Ingin pergi ke pantai pasir keemasan",
+        r: "",
+        e: "金色＝像黃金一樣的顏色；沙灘＝海邊的沙地。"
+      },
+      ne: {
+        s: "सुनौलो बालुवाको किनारमा जान मन छ",
+        r: "sunaulo bāruwāko kinārmā jāna man cha",
+        e: "金色＝像黃金一樣的顏色；沙灘＝海邊的沙地。"
+      },
+      bn: {
+        s: "যেতে চাই সোনালি বালুকাবেলায়",
+        r: "yete cāi sonāli bālukābelāẏ",
+        e: "金色＝像黃金一樣的顏色；沙灘＝海邊的沙地。"
+      },
+      es: {
+        s: "Quiero ir a la playa de arena dorada",
+        r: "",
+        e: "金色＝像黃金一樣的顏色；沙灘＝海邊的沙地。"
+      },
+      de: {
+        s: "Ich will an den goldenen Sandstrand",
+        r: "",
+        e: "金色＝像黃金一樣的顏色；沙灘＝海邊的沙地。"
+      },
+      my: {
+        s: "ရွှေရောင်သဲသောင်ပြင်ဆီ သွားချင်တယ်",
+        r: "shway-yaung the-thaung-pyin hsi thwar-chin-de",
+        e: "金色＝像黃金一樣的顏色；沙灘＝海邊的沙地。"
+      },
+      ko: {
+        s: "황금빛 모래 해변에 가고 싶어",
+        r: "hwanggeumbit morae haebyeone gago sipeo",
+        e: "金色＝像黃金一樣的顏色；沙灘＝海邊的沙地。"
+      },
+      ja: {
+        s: "金色の砂浜へ行きたい",
+        r: "kin'iro no sunahama e ikitai",
+        e: "金色＝像黃金一樣的顏色；沙灘＝海邊的沙地。"
+      },
+      si: {
+        s: "රන්වන් වැලි වෙරළට යන්න ආසයි",
+        r: "ranvan væli veraḷaṭa yanna āsayi",
+        e: "金色＝像黃金一樣的顏色；沙灘＝海邊的沙地。"
+      },
+      fa: {
+        s: "دلم می‌خواهد به ساحل شنی طلایی بروم",
+        r: "delam mikhāhad be sāhel-e sheni-ye talāyi beravam",
+        e: "金色＝像黃金一樣的顏色；沙灘＝海邊的沙地。"
+      }
+    },
+    {
+      hi: {
+        s: "दूर जाकर रोमांच करना चाहता हूँ",
+        r: "dūr jākar romāñc karnā cāhtā hūṅ",
+        e: "遠方＝很遠的地方；冒險＝去做有風險又新奇的事。"
+      },
+      en: {
+        s: "I want to go adventuring far away",
+        r: "",
+        e: "遠方＝很遠的地方；冒險＝去做有風險又新奇的事。"
+      },
+      ta: {
+        s: "தூர இடங்களுக்குச் சாகசப் பயணம் போக ஆசை",
+        r: "tūra iṭaṅkaḷukkuc cākacap payaṇam pōka ācai",
+        e: "遠方＝很遠的地方；冒險＝去做有風險又新奇的事。"
+      },
+      th: {
+        s: "อยากไปผจญภัยในแดนไกล",
+        r: "yak pai phachon-phai nai daen klai",
+        e: "遠方＝很遠的地方；冒險＝去做有風險又新奇的事。"
+      },
+      km: {
+        s: "ចង់ទៅផ្សងព្រេងនៅទីឆ្ងាយ",
+        r: "chong tov phsong preng nov ti chhngay",
+        e: "遠方＝很遠的地方；冒險＝去做有風險又新奇的事。"
+      },
+      vi: {
+        s: "Muốn đi phiêu lưu nơi phương xa",
+        r: "",
+        e: "遠方＝很遠的地方；冒險＝去做有風險又新奇的事。"
+      },
+      id: {
+        s: "Ingin pergi bertualang ke tempat yang jauh",
+        r: "",
+        e: "遠方＝很遠的地方；冒險＝去做有風險又新奇的事。"
+      },
+      ne: {
+        s: "टाढा गएर साहसिक यात्रा गर्न मन छ",
+        r: "ṭāḍhā gaera sāhasik yātrā garna man cha",
+        e: "遠方＝很遠的地方；冒險＝去做有風險又新奇的事。"
+      },
+      bn: {
+        s: "দূরে গিয়ে অভিযানে যেতে চাই",
+        r: "dūre giẏe abhiyāne yete cāi",
+        e: "遠方＝很遠的地方；冒險＝去做有風險又新奇的事。"
+      },
+      es: {
+        s: "Quiero ir de aventura a tierras lejanas",
+        r: "",
+        e: "遠方＝很遠的地方；冒險＝去做有風險又新奇的事。"
+      },
+      de: {
+        s: "Ich will in der Ferne Abenteuer erleben",
+        r: "",
+        e: "遠方＝很遠的地方；冒險＝去做有風險又新奇的事。"
+      },
+      my: {
+        s: "အဝေးကြီးကို စွန့်စားသွားချင်တယ်",
+        r: "a-way-gyi go sunt-sar thwar-chin-de",
+        e: "遠方＝很遠的地方；冒險＝去做有風險又新奇的事。"
+      },
+      ko: {
+        s: "먼 곳으로 모험을 떠나고 싶어",
+        r: "meon goseuro moheomeul tteonago sipeo",
+        e: "遠方＝很遠的地方；冒險＝去做有風險又新奇的事。"
+      },
+      ja: {
+        s: "遠くへ冒険に行きたい",
+        r: "tōku e bōken ni ikitai",
+        e: "遠方＝很遠的地方；冒險＝去做有風險又新奇的事。"
+      },
+      si: {
+        s: "ඈතට ගොස් වික්‍රමාන්විත ගමනක් යන්න ආසයි",
+        r: "ǟtaṭa gos vikramānvita gamanak yanna āsayi",
+        e: "遠方＝很遠的地方；冒險＝去做有風險又新奇的事。"
+      },
+      fa: {
+        s: "دلم می‌خواهد به جاهای دور برای ماجراجویی بروم",
+        r: "delam mikhāhad be jāhā-ye dur barā-ye mājārājuyi beravam",
+        e: "遠方＝很遠的地方；冒險＝去做有風險又新奇的事。"
+      }
+    },
+    {
+      hi: {
+        s: "तुम हमेशा मेरे पास रहते हो",
+        r: "tum hameśā mere pās rahte ho",
+        e: "身邊＝身旁、附近；都＝每一次、始終。"
+      },
+      en: {
+        s: "You are always right by my side",
+        r: "",
+        e: "身邊＝身旁、附近；都＝每一次、始終。"
+      },
+      ta: {
+        s: "நீ எப்போதும் என் அருகிலேயே இருக்கிறாய்",
+        r: "nī eppōtum eṉ arukilēyē irukkiṟāy",
+        e: "身邊＝身旁、附近；都＝每一次、始終。"
+      },
+      th: {
+        s: "เธออยู่เคียงข้างฉันเสมอ",
+        r: "thoe yu khiang-khang chan samoe",
+        e: "身邊＝身旁、附近；都＝每一次、始終。"
+      },
+      km: {
+        s: "អ្នកនៅក្បែរខ្ញុំជានិច្ច",
+        r: "anak nov kbae khnhom chea nich",
+        e: "身邊＝身旁、附近；都＝每一次、始終。"
+      },
+      vi: {
+        s: "Bạn luôn ở bên cạnh tôi",
+        r: "",
+        e: "身邊＝身旁、附近；都＝每一次、始終。"
+      },
+      id: {
+        s: "Kamu selalu ada di sisiku",
+        r: "",
+        e: "身邊＝身旁、附近；都＝每一次、始終。"
+      },
+      ne: {
+        s: "तिमी सधैं मेरो साथमा हुन्छौ",
+        r: "timī sadhaiṅ mero sāthmā hunchau",
+        e: "身邊＝身旁、附近；都＝每一次、始終。"
+      },
+      bn: {
+        s: "তুমি সবসময় আমার পাশে থাকো",
+        r: "tumi sabsamaẏ āmār pāśe thāko",
+        e: "身邊＝身旁、附近；都＝每一次、始終。"
+      },
+      es: {
+        s: "Tú siempre estás a mi lado",
+        r: "",
+        e: "身邊＝身旁、附近；都＝每一次、始終。"
+      },
+      de: {
+        s: "Du bist immer an meiner Seite",
+        r: "",
+        e: "身邊＝身旁、附近；都＝每一次、始終。"
+      },
+      my: {
+        s: "မင်းက အမြဲတမ်း ငါ့အနားမှာ ရှိတယ်",
+        r: "min ga a-mye-dan nga a-nar hma shi-de",
+        e: "身邊＝身旁、附近；都＝每一次、始終。"
+      },
+      ko: {
+        s: "너는 언제나 내 곁에 있어",
+        r: "neoneun eonjena nae gyeote isseo",
+        e: "身邊＝身旁、附近；都＝每一次、始終。"
+      },
+      ja: {
+        s: "あなたはいつも私のそばにいる",
+        r: "anata wa itsumo watashi no soba ni iru",
+        e: "身邊＝身旁、附近；都＝每一次、始終。"
+      },
+      si: {
+        s: "ඔබ සැමවිටම මගේ ළඟින්ම ඉන්නවා",
+        r: "oba sæmaviṭama magē ḷaṅginma innanavā",
+        e: "身邊＝身旁、附近；都＝每一次、始終。"
+      },
+      fa: {
+        s: "تو همیشه کنار منی",
+        r: "to hamishe kenār-e mani",
+        e: "身邊＝身旁、附近；都＝每一次、始終。"
+      }
+    },
+    {
+      hi: {
+        s: "मुझे दुनिया की सैर कराते हो",
+        r: "mujhe duniyā kī sair karāte ho",
+        e: "帶＝領著；環遊＝繞一圈旅行；世界＝地球上所有地方。"
+      },
+      en: {
+        s: "You take me traveling around the world",
+        r: "",
+        e: "帶＝領著；環遊＝繞一圈旅行；世界＝地球上所有地方。"
+      },
+      ta: {
+        s: "என்னை உலகம் சுற்றி அழைத்துச் செல்கிறாய்",
+        r: "eṉṉai ulakam cuṟṟi aḻaittuc celkiṟāy",
+        e: "帶＝領著；環遊＝繞一圈旅行；世界＝地球上所有地方。"
+      },
+      th: {
+        s: "พาฉันเที่ยวรอบโลก",
+        r: "pha chan thiao rop lok",
+        e: "帶＝領著；環遊＝繞一圈旅行；世界＝地球上所有地方。"
+      },
+      km: {
+        s: "នាំខ្ញុំធ្វើដំណើរជុំវិញពិភពលោក",
+        r: "noam khnhom thveu domnaer chumvinh piphoplok",
+        e: "帶＝領著；環遊＝繞一圈旅行；世界＝地球上所有地方。"
+      },
+      vi: {
+        s: "Dẫn tôi đi vòng quanh thế giới",
+        r: "",
+        e: "帶＝領著；環遊＝繞一圈旅行；世界＝地球上所有地方。"
+      },
+      id: {
+        s: "Membawaku berkeliling dunia",
+        r: "",
+        e: "帶＝領著；環遊＝繞一圈旅行；世界＝地球上所有地方。"
+      },
+      ne: {
+        s: "मलाई संसार घुमाउँछौ",
+        r: "malāī saṅsār ghumāunchau",
+        e: "帶＝領著；環遊＝繞一圈旅行；世界＝地球上所有地方。"
+      },
+      bn: {
+        s: "আমাকে সারা পৃথিবী ঘুরিয়ে বেড়াও",
+        r: "āmāke sārā pṛthibī ghuriye beṛāo",
+        e: "帶＝領著；環遊＝繞一圈旅行；世界＝地球上所有地方。"
+      },
+      es: {
+        s: "Me llevas a recorrer el mundo",
+        r: "",
+        e: "帶＝領著；環遊＝繞一圈旅行；世界＝地球上所有地方。"
+      },
+      de: {
+        s: "Du nimmst mich mit auf eine Reise um die Welt",
+        r: "",
+        e: "帶＝領著；環遊＝繞一圈旅行；世界＝地球上所有地方。"
+      },
+      my: {
+        s: "ငါ့ကို ကမ္ဘာပတ်ပြီး လိုက်ပို့တယ်",
+        r: "nga go kan-ba pat pyi laik-po de",
+        e: "帶＝領著；環遊＝繞一圈旅行；世界＝地球上所有地方。"
+      },
+      ko: {
+        s: "나를 데리고 세계를 여행해",
+        r: "nareul derigo segyereul yeohaenghae",
+        e: "帶＝領著；環遊＝繞一圈旅行；世界＝地球上所有地方。"
+      },
+      ja: {
+        s: "私を連れて世界中を旅してくれる",
+        r: "watashi o tsurete sekaijū o tabi shite kureru",
+        e: "帶＝領著；環遊＝繞一圈旅行；世界＝地球上所有地方。"
+      },
+      si: {
+        s: "මාව ලෝකය වටා සංචාරයට ගෙනියනවා",
+        r: "māva lōkaya vaṭā saṁcārayaṭa geniyanavā",
+        e: "帶＝領著；環遊＝繞一圈旅行；世界＝地球上所有地方。"
+      },
+      fa: {
+        s: "مرا به دور دنیا می‌بری",
+        r: "marā be dowr-e donyā mibari",
+        e: "帶＝領著；環遊＝繞一圈旅行；世界＝地球上所有地方。"
+      }
+    },
+    {
+      hi: {
+        s: "दूर की क्षितिज रेखा देखते हैं",
+        r: "dūr kī kṣitij rekhā dekhte haiṅ",
+        e: "遙遠＝很遠；地平線＝天地相接的那條線。"
+      },
+      en: {
+        s: "To see the faraway horizon",
+        r: "",
+        e: "遙遠＝很遠；地平線＝天地相接的那條線。"
+      },
+      ta: {
+        s: "தொலைவில் உள்ள அடிவானத்தைக் காண",
+        r: "tolaivil uḷḷa aṭivāṉattaik kāṇa",
+        e: "遙遠＝很遠；地平線＝天地相接的那條線。"
+      },
+      th: {
+        s: "ชมเส้นขอบฟ้าที่ไกลแสนไกล",
+        r: "chom sen khop fa thi klai saen klai",
+        e: "遙遠＝很遠；地平線＝天地相接的那條線。"
+      },
+      km: {
+        s: "មើលជើងមេឃដ៏ឆ្ងាយ",
+        r: "meul cheung mek da chhngay",
+        e: "遙遠＝很遠；地平線＝天地相接的那條線。"
+      },
+      vi: {
+        s: "Ngắm đường chân trời xa xăm",
+        r: "",
+        e: "遙遠＝很遠；地平線＝天地相接的那條線。"
+      },
+      id: {
+        s: "Melihat garis cakrawala yang jauh",
+        r: "",
+        e: "遙遠＝很遠；地平線＝天地相接的那條線。"
+      },
+      ne: {
+        s: "टाढाको क्षितिज हेर्न",
+        r: "ṭāḍhāko kṣitij herna",
+        e: "遙遠＝很遠；地平線＝天地相接的那條線。"
+      },
+      bn: {
+        s: "দূরের দিগন্ত দেখতে",
+        r: "dūrer diganta dekhte",
+        e: "遙遠＝很遠；地平線＝天地相接的那條線。"
+      },
+      es: {
+        s: "A ver el horizonte lejano",
+        r: "",
+        e: "遙遠＝很遠；地平線＝天地相接的那條線。"
+      },
+      de: {
+        s: "Den fernen Horizont zu sehen",
+        r: "",
+        e: "遙遠＝很遠；地平線＝天地相接的那條線。"
+      },
+      my: {
+        s: "အဝေးက မိုးကုပ်စက်ဝိုင်းကို ကြည့်ဖို့",
+        r: "a-way ga moe-kout-set-waing go kyi pho",
+        e: "遙遠＝很遠；地平線＝天地相接的那條線。"
+      },
+      ko: {
+        s: "머나먼 지평선을 바라보며",
+        r: "meonameon jipyeongseoneul barabomyeo",
+        e: "遙遠＝很遠；地平線＝天地相接的那條線。"
+      },
+      ja: {
+        s: "遥かな地平線を眺めて",
+        r: "haruka na chiheisen o nagamete",
+        e: "遙遠＝很遠；地平線＝天地相接的那條線。"
+      },
+      si: {
+        s: "ඈත ක්ෂිතිජය දෙස බලන්න",
+        r: "ǟta kṣitijaya desa balanna",
+        e: "遙遠＝很遠；地平線＝天地相接的那條線。"
+      },
+      fa: {
+        s: "تا افق دوردست را ببینیم",
+        r: "tā ofogh-e durdast rā bebinim",
+        e: "遙遠＝很遠；地平線＝天地相接的那條線。"
+      }
+    },
+    {
+      hi: {
+        s: "टिमटिमाते तारे तोड़ लाते हो",
+        r: "ṭimṭimāte tāre toṛ lāte ho",
+        e: "摘下＝採下來；繁星＝很多星星；點點＝一點一點、星星點點的樣子。"
+      },
+      en: {
+        s: "You pluck down the twinkling stars",
+        r: "",
+        e: "摘下＝採下來；繁星＝很多星星；點點＝一點一點、星星點點的樣子。"
+      },
+      ta: {
+        s: "மின்னும் நட்சத்திரங்களைப் பறித்து வருகிறாய்",
+        r: "miṉṉum naṭcattiraṅkaḷaip paṟittu varukiṟāy",
+        e: "摘下＝採下來；繁星＝很多星星；點點＝一點一點、星星點點的樣子。"
+      },
+      th: {
+        s: "เด็ดดาวระยิบระยับลงมา",
+        r: "det dao rayip-rayap long ma",
+        e: "摘下＝採下來；繁星＝很多星星；點點＝一點一點、星星點點的樣子。"
+      },
+      km: {
+        s: "បេះផ្កាយដែលភ្លឺច្រៀងចុះមក",
+        r: "beh phkay dael phlue chriang chos mok",
+        e: "摘下＝採下來；繁星＝很多星星；點點＝一點一點、星星點點的樣子。"
+      },
+      vi: {
+        s: "Hái xuống những vì sao lấp lánh",
+        r: "",
+        e: "摘下＝採下來；繁星＝很多星星；點點＝一點一點、星星點點的樣子。"
+      },
+      id: {
+        s: "Memetik bintang-bintang yang berkelip",
+        r: "",
+        e: "摘下＝採下來；繁星＝很多星星；點點＝一點一點、星星點點的樣子。"
+      },
+      ne: {
+        s: "झिलिमिली ताराहरू टिपेर ल्याउँछौ",
+        r: "jhilimilī tārāharū ṭipera lyāunchau",
+        e: "摘下＝採下來；繁星＝很多星星；點點＝一點一點、星星點點的樣子。"
+      },
+      bn: {
+        s: "ঝিলমিল তারা পেড়ে আনো",
+        r: "jhilmil tārā peṛe āno",
+        e: "摘下＝採下來；繁星＝很多星星；點點＝一點一點、星星點點的樣子。"
+      },
+      es: {
+        s: "Arrancas las estrellas centelleantes",
+        r: "",
+        e: "摘下＝採下來；繁星＝很多星星；點點＝一點一點、星星點點的樣子。"
+      },
+      de: {
+        s: "Du pflückst die funkelnden Sterne herab",
+        r: "",
+        e: "摘下＝採下來；繁星＝很多星星；點點＝一點一點、星星點點的樣子。"
+      },
+      my: {
+        s: "ကြယ်လေးတွေ တောက်တောက်ပပ ခူးချပေးတယ်",
+        r: "kye-lay-tway touk-touk-pa-pa khu-cha pay-de",
+        e: "摘下＝採下來；繁星＝很多星星；點點＝一點一點、星星點點的樣子。"
+      },
+      ko: {
+        s: "반짝이는 별들을 따다가",
+        r: "banjjagineun byeoldeureul ttadaga",
+        e: "摘下＝採下來；繁星＝很多星星；點點＝一點一點、星星點點的樣子。"
+      },
+      ja: {
+        s: "きらめく星々を摘み取って",
+        r: "kirameku hoshiboshi o tsumitotte",
+        e: "摘下＝採下來；繁星＝很多星星；點點＝一點一點、星星點點的樣子。"
+      },
+      si: {
+        s: "දිදුලන තාරකා කඩාගෙන එනවා",
+        r: "didulana tārakā kaḍāgena enavā",
+        e: "摘下＝採下來；繁星＝很多星星；點點＝一點一點、星星點點的樣子。"
+      },
+      fa: {
+        s: "ستاره‌های چشمک‌زن را می‌چینی",
+        r: "setārehā-ye cheshmakzan rā michini",
+        e: "摘下＝採下來；繁星＝很多星星；點點＝一點一點、星星點點的樣子。"
+      }
+    },
+    {
+      hi: {
+        s: "मेरी खिड़की के सामने टाँग देते हो",
+        r: "merī khiṛkī ke sāmne ṭāṅg dete ho",
+        e: "掛＝懸吊；窗前＝窗戶前面。"
+      },
+      en: {
+        s: "And hang them by my window",
+        r: "",
+        e: "掛＝懸吊；窗前＝窗戶前面。"
+      },
+      ta: {
+        s: "என் சன்னல் முன் தொங்க விடுகிறாய்",
+        r: "eṉ caṉṉal muṉ toṅka viṭukiṟāy",
+        e: "掛＝懸吊；窗前＝窗戶前面。"
+      },
+      th: {
+        s: "แขวนไว้หน้าหน้าต่างของฉัน",
+        r: "khwaen wai na natang khong chan",
+        e: "掛＝懸吊；窗前＝窗戶前面。"
+      },
+      km: {
+        s: "ព្យួរនាខាងមុខបង្អួចរបស់ខ្ញុំ",
+        r: "pyua vea khangmok bang-uoch robsa khnhom",
+        e: "掛＝懸吊；窗前＝窗戶前面。"
+      },
+      vi: {
+        s: "Treo trước cửa sổ của tôi",
+        r: "",
+        e: "掛＝懸吊；窗前＝窗戶前面。"
+      },
+      id: {
+        s: "Menggantungkannya di depan jendelaku",
+        r: "",
+        e: "掛＝懸吊；窗前＝窗戶前面。"
+      },
+      ne: {
+        s: "मेरो झ्यालअगाडि झुण्ड्याइदिन्छौ",
+        r: "mero jhyāl-agāḍi jhuṇḍyāidinchau",
+        e: "掛＝懸吊；窗前＝窗戶前面。"
+      },
+      bn: {
+        s: "আমার জানালার সামনে ঝুলিয়ে দাও",
+        r: "āmār jānālār sāmne jhuliye dāo",
+        e: "掛＝懸吊；窗前＝窗戶前面。"
+      },
+      es: {
+        s: "Y las cuelgas frente a mi ventana",
+        r: "",
+        e: "掛＝懸吊；窗前＝窗戶前面。"
+      },
+      de: {
+        s: "Und hängst sie vor mein Fenster",
+        r: "",
+        e: "掛＝懸吊；窗前＝窗戶前面。"
+      },
+      my: {
+        s: "ငါ့ပြတင်းပေါက်ရှေ့မှာ ချိတ်ဆွဲပေးတယ်",
+        r: "nga pyatin-pouk shay hma chait-hswe pay-de",
+        e: "掛＝懸吊；窗前＝窗戶前面。"
+      },
+      ko: {
+        s: "내 창가에 걸어 줘",
+        r: "nae changgae georeo jwo",
+        e: "掛＝懸吊；窗前＝窗戶前面。"
+      },
+      ja: {
+        s: "私の窓辺に掛けてくれる",
+        r: "watashi no madobe ni kakete kureru",
+        e: "掛＝懸吊；窗前＝窗戶前面。"
+      },
+      si: {
+        s: "මගේ ජනේලය ඉදිරිපිට එල්ලා තබනවා",
+        r: "magē janēlaya idiripiṭa ellā tabanavā",
+        e: "掛＝懸吊；窗前＝窗戶前面。"
+      },
+      fa: {
+        s: "جلوی پنجره‌ام آویزان می‌کنی",
+        r: "jelo-ye panjeream āvizān mikoni",
+        e: "掛＝懸吊；窗前＝窗戶前面。"
+      }
+    },
+    {
+      hi: {
+        s: "साथ रहने के लिए धन्यवाद",
+        r: "sāth rahne ke lie dhanyavād",
+        e: "感謝＝謝謝；陪＝陪伴；左右＝身邊（左邊右邊，指身旁）。"
+      },
+      en: {
+        s: "Thank you for staying by my side",
+        r: "",
+        e: "感謝＝謝謝；陪＝陪伴；左右＝身邊（左邊右邊，指身旁）。"
+      },
+      ta: {
+        s: "என்னுடன் இருப்பதற்கு நன்றி",
+        r: "eṉṉuṭaṉ iruppataṟku naṉṟi",
+        e: "感謝＝謝謝；陪＝陪伴；左右＝身邊（左邊右邊，指身旁）。"
+      },
+      th: {
+        s: "ขอบคุณที่อยู่เคียงข้างฉัน",
+        r: "khop-khun thi yu khiang-khang chan",
+        e: "感謝＝謝謝；陪＝陪伴；左右＝身邊（左邊右邊，指身旁）。"
+      },
+      km: {
+        s: "អរគុណដែលនៅជាមួយខ្ញុំជានិច្ច",
+        r: "arkun dael nov chomuy khnhom chea nich",
+        e: "感謝＝謝謝；陪＝陪伴；左右＝身邊（左邊右邊，指身旁）。"
+      },
+      vi: {
+        s: "Cảm ơn bạn đã luôn ở bên tôi",
+        r: "",
+        e: "感謝＝謝謝；陪＝陪伴；左右＝身邊（左邊右邊，指身旁）。"
+      },
+      id: {
+        s: "Terima kasih sudah menemaniku selalu",
+        r: "",
+        e: "感謝＝謝謝；陪＝陪伴；左右＝身邊（左邊右邊，指身旁）。"
+      },
+      ne: {
+        s: "मेरो साथमा रहिदिएकोमा धन्यवाद",
+        r: "mero sāthmā rahidiekoma dhanyabād",
+        e: "感謝＝謝謝；陪＝陪伴；左右＝身邊（左邊右邊，指身旁）。"
+      },
+      bn: {
+        s: "পাশে থাকার জন্য ধন্যবাদ",
+        r: "pāśe thākār janya dhanyabād",
+        e: "感謝＝謝謝；陪＝陪伴；左右＝身邊（左邊右邊，指身旁）。"
+      },
+      es: {
+        s: "Gracias por estar siempre a mi lado",
+        r: "",
+        e: "感謝＝謝謝；陪＝陪伴；左右＝身邊（左邊右邊，指身旁）。"
+      },
+      de: {
+        s: "Danke, dass du immer bei mir bist",
+        r: "",
+        e: "感謝＝謝謝；陪＝陪伴；左右＝身邊（左邊右邊，指身旁）。"
+      },
+      my: {
+        s: "ငါ့အနားမှာ ရှိနေပေးလို့ ကျေးဇူးတင်ပါတယ်",
+        r: "nga a-nar hma shi-nay pay-lo kye-zu tin-ba-de",
+        e: "感謝＝謝謝；陪＝陪伴；左右＝身邊（左邊右邊，指身旁）。"
+      },
+      ko: {
+        s: "곁에 있어 줘서 고마워",
+        r: "gyeote isseo jwoseo gomawo",
+        e: "感謝＝謝謝；陪＝陪伴；左右＝身邊（左邊右邊，指身旁）。"
+      },
+      ja: {
+        s: "そばにいてくれてありがとう",
+        r: "soba ni ite kurete arigatō",
+        e: "感謝＝謝謝；陪＝陪伴；左右＝身邊（左邊右邊，指身旁）。"
+      },
+      si: {
+        s: "මගේ ළඟින් සිටිනවාට ස්තූතියි",
+        r: "magē ḷaṅgin siṭinavāṭa stūtiyi",
+        e: "感謝＝謝謝；陪＝陪伴；左右＝身邊（左邊右邊，指身旁）。"
+      },
+      fa: {
+        s: "ممنون که همیشه کنارمی",
+        r: "mamnun ke hamishe kenārami",
+        e: "感謝＝謝謝；陪＝陪伴；左右＝身邊（左邊右邊，指身旁）。"
+      }
+    },
+    {
+      hi: {
+        s: "बस तुम हो, वही काफी है",
+        r: "bas tum ho, vahī kāfī hai",
+        e: "只要…就＝條件句型；足夠＝夠了、不需要更多。"
+      },
+      en: {
+        s: "As long as I have you, that is enough",
+        r: "",
+        e: "只要…就＝條件句型；足夠＝夠了、不需要更多。"
+      },
+      ta: {
+        s: "நீ இருந்தால் அதுவே போதும்",
+        r: "nī iruntāl atuvē pōtum",
+        e: "只要…就＝條件句型；足夠＝夠了、不需要更多。"
+      },
+      th: {
+        s: "แค่มีเธอก็พอแล้ว",
+        r: "khae mi thoe ko pho laeo",
+        e: "只要…就＝條件句型；足夠＝夠了、不需要更多。"
+      },
+      km: {
+        s: "ឱ្យតែមានអ្នក គឺគ្រប់គ្រាន់ហើយ",
+        r: "aoy tae mean anak ku krobkran haey",
+        e: "只要…就＝條件句型；足夠＝夠了、不需要更多。"
+      },
+      vi: {
+        s: "Chỉ cần có bạn là đủ rồi",
+        r: "",
+        e: "只要…就＝條件句型；足夠＝夠了、不需要更多。"
+      },
+      id: {
+        s: "Asalkan ada kamu, itu sudah cukup",
+        r: "",
+        e: "只要…就＝條件句型；足夠＝夠了、不需要更多。"
+      },
+      ne: {
+        s: "तिमी भए पुग्छ",
+        r: "timī bhae pugcha",
+        e: "只要…就＝條件句型；足夠＝夠了、不需要更多。"
+      },
+      bn: {
+        s: "তুমি থাকলেই যথেষ্ট",
+        r: "tumi thāklei yatheṣṭa",
+        e: "只要…就＝條件句型；足夠＝夠了、不需要更多。"
+      },
+      es: {
+        s: "Con tal de tenerte a ti, ya es suficiente",
+        r: "",
+        e: "只要…就＝條件句型；足夠＝夠了、不需要更多。"
+      },
+      de: {
+        s: "Solange ich dich habe, ist das genug",
+        r: "",
+        e: "只要…就＝條件句型；足夠＝夠了、不需要更多。"
+      },
+      my: {
+        s: "မင်းရှိရင်ပဲ လုံလောက်ပါပြီ",
+        r: "min shi-yin pe lone-louk ba pyi",
+        e: "只要…就＝條件句型；足夠＝夠了、不需要更多。"
+      },
+      ko: {
+        s: "너만 있으면 충분해",
+        r: "neoman isseumyeon chungbunhae",
+        e: "只要…就＝條件句型；足夠＝夠了、不需要更多。"
+      },
+      ja: {
+        s: "あなたさえいればそれで十分",
+        r: "anata sae ireba sore de jūbun",
+        e: "只要…就＝條件句型；足夠＝夠了、不需要更多。"
+      },
+      si: {
+        s: "ඔබ සිටියොත් එයම ප්‍රමාණවත්",
+        r: "oba siṭiyot eyama pramāṇavat",
+        e: "只要…就＝條件句型；足夠＝夠了、不需要更多。"
+      },
+      fa: {
+        s: "همین که تو باشی کافی است",
+        r: "hamin ke to bāshi kāfi ast",
+        e: "只要…就＝條件句型；足夠＝夠了、不需要更多。"
+      }
+    },
+    {
+      hi: {
+        s: "मैं तुम्हें अपना सब कुछ देना चाहता हूँ",
+        r: "maiṅ tumheṅ apnā sab kuch denā cāhtā hūṅ",
+        e: "所有＝一切、全部的東西。"
+      },
+      en: {
+        s: "I want to give you everything I have",
+        r: "",
+        e: "所有＝一切、全部的東西。"
+      },
+      ta: {
+        s: "என்னிடம் உள்ள எல்லாவற்றையும் உனக்குத் தர விரும்புகிறேன்",
+        r: "eṉṉiṭam uḷḷa ellāvaṟṟaiyum uṉakkut tara virumpukiṟēṉ",
+        e: "所有＝一切、全部的東西。"
+      },
+      th: {
+        s: "ฉันอยากมอบทุกสิ่งที่ฉันมีให้เธอ",
+        r: "chan yak mop thuk sing thi chan mi hai thoe",
+        e: "所有＝一切、全部的東西。"
+      },
+      km: {
+        s: "ខ្ញុំចង់ជូនអ្នកនូវអ្វីៗទាំងអស់ដែលខ្ញុំមាន",
+        r: "khnhom chong chun anak nouv avei teang os dael khnhom mean",
+        e: "所有＝一切、全部的東西。"
+      },
+      vi: {
+        s: "Tôi muốn trao bạn tất cả những gì tôi có",
+        r: "",
+        e: "所有＝一切、全部的東西。"
+      },
+      id: {
+        s: "Aku ingin memberikan semua yang kumiliki kepadamu",
+        r: "",
+        e: "所有＝一切、全部的東西。"
+      },
+      ne: {
+        s: "म तिमीलाई मेरो सबैथोक दिन चाहन्छु",
+        r: "ma timīlāī mero sabaithok dina cāhanchu",
+        e: "所有＝一切、全部的東西。"
+      },
+      bn: {
+        s: "আমি তোমাকে আমার সবকিছু দিতে চাই",
+        r: "āmi tomāke āmār sabkichu dite cāi",
+        e: "所有＝一切、全部的東西。"
+      },
+      es: {
+        s: "Quiero darte todo lo que tengo",
+        r: "",
+        e: "所有＝一切、全部的東西。"
+      },
+      de: {
+        s: "Ich will dir alles geben, was ich habe",
+        r: "",
+        e: "所有＝一切、全部的東西。"
+      },
+      my: {
+        s: "ငါ့မှာရှိသမျှ အားလုံး မင်းကို ပေးချင်တယ်",
+        r: "nga hma shi-tha-hmya ar-lone min go pay-chin-de",
+        e: "所有＝一切、全部的東西。"
+      },
+      ko: {
+        s: "내가 가진 모든 것을 너에게 주고 싶어",
+        r: "naega gajin modeun geoseul neoege jugo sipeo",
+        e: "所有＝一切、全部的東西。"
+      },
+      ja: {
+        s: "私のすべてをあなたにあげたい",
+        r: "watashi no subete o anata ni agetai",
+        e: "所有＝一切、全部的東西。"
+      },
+      si: {
+        s: "මා සතු සියල්ල ඔබට දෙන්න ඕනෑ",
+        r: "mā satu siyalla obaṭa denna ōnǟ",
+        e: "所有＝一切、全部的東西。"
+      },
+      fa: {
+        s: "می‌خواهم همه چیزم را به تو بدهم",
+        r: "mikhāham hame chizam rā be to bedaham",
+        e: "所有＝一切、全部的東西。"
+      }
+    },
+    {
+      hi: {
+        s: "अभी से लेकर हमेशा तक",
+        r: "abhī se lekar hameśā tak",
+        e: "從…直到＝從某時到某時；以後＝將來、往後。"
+      },
+      en: {
+        s: "From now on, forever and ever",
+        r: "",
+        e: "從…直到＝從某時到某時；以後＝將來、往後。"
+      },
+      ta: {
+        s: "இப்போதிலிருந்து என்றென்றும்",
+        r: "ippōtiliruntu eṉṟeṉṟum",
+        e: "從…直到＝從某時到某時；以後＝將來、往後。"
+      },
+      th: {
+        s: "ตั้งแต่วันนี้จนตลอดไป",
+        r: "tang-tae wan-ni chon talot pai",
+        e: "從…直到＝從某時到某時；以後＝將來、往後。"
+      },
+      km: {
+        s: "ចាប់ពីឥឡូវរហូតទៅអនាគត",
+        r: "chap pi ilov rohot tov anakot",
+        e: "從…直到＝從某時到某時；以後＝將來、往後。"
+      },
+      vi: {
+        s: "Từ bây giờ cho đến mãi mãi về sau",
+        r: "",
+        e: "從…直到＝從某時到某時；以後＝將來、往後。"
+      },
+      id: {
+        s: "Dari sekarang sampai selamanya",
+        r: "",
+        e: "從…直到＝從某時到某時；以後＝將來、往後。"
+      },
+      ne: {
+        s: "अहिलेदेखि सधैंभरि",
+        r: "ahiledekhi sadhaiṅbhari",
+        e: "從…直到＝從某時到某時；以後＝將來、往後。"
+      },
+      bn: {
+        s: "এখন থেকে চিরকাল",
+        r: "ekhan theke cirakāl",
+        e: "從…直到＝從某時到某時；以後＝將來、往後。"
+      },
+      es: {
+        s: "Desde ahora y para siempre",
+        r: "",
+        e: "從…直到＝從某時到某時；以後＝將來、往後。"
+      },
+      de: {
+        s: "Von jetzt an bis in alle Zeit",
+        r: "",
+        e: "從…直到＝從某時到某時；以後＝將來、往後。"
+      },
+      my: {
+        s: "အခုကစပြီး နောင်အချိန်ထိ",
+        r: "a-khu ga-sa pyi naung a-chain hti",
+        e: "從…直到＝從某時到某時；以後＝將來、往後。"
+      },
+      ko: {
+        s: "지금부터 영원히",
+        r: "jigeumbuteo yeongwonhi",
+        e: "從…直到＝從某時到某時；以後＝將來、往後。"
+      },
+      ja: {
+        s: "今からずっと未来まで",
+        r: "ima kara zutto mirai made",
+        e: "從…直到＝從某時到某時；以後＝將來、往後。"
+      },
+      si: {
+        s: "දැන් සිට සදහටම",
+        r: "dæn siṭa sadahaṭama",
+        e: "從…直到＝從某時到某時；以後＝將來、往後。"
+      },
+      fa: {
+        s: "از حالا تا همیشه",
+        r: "az hālā tā hamishe",
+        e: "從…直到＝從某時到某時；以後＝將來、往後。"
+      }
+    }
+  ],
+  zuibangdelaoba: [
+    {
+      hi: {
+        s: "तुम्हें जल्दी घर आना चाहिए",
+        r: "tumheṁ jaldī ghar ānā cāhiye",
+        e: "早點＝提早一些；回家＝回到家裡。勸爸爸早一點回家。"
+      },
+      en: {
+        s: "You should come home early",
+        r: "",
+        e: "早點＝提早一些；回家＝回到家裡。勸爸爸早一點回家。"
+      },
+      ta: {
+        s: "நீ சீக்கிரமாக வீடு திரும்ப வேண்டும்",
+        r: "nī cīkkiramāka vīṭu tirumba vēṇṭum",
+        e: "早點＝提早一些；回家＝回到家裡。勸爸爸早一點回家。"
+      },
+      th: {
+        s: "พ่อต้องกลับบ้านเร็วหน่อย",
+        r: "phôo tông klàp bâan reo nòi",
+        e: "早點＝提早一些；回家＝回到家裡。勸爸爸早一點回家。"
+      },
+      km: {
+        s: "ប៉ាត្រូវវិលមកផ្ទះឱ្យបានឆាប់",
+        r: "pā trūv vil mok phteăh aoy ban chhăp",
+        e: "早點＝提早一些；回家＝回到家裡。勸爸爸早一點回家。"
+      },
+      vi: {
+        s: "Bố nên về nhà sớm",
+        r: "",
+        e: "早點＝提早一些；回家＝回到家裡。勸爸爸早一點回家。"
+      },
+      id: {
+        s: "Ayah harus pulang lebih awal",
+        r: "",
+        e: "早點＝提早一些；回家＝回到家裡。勸爸爸早一點回家。"
+      },
+      ne: {
+        s: "तपाईं छिट्टै घर आउनुपर्छ",
+        r: "tapāī̃ chiṭṭai ghar āunuparcha",
+        e: "早點＝提早一些；回家＝回到家裡。勸爸爸早一點回家。"
+      },
+      bn: {
+        s: "তোমাকে তাড়াতাড়ি বাড়ি ফিরতে হবে",
+        r: "tomāke tāṛātāṛi bāṛi phirte habe",
+        e: "早點＝提早一些；回家＝回到家裡。勸爸爸早一點回家。"
+      },
+      es: {
+        s: "Debes volver a casa temprano",
+        r: "",
+        e: "早點＝提早一些；回家＝回到家裡。勸爸爸早一點回家。"
+      },
+      de: {
+        s: "Du solltest früh nach Hause kommen",
+        r: "",
+        e: "早點＝提早一些；回家＝回到家裡。勸爸爸早一點回家。"
+      },
+      my: {
+        s: "ဖေဖေစောစောအိမ်ပြန်လာပါ",
+        r: "hpe-hpe saw-saw eain pyan lar par",
+        e: "早點＝提早一些；回家＝回到家裡。勸爸爸早一點回家。"
+      },
+      ko: {
+        s: "아빠 일찍 집에 와야 해요",
+        r: "appa iljjik jibe waya haeyo",
+        e: "早點＝提早一些；回家＝回到家裡。勸爸爸早一點回家。"
+      },
+      ja: {
+        s: "パパ、早く家に帰ってきて",
+        r: "papa, hayaku ie ni kaette kite",
+        e: "早點＝提早一些；回家＝回到家裡。勸爸爸早一點回家。"
+      },
+      si: {
+        s: "ඔයා ඉක්මනින් ගෙදර එන්න ඕනෙ",
+        r: "oyā ikmanin gedara enna ōne",
+        e: "早點＝提早一些；回家＝回到家裡。勸爸爸早一點回家。"
+      },
+      fa: {
+        s: "تو باید زود به خانه برگردی",
+        r: "to bāyad zūd be xāne bargardi",
+        e: "早點＝提早一些；回家＝回到家裡。勸爸爸早一點回家。"
+      }
+    },
+    {
+      hi: {
+        s: "मेरे और माँ के साथ समय बिताओ",
+        r: "mere aur māṁ ke sāth samay bitāo",
+        e: "陪陪＝陪伴（動詞重疊，語氣輕鬆）；和＝跟、與。"
+      },
+      en: {
+        s: "Keep me and Mom company",
+        r: "",
+        e: "陪陪＝陪伴（動詞重疊，語氣輕鬆）；和＝跟、與。"
+      },
+      ta: {
+        s: "என்னுடனும் அம்மாவுடனும் நேரம் செலவிடு",
+        r: "eṉṉuṭaṉum ammāvuṭaṉum nēram celaviṭu",
+        e: "陪陪＝陪伴（動詞重疊，語氣輕鬆）；和＝跟、與。"
+      },
+      th: {
+        s: "อยู่เป็นเพื่อนหนูกับแม่หน่อย",
+        r: "yùu pen phûuean nǔu kàp mâe nòi",
+        e: "陪陪＝陪伴（動詞重疊，語氣輕鬆）；和＝跟、與。"
+      },
+      km: {
+        s: "នៅកំដរខ្ញុំនិងម៉ាក់",
+        r: "nov kamdar khnhom ning mak",
+        e: "陪陪＝陪伴（動詞重疊，語氣輕鬆）；和＝跟、與。"
+      },
+      vi: {
+        s: "Ở bên con và mẹ nhé",
+        r: "",
+        e: "陪陪＝陪伴（動詞重疊，語氣輕鬆）；和＝跟、與。"
+      },
+      id: {
+        s: "Temani aku dan Ibu",
+        r: "",
+        e: "陪陪＝陪伴（動詞重疊，語氣輕鬆）；和＝跟、與。"
+      },
+      ne: {
+        s: "मसँग र आमासँग समय बिताउनुहोस्",
+        r: "masãga ra āmāsãga samaya bitāunuhos",
+        e: "陪陪＝陪伴（動詞重疊，語氣輕鬆）；和＝跟、與。"
+      },
+      bn: {
+        s: "আমার আর মায়ের সঙ্গে থাকো",
+        r: "āmār ār māẏer saṅge thāko",
+        e: "陪陪＝陪伴（動詞重疊，語氣輕鬆）；和＝跟、與。"
+      },
+      es: {
+        s: "Acompáñanos a mamá y a mí",
+        r: "",
+        e: "陪陪＝陪伴（動詞重疊，語氣輕鬆）；和＝跟、與。"
+      },
+      de: {
+        s: "Bleib bei Mama und mir",
+        r: "",
+        e: "陪陪＝陪伴（動詞重疊，語氣輕鬆）；和＝跟、與。"
+      },
+      my: {
+        s: "ကျွန်တော်နဲ့အမေ့နား နေပေးပါ",
+        r: "kyan-taw ne a-may nar nay pay par",
+        e: "陪陪＝陪伴（動詞重疊，語氣輕鬆）；和＝跟、與。"
+      },
+      ko: {
+        s: "저와 엄마 곁에 있어 줘요",
+        r: "jeowa eomma gyeote isseo jwoyo",
+        e: "陪陪＝陪伴（動詞重疊，語氣輕鬆）；和＝跟、與。"
+      },
+      ja: {
+        s: "私とママのそばにいて",
+        r: "watashi to mama no soba ni ite",
+        e: "陪陪＝陪伴（動詞重疊，語氣輕鬆）；和＝跟、與。"
+      },
+      si: {
+        s: "මාත් එක්කයි අම්මාත් එක්කයි ඉන්න",
+        r: "māt ekkayi ammāt ekkayi inna",
+        e: "陪陪＝陪伴（動詞重疊，語氣輕鬆）；和＝跟、與。"
+      },
+      fa: {
+        s: "پیش من و مامان بمان",
+        r: "piše man va māmān bemān",
+        e: "陪陪＝陪伴（動詞重疊，語氣輕鬆）；和＝跟、與。"
+      }
+    },
+    {
+      hi: {
+        s: "रसोई के खाने की खुशबू",
+        r: "rasoī ke khāne kī khuśbū",
+        e: "廚房＝做飯的地方；飯菜＝飯和菜、餐食；香＝香氣。"
+      },
+      en: {
+        s: "The aroma of food from the kitchen",
+        r: "",
+        e: "廚房＝做飯的地方；飯菜＝飯和菜、餐食；香＝香氣。"
+      },
+      ta: {
+        s: "சமையலறை உணவின் மணம்",
+        r: "camaiyalaṟai uṇaviṉ maṇam",
+        e: "廚房＝做飯的地方；飯菜＝飯和菜、餐食；香＝香氣。"
+      },
+      th: {
+        s: "กลิ่นอาหารจากห้องครัว",
+        r: "klìn aa-hǎan jàak hông khrua",
+        e: "廚房＝做飯的地方；飯菜＝飯和菜、餐食；香＝香氣。"
+      },
+      km: {
+        s: "ក្លិនម្ហូបពីផ្ទះបាយ",
+        r: "klin mhoob pi phteah bay",
+        e: "廚房＝做飯的地方；飯菜＝飯和菜、餐食；香＝香氣。"
+      },
+      vi: {
+        s: "Mùi thơm cơm canh từ nhà bếp",
+        r: "",
+        e: "廚房＝做飯的地方；飯菜＝飯和菜、餐食；香＝香氣。"
+      },
+      id: {
+        s: "Aroma masakan dari dapur",
+        r: "",
+        e: "廚房＝做飯的地方；飯菜＝飯和菜、餐食；香＝香氣。"
+      },
+      ne: {
+        s: "भान्साको खानाको सुगन्ध",
+        r: "bhānsāko khānāko sugandha",
+        e: "廚房＝做飯的地方；飯菜＝飯和菜、餐食；香＝香氣。"
+      },
+      bn: {
+        s: "রান্নাঘরের খাবারের সুগন্ধ",
+        r: "rānnāgharer khābārer sugandha",
+        e: "廚房＝做飯的地方；飯菜＝飯和菜、餐食；香＝香氣。"
+      },
+      es: {
+        s: "El aroma de la comida de la cocina",
+        r: "",
+        e: "廚房＝做飯的地方；飯菜＝飯和菜、餐食；香＝香氣。"
+      },
+      de: {
+        s: "Der Duft des Essens aus der Küche",
+        r: "",
+        e: "廚房＝做飯的地方；飯菜＝飯和菜、餐食；香＝香氣。"
+      },
+      my: {
+        s: "မီးဖိုချောင်က အစားအစာရနံ့",
+        r: "mee-pho-chaung ga a-sar-a-sar ya-nan",
+        e: "廚房＝做飯的地方；飯菜＝飯和菜、餐食；香＝香氣。"
+      },
+      ko: {
+        s: "부엌에서 나는 음식 냄새",
+        r: "bueokeseo naneun eumsik naemsae",
+        e: "廚房＝做飯的地方；飯菜＝飯和菜、餐食；香＝香氣。"
+      },
+      ja: {
+        s: "台所から漂う料理の香り",
+        r: "daidokoro kara tadayou ryōri no kaori",
+        e: "廚房＝做飯的地方；飯菜＝飯和菜、餐食；香＝香氣。"
+      },
+      si: {
+        s: "කුස්සියේ කෑම සුවඳ",
+        r: "kussiyē kǣma suvaňda",
+        e: "廚房＝做飯的地方；飯菜＝飯和菜、餐食；香＝香氣。"
+      },
+      fa: {
+        s: "بوی غذای آشپزخانه",
+        r: "būye ğazāye āšpazxāne",
+        e: "廚房＝做飯的地方；飯菜＝飯和菜、餐食；香＝香氣。"
+      }
+    },
+    {
+      hi: {
+        s: "इसमें है अद्भुत जादू",
+        r: "ismeṁ hai adbhut jādū",
+        e: "神奇＝奇妙、不可思議；魔法＝魔術般的神奇力量。"
+      },
+      en: {
+        s: "It has a magical spell",
+        r: "",
+        e: "神奇＝奇妙、不可思議；魔法＝魔術般的神奇力量。"
+      },
+      ta: {
+        s: "அதில் அற்புதமான மந்திரம் உள்ளது",
+        r: "atil aṟputamāṉa mantiram uḷḷatu",
+        e: "神奇＝奇妙、不可思議；魔法＝魔術般的神奇力量。"
+      },
+      th: {
+        s: "มีเวทมนตร์มหัศจรรย์",
+        r: "mii wêet-mon mahàt-sà-jan",
+        e: "神奇＝奇妙、不可思議；魔法＝魔術般的神奇力量。"
+      },
+      km: {
+        s: "មានមន្តអាគមដ៏អស្ចារ្យ",
+        r: "mean mont akum dorh oschary",
+        e: "神奇＝奇妙、不可思議；魔法＝魔術般的神奇力量。"
+      },
+      vi: {
+        s: "Có phép màu kỳ diệu",
+        r: "",
+        e: "神奇＝奇妙、不可思議；魔法＝魔術般的神奇力量。"
+      },
+      id: {
+        s: "Ada sihir yang ajaib",
+        r: "",
+        e: "神奇＝奇妙、不可思議；魔法＝魔術般的神奇力量。"
+      },
+      ne: {
+        s: "त्यसमा छ अद्भुत जादु",
+        r: "tyasmā cha adbhut jādu",
+        e: "神奇＝奇妙、不可思議；魔法＝魔術般的神奇力量。"
+      },
+      bn: {
+        s: "তাতে আছে অলৌকিক জাদু",
+        r: "tāte āche alaukik jādu",
+        e: "神奇＝奇妙、不可思議；魔法＝魔術般的神奇力量。"
+      },
+      es: {
+        s: "Tiene una magia maravillosa",
+        r: "",
+        e: "神奇＝奇妙、不可思議；魔法＝魔術般的神奇力量。"
+      },
+      de: {
+        s: "Darin steckt ein wunderbarer Zauber",
+        r: "",
+        e: "神奇＝奇妙、不可思議；魔法＝魔術般的神奇力量。"
+      },
+      my: {
+        s: "အံ့ဩဖွယ် မှော်ပညာ ရှိတယ်",
+        r: "an-aw-hpwè hmaw pyin-nyar shi te",
+        e: "神奇＝奇妙、不可思議；魔法＝魔術般的神奇力量。"
+      },
+      ko: {
+        s: "신기한 마법이 있어요",
+        r: "singihan mabeobi isseoyo",
+        e: "神奇＝奇妙、不可思議；魔法＝魔術般的神奇力量。"
+      },
+      ja: {
+        s: "不思議な魔法がある",
+        r: "fushigi na mahō ga aru",
+        e: "神奇＝奇妙、不可思議；魔法＝魔術般的神奇力量。"
+      },
+      si: {
+        s: "එහි පුදුමාකාර මායාවක් තියෙනවා",
+        r: "ehi pudumākāra māyāvak tiyenavā",
+        e: "神奇＝奇妙、不可思議；魔法＝魔術般的神奇力量。"
+      },
+      fa: {
+        s: "جادویی شگفت‌انگیز دارد",
+        r: "jādūyi šegeft-angiz dārad",
+        e: "神奇＝奇妙、不可思議；魔法＝魔術般的神奇力量。"
+      }
+    },
+    {
+      hi: {
+        s: "यह लोगों को बड़ा बनाती है",
+        r: "yah logoṁ ko baṛā banātī hai",
+        e: "它＝指前句的飯菜香；讓＝使、令；長大＝成長。"
+      },
+      en: {
+        s: "It can make people grow up",
+        r: "",
+        e: "它＝指前句的飯菜香；讓＝使、令；長大＝成長。"
+      },
+      ta: {
+        s: "அது மனிதர்களை வளரச் செய்யும்",
+        r: "atu maṉitarkaḷai vaḷarac ceyyum",
+        e: "它＝指前句的飯菜香；讓＝使、令；長大＝成長。"
+      },
+      th: {
+        s: "มันทำให้คนเติบโตขึ้น",
+        r: "man tham-hâi khon tòop-too khûuen",
+        e: "它＝指前句的飯菜香；讓＝使、令；長大＝成長。"
+      },
+      km: {
+        s: "វាអាចធ្វើឱ្យមនុស្សធំឡើង",
+        r: "vea ach thveu aoy mnous thom laeng",
+        e: "它＝指前句的飯菜香；讓＝使、令；長大＝成長。"
+      },
+      vi: {
+        s: "Nó có thể làm người ta lớn lên",
+        r: "",
+        e: "它＝指前句的飯菜香；讓＝使、令；長大＝成長。"
+      },
+      id: {
+        s: "Ia bisa membuat orang tumbuh besar",
+        r: "",
+        e: "它＝指前句的飯菜香；讓＝使、令；長大＝成長。"
+      },
+      ne: {
+        s: "यसले मानिसलाई ठूलो बनाउँछ",
+        r: "yasle mānislāī ṭhūlo banāũcha",
+        e: "它＝指前句的飯菜香；讓＝使、令；長大＝成長。"
+      },
+      bn: {
+        s: "এটা মানুষকে বড় করে তোলে",
+        r: "eṭā mānuṣke baṛa kare tole",
+        e: "它＝指前句的飯菜香；讓＝使、令；長大＝成長。"
+      },
+      es: {
+        s: "Puede hacer crecer a las personas",
+        r: "",
+        e: "它＝指前句的飯菜香；讓＝使、令；長大＝成長。"
+      },
+      de: {
+        s: "Es kann Menschen wachsen lassen",
+        r: "",
+        e: "它＝指前句的飯菜香；讓＝使、令；長大＝成長。"
+      },
+      my: {
+        s: "လူတွေကို ကြီးပြင်းစေနိုင်တယ်",
+        r: "lu-dwe go kyee-pyin say nain te",
+        e: "它＝指前句的飯菜香；讓＝使、令；長大＝成長。"
+      },
+      ko: {
+        s: "사람을 자라게 할 수 있어요",
+        r: "sarameul jarage hal su isseoyo",
+        e: "它＝指前句的飯菜香；讓＝使、令；長大＝成長。"
+      },
+      ja: {
+        s: "人を大きく育ててくれる",
+        r: "hito o ōkiku sodatete kureru",
+        e: "它＝指前句的飯菜香；讓＝使、令；長大＝成長。"
+      },
+      si: {
+        s: "එය මිනිසුන් ලොකු කරනවා",
+        r: "eya minisun loku karanavā",
+        e: "它＝指前句的飯菜香；讓＝使、令；長大＝成長。"
+      },
+      fa: {
+        s: "می‌تواند آدم‌ها را بزرگ کند",
+        r: "mitavānad ādamhā rā bozorg konad",
+        e: "它＝指前句的飯菜香；讓＝使、令；長大＝成長。"
+      }
+    },
+    {
+      hi: {
+        s: "मुस्कुराते चेहरे फूलों जैसे",
+        r: "muskurāte cehre phūloṁ jaise",
+        e: "如＝像、如同；笑臉如花＝笑容像花一樣燦爛。"
+      },
+      en: {
+        s: "Smiling faces like flowers",
+        r: "",
+        e: "如＝像、如同；笑臉如花＝笑容像花一樣燦爛。"
+      },
+      ta: {
+        s: "பூக்களைப் போன்ற புன்னகை முகங்கள்",
+        r: "pūkkaḷaip pōṉṟa puṉṉakai mukaṅkaḷ",
+        e: "如＝像、如同；笑臉如花＝笑容像花一樣燦爛。"
+      },
+      th: {
+        s: "ใบหน้ายิ้มแย้มเหมือนดอกไม้",
+        r: "bai-nâa yím-yáaem mǔuean dòok-mái",
+        e: "如＝像、如同；笑臉如花＝笑容像花一樣燦爛。"
+      },
+      km: {
+        s: "មុខញញឹមដូចផ្កា",
+        r: "muk nhenhim douch phka",
+        e: "如＝像、如同；笑臉如花＝笑容像花一樣燦爛。"
+      },
+      vi: {
+        s: "Gương mặt cười tươi như hoa",
+        r: "",
+        e: "如＝像、如同；笑臉如花＝笑容像花一樣燦爛。"
+      },
+      id: {
+        s: "Wajah tersenyum seperti bunga",
+        r: "",
+        e: "如＝像、如同；笑臉如花＝笑容像花一樣燦爛。"
+      },
+      ne: {
+        s: "फूलजस्तै मुस्कुराउने अनुहार",
+        r: "phūljastai muskurāune anuhār",
+        e: "如＝像、如同；笑臉如花＝笑容像花一樣燦爛。"
+      },
+      bn: {
+        s: "ফুলের মতো হাসিমুখ",
+        r: "phuler mata hāsimukh",
+        e: "如＝像、如同；笑臉如花＝笑容像花一樣燦爛。"
+      },
+      es: {
+        s: "Caras sonrientes como flores",
+        r: "",
+        e: "如＝像、如同；笑臉如花＝笑容像花一樣燦爛。"
+      },
+      de: {
+        s: "Lächelnde Gesichter wie Blumen",
+        r: "",
+        e: "如＝像、如同；笑臉如花＝笑容像花一樣燦爛。"
+      },
+      my: {
+        s: "ပန်းလို ပြုံးနေတဲ့မျက်နှာ",
+        r: "pan lo pyone nay te myet-hnar",
+        e: "如＝像、如同；笑臉如花＝笑容像花一樣燦爛。"
+      },
+      ko: {
+        s: "꽃처럼 웃는 얼굴",
+        r: "kkotcheoreom unneun eolgul",
+        e: "如＝像、如同；笑臉如花＝笑容像花一樣燦爛。"
+      },
+      ja: {
+        s: "花のような笑顔",
+        r: "hana no yō na egao",
+        e: "如＝像、如同；笑臉如花＝笑容像花一樣燦爛。"
+      },
+      si: {
+        s: "මල් වගේ සිනා මුහුණ",
+        r: "mal vagē sinā muhuṇa",
+        e: "如＝像、如同；笑臉如花＝笑容像花一樣燦爛。"
+      },
+      fa: {
+        s: "صورت‌های خندان مثل گل",
+        r: "surat-hāye xandān mesle gol",
+        e: "如＝像、如同；笑臉如花＝笑容像花一樣燦爛。"
+      }
+    },
+    {
+      hi: {
+        s: "हर बसंत, पतझड़, सर्दी, गर्मी",
+        r: "har basant, patjhaṛ, sardī, garmī",
+        e: "每個＝每一個；春秋冬夏＝一年四季。"
+      },
+      en: {
+        s: "Every spring, autumn, winter and summer",
+        r: "",
+        e: "每個＝每一個；春秋冬夏＝一年四季。"
+      },
+      ta: {
+        s: "ஒவ்வொரு வசந்தம், இலையுதிர், குளிர், கோடை",
+        r: "ovvoru vacantam, ilaiyutir, kuḷir, kōṭai",
+        e: "每個＝每一個；春秋冬夏＝一年四季。"
+      },
+      th: {
+        s: "ทุกฤดูใบไม้ผลิ ใบไม้ร่วง หนาว และร้อน",
+        r: "thúk rúue-duu bai-mái phlì, bai-mái rûuang, nǎao láe rón",
+        e: "每個＝每一個；春秋冬夏＝一年四季。"
+      },
+      km: {
+        s: "រាល់និទាឃរដូវ សរទរដូវ រដូវរងា និងរដូវក្តៅ",
+        r: "roal nitakea roduv, sort roduv, roduv rongea ning roduv kdau",
+        e: "每個＝每一個；春秋冬夏＝一年四季。"
+      },
+      vi: {
+        s: "Mỗi xuân thu đông hạ",
+        r: "",
+        e: "每個＝每一個；春秋冬夏＝一年四季。"
+      },
+      id: {
+        s: "Setiap musim semi, gugur, dingin, dan panas",
+        r: "",
+        e: "每個＝每一個；春秋冬夏＝一年四季。"
+      },
+      ne: {
+        s: "हरेक वसन्त, शरद, जाडो र गर्मी",
+        r: "harek vasanta, śarad, jāḍo ra garmī",
+        e: "每個＝每一個；春秋冬夏＝一年四季。"
+      },
+      bn: {
+        s: "প্রতিটি বসন্ত, শরৎ, শীত আর গ্রীষ্ম",
+        r: "pratiṭi basanta, śarat, śīt ār grīṣma",
+        e: "每個＝每一個；春秋冬夏＝一年四季。"
+      },
+      es: {
+        s: "Cada primavera, otoño, invierno y verano",
+        r: "",
+        e: "每個＝每一個；春秋冬夏＝一年四季。"
+      },
+      de: {
+        s: "Jeden Frühling, Herbst, Winter und Sommer",
+        r: "",
+        e: "每個＝每一個；春秋冬夏＝一年四季。"
+      },
+      my: {
+        s: "နွေ၊ ဆောင်းဦး၊ ဆောင်းနဲ့ နွေရာသီ တိုင်းမှာ",
+        r: "nway, hsaung-uu, hsaung ne nway-yar-thi tain hmar",
+        e: "每個＝每一個；春秋冬夏＝一年四季。"
+      },
+      ko: {
+        s: "모든 봄 가을 겨울 여름",
+        r: "modeun bom gaeul gyeoul yeoreum",
+        e: "每個＝每一個；春秋冬夏＝一年四季。"
+      },
+      ja: {
+        s: "春も秋も冬も夏も",
+        r: "haru mo aki mo fuyu mo natsu mo",
+        e: "每個＝每一個；春秋冬夏＝一年四季。"
+      },
+      si: {
+        s: "සෑම වසන්ත, සරත්, ශීත සහ ගිම්හාන",
+        r: "sǣma vasanta, sarat, śīta saha gimhāna",
+        e: "每個＝每一個；春秋冬夏＝一年四季。"
+      },
+      fa: {
+        s: "هر بهار و پاییز و زمستان و تابستان",
+        r: "har bahār va pāyiz va zemestān va tābestān",
+        e: "每個＝每一個；春秋冬夏＝一年四季。"
+      }
+    },
+    {
+      hi: {
+        s: "एक मेज़ के चारों ओर हँसते-खिलखिलाते",
+        r: "ek mez ke cāroṁ or haṁste-khilkhilāte",
+        e: "圍＝圍坐；一桌＝一張桌子；笑哈哈＝開心大笑的樣子。"
+      },
+      en: {
+        s: "Around one table, laughing merrily",
+        r: "",
+        e: "圍＝圍坐；一桌＝一張桌子；笑哈哈＝開心大笑的樣子。"
+      },
+      ta: {
+        s: "ஒரு மேசையைச் சுற்றி கலகலவென சிரிப்பு",
+        r: "oru mēcaiyaic cuṟṟi kalakalaveṉa cirippu",
+        e: "圍＝圍坐；一桌＝一張桌子；笑哈哈＝開心大笑的樣子。"
+      },
+      th: {
+        s: "ล้อมโต๊ะหัวเราะกันอย่างสนุกสนาน",
+        r: "lóm tô hǔa-ró kan yàang sà-nùk-sà-nǎan",
+        e: "圍＝圍坐；一桌＝一張桌子；笑哈哈＝開心大笑的樣子。"
+      },
+      km: {
+        s: "ជុំវិញតុមួយ សើចក្អាកក្អាយ",
+        r: "chomvinh tok muoy saech k'ak k'ay",
+        e: "圍＝圍坐；一桌＝一張桌子；笑哈哈＝開心大笑的樣子。"
+      },
+      vi: {
+        s: "Quây quanh một bàn, cười ha ha",
+        r: "",
+        e: "圍＝圍坐；一桌＝一張桌子；笑哈哈＝開心大笑的樣子。"
+      },
+      id: {
+        s: "Mengelilingi satu meja sambil tertawa riang",
+        r: "",
+        e: "圍＝圍坐；一桌＝一張桌子；笑哈哈＝開心大笑的樣子。"
+      },
+      ne: {
+        s: "एउटा टेबल वरिपरि हाँस्दै खित्का छोड्दै",
+        r: "euṭā ṭebal varipari hā̃sdai khitkā choḍdai",
+        e: "圍＝圍坐；一桌＝一張桌子；笑哈哈＝開心大笑的樣子。"
+      },
+      bn: {
+        s: "এক টেবিল ঘিরে হাসিখুশি",
+        r: "ek ṭebil ghire hāsikhuśi",
+        e: "圍＝圍坐；一桌＝一張桌子；笑哈哈＝開心大笑的樣子。"
+      },
+      es: {
+        s: "Alrededor de una mesa, riendo a carcajadas",
+        r: "",
+        e: "圍＝圍坐；一桌＝一張桌子；笑哈哈＝開心大笑的樣子。"
+      },
+      de: {
+        s: "Um einen Tisch versammelt, fröhlich lachend",
+        r: "",
+        e: "圍＝圍坐；一桌＝一張桌子；笑哈哈＝開心大笑的樣子。"
+      },
+      my: {
+        s: "စားပွဲတစ်လုံးဝိုင်းပြီး ရယ်မောပျော်ရွှင်",
+        r: "sar-pwe tit-lone wine pyee ye-maw pyaw-shwin",
+        e: "圍＝圍坐；一桌＝一張桌子；笑哈哈＝開心大笑的樣子。"
+      },
+      ko: {
+        s: "한 상에 둘러앉아 하하 웃어요",
+        r: "han sang-e dulleoanja haha useoyo",
+        e: "圍＝圍坐；一桌＝一張桌子；笑哈哈＝開心大笑的樣子。"
+      },
+      ja: {
+        s: "一つのテーブルを囲んで大笑い",
+        r: "hitotsu no tēburu o kakonde ōwarai",
+        e: "圍＝圍坐；一桌＝一張桌子；笑哈哈＝開心大笑的樣子。"
+      },
+      si: {
+        s: "එක මේසයක් වටේ හිනැහී",
+        r: "eka mēsayak vaṭē hinæhī",
+        e: "圍＝圍坐；一桌＝一張桌子；笑哈哈＝開心大笑的樣子。"
+      },
+      fa: {
+        s: "دور یک میز، قهقهه می‌زنیم",
+        r: "dowre yek miz, qahqahe mizanim",
+        e: "圍＝圍坐；一桌＝一張桌子；笑哈哈＝開心大笑的樣子。"
+      }
+    },
+    {
+      hi: {
+        s: "तुम मेरे सबसे अच्छे पापा हो",
+        r: "tum mere sabse acche pāpā ho",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      en: {
+        s: "You are my greatest dad",
+        r: "",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      ta: {
+        s: "நீ என் மிகச் சிறந்த அப்பா",
+        r: "nī eṉ mikac ciṟanta appā",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      th: {
+        s: "พ่อคือพ่อที่ดีที่สุดของหนู",
+        r: "phôo khuue phôo thîi dii thîi-sùt khǒong nǔu",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      km: {
+        s: "ប៉ាជាប៉ាដ៏ល្អបំផុតរបស់ខ្ញុំ",
+        r: "pa chea pa dor l'or bomphot robsa khnhom",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      vi: {
+        s: "Bố là người bố tuyệt vời nhất của con",
+        r: "",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      id: {
+        s: "Ayah adalah ayah terbaikku",
+        r: "",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      ne: {
+        s: "तपाईं मेरो सबैभन्दा राम्रो बुबा हुनुहुन्छ",
+        r: "tapāī̃ mero sabaibhandā rāmro bubā hunuhuncha",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      bn: {
+        s: "তুমি আমার সবচেয়ে সেরা বাবা",
+        r: "tumi āmār sabceẏe serā bābā",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      es: {
+        s: "Eres mi papá más genial",
+        r: "",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      de: {
+        s: "Du bist mein allerbester Papa",
+        r: "",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      my: {
+        s: "ဖေဖေက ကျွန်တော့်ရဲ့ အကောင်းဆုံး ဖေဖေပါ",
+        r: "hpe-hpe ga kyan-taw ye a-kaung-sone hpe-hpe par",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      ko: {
+        s: "아빠는 제 최고의 아빠예요",
+        r: "appaneun je choegoui appayeyo",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      ja: {
+        s: "パパは私の最高のパパ",
+        r: "papa wa watashi no saikō no papa",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      si: {
+        s: "තාත්තා මගේ හොඳම තාත්තා",
+        r: "tāttā magē hondama tāttā",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      fa: {
+        s: "تو بهترین بابای منی",
+        r: "to behtarin bābāye mani",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      }
+    },
+    {
+      hi: {
+        s: "मुझे एक घर दिया",
+        r: "mujhe ek ghar diyā",
+        e: "給＝給予；一個家＝一個家庭、一個歸宿。"
+      },
+      en: {
+        s: "You gave me a home",
+        r: "",
+        e: "給＝給予；一個家＝一個家庭、一個歸宿。"
+      },
+      ta: {
+        s: "எனக்கு ஒரு வீடு கொடுத்தாய்",
+        r: "eṉakku oru vīṭu koṭuttāy",
+        e: "給＝給予；一個家＝一個家庭、一個歸宿。"
+      },
+      th: {
+        s: "ให้บ้านแก่หนู",
+        r: "hâi bâan kàe nǔu",
+        e: "給＝給予；一個家＝一個家庭、一個歸宿。"
+      },
+      km: {
+        s: "បានឱ្យផ្ទះមួយដល់ខ្ញុំ",
+        r: "ban aoy phteah muoy dal khnhom",
+        e: "給＝給予；一個家＝一個家庭、一個歸宿。"
+      },
+      vi: {
+        s: "Cho con một mái nhà",
+        r: "",
+        e: "給＝給予；一個家＝一個家庭、一個歸宿。"
+      },
+      id: {
+        s: "Memberiku sebuah rumah",
+        r: "",
+        e: "給＝給予；一個家＝一個家庭、一個歸宿。"
+      },
+      ne: {
+        s: "मलाई एउटा घर दिनुभयो",
+        r: "malāī euṭā ghar dinubhayo",
+        e: "給＝給予；一個家＝一個家庭、一個歸宿。"
+      },
+      bn: {
+        s: "আমাকে একটা বাড়ি দিয়েছ",
+        r: "āmāke ekṭā bāṛi diẏecho",
+        e: "給＝給予；一個家＝一個家庭、一個歸宿。"
+      },
+      es: {
+        s: "Me diste un hogar",
+        r: "",
+        e: "給＝給予；一個家＝一個家庭、一個歸宿。"
+      },
+      de: {
+        s: "Hast mir ein Zuhause gegeben",
+        r: "",
+        e: "給＝給予；一個家＝一個家庭、一個歸宿。"
+      },
+      my: {
+        s: "ကျွန်တော့်ကို အိမ်တစ်လုံး ပေးခဲ့တယ်",
+        r: "kyan-taw go eain tit-lone pay khae te",
+        e: "給＝給予；一個家＝一個家庭、一個歸宿。"
+      },
+      ko: {
+        s: "내게 집을 주셨어요",
+        r: "naege jibeul jusyeosseoyo",
+        e: "給＝給予；一個家＝一個家庭、一個歸宿。"
+      },
+      ja: {
+        s: "私に家をくれた",
+        r: "watashi ni ie o kureta",
+        e: "給＝給予；一個家＝一個家庭、一個歸宿。"
+      },
+      si: {
+        s: "මට ගෙයක් දුන්නා",
+        r: "maṭa geyak dunnā",
+        e: "給＝給予；一個家＝一個家庭、一個歸宿。"
+      },
+      fa: {
+        s: "به من یک خانه دادی",
+        r: "be man yek xāne dādi",
+        e: "給＝給予；一個家＝一個家庭、一個歸宿。"
+      }
+    },
+    {
+      hi: {
+        s: "जब तुम मुझे गले लगाते हो",
+        r: "jab tum mujhe gale lagāte ho",
+        e: "擁抱＝抱住；著＝表示動作持續；的時候＝當……之時。"
+      },
+      en: {
+        s: "When you hold me in your arms",
+        r: "",
+        e: "擁抱＝抱住；著＝表示動作持續；的時候＝當……之時。"
+      },
+      ta: {
+        s: "நீ என்னை அணைக்கும் போது",
+        r: "nī eṉṉai aṇaikkum pōtu",
+        e: "擁抱＝抱住；著＝表示動作持續；的時候＝當……之時。"
+      },
+      th: {
+        s: "เวลาที่พ่อกอดหนู",
+        r: "wee-laa thîi phôo kòot nǔu",
+        e: "擁抱＝抱住；著＝表示動作持續；的時候＝當……之時。"
+      },
+      km: {
+        s: "ពេលប៉ាឱបខ្ញុំ",
+        r: "pel pa aob khnhom",
+        e: "擁抱＝抱住；著＝表示動作持續；的時候＝當……之時。"
+      },
+      vi: {
+        s: "Khi bố ôm con",
+        r: "",
+        e: "擁抱＝抱住；著＝表示動作持續；的時候＝當……之時。"
+      },
+      id: {
+        s: "Saat Ayah memelukku",
+        r: "",
+        e: "擁抱＝抱住；著＝表示動作持續；的時候＝當……之時。"
+      },
+      ne: {
+        s: "तपाईंले मलाई अँगालो हाल्ने बेला",
+        r: "tapāī̃le malāī ãgālo hālne belā",
+        e: "擁抱＝抱住；著＝表示動作持續；的時候＝當……之時。"
+      },
+      bn: {
+        s: "যখন তুমি আমাকে জড়িয়ে ধরো",
+        r: "yakhan tumi āmāke jaṛiẏe dharo",
+        e: "擁抱＝抱住；著＝表示動作持續；的時候＝當……之時。"
+      },
+      es: {
+        s: "Cuando me abrazas",
+        r: "",
+        e: "擁抱＝抱住；著＝表示動作持續；的時候＝當……之時。"
+      },
+      de: {
+        s: "Wenn du mich in den Arm nimmst",
+        r: "",
+        e: "擁抱＝抱住；著＝表示動作持續；的時候＝當……之時。"
+      },
+      my: {
+        s: "ဖေဖေ ကျွန်တော့်ကို ဖက်ထားတဲ့အခါ",
+        r: "hpe-hpe kyan-taw go hpet htar te a-khar",
+        e: "擁抱＝抱住；著＝表示動作持續；的時候＝當……之時。"
+      },
+      ko: {
+        s: "아빠가 저를 안아 줄 때",
+        r: "appaga jeoreul ana jul ttae",
+        e: "擁抱＝抱住；著＝表示動作持續；的時候＝當……之時。"
+      },
+      ja: {
+        s: "パパが抱きしめてくれるとき",
+        r: "papa ga dakishimete kureru toki",
+        e: "擁抱＝抱住；著＝表示動作持續；的時候＝當……之時。"
+      },
+      si: {
+        s: "තාත්තා මාව වැළඳගන්න විට",
+        r: "tāttā māva væḷaňdaganna viṭa",
+        e: "擁抱＝抱住；著＝表示動作持續；的時候＝當……之時。"
+      },
+      fa: {
+        s: "وقتی مرا در آغوش می‌گیری",
+        r: "vaghti marā dar āğuš migiri",
+        e: "擁抱＝抱住；著＝表示動作持續；的時候＝當……之時。"
+      }
+    },
+    {
+      hi: {
+        s: "जैसे सारी दुनिया जीत ली हो",
+        r: "jaise sārī duniyā jīt lī ho",
+        e: "就像＝好像；贏得＝贏到、獲得；天下＝整個世界。"
+      },
+      en: {
+        s: "It is like winning the whole world",
+        r: "",
+        e: "就像＝好像；贏得＝贏到、獲得；天下＝整個世界。"
+      },
+      ta: {
+        s: "உலகையே வென்றது போல்",
+        r: "ulakaiyē veṉṟatu pōl",
+        e: "就像＝好像；贏得＝贏到、獲得；天下＝整個世界。"
+      },
+      th: {
+        s: "เหมือนได้ครองโลกทั้งใบ",
+        r: "mǔuean dâi khroong lôok tháng bai",
+        e: "就像＝好像；贏得＝贏到、獲得；天下＝整個世界。"
+      },
+      km: {
+        s: "ដូចបានឈ្នះលោកទាំងមូល",
+        r: "douch ban chhneah lok teang moul",
+        e: "就像＝好像；贏得＝贏到、獲得；天下＝整個世界。"
+      },
+      vi: {
+        s: "Giống như giành được cả thiên hạ",
+        r: "",
+        e: "就像＝好像；贏得＝贏到、獲得；天下＝整個世界。"
+      },
+      id: {
+        s: "Rasanya seperti memenangkan seluruh dunia",
+        r: "",
+        e: "就像＝好像；贏得＝贏到、獲得；天下＝整個世界。"
+      },
+      ne: {
+        s: "सारा संसार जिते जस्तै",
+        r: "sārā sansār jite jastai",
+        e: "就像＝好像；贏得＝贏到、獲得；天下＝整個世界。"
+      },
+      bn: {
+        s: "যেন সারা বিশ্ব জয় করেছি",
+        r: "yena sārā biśba jay karechi",
+        e: "就像＝好像；贏得＝贏到、獲得；天下＝整個世界。"
+      },
+      es: {
+        s: "Es como ganar el mundo entero",
+        r: "",
+        e: "就像＝好像；贏得＝贏到、獲得；天下＝整個世界。"
+      },
+      de: {
+        s: "Es ist, als hätte ich die ganze Welt gewonnen",
+        r: "",
+        e: "就像＝好像；贏得＝贏到、獲得；天下＝整個世界。"
+      },
+      my: {
+        s: "ကမ္ဘာကြီးကို အနိုင်ရလိုက်သလိုပဲ",
+        r: "kabar-gyee go a-nine ya lite thi-lo be",
+        e: "就像＝好像；贏得＝贏到、獲得；天下＝整個世界。"
+      },
+      ko: {
+        s: "세상을 다 가진 것 같아요",
+        r: "sesangeul da gajin geot gatayo",
+        e: "就像＝好像；贏得＝贏到、獲得；天下＝整個世界。"
+      },
+      ja: {
+        s: "世界中を手に入れたみたい",
+        r: "sekaijū o te ni ireta mitai",
+        e: "就像＝好像；贏得＝贏到、獲得；天下＝整個世界。"
+      },
+      si: {
+        s: "ලෝකයම දිනුවා වගේ",
+        r: "lōkayama dinuvā vagē",
+        e: "就像＝好像；贏得＝贏到、獲得；天下＝整個世界。"
+      },
+      fa: {
+        s: "مثل این است که همه دنیا را برده باشم",
+        r: "mesle in ast ke hame donyā rā borde bāšam",
+        e: "就像＝好像；贏得＝贏到、獲得；天下＝整個世界。"
+      }
+    },
+    {
+      hi: {
+        s: "तुम सबसे अच्छे पापा हो",
+        r: "tum sabse acche pāpā ho",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      en: {
+        s: "You are the greatest dad",
+        r: "",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      ta: {
+        s: "நீ மிகச் சிறந்த அப்பா",
+        r: "nī mikac ciṟanta appā",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      th: {
+        s: "พ่อคือพ่อที่ดีที่สุด",
+        r: "phôo khuue phôo thîi dii thîi-sùt",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      km: {
+        s: "ប៉ាជាប៉ាដដ៏ល្អបំផុត",
+        r: "pa chea pa dor l'or bomphot",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      vi: {
+        s: "Bố là người bố tuyệt vời nhất",
+        r: "",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      id: {
+        s: "Ayah adalah ayah terbaik",
+        r: "",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      ne: {
+        s: "तपाईं सबैभन्दा राम्रो बुबा हुनुहुन्छ",
+        r: "tapāī̃ sabaibhandā rāmro bubā hunuhuncha",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      bn: {
+        s: "তুমি সবচেয়ে সেরা বাবা",
+        r: "tumi sabceẏe serā bābā",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      es: {
+        s: "Eres el papá más genial",
+        r: "",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      de: {
+        s: "Du bist der allerbeste Papa",
+        r: "",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      my: {
+        s: "ဖေဖေက အကောင်းဆုံး ဖေဖေပါ",
+        r: "hpe-hpe ga a-kaung-sone hpe-hpe par",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      ko: {
+        s: "아빠는 최고의 아빠예요",
+        r: "appaneun choegoui appayeyo",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      ja: {
+        s: "パパは最高のパパ",
+        r: "papa wa saikō no papa",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      si: {
+        s: "තාත්තා හොඳම තාත්තා",
+        r: "tāttā hondama tāttā",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      },
+      fa: {
+        s: "تو بهترین بابایی",
+        r: "to behtarin bābāyi",
+        e: "最棒＝最好、最厲害；老爸＝對父親的親暱稱呼。"
+      }
+    },
+    {
+      hi: {
+        s: "किसी चीज़ से नहीं डरते",
+        r: "kisī cīz se nahīṁ ḍarte",
+        e: "什麼都＝任何事物都；不怕＝不害怕。"
+      },
+      en: {
+        s: "You are afraid of nothing",
+        r: "",
+        e: "什麼都＝任何事物都；不怕＝不害怕。"
+      },
+      ta: {
+        s: "எதற்கும் பயப்பட மாட்டாய்",
+        r: "etaṟkum payappaṭa māṭṭāy",
+        e: "什麼都＝任何事物都；不怕＝不害怕。"
+      },
+      th: {
+        s: "ไม่กลัวอะไรเลย",
+        r: "mâi klua à-rai loei",
+        e: "什麼都＝任何事物都；不怕＝不害怕。"
+      },
+      km: {
+        s: "មិនខ្លាចអ្វីទាំងអស់",
+        r: "min khlach avei teang os",
+        e: "什麼都＝任何事物都；不怕＝不害怕。"
+      },
+      vi: {
+        s: "Chẳng sợ điều gì",
+        r: "",
+        e: "什麼都＝任何事物都；不怕＝不害怕。"
+      },
+      id: {
+        s: "Tidak takut apa pun",
+        r: "",
+        e: "什麼都＝任何事物都；不怕＝不害怕。"
+      },
+      ne: {
+        s: "केहीदेखि डराउनुहुन्न",
+        r: "kehīdekhi ḍarāunuhunna",
+        e: "什麼都＝任何事物都；不怕＝不害怕。"
+      },
+      bn: {
+        s: "কিছুতেই ভয় পাও না",
+        r: "kichutei bhay pāo nā",
+        e: "什麼都＝任何事物都；不怕＝不害怕。"
+      },
+      es: {
+        s: "No le temes a nada",
+        r: "",
+        e: "什麼都＝任何事物都；不怕＝不害怕。"
+      },
+      de: {
+        s: "Du fürchtest dich vor nichts",
+        r: "",
+        e: "什麼都＝任何事物都；不怕＝不害怕。"
+      },
+      my: {
+        s: "ဘာကိုမှ မကြောက်ဘူး",
+        r: "bar go hma ma-kyauk buu",
+        e: "什麼都＝任何事物都；不怕＝不害怕。"
+      },
+      ko: {
+        s: "아무것도 무섭지 않아요",
+        r: "amugeotdo museopji anayo",
+        e: "什麼都＝任何事物都；不怕＝不害怕。"
+      },
+      ja: {
+        s: "何も怖くない",
+        r: "nani mo kowakunai",
+        e: "什麼都＝任何事物都；不怕＝不害怕。"
+      },
+      si: {
+        s: "කිසිම දෙයකට බය නෑ",
+        r: "kisima deyakata baya nǣ",
+        e: "什麼都＝任何事物都；不怕＝不害怕。"
+      },
+      fa: {
+        s: "از هیچ چیز نمی‌ترسی",
+        r: "az hič čiz nemitarsi",
+        e: "什麼都＝任何事物都；不怕＝不害怕。"
+      }
+    },
+    {
+      hi: {
+        s: "तुमने कहा था, आसमान बड़ा, धरती बड़ी",
+        r: "tumne kahā thā, āsmān baṛā, dhartī baṛī",
+        e: "說過＝曾經說（過＝表示經驗）；天大地大＝天地廣闊無邊。"
+      },
+      en: {
+        s: "You once said, the sky is vast and the earth is wide",
+        r: "",
+        e: "說過＝曾經說（過＝表示經驗）；天大地大＝天地廣闊無邊。"
+      },
+      ta: {
+        s: "வானம் பெரிது, பூமி பெரிது என்று நீ சொன்னாய்",
+        r: "vāṉam peritu, pūmi peritu eṉṟu nī coṉṉāy",
+        e: "說過＝曾經說（過＝表示經驗）；天大地大＝天地廣闊無邊。"
+      },
+      th: {
+        s: "พ่อเคยบอกว่า ฟ้ากว้าง แผ่นดินใหญ่",
+        r: "phôo khooei bòok wâa fáa kwâang phàaen-din yài",
+        e: "說過＝曾經說（過＝表示經驗）；天大地大＝天地廣闊無邊。"
+      },
+      km: {
+        s: "ប៉ាធ្លាប់និយាយថា មេឃធំ ដីធំ",
+        r: "pa thloap niyay tha mek thom dei thom",
+        e: "說過＝曾經說（過＝表示經驗）；天大地大＝天地廣闊無邊。"
+      },
+      vi: {
+        s: "Bố từng nói trời cao đất rộng",
+        r: "",
+        e: "說過＝曾經說（過＝表示經驗）；天大地大＝天地廣闊無邊。"
+      },
+      id: {
+        s: "Ayah pernah bilang, langit luas, bumi besar",
+        r: "",
+        e: "說過＝曾經說（過＝表示經驗）；天大地大＝天地廣闊無邊。"
+      },
+      ne: {
+        s: "तपाईंले भन्नुभएको थियो, आकाश ठूलो, धर्ती ठूलो",
+        r: "tapāī̃le bhannubhaeko thiyo, ākāś ṭhūlo, dhartī ṭhūlo",
+        e: "說過＝曾經說（過＝表示經驗）；天大地大＝天地廣闊無邊。"
+      },
+      bn: {
+        s: "তুমি বলেছিলে, আকাশ বড়, পৃথিবী বড়",
+        r: "tumi balechile, ākāś baṛa, pr̥thibī baṛa",
+        e: "說過＝曾經說（過＝表示經驗）；天大地大＝天地廣闊無邊。"
+      },
+      es: {
+        s: "Dijiste que el cielo es inmenso y la tierra es grande",
+        r: "",
+        e: "說過＝曾經說（過＝表示經驗）；天大地大＝天地廣闊無邊。"
+      },
+      de: {
+        s: "Du hast gesagt, der Himmel ist groß und die Erde ist groß",
+        r: "",
+        e: "說過＝曾經說（過＝表示經驗）；天大地大＝天地廣闊無邊。"
+      },
+      my: {
+        s: "ဖေဖေ ပြောဖူးတယ်၊ ကောင်းကင်ကြီးတယ်၊ မြေကြီးတယ်",
+        r: "hpe-hpe pyaw phuu te, kaung-kin kyee te, myay kyee te",
+        e: "說過＝曾經說（過＝表示經驗）；天大地大＝天地廣闊無邊。"
+      },
+      ko: {
+        s: "아빠는 말했어요, 하늘이 크고 땅이 크다고",
+        r: "appaneun malhaesseoyo, haneuri keugo ttangi keudago",
+        e: "說過＝曾經說（過＝表示經驗）；天大地大＝天地廣闊無邊。"
+      },
+      ja: {
+        s: "パパは言った、空は大きく地は大きいと",
+        r: "papa wa itta, sora wa ōkiku chi wa ōkii to",
+        e: "說過＝曾經說（過＝表示經驗）；天大地大＝天地廣闊無邊。"
+      },
+      si: {
+        s: "තාත්තා කිව්වා, අහස ලොකුයි, පොළොව ලොකුයි",
+        r: "tāttā kivvā, ahasa lokuyi, poḷova lokuyi",
+        e: "說過＝曾經說（過＝表示經驗）；天大地大＝天地廣闊無邊。"
+      },
+      fa: {
+        s: "تو گفتی آسمان بزرگ است و زمین بزرگ است",
+        r: "to gofti āsemān bozorg ast va zamin bozorg ast",
+        e: "說過＝曾經說（過＝表示經驗）；天大地大＝天地廣闊無邊。"
+      }
+    },
+    {
+      hi: {
+        s: "पर हमारे घर जैसा कुछ नहीं",
+        r: "par hamāre ghar jaisā kuch nahīṁ",
+        e: "不如＝比不上；我們的家＝我們共同的家庭。"
+      },
+      en: {
+        s: "But nothing compares to our home",
+        r: "",
+        e: "不如＝比不上；我們的家＝我們共同的家庭。"
+      },
+      ta: {
+        s: "ஆனால் நம் வீட்டிற்கு ஈடு இல்லை",
+        r: "āṉāl nam vīṭṭiṟku īṭu illai",
+        e: "不如＝比不上；我們的家＝我們共同的家庭。"
+      },
+      th: {
+        s: "ก็ไม่เท่าบ้านของเรา",
+        r: "kô mâi thâo bâan khǒong rao",
+        e: "不如＝比不上；我們的家＝我們共同的家庭。"
+      },
+      km: {
+        s: "មិនស្មើផ្ទះរបស់យើងទេ",
+        r: "min smee phteah robsa yeung te",
+        e: "不如＝比不上；我們的家＝我們共同的家庭。"
+      },
+      vi: {
+        s: "Chẳng bằng mái nhà của chúng ta",
+        r: "",
+        e: "不如＝比不上；我們的家＝我們共同的家庭。"
+      },
+      id: {
+        s: "Tak sebanding dengan rumah kita",
+        r: "",
+        e: "不如＝比不上；我們的家＝我們共同的家庭。"
+      },
+      ne: {
+        s: "तर हाम्रो घरजति छैन",
+        r: "tar hāmro gharjati chaina",
+        e: "不如＝比不上；我們的家＝我們共同的家庭。"
+      },
+      bn: {
+        s: "তবু আমাদের বাড়ির মতো নয়",
+        r: "tabu āmāder bāṛir mata nay",
+        e: "不如＝比不上；我們的家＝我們共同的家庭。"
+      },
+      es: {
+        s: "Nada se compara con nuestro hogar",
+        r: "",
+        e: "不如＝比不上；我們的家＝我們共同的家庭。"
+      },
+      de: {
+        s: "Nichts kommt an unser Zuhause heran",
+        r: "",
+        e: "不如＝比不上；我們的家＝我們共同的家庭。"
+      },
+      my: {
+        s: "ကျွန်တော်တို့အိမ်နဲ့ မယှဉ်နိုင်ဘူး",
+        r: "kyan-taw-doh eain ne ma-shin-nine buu",
+        e: "不如＝比不上；我們的家＝我們共同的家庭。"
+      },
+      ko: {
+        s: "우리 집만은 못해요",
+        r: "uri jimaneun mothaeyo",
+        e: "不如＝比不上；我們的家＝我們共同的家庭。"
+      },
+      ja: {
+        s: "私たちの家にはかなわない",
+        r: "watashitachi no ie ni wa kanawanai",
+        e: "不如＝比不上；我們的家＝我們共同的家庭。"
+      },
+      si: {
+        s: "අපේ ගෙදර තරම් නෑ",
+        r: "apē gedara taram nǣ",
+        e: "不如＝比不上；我們的家＝我們共同的家庭。"
+      },
+      fa: {
+        s: "اما به پای خانه ما نمی‌رسد",
+        r: "ammā be pāye xāneye mā nemiresad",
+        e: "不如＝比不上；我們的家＝我們共同的家庭。"
+      }
+    }
+  ],
+  younijiuxingfu: [
+    {
+      hi: {
+        s: "मैं एक पेड़ देखता हूँ",
+        r: "maiṅ ek peṛ dekhtā hūṅ",
+        e: "看見＝看到；一棵樹＝「棵」是樹木的量詞。"
+      },
+      en: {
+        s: "I see a tree",
+        r: "",
+        e: "看見＝看到；一棵樹＝「棵」是樹木的量詞。"
+      },
+      ta: {
+        s: "நான் ஒரு மரத்தைக் காண்கிறேன்",
+        r: "nāṉ oru marattaik kāṇkiṟēṉ",
+        e: "看見＝看到；一棵樹＝「棵」是樹木的量詞。"
+      },
+      th: {
+        s: "ฉันเห็นต้นไม้ต้นหนึ่ง",
+        r: "chan hen ton mai ton nueng",
+        e: "看見＝看到；一棵樹＝「棵」是樹木的量詞。"
+      },
+      km: {
+        s: "ខ្ញុំឃើញដើមឈើមួយដើម",
+        r: "khnhom kheunh daem chheu muoy daem",
+        e: "看見＝看到；一棵樹＝「棵」是樹木的量詞。"
+      },
+      vi: {
+        s: "Tôi nhìn thấy một cái cây",
+        r: "",
+        e: "看見＝看到；一棵樹＝「棵」是樹木的量詞。"
+      },
+      id: {
+        s: "Aku melihat sebatang pohon",
+        r: "",
+        e: "看見＝看到；一棵樹＝「棵」是樹木的量詞。"
+      },
+      ne: {
+        s: "म एउटा रूख देख्छु",
+        r: "ma euṭā rūkh dekhchu",
+        e: "看見＝看到；一棵樹＝「棵」是樹木的量詞。"
+      },
+      bn: {
+        s: "আমি একটি গাছ দেখি",
+        r: "āmi ekaṭi gāch dekhi",
+        e: "看見＝看到；一棵樹＝「棵」是樹木的量詞。"
+      },
+      es: {
+        s: "Veo un árbol",
+        r: "",
+        e: "看見＝看到；一棵樹＝「棵」是樹木的量詞。"
+      },
+      de: {
+        s: "Ich sehe einen Baum",
+        r: "",
+        e: "看見＝看到；一棵樹＝「棵」是樹木的量詞。"
+      },
+      my: {
+        s: "သစ်ပင်တစ်ပင်ကို မြင်တယ်",
+        r: "thit-pin ta-pin go myin-de",
+        e: "看見＝看到；一棵樹＝「棵」是樹木的量詞。"
+      },
+      ko: {
+        s: "나는 나무 한 그루를 보네",
+        r: "naneun namu han geurureul bone",
+        e: "看見＝看到；一棵樹＝「棵」是樹木的量詞。"
+      },
+      ja: {
+        s: "木が一本見える",
+        r: "ki ga ippon mieru",
+        e: "看見＝看到；一棵樹＝「棵」是樹木的量詞。"
+      },
+      si: {
+        s: "මම ගසක් දකිනවා",
+        r: "mama gasak dakinavā",
+        e: "看見＝看到；一棵樹＝「棵」是樹木的量詞。"
+      },
+      fa: {
+        s: "یک درخت می‌بینم",
+        r: "yek derakht mībīnam",
+        e: "看見＝看到；一棵樹＝「棵」是樹木的量詞。"
+      }
+    },
+    {
+      hi: {
+        s: "शाम और सूर्योदय देखता हूँ",
+        r: "śām aur sūryoday dekhtā hūṅ",
+        e: "黃昏＝傍晚日落時分；日出＝太陽升起；和＝與、跟。"
+      },
+      en: {
+        s: "I see the dusk and the sunrise",
+        r: "",
+        e: "黃昏＝傍晚日落時分；日出＝太陽升起；和＝與、跟。"
+      },
+      ta: {
+        s: "அந்தியையும் சூரிய உதயத்தையும் காண்கிறேன்",
+        r: "antiyaiyum cūriya utayattaiyum kāṇkiṟēṉ",
+        e: "黃昏＝傍晚日落時分；日出＝太陽升起；和＝與、跟。"
+      },
+      th: {
+        s: "เห็นยามค่ำและตะวันขึ้น",
+        r: "hen yam kham lae tawan khuen",
+        e: "黃昏＝傍晚日落時分；日出＝太陽升起；和＝與、跟。"
+      },
+      km: {
+        s: "ឃើញព្រលប់ និងថ្ងៃរះ",
+        r: "kheunh prolob ning thngai reah",
+        e: "黃昏＝傍晚日落時分；日出＝太陽升起；和＝與、跟。"
+      },
+      vi: {
+        s: "Nhìn thấy hoàng hôn và bình minh",
+        r: "",
+        e: "黃昏＝傍晚日落時分；日出＝太陽升起；和＝與、跟。"
+      },
+      id: {
+        s: "Melihat senja dan matahari terbit",
+        r: "",
+        e: "黃昏＝傍晚日落時分；日出＝太陽升起；和＝與、跟。"
+      },
+      ne: {
+        s: "साँझ र सूर्योदय देख्छु",
+        r: "sā̃jh ra sūryodaya dekhchu",
+        e: "黃昏＝傍晚日落時分；日出＝太陽升起；和＝與、跟。"
+      },
+      bn: {
+        s: "গোধূলি আর সূর্যোদয় দেখি",
+        r: "godhūli ār sūryodaya dekhi",
+        e: "黃昏＝傍晚日落時分；日出＝太陽升起；和＝與、跟。"
+      },
+      es: {
+        s: "Veo el atardecer y el amanecer",
+        r: "",
+        e: "黃昏＝傍晚日落時分；日出＝太陽升起；和＝與、跟。"
+      },
+      de: {
+        s: "Ich sehe die Abenddämmerung und den Sonnenaufgang",
+        r: "",
+        e: "黃昏＝傍晚日落時分；日出＝太陽升起；和＝與、跟。"
+      },
+      my: {
+        s: "ညနေခင်းနဲ့ နေထွက်ကို မြင်တယ်",
+        r: "nya-ne-khin ne nay-htwet go myin-de",
+        e: "黃昏＝傍晚日落時分；日出＝太陽升起；和＝與、跟。"
+      },
+      ko: {
+        s: "황혼과 일출을 보네",
+        r: "hwanghongwa ilchureul bone",
+        e: "黃昏＝傍晚日落時分；日出＝太陽升起；和＝與、跟。"
+      },
+      ja: {
+        s: "夕暮れと日の出が見える",
+        r: "yūgure to hinode ga mieru",
+        e: "黃昏＝傍晚日落時分；日出＝太陽升起；和＝與、跟。"
+      },
+      si: {
+        s: "සන්ධ්‍යාව සහ හිරු උදාව දකිනවා",
+        r: "sandhyāva saha hiru udāva dakinavā",
+        e: "黃昏＝傍晚日落時分；日出＝太陽升起；和＝與、跟。"
+      },
+      fa: {
+        s: "غروب و طلوع خورشید را می‌بینم",
+        r: "ghorūb o ṭolūʿ-e khorshīd rā mībīnam",
+        e: "黃昏＝傍晚日落時分；日出＝太陽升起；和＝與、跟。"
+      }
+    },
+    {
+      hi: {
+        s: "मेरी ज़िंदगी में एक तुम हो",
+        r: "merī zindagī meṅ ek tum ho",
+        e: "生命中＝人生裡；有個你＝有一個你，「個」為量詞。"
+      },
+      en: {
+        s: "In my life there is you",
+        r: "",
+        e: "生命中＝人生裡；有個你＝有一個你，「個」為量詞。"
+      },
+      ta: {
+        s: "என் வாழ்க்கையில் நீ இருக்கிறாய்",
+        r: "eṉ vāḻkkaiyil nī irukkiṟāy",
+        e: "生命中＝人生裡；有個你＝有一個你，「個」為量詞。"
+      },
+      th: {
+        s: "ในชีวิตของฉันมีเธอ",
+        r: "nai chiwit khong chan mi thoe",
+        e: "生命中＝人生裡；有個你＝有一個你，「個」為量詞。"
+      },
+      km: {
+        s: "ក្នុងជីវិតខ្ញុំមានអ្នក",
+        r: "knong chivit khnhom mean neak",
+        e: "生命中＝人生裡；有個你＝有一個你，「個」為量詞。"
+      },
+      vi: {
+        s: "Trong đời tôi có bạn",
+        r: "",
+        e: "生命中＝人生裡；有個你＝有一個你，「個」為量詞。"
+      },
+      id: {
+        s: "Dalam hidupku ada dirimu",
+        r: "",
+        e: "生命中＝人生裡；有個你＝有一個你，「個」為量詞。"
+      },
+      ne: {
+        s: "मेरो जीवनमा तिमी छौ",
+        r: "mero jīvanmā timī chau",
+        e: "生命中＝人生裡；有個你＝有一個你，「個」為量詞。"
+      },
+      bn: {
+        s: "আমার জীবনে তুমি আছ",
+        r: "āmār jībane tumi ācha",
+        e: "生命中＝人生裡；有個你＝有一個你，「個」為量詞。"
+      },
+      es: {
+        s: "En mi vida estás tú",
+        r: "",
+        e: "生命中＝人生裡；有個你＝有一個你，「個」為量詞。"
+      },
+      de: {
+        s: "In meinem Leben gibt es dich",
+        r: "",
+        e: "生命中＝人生裡；有個你＝有一個你，「個」為量詞。"
+      },
+      my: {
+        s: "ဘဝမှာ မင်းတစ်ယောက် ရှိတယ်",
+        r: "ba-wa hma min ta-yout shi-de",
+        e: "生命中＝人生裡；有個你＝有一個你，「個」為量詞。"
+      },
+      ko: {
+        s: "내 삶 속에 네가 있어",
+        r: "nae sam soge nega isseo",
+        e: "生命中＝人生裡；有個你＝有一個你，「個」為量詞。"
+      },
+      ja: {
+        s: "人生にあなたがいる",
+        r: "jinsei ni anata ga iru",
+        e: "生命中＝人生裡；有個你＝有一個你，「個」為量詞。"
+      },
+      si: {
+        s: "මගේ ජීවිතයේ ඔබ ඉන්නවා",
+        r: "magē jīvitayē oba innavā",
+        e: "生命中＝人生裡；有個你＝有一個你，「個」為量詞。"
+      },
+      fa: {
+        s: "در زندگی‌ام تو هستی",
+        r: "dar zendegīam to hastī",
+        e: "生命中＝人生裡；有個你＝有一個你，「個」為量詞。"
+      }
+    },
+    {
+      hi: {
+        s: "हमेशा मेरे पास मेरी रक्षा करते हो",
+        r: "hameśā mere pās merī rakṣā karte ho",
+        e: "總是＝一直；守護＝保護、照看；身邊＝身旁。"
+      },
+      en: {
+        s: "Always watching over me by my side",
+        r: "",
+        e: "總是＝一直；守護＝保護、照看；身邊＝身旁。"
+      },
+      ta: {
+        s: "எப்போதும் என் அருகில் என்னைக் காக்கிறாய்",
+        r: "eppōtum eṉ arukil eṉṉaik kākkiṟāy",
+        e: "總是＝一直；守護＝保護、照看；身邊＝身旁。"
+      },
+      th: {
+        s: "คอยเฝ้าดูแลอยู่ข้างกายฉันเสมอ",
+        r: "khoi fao dulae yu khang kai chan samoe",
+        e: "總是＝一直；守護＝保護、照看；身邊＝身旁。"
+      },
+      km: {
+        s: "តែងតែនៅក្បែរខ្ញុំការពារខ្ញុំ",
+        r: "taeng tae nov kbae khnhom karpear khnhom",
+        e: "總是＝一直；守護＝保護、照看；身邊＝身旁。"
+      },
+      vi: {
+        s: "Luôn ở bên cạnh chở che cho tôi",
+        r: "",
+        e: "總是＝一直；守護＝保護、照看；身邊＝身旁。"
+      },
+      id: {
+        s: "Selalu menjagaku di sisiku",
+        r: "",
+        e: "總是＝一直；守護＝保護、照看；身邊＝身旁。"
+      },
+      ne: {
+        s: "सधैं मेरो छेउमा मेरो रक्षा गर्छौ",
+        r: "sadhaĩ mero cheumā mero rakṣā garchau",
+        e: "總是＝一直；守護＝保護、照看；身邊＝身旁。"
+      },
+      bn: {
+        s: "সবসময় আমার পাশে থেকে আমাকে রক্ষা করো",
+        r: "sabsamay āmār pāśe theke āmāke rakṣā karo",
+        e: "總是＝一直；守護＝保護、照看；身邊＝身旁。"
+      },
+      es: {
+        s: "Siempre me proteges a mi lado",
+        r: "",
+        e: "總是＝一直；守護＝保護、照看；身邊＝身旁。"
+      },
+      de: {
+        s: "Du beschützt mich immer an meiner Seite",
+        r: "",
+        e: "總是＝一直；守護＝保護、照看；身邊＝身旁。"
+      },
+      my: {
+        s: "အမြဲတမ်း ငါ့အနားမှာ စောင့်ရှောက်နေတယ်",
+        r: "a-mye-dan nga a-nar hma saung-shout nay-de",
+        e: "總是＝一直；守護＝保護、照看；身邊＝身旁。"
+      },
+      ko: {
+        s: "늘 내 곁에서 지켜줘",
+        r: "neul nae gyeoteseo jikyeojwo",
+        e: "總是＝一直；守護＝保護、照看；身邊＝身旁。"
+      },
+      ja: {
+        s: "いつもそばで守ってくれる",
+        r: "itsumo soba de mamotte kureru",
+        e: "總是＝一直；守護＝保護、照看；身邊＝身旁。"
+      },
+      si: {
+        s: "හැමදාම මා ළඟ ඉඳලා මාව රකිනවා",
+        r: "hämadāma mā ḷaṅga indalā māva rakinavā",
+        e: "總是＝一直；守護＝保護、照看；身邊＝身旁。"
+      },
+      fa: {
+        s: "همیشه کنارم از من محافظت می‌کنی",
+        r: "hamīshe kenāram az man moḥāfeẓat mīkonī",
+        e: "總是＝一直；守護＝保護、照看；身邊＝身旁。"
+      }
+    },
+    {
+      hi: {
+        s: "कितनी भी दूर की यात्रा हो",
+        r: "kitnī bhī dūr kī yātrā ho",
+        e: "多遠＝無論多遠（疑問詞表任指）；旅途＝旅程。"
+      },
+      en: {
+        s: "However long the journey may be",
+        r: "",
+        e: "多遠＝無論多遠（疑問詞表任指）；旅途＝旅程。"
+      },
+      ta: {
+        s: "எவ்வளவு தூரப் பயணமானாலும்",
+        r: "evvaḷavu tūrap payaṇamāṉālum",
+        e: "多遠＝無論多遠（疑問詞表任指）；旅途＝旅程。"
+      },
+      th: {
+        s: "ไม่ว่าการเดินทางจะไกลแค่ไหน",
+        r: "mai wa kan doen thang cha klai khae nai",
+        e: "多遠＝無論多遠（疑問詞表任指）；旅途＝旅程。"
+      },
+      km: {
+        s: "ទោះដំណើរឆ្ងាយយ៉ាងណា",
+        r: "toh domnaer chhngay yang na",
+        e: "多遠＝無論多遠（疑問詞表任指）；旅途＝旅程。"
+      },
+      vi: {
+        s: "Dù chuyến hành trình có xa đến đâu",
+        r: "",
+        e: "多遠＝無論多遠（疑問詞表任指）；旅途＝旅程。"
+      },
+      id: {
+        s: "Sejauh apa pun perjalanan ini",
+        r: "",
+        e: "多遠＝無論多遠（疑問詞表任指）；旅途＝旅程。"
+      },
+      ne: {
+        s: "जति टाढाको यात्रा भए पनि",
+        r: "jati ṭāḍhāko yātrā bhae pani",
+        e: "多遠＝無論多遠（疑問詞表任指）；旅途＝旅程。"
+      },
+      bn: {
+        s: "যত দূরের যাত্রাই হোক",
+        r: "yata dūrer yātrāi hok",
+        e: "多遠＝無論多遠（疑問詞表任指）；旅途＝旅程。"
+      },
+      es: {
+        s: "Por largo que sea el viaje",
+        r: "",
+        e: "多遠＝無論多遠（疑問詞表任指）；旅途＝旅程。"
+      },
+      de: {
+        s: "Wie weit die Reise auch sein mag",
+        r: "",
+        e: "多遠＝無論多遠（疑問詞表任指）；旅途＝旅程。"
+      },
+      my: {
+        s: "ခရီးဘယ်လောက်ဝေးဝေး",
+        r: "kha-yi be-lout way-way",
+        e: "多遠＝無論多遠（疑問詞表任指）；旅途＝旅程。"
+      },
+      ko: {
+        s: "아무리 먼 여정이라도",
+        r: "amuri meon yeojeongirado",
+        e: "多遠＝無論多遠（疑問詞表任指）；旅途＝旅程。"
+      },
+      ja: {
+        s: "どんなに遠い旅路でも",
+        r: "donna ni tōi tabiji demo",
+        e: "多遠＝無論多遠（疑問詞表任指）；旅途＝旅程。"
+      },
+      si: {
+        s: "කොච්චර දුර ගමනක් වුණත්",
+        r: "kochchara dura gamanak vuṇat",
+        e: "多遠＝無論多遠（疑問詞表任指）；旅途＝旅程。"
+      },
+      fa: {
+        s: "هر قدر هم سفر دور باشد",
+        r: "har qadr ham safar dūr bāshad",
+        e: "多遠＝無論多遠（疑問詞表任指）；旅途＝旅程。"
+      }
+    },
+    {
+      hi: {
+        s: "कितने भी मौसम बीत जाएँ",
+        r: "kitne bhī mausam bīt jāeṅ",
+        e: "寒暑＝寒冷與炎熱，借指歲月流轉；多少＝無論多少。"
+      },
+      en: {
+        s: "However many winters and summers pass",
+        r: "",
+        e: "寒暑＝寒冷與炎熱，借指歲月流轉；多少＝無論多少。"
+      },
+      ta: {
+        s: "எத்தனை குளிரும் வெயிலும் கடந்தாலும்",
+        r: "ettaṉai kuḷirum veyilum kaṭantālum",
+        e: "寒暑＝寒冷與炎熱，借指歲月流轉；多少＝無論多少。"
+      },
+      th: {
+        s: "ไม่ว่ากี่หนาวกี่ร้อนผ่านไป",
+        r: "mai wa ki nao ki ron phan pai",
+        e: "寒暑＝寒冷與炎熱，借指歲月流轉；多少＝無論多少。"
+      },
+      km: {
+        s: "ទោះប៉ុន្មានរដូវកន្លងផុត",
+        r: "toh bonman rodov kanlang phot",
+        e: "寒暑＝寒冷與炎熱，借指歲月流轉；多少＝無論多少。"
+      },
+      vi: {
+        s: "Dù bao nhiêu mùa đông hạ trôi qua",
+        r: "",
+        e: "寒暑＝寒冷與炎熱，借指歲月流轉；多少＝無論多少。"
+      },
+      id: {
+        s: "Berapa pun musim yang berlalu",
+        r: "",
+        e: "寒暑＝寒冷與炎熱，借指歲月流轉；多少＝無論多少。"
+      },
+      ne: {
+        s: "जति धेरै गर्मी जाडो बिते पनि",
+        r: "jati dherai garmī jāḍo bite pani",
+        e: "寒暑＝寒冷與炎熱，借指歲月流轉；多少＝無論多少。"
+      },
+      bn: {
+        s: "যত শীত-গ্রীষ্মই কেটে যাক",
+        r: "yata śīta-grīṣmai keṭe yāk",
+        e: "寒暑＝寒冷與炎熱，借指歲月流轉；多少＝無論多少。"
+      },
+      es: {
+        s: "Por muchos inviernos y veranos que pasen",
+        r: "",
+        e: "寒暑＝寒冷與炎熱，借指歲月流轉；多少＝無論多少。"
+      },
+      de: {
+        s: "Wie viele Winter und Sommer auch vergehen",
+        r: "",
+        e: "寒暑＝寒冷與炎熱，借指歲月流轉；多少＝無論多少。"
+      },
+      my: {
+        s: "ဘယ်နှစ်ရာသီ ကြာကြာ",
+        r: "be-hnit ya-thi kya-kya",
+        e: "寒暑＝寒冷與炎熱，借指歲月流轉；多少＝無論多少。"
+      },
+      ko: {
+        s: "몇 번의 겨울과 여름이 지나도",
+        r: "myeot beonui gyeoulgwa yeoreumi jinado",
+        e: "寒暑＝寒冷與炎熱，借指歲月流轉；多少＝無論多少。"
+      },
+      ja: {
+        s: "幾つの寒さ暑さを越えても",
+        r: "ikutsu no samusa atsusa wo koete mo",
+        e: "寒暑＝寒冷與炎熱，借指歲月流轉；多少＝無論多少。"
+      },
+      si: {
+        s: "කොච්චර ශීත උණුසුම් කාල ගත වුණත්",
+        r: "kochchara śīta uṇusum kāla gata vuṇat",
+        e: "寒暑＝寒冷與炎熱，借指歲月流轉；多少＝無論多少。"
+      },
+      fa: {
+        s: "هر چند زمستان و تابستان بگذرد",
+        r: "har chand zemestān o tābestān begozarad",
+        e: "寒暑＝寒冷與炎熱，借指歲月流轉；多少＝無論多少。"
+      }
+    },
+    {
+      hi: {
+        s: "तुम्हारे साथ रहकर",
+        r: "tumhāre sāth rahkar",
+        e: "在一起＝相聚、相伴；和＝與、跟。"
+      },
+      en: {
+        s: "When I am together with you",
+        r: "",
+        e: "在一起＝相聚、相伴；和＝與、跟。"
+      },
+      ta: {
+        s: "உன்னுடன் சேர்ந்திருக்கும் போது",
+        r: "uṉṉuṭaṉ cērntirukkum pōtu",
+        e: "在一起＝相聚、相伴；和＝與、跟。"
+      },
+      th: {
+        s: "เมื่อได้อยู่กับเธอ",
+        r: "muea dai yu kap thoe",
+        e: "在一起＝相聚、相伴；和＝與、跟。"
+      },
+      km: {
+        s: "ពេលនៅជាមួយអ្នក",
+        r: "pel nov chiemuy neak",
+        e: "在一起＝相聚、相伴；和＝與、跟。"
+      },
+      vi: {
+        s: "Khi được ở bên bạn",
+        r: "",
+        e: "在一起＝相聚、相伴；和＝與、跟。"
+      },
+      id: {
+        s: "Saat bersamamu",
+        r: "",
+        e: "在一起＝相聚、相伴；和＝與、跟。"
+      },
+      ne: {
+        s: "तिमीसँग सँगै हुँदा",
+        r: "timīsaṅga saṅgai huṅdā",
+        e: "在一起＝相聚、相伴；和＝與、跟。"
+      },
+      bn: {
+        s: "তোমার সাথে থাকলে",
+        r: "tomār sāthe thākle",
+        e: "在一起＝相聚、相伴；和＝與、跟。"
+      },
+      es: {
+        s: "Cuando estoy contigo",
+        r: "",
+        e: "在一起＝相聚、相伴；和＝與、跟。"
+      },
+      de: {
+        s: "Wenn ich mit dir zusammen bin",
+        r: "",
+        e: "在一起＝相聚、相伴；和＝與、跟。"
+      },
+      my: {
+        s: "မင်းနဲ့အတူ ရှိနေရင်",
+        r: "min ne a-tu shi nay yin",
+        e: "在一起＝相聚、相伴；和＝與、跟。"
+      },
+      ko: {
+        s: "너와 함께 있으면",
+        r: "neowa hamkke isseumyeon",
+        e: "在一起＝相聚、相伴；和＝與、跟。"
+      },
+      ja: {
+        s: "あなたと一緒にいると",
+        r: "anata to issho ni iru to",
+        e: "在一起＝相聚、相伴；和＝與、跟。"
+      },
+      si: {
+        s: "ඔබත් එක්ක ඉන්න විට",
+        r: "obat ekka inna viṭa",
+        e: "在一起＝相聚、相伴；和＝與、跟。"
+      },
+      fa: {
+        s: "وقتی با تو هستم",
+        r: "vaqtī bā to hastam",
+        e: "在一起＝相聚、相伴；和＝與、跟。"
+      }
+    },
+    {
+      hi: {
+        s: "संतोष महसूस होता है",
+        r: "santoṣ mahsūs hotā hai",
+        e: "覺得＝感到；滿足＝心滿意足；就＝便，承接前句的結果。"
+      },
+      en: {
+        s: "I feel so content",
+        r: "",
+        e: "覺得＝感到；滿足＝心滿意足；就＝便，承接前句的結果。"
+      },
+      ta: {
+        s: "மனம் நிறைவாக உணர்கிறேன்",
+        r: "maṉam niṟaivāka uṇarkiṟēṉ",
+        e: "覺得＝感到；滿足＝心滿意足；就＝便，承接前句的結果。"
+      },
+      th: {
+        s: "ก็รู้สึกพอใจเต็มหัวใจ",
+        r: "ko rusuek phochai tem hua chai",
+        e: "覺得＝感到；滿足＝心滿意足；就＝便，承接前句的結果。"
+      },
+      km: {
+        s: "ខ្ញុំមានអារម្មណ៍ពេញចិត្ត",
+        r: "khnhom mean arom penh chett",
+        e: "覺得＝感到；滿足＝心滿意足；就＝便，承接前句的結果。"
+      },
+      vi: {
+        s: "Tôi thấy lòng mình mãn nguyện",
+        r: "",
+        e: "覺得＝感到；滿足＝心滿意足；就＝便，承接前句的結果。"
+      },
+      id: {
+        s: "Hatiku merasa puas",
+        r: "",
+        e: "覺得＝感到；滿足＝心滿意足；就＝便，承接前句的結果。"
+      },
+      ne: {
+        s: "मन सन्तुष्ट हुन्छ",
+        r: "man santuṣṭa huncha",
+        e: "覺得＝感到；滿足＝心滿意足；就＝便，承接前句的結果。"
+      },
+      bn: {
+        s: "মনটা ভরে যায়",
+        r: "manaṭā bhare yāy",
+        e: "覺得＝感到；滿足＝心滿意足；就＝便，承接前句的結果。"
+      },
+      es: {
+        s: "Me siento plenamente satisfecho",
+        r: "",
+        e: "覺得＝感到；滿足＝心滿意足；就＝便，承接前句的結果。"
+      },
+      de: {
+        s: "Fühle ich mich rundum zufrieden",
+        r: "",
+        e: "覺得＝感到；滿足＝心滿意足；就＝便，承接前句的結果。"
+      },
+      my: {
+        s: "စိတ်ကျေနပ်မှု ခံစားရတယ်",
+        r: "sait kye-nat-hmu khan-sar ya-de",
+        e: "覺得＝感到；滿足＝心滿意足；就＝便，承接前句的結果。"
+      },
+      ko: {
+        s: "마음이 충만해져",
+        r: "maeumi chungmanhaejyeo",
+        e: "覺得＝感到；滿足＝心滿意足；就＝便，承接前句的結果。"
+      },
+      ja: {
+        s: "心が満たされる",
+        r: "kokoro ga mitasareru",
+        e: "覺得＝感到；滿足＝心滿意足；就＝便，承接前句的結果。"
+      },
+      si: {
+        s: "හිත තෘප්තිමත් වෙනවා",
+        r: "hita tṛptimat venavā",
+        e: "覺得＝感到；滿足＝心滿意足；就＝便，承接前句的結果。"
+      },
+      fa: {
+        s: "احساس رضایت می‌کنم",
+        r: "eḥsās-e reżāyat mīkonam",
+        e: "覺得＝感到；滿足＝心滿意足；就＝便，承接前句的結果。"
+      }
+    },
+    {
+      hi: {
+        s: "तुम्हारे होने से ही खुशी है",
+        r: "tumhāre hone se hī khuśī hai",
+        e: "有你＝有你在；就幸福＝便感到幸福，「有……就……」抒情句型。"
+      },
+      en: {
+        s: "With you, I have happiness",
+        r: "",
+        e: "有你＝有你在；就幸福＝便感到幸福，「有……就……」抒情句型。"
+      },
+      ta: {
+        s: "நீ இருந்தாலே மகிழ்ச்சி",
+        r: "nī iruntālē makiḻcci",
+        e: "有你＝有你在；就幸福＝便感到幸福，「有……就……」抒情句型。"
+      },
+      th: {
+        s: "มีเธออยู่ก็มีความสุข",
+        r: "mi thoe yu ko mi khwam suk",
+        e: "有你＝有你在；就幸福＝便感到幸福，「有……就……」抒情句型。"
+      },
+      km: {
+        s: "មានអ្នកគឺមានសុភមង្គល",
+        r: "mean neak ku mean sophamongkol",
+        e: "有你＝有你在；就幸福＝便感到幸福，「有……就……」抒情句型。"
+      },
+      vi: {
+        s: "Có bạn là có hạnh phúc",
+        r: "",
+        e: "有你＝有你在；就幸福＝便感到幸福，「有……就……」抒情句型。"
+      },
+      id: {
+        s: "Ada dirimu, ada kebahagiaan",
+        r: "",
+        e: "有你＝有你在；就幸福＝便感到幸福，「有……就……」抒情句型。"
+      },
+      ne: {
+        s: "तिमी भए खुशी छ",
+        r: "timī bhae khuśī cha",
+        e: "有你＝有你在；就幸福＝便感到幸福，「有……就……」抒情句型。"
+      },
+      bn: {
+        s: "তুমি থাকলেই সুখ",
+        r: "tumi thāklei sukh",
+        e: "有你＝有你在；就幸福＝便感到幸福，「有……就……」抒情句型。"
+      },
+      es: {
+        s: "Contigo soy feliz",
+        r: "",
+        e: "有你＝有你在；就幸福＝便感到幸福，「有……就……」抒情句型。"
+      },
+      de: {
+        s: "Mit dir bin ich glücklich",
+        r: "",
+        e: "有你＝有你在；就幸福＝便感到幸福，「有……就……」抒情句型。"
+      },
+      my: {
+        s: "မင်းရှိရင် ပျော်ရွှင်မှုပဲ",
+        r: "min shi yin pyaw-shwin-hmu pe",
+        e: "有你＝有你在；就幸福＝便感到幸福，「有……就……」抒情句型。"
+      },
+      ko: {
+        s: "네가 있으면 행복해",
+        r: "nega isseumyeon haengbokhae",
+        e: "有你＝有你在；就幸福＝便感到幸福，「有……就……」抒情句型。"
+      },
+      ja: {
+        s: "あなたがいれば幸せ",
+        r: "anata ga ireba shiawase",
+        e: "有你＝有你在；就幸福＝便感到幸福，「有……就……」抒情句型。"
+      },
+      si: {
+        s: "ඔබ ඉන්නවා නම් සතුටයි",
+        r: "oba innavā nam satutayi",
+        e: "有你＝有你在；就幸福＝便感到幸福，「有……就……」抒情句型。"
+      },
+      fa: {
+        s: "با تو بودن یعنی خوشبختی",
+        r: "bā to būdan yaʿnī khoshbakhtī",
+        e: "有你＝有你在；就幸福＝便感到幸福，「有……就……」抒情句型。"
+      }
+    },
+    {
+      hi: {
+        s: "वह धूप की गर्माहट है",
+        r: "vah dhūp kī garmāhaṭ hai",
+        e: "陽光＝太陽的光；溫度＝溫暖的程度；那是＝那就是。"
+      },
+      en: {
+        s: "That is the warmth of the sunlight",
+        r: "",
+        e: "陽光＝太陽的光；溫度＝溫暖的程度；那是＝那就是。"
+      },
+      ta: {
+        s: "அது சூரிய ஒளியின் கதகதப்பு",
+        r: "atu cūriya oḷiyiṉ katakattappu",
+        e: "陽光＝太陽的光；溫度＝溫暖的程度；那是＝那就是。"
+      },
+      th: {
+        s: "นั่นคือความอบอุ่นของแสงแดด",
+        r: "nan khue khwam op un khong saeng daet",
+        e: "陽光＝太陽的光；溫度＝溫暖的程度；那是＝那就是。"
+      },
+      km: {
+        s: "នោះគឺកម្តៅនៃពន្លឺព្រះអាទិត្យ",
+        r: "nuh ku kamdav ney ponlu preah atit",
+        e: "陽光＝太陽的光；溫度＝溫暖的程度；那是＝那就是。"
+      },
+      vi: {
+        s: "Đó là hơi ấm của ánh nắng",
+        r: "",
+        e: "陽光＝太陽的光；溫度＝溫暖的程度；那是＝那就是。"
+      },
+      id: {
+        s: "Itulah kehangatan sinar matahari",
+        r: "",
+        e: "陽光＝太陽的光；溫度＝溫暖的程度；那是＝那就是。"
+      },
+      ne: {
+        s: "त्यो घामको न्यानोपन हो",
+        r: "tyo ghāmko nyānopan ho",
+        e: "陽光＝太陽的光；溫度＝溫暖的程度；那是＝那就是。"
+      },
+      bn: {
+        s: "সেটা সূর্যের আলোর উষ্ণতা",
+        r: "seṭā sūryer ālor uṣṇatā",
+        e: "陽光＝太陽的光；溫度＝溫暖的程度；那是＝那就是。"
+      },
+      es: {
+        s: "Es el calor de la luz del sol",
+        r: "",
+        e: "陽光＝太陽的光；溫度＝溫暖的程度；那是＝那就是。"
+      },
+      de: {
+        s: "Das ist die Wärme des Sonnenlichts",
+        r: "",
+        e: "陽光＝太陽的光；溫度＝溫暖的程度；那是＝那就是。"
+      },
+      my: {
+        s: "အဲဒါ နေရောင်ခြည်ရဲ့ နွေးထွေးမှုပဲ",
+        r: "e-da nay-yaung-chi ye nway-htway-hmu pe",
+        e: "陽光＝太陽的光；溫度＝溫暖的程度；那是＝那就是。"
+      },
+      ko: {
+        s: "그건 햇살의 온기야",
+        r: "geugeon haessarui ongiya",
+        e: "陽光＝太陽的光；溫度＝溫暖的程度；那是＝那就是。"
+      },
+      ja: {
+        s: "それは太陽の光の温かさ",
+        r: "sore wa taiyō no hikari no atatakasa",
+        e: "陽光＝太陽的光；溫度＝溫暖的程度；那是＝那就是。"
+      },
+      si: {
+        s: "එය හිරු එළියේ උණුසුමයි",
+        r: "eya hiru eliyē uṇusumayi",
+        e: "陽光＝太陽的光；溫度＝溫暖的程度；那是＝那就是。"
+      },
+      fa: {
+        s: "آن گرمای نور خورشید است",
+        r: "ān garmā-ye nūr-e khorshīd ast",
+        e: "陽光＝太陽的光；溫度＝溫暖的程度；那是＝那就是。"
+      }
+    },
+    {
+      hi: {
+        s: "प्यार पंखों की एक जोड़ी है",
+        r: "pyār paṅkhoṅ kī ek joṛī hai",
+        e: "一雙＝一對，「雙」為成對事物的量詞；翅膀＝鳥類飛行的器官，比喻自由與力量。"
+      },
+      en: {
+        s: "Love is a pair of wings",
+        r: "",
+        e: "一雙＝一對，「雙」為成對事物的量詞；翅膀＝鳥類飛行的器官，比喻自由與力量。"
+      },
+      ta: {
+        s: "அன்பு என்பது ஒரு ஜோடி சிறகுகள்",
+        r: "aṉpu eṉpatu oru jōṭi ciṟakukaḷ",
+        e: "一雙＝一對，「雙」為成對事物的量詞；翅膀＝鳥類飛行的器官，比喻自由與力量。"
+      },
+      th: {
+        s: "ความรักคือปีกหนึ่งคู่",
+        r: "khwam rak khue pik nueng khu",
+        e: "一雙＝一對，「雙」為成對事物的量詞；翅膀＝鳥類飛行的器官，比喻自由與力量。"
+      },
+      km: {
+        s: "សេចក្តីស្រឡាញ់គឺជាស្លាបមួយគូ",
+        r: "sechktei sralanh ku chea slab muoy ku",
+        e: "一雙＝一對，「雙」為成對事物的量詞；翅膀＝鳥類飛行的器官，比喻自由與力量。"
+      },
+      vi: {
+        s: "Tình yêu là một đôi cánh",
+        r: "",
+        e: "一雙＝一對，「雙」為成對事物的量詞；翅膀＝鳥類飛行的器官，比喻自由與力量。"
+      },
+      id: {
+        s: "Cinta adalah sepasang sayap",
+        r: "",
+        e: "一雙＝一對，「雙」為成對事物的量詞；翅膀＝鳥類飛行的器官，比喻自由與力量。"
+      },
+      ne: {
+        s: "माया पखेटाको एक जोडी हो",
+        r: "māyā pakheṭāko ek joḍī ho",
+        e: "一雙＝一對，「雙」為成對事物的量詞；翅膀＝鳥類飛行的器官，比喻自由與力量。"
+      },
+      bn: {
+        s: "ভালোবাসা একজোড়া ডানা",
+        r: "bhālobāsā ekajoṛā ḍānā",
+        e: "一雙＝一對，「雙」為成對事物的量詞；翅膀＝鳥類飛行的器官，比喻自由與力量。"
+      },
+      es: {
+        s: "El amor es un par de alas",
+        r: "",
+        e: "一雙＝一對，「雙」為成對事物的量詞；翅膀＝鳥類飛行的器官，比喻自由與力量。"
+      },
+      de: {
+        s: "Liebe ist ein Paar Flügel",
+        r: "",
+        e: "一雙＝一對，「雙」為成對事物的量詞；翅膀＝鳥類飛行的器官，比喻自由與力量。"
+      },
+      my: {
+        s: "အချစ်ဆိုတာ အတောင်တစ်စုံပဲ",
+        r: "a-chit hso-da a-taung ta-son pe",
+        e: "一雙＝一對，「雙」為成對事物的量詞；翅膀＝鳥類飛行的器官，比喻自由與力量。"
+      },
+      ko: {
+        s: "사랑은 한 쌍의 날개야",
+        r: "sarangeun han ssangui nalgaeya",
+        e: "一雙＝一對，「雙」為成對事物的量詞；翅膀＝鳥類飛行的器官，比喻自由與力量。"
+      },
+      ja: {
+        s: "愛は一対の翼",
+        r: "ai wa ittsui no tsubasa",
+        e: "一雙＝一對，「雙」為成對事物的量詞；翅膀＝鳥類飛行的器官，比喻自由與力量。"
+      },
+      si: {
+        s: "ආදරය කියන්නේ පියාපත් දෙකක්",
+        r: "ādaraya kiyannē piyāpat dekak",
+        e: "一雙＝一對，「雙」為成對事物的量詞；翅膀＝鳥類飛行的器官，比喻自由與力量。"
+      },
+      fa: {
+        s: "عشق یک جفت بال است",
+        r: "ʿeshq yek joft bāl ast",
+        e: "一雙＝一對，「雙」為成對事物的量詞；翅膀＝鳥類飛行的器官，比喻自由與力量。"
+      }
+    },
+    {
+      hi: {
+        s: "मेरे संग घाटियों के ऊपर उड़ता है",
+        r: "mere saṅg ghāṭiyoṅ ke ūpar uṛtā hai",
+        e: "陪＝陪伴；飛過＝飛越；山谷＝兩山之間的低地。"
+      },
+      en: {
+        s: "It flies with me over the valleys",
+        r: "",
+        e: "陪＝陪伴；飛過＝飛越；山谷＝兩山之間的低地。"
+      },
+      ta: {
+        s: "என்னுடன் பள்ளத்தாக்குகளைக் கடந்து பறக்கிறது",
+        r: "eṉṉuṭaṉ paḷḷattākkukaḷaik kaṭantu paṟakkiṟatu",
+        e: "陪＝陪伴；飛過＝飛越；山谷＝兩山之間的低地。"
+      },
+      th: {
+        s: "พาฉันบินข้ามหุบเขา",
+        r: "pha chan bin kham hup khao",
+        e: "陪＝陪伴；飛過＝飛越；山谷＝兩山之間的低地。"
+      },
+      km: {
+        s: "ហោះជាមួយខ្ញុំឆ្លងជ្រលងភ្នំ",
+        r: "haoh chiemuy khnhom chhlang chrolong phnom",
+        e: "陪＝陪伴；飛過＝飛越；山谷＝兩山之間的低地。"
+      },
+      vi: {
+        s: "Cùng tôi bay qua những thung lũng",
+        r: "",
+        e: "陪＝陪伴；飛過＝飛越；山谷＝兩山之間的低地。"
+      },
+      id: {
+        s: "Terbang bersamaku melintasi lembah",
+        r: "",
+        e: "陪＝陪伴；飛過＝飛越；山谷＝兩山之間的低地。"
+      },
+      ne: {
+        s: "मसँग उपत्यकामाथि उड्छ",
+        r: "masaṅga upatyakāmāthi uḍcha",
+        e: "陪＝陪伴；飛過＝飛越；山谷＝兩山之間的低地。"
+      },
+      bn: {
+        s: "আমার সাথে উপত্যকার উপর দিয়ে ওড়ে",
+        r: "āmār sāthe upatyakār upar diye oṛe",
+        e: "陪＝陪伴；飛過＝飛越；山谷＝兩山之間的低地。"
+      },
+      es: {
+        s: "Vuela conmigo sobre los valles",
+        r: "",
+        e: "陪＝陪伴；飛過＝飛越；山谷＝兩山之間的低地。"
+      },
+      de: {
+        s: "Sie fliegen mit mir über die Täler",
+        r: "",
+        e: "陪＝陪伴；飛過＝飛越；山谷＝兩山之間的低地。"
+      },
+      my: {
+        s: "ငါနဲ့အတူ ချိုင့်ဝှမ်းတွေကို ပျံသန်းကျော်ဖြတ်တယ်",
+        r: "nga ne a-tu chaint-wan dway go pyan-than kyaw-phyat de",
+        e: "陪＝陪伴；飛過＝飛越；山谷＝兩山之間的低地。"
+      },
+      ko: {
+        s: "나와 함께 골짜기를 날아 넘어",
+        r: "nawa hamkke goljjagireul nara neomeo",
+        e: "陪＝陪伴；飛過＝飛越；山谷＝兩山之間的低地。"
+      },
+      ja: {
+        s: "私と一緒に谷を飛び越える",
+        r: "watashi to issho ni tani wo tobikoeru",
+        e: "陪＝陪伴；飛過＝飛越；山谷＝兩山之間的低地。"
+      },
+      si: {
+        s: "මාත් එක්ක කඳු නිම්න උඩින් පියාසර කරනවා",
+        r: "māt ekka kandu nimna uḍin piyāsara karanavā",
+        e: "陪＝陪伴；飛過＝飛越；山谷＝兩山之間的低地。"
+      },
+      fa: {
+        s: "با من بر فراز دره‌ها پرواز می‌کند",
+        r: "bā man bar farāz-e darrehā parvāz mīkonad",
+        e: "陪＝陪伴；飛過＝飛越；山谷＝兩山之間的低地。"
+      }
+    },
+    {
+      hi: {
+        s: "वह समय का उपहार है",
+        r: "vah samay kā uphār hai",
+        e: "歲月＝時光、年月；禮物＝贈送的物品，此指珍貴的賜予。"
+      },
+      en: {
+        s: "That is the gift of the passing years",
+        r: "",
+        e: "歲月＝時光、年月；禮物＝贈送的物品，此指珍貴的賜予。"
+      },
+      ta: {
+        s: "அது காலத்தின் பரிசு",
+        r: "atu kālattiṉ paricu",
+        e: "歲月＝時光、年月；禮物＝贈送的物品，此指珍貴的賜予。"
+      },
+      th: {
+        s: "นั่นคือของขวัญแห่งกาลเวลา",
+        r: "nan khue khong khwan haeng kan wela",
+        e: "歲月＝時光、年月；禮物＝贈送的物品，此指珍貴的賜予。"
+      },
+      km: {
+        s: "នោះគឺជាអំណោយនៃពេលវេលា",
+        r: "nuh ku chea amnaoy ney pel velea",
+        e: "歲月＝時光、年月；禮物＝贈送的物品，此指珍貴的賜予。"
+      },
+      vi: {
+        s: "Đó là món quà của năm tháng",
+        r: "",
+        e: "歲月＝時光、年月；禮物＝贈送的物品，此指珍貴的賜予。"
+      },
+      id: {
+        s: "Itulah hadiah dari waktu yang berlalu",
+        r: "",
+        e: "歲月＝時光、年月；禮物＝贈送的物品，此指珍貴的賜予。"
+      },
+      ne: {
+        s: "त्यो समयको उपहार हो",
+        r: "tyo samayko uphār ho",
+        e: "歲月＝時光、年月；禮物＝贈送的物品，此指珍貴的賜予。"
+      },
+      bn: {
+        s: "সেটা সময়ের উপহার",
+        r: "seṭā samayer uphār",
+        e: "歲月＝時光、年月；禮物＝贈送的物品，此指珍貴的賜予。"
+      },
+      es: {
+        s: "Es el regalo de los años",
+        r: "",
+        e: "歲月＝時光、年月；禮物＝贈送的物品，此指珍貴的賜予。"
+      },
+      de: {
+        s: "Das ist das Geschenk der Jahre",
+        r: "",
+        e: "歲月＝時光、年月；禮物＝贈送的物品，此指珍貴的賜予。"
+      },
+      my: {
+        s: "အဲဒါ အချိန်ကာလရဲ့ လက်ဆောင်ပဲ",
+        r: "e-da a-chain ka-la ye let-hsaung pe",
+        e: "歲月＝時光、年月；禮物＝贈送的物品，此指珍貴的賜予。"
+      },
+      ko: {
+        s: "그건 세월이 주는 선물이야",
+        r: "geugeon sewol-i juneun seonmuriya",
+        e: "歲月＝時光、年月；禮物＝贈送的物品，此指珍貴的賜予。"
+      },
+      ja: {
+        s: "それは歳月の贈り物",
+        r: "sore wa saigetsu no okurimono",
+        e: "歲月＝時光、年月；禮物＝贈送的物品，此指珍貴的賜予。"
+      },
+      si: {
+        s: "එය කාලයේ තෑග්ගයි",
+        r: "eya kālayē tæggayi",
+        e: "歲月＝時光、年月；禮物＝贈送的物品，此指珍貴的賜予。"
+      },
+      fa: {
+        s: "آن هدیهٔ سالیان است",
+        r: "ān hadīye-ye sālīān ast",
+        e: "歲月＝時光、年月；禮物＝贈送的物品，此指珍貴的賜予。"
+      }
+    },
+    {
+      hi: {
+        s: "एक गर्मजोशी भरा आलिंगन",
+        r: "ek garmajośī bharā āliṅgan",
+        e: "溫暖＝暖和、令人安心；擁抱＝抱住對方，表達愛意。"
+      },
+      en: {
+        s: "One warm embrace",
+        r: "",
+        e: "溫暖＝暖和、令人安心；擁抱＝抱住對方，表達愛意。"
+      },
+      ta: {
+        s: "ஒரு அன்பான அரவணைப்பு",
+        r: "oru aṉpāṉa aravaṇaippu",
+        e: "溫暖＝暖和、令人安心；擁抱＝抱住對方，表達愛意。"
+      },
+      th: {
+        s: "อ้อมกอดที่อบอุ่น",
+        r: "om kot thi op un",
+        e: "溫暖＝暖和、令人安心；擁抱＝抱住對方，表達愛意。"
+      },
+      km: {
+        s: "ការឱបមួយដ៏កក់ក្តៅ",
+        r: "kar ob muoy da kakk kdov",
+        e: "溫暖＝暖和、令人安心；擁抱＝抱住對方，表達愛意。"
+      },
+      vi: {
+        s: "Một cái ôm ấm áp",
+        r: "",
+        e: "溫暖＝暖和、令人安心；擁抱＝抱住對方，表達愛意。"
+      },
+      id: {
+        s: "Sebuah pelukan yang hangat",
+        r: "",
+        e: "溫暖＝暖和、令人安心；擁抱＝抱住對方，表達愛意。"
+      },
+      ne: {
+        s: "एउटा न्यानो अँगालो",
+        r: "euṭā nyāno aṅgālo",
+        e: "溫暖＝暖和、令人安心；擁抱＝抱住對方，表達愛意。"
+      },
+      bn: {
+        s: "একটি উষ্ণ আলিঙ্গন",
+        r: "ekaṭi uṣṇa āliṅgan",
+        e: "溫暖＝暖和、令人安心；擁抱＝抱住對方，表達愛意。"
+      },
+      es: {
+        s: "Un abrazo cálido",
+        r: "",
+        e: "溫暖＝暖和、令人安心；擁抱＝抱住對方，表達愛意。"
+      },
+      de: {
+        s: "Eine warme Umarmung",
+        r: "",
+        e: "溫暖＝暖和、令人安心；擁抱＝抱住對方，表達愛意。"
+      },
+      my: {
+        s: "နွေးထွေးတဲ့ ပွေ့ဖက်မှုတစ်ခု",
+        r: "nway-htway de pway-phat-hmu ta-khu",
+        e: "溫暖＝暖和、令人安心；擁抱＝抱住對方，表達愛意。"
+      },
+      ko: {
+        s: "따뜻한 포옹 하나",
+        r: "ttatteuthan poong hana",
+        e: "溫暖＝暖和、令人安心；擁抱＝抱住對方，表達愛意。"
+      },
+      ja: {
+        s: "温かい抱擁ひとつ",
+        r: "atatakai hōyō hitotsu",
+        e: "溫暖＝暖和、令人安心；擁抱＝抱住對方，表達愛意。"
+      },
+      si: {
+        s: "උණුසුම් වැළඳගැනීමක්",
+        r: "uṇusum væḷandagænīmak",
+        e: "溫暖＝暖和、令人安心；擁抱＝抱住對方，表達愛意。"
+      },
+      fa: {
+        s: "یک آغوش گرم",
+        r: "yek āghūsh-e garm",
+        e: "溫暖＝暖和、令人安心；擁抱＝抱住對方，表達愛意。"
+      }
+    },
+    {
+      hi: {
+        s: "खुशियों से भरा हुआ",
+        r: "khuśiyoṅ se bharā huā",
+        e: "滿滿的＝充滿、豐盈的樣子；幸福＝快樂滿足的感受。"
+      },
+      en: {
+        s: "Brimming with happiness",
+        r: "",
+        e: "滿滿的＝充滿、豐盈的樣子；幸福＝快樂滿足的感受。"
+      },
+      ta: {
+        s: "மகிழ்ச்சி நிரம்பி வழிகிறது",
+        r: "makiḻcci nirampi vaḻikiṟatu",
+        e: "滿滿的＝充滿、豐盈的樣子；幸福＝快樂滿足的感受。"
+      },
+      th: {
+        s: "ความสุขที่เต็มเปี่ยม",
+        r: "khwam suk thi tem piam",
+        e: "滿滿的＝充滿、豐盈的樣子；幸福＝快樂滿足的感受。"
+      },
+      km: {
+        s: "ពោរពេញដោយសុភមង្គល",
+        r: "pour penh daoy sophamongkol",
+        e: "滿滿的＝充滿、豐盈的樣子；幸福＝快樂滿足的感受。"
+      },
+      vi: {
+        s: "Tràn đầy hạnh phúc",
+        r: "",
+        e: "滿滿的＝充滿、豐盈的樣子；幸福＝快樂滿足的感受。"
+      },
+      id: {
+        s: "Penuh dengan kebahagiaan",
+        r: "",
+        e: "滿滿的＝充滿、豐盈的樣子；幸福＝快樂滿足的感受。"
+      },
+      ne: {
+        s: "खुशीले भरिएको",
+        r: "khuśīle bharieko",
+        e: "滿滿的＝充滿、豐盈的樣子；幸福＝快樂滿足的感受。"
+      },
+      bn: {
+        s: "সুখে ভরপুর",
+        r: "sukhe bharapura",
+        e: "滿滿的＝充滿、豐盈的樣子；幸福＝快樂滿足的感受。"
+      },
+      es: {
+        s: "Rebosante de felicidad",
+        r: "",
+        e: "滿滿的＝充滿、豐盈的樣子；幸福＝快樂滿足的感受。"
+      },
+      de: {
+        s: "Voller Glück",
+        r: "",
+        e: "滿滿的＝充滿、豐盈的樣子；幸福＝快樂滿足的感受。"
+      },
+      my: {
+        s: "ပျော်ရွှင်မှုတွေ အပြည့်ပဲ",
+        r: "pyaw-shwin-hmu dway a-pyay pe",
+        e: "滿滿的＝充滿、豐盈的樣子；幸福＝快樂滿足的感受。"
+      },
+      ko: {
+        s: "가득한 행복",
+        r: "gadeukhan haengbok",
+        e: "滿滿的＝充滿、豐盈的樣子；幸福＝快樂滿足的感受。"
+      },
+      ja: {
+        s: "幸せでいっぱい",
+        r: "shiawase de ippai",
+        e: "滿滿的＝充滿、豐盈的樣子；幸福＝快樂滿足的感受。"
+      },
+      si: {
+        s: "සතුටින් පිරුණු",
+        r: "satutin piruṇu",
+        e: "滿滿的＝充滿、豐盈的樣子；幸福＝快樂滿足的感受。"
+      },
+      fa: {
+        s: "سرشار از خوشبختی",
+        r: "sarshār az khoshbakhtī",
+        e: "滿滿的＝充滿、豐盈的樣子；幸福＝快樂滿足的感受。"
+      }
+    }
+  ],
+  babamamaxiexieni: [
+    {
+      hi: {
+        s: "पापा मम्मी, धन्यवाद",
+        r: "pāpā mammī, dhanyavād",
+        e: "爸爸媽媽＝孩子對父母的稱呼；謝謝＝感謝，本句是全歌的主題句。"
+      },
+      en: {
+        s: "Dad and Mom, thank you",
+        r: "",
+        e: "爸爸媽媽＝孩子對父母的稱呼；謝謝＝感謝，本句是全歌的主題句。"
+      },
+      ta: {
+        s: "அப்பா அம்மா, நன்றி",
+        r: "appā ammā, naṉṟi",
+        e: "爸爸媽媽＝孩子對父母的稱呼；謝謝＝感謝，本句是全歌的主題句。"
+      },
+      th: {
+        s: "พ่อจ๋าแม่จ๋า ขอบคุณนะ",
+        r: "pho ja mae ja, khop khun na",
+        e: "爸爸媽媽＝孩子對父母的稱呼；謝謝＝感謝，本句是全歌的主題句。"
+      },
+      km: {
+        s: "ប៉ាម៉ាក់ អរគុណ",
+        r: "pa mak, orkun",
+        e: "爸爸媽媽＝孩子對父母的稱呼；謝謝＝感謝，本句是全歌的主題句。"
+      },
+      vi: {
+        s: "Bố mẹ ơi, con cảm ơn",
+        r: "",
+        e: "爸爸媽媽＝孩子對父母的稱呼；謝謝＝感謝，本句是全歌的主題句。"
+      },
+      id: {
+        s: "Ayah Ibu, terima kasih",
+        r: "",
+        e: "爸爸媽媽＝孩子對父母的稱呼；謝謝＝感謝，本句是全歌的主題句。"
+      },
+      ne: {
+        s: "बुबा आमा, धन्यवाद",
+        r: "bubā āmā, dhanyabād",
+        e: "爸爸媽媽＝孩子對父母的稱呼；謝謝＝感謝，本句是全歌的主題句。"
+      },
+      bn: {
+        s: "বাবা মা, ধন্যবাদ",
+        r: "bābā mā, dhanyabād",
+        e: "爸爸媽媽＝孩子對父母的稱呼；謝謝＝感謝，本句是全歌的主題句。"
+      },
+      es: {
+        s: "Papá, mamá, gracias",
+        r: "",
+        e: "爸爸媽媽＝孩子對父母的稱呼；謝謝＝感謝，本句是全歌的主題句。"
+      },
+      de: {
+        s: "Papa, Mama, ich danke euch",
+        r: "",
+        e: "爸爸媽媽＝孩子對父母的稱呼；謝謝＝感謝，本句是全歌的主題句。"
+      },
+      my: {
+        s: "ဖေဖေနဲ့ မေမေ ကျေးဇူးတင်ပါတယ်",
+        r: "phe-phe ne me-me kye-zu tin par-tal",
+        e: "爸爸媽媽＝孩子對父母的稱呼；謝謝＝感謝，本句是全歌的主題句。"
+      },
+      ko: {
+        s: "아빠 엄마 감사해요",
+        r: "appa eomma gamsahaeyo",
+        e: "爸爸媽媽＝孩子對父母的稱呼；謝謝＝感謝，本句是全歌的主題句。"
+      },
+      ja: {
+        s: "パパ、ママ、ありがとう",
+        r: "papa, mama, arigatō",
+        e: "爸爸媽媽＝孩子對父母的稱呼；謝謝＝感謝，本句是全歌的主題句。"
+      },
+      si: {
+        s: "තාත්තේ අම්මේ, ස්තූතියි",
+        r: "thātthē ammē, sthūthiyi",
+        e: "爸爸媽媽＝孩子對父母的稱呼；謝謝＝感謝，本句是全歌的主題句。"
+      },
+      fa: {
+        s: "بابا و مامان، از شما ممنونم",
+        r: "bābā va māmān, az šomā mamnunam",
+        e: "爸爸媽媽＝孩子對父母的稱呼；謝謝＝感謝，本句是全歌的主題句。"
+      }
+    },
+    {
+      hi: {
+        s: "आप अपना प्यारा मोबाइल रख देते हैं",
+        r: "āp apnā pyārā mobāil rakh dete haiṅ",
+        e: "放下＝把拿著的東西擱下；心愛的＝最喜愛的；手機＝行動電話。"
+      },
+      en: {
+        s: "You put down your beloved phone",
+        r: "",
+        e: "放下＝把拿著的東西擱下；心愛的＝最喜愛的；手機＝行動電話。"
+      },
+      ta: {
+        s: "உங்கள் செல்போனை ஒதுக்கி வைக்கிறீர்கள்",
+        r: "uṅkaḷ celpōṉai otukki vaikkiṟīrkaḷ",
+        e: "放下＝把拿著的東西擱下；心愛的＝最喜愛的；手機＝行動電話。"
+      },
+      th: {
+        s: "วางมือถือสุดที่รักลง",
+        r: "wang mue thue sut thi rak long",
+        e: "放下＝把拿著的東西擱下；心愛的＝最喜愛的；手機＝行動電話。"
+      },
+      km: {
+        s: "ដាក់ទូរស័ព្ទជាទីស្រឡាញ់ចុះ",
+        r: "dak tursap chea ti sralanh choh",
+        e: "放下＝把拿著的東西擱下；心愛的＝最喜愛的；手機＝行動電話。"
+      },
+      vi: {
+        s: "Bố mẹ đặt chiếc điện thoại yêu quý xuống",
+        r: "",
+        e: "放下＝把拿著的東西擱下；心愛的＝最喜愛的；手機＝行動電話。"
+      },
+      id: {
+        s: "Kalian letakkan ponsel kesayangan",
+        r: "",
+        e: "放下＝把拿著的東西擱下；心愛的＝最喜愛的；手機＝行動電話。"
+      },
+      ne: {
+        s: "आफ्नो प्यारो मोबाइल राख्नुहुन्छ",
+        r: "āphno pyāro mobāil rākhnuhuncha",
+        e: "放下＝把拿著的東西擱下；心愛的＝最喜愛的；手機＝行動電話。"
+      },
+      bn: {
+        s: "তোমরা প্রিয় মোবাইলটা রেখে দাও",
+        r: "tomrā priẏa mobāilṭā rekhe dāo",
+        e: "放下＝把拿著的東西擱下；心愛的＝最喜愛的；手機＝行動電話。"
+      },
+      es: {
+        s: "Dejan su querido teléfono a un lado",
+        r: "",
+        e: "放下＝把拿著的東西擱下；心愛的＝最喜愛的；手機＝行動電話。"
+      },
+      de: {
+        s: "Ihr legt euer geliebtes Handy weg",
+        r: "",
+        e: "放下＝把拿著的東西擱下；心愛的＝最喜愛的；手機＝行動電話。"
+      },
+      my: {
+        s: "အရမ်းချစ်တဲ့ ဖုန်းလေးကို ချထားပေးတယ်",
+        r: "a-yan chit-de hpon-lei-go cha hta pei tal",
+        e: "放下＝把拿著的東西擱下；心愛的＝最喜愛的；手機＝行動電話。"
+      },
+      ko: {
+        s: "사랑하는 휴대폰을 내려놓고",
+        r: "saranghaneun hyudaeponeul naeryeonoko",
+        e: "放下＝把拿著的東西擱下；心愛的＝最喜愛的；手機＝行動電話。"
+      },
+      ja: {
+        s: "大好きなスマホを置いて",
+        r: "daisuki na sumaho o oite",
+        e: "放下＝把拿著的東西擱下；心愛的＝最喜愛的；手機＝行動電話。"
+      },
+      si: {
+        s: "ඔබේ ආදරණීය දුරකථනය තබනවා",
+        r: "obē ādaraṇīya durakathanaya thabanavā",
+        e: "放下＝把拿著的東西擱下；心愛的＝最喜愛的；手機＝行動電話。"
+      },
+      fa: {
+        s: "گوشی محبوبتان را کنار می‌گذارید",
+        r: "guši-ye mahbubetān rā kenār migozārid",
+        e: "放下＝把拿著的東西擱下；心愛的＝最喜愛的；手機＝行動電話。"
+      }
+    },
+    {
+      hi: {
+        s: "अक्सर मेरे साथ खेलते हैं",
+        r: "aksar mere sāth khelte haiṅ",
+        e: "常＝常常、經常；陪＝陪伴；玩耍＝玩；做遊戲＝玩遊戲。"
+      },
+      en: {
+        s: "And often play and have fun with me",
+        r: "",
+        e: "常＝常常、經常；陪＝陪伴；玩耍＝玩；做遊戲＝玩遊戲。"
+      },
+      ta: {
+        s: "அடிக்கடி என்னுடன் விளையாடுகிறீர்கள்",
+        r: "aṭikkaṭi eṉṉuṭaṉ viḷaiyāṭukiṟīrkaḷ",
+        e: "常＝常常、經常；陪＝陪伴；玩耍＝玩；做遊戲＝玩遊戲。"
+      },
+      th: {
+        s: "มาเล่นกับหนูเสมอ",
+        r: "ma len kap nu samoe",
+        e: "常＝常常、經常；陪＝陪伴；玩耍＝玩；做遊戲＝玩遊戲。"
+      },
+      km: {
+        s: "លេងជាមួយខ្ញុំជាញឹកញាប់",
+        r: "leng cheamouy khnhom chea nhiknhap",
+        e: "常＝常常、經常；陪＝陪伴；玩耍＝玩；做遊戲＝玩遊戲。"
+      },
+      vi: {
+        s: "Thường chơi đùa cùng con",
+        r: "",
+        e: "常＝常常、經常；陪＝陪伴；玩耍＝玩；做遊戲＝玩遊戲。"
+      },
+      id: {
+        s: "Sering bermain bersamaku",
+        r: "",
+        e: "常＝常常、經常；陪＝陪伴；玩耍＝玩；做遊戲＝玩遊戲。"
+      },
+      ne: {
+        s: "मसँग अक्सर खेल्नुहुन्छ",
+        r: "masãga aksar khelnuhuncha",
+        e: "常＝常常、經常；陪＝陪伴；玩耍＝玩；做遊戲＝玩遊戲。"
+      },
+      bn: {
+        s: "প্রায়ই আমার সঙ্গে খেলো",
+        r: "prāẏi āmār saṅge khelo",
+        e: "常＝常常、經常；陪＝陪伴；玩耍＝玩；做遊戲＝玩遊戲。"
+      },
+      es: {
+        s: "Juegan conmigo muy a menudo",
+        r: "",
+        e: "常＝常常、經常；陪＝陪伴；玩耍＝玩；做遊戲＝玩遊戲。"
+      },
+      de: {
+        s: "Und spielt oft mit mir",
+        r: "",
+        e: "常＝常常、經常；陪＝陪伴；玩耍＝玩；做遊戲＝玩遊戲。"
+      },
+      my: {
+        s: "ကျွန်တော်နဲ့ အမြဲ ဆော့ကစားပေးတယ်",
+        r: "kyun-taw ne a-mye sawt ka-sa pei tal",
+        e: "常＝常常、經常；陪＝陪伴；玩耍＝玩；做遊戲＝玩遊戲。"
+      },
+      ko: {
+        s: "자주 저와 함께 놀아 주세요",
+        r: "jaju jeowa hamkke nora juseyo",
+        e: "常＝常常、經常；陪＝陪伴；玩耍＝玩；做遊戲＝玩遊戲。"
+      },
+      ja: {
+        s: "いつもいっしょに遊んでくれる",
+        r: "itsumo issho ni asonde kureru",
+        e: "常＝常常、經常；陪＝陪伴；玩耍＝玩；做遊戲＝玩遊戲。"
+      },
+      si: {
+        s: "නිතරම මා සමඟ සෙල්ලම් කරනවා",
+        r: "nitharama mā samaga sellam karanavā",
+        e: "常＝常常、經常；陪＝陪伴；玩耍＝玩；做遊戲＝玩遊戲。"
+      },
+      fa: {
+        s: "اغلب با من بازی می‌کنید",
+        r: "ağlab bā man bāzi mikonid",
+        e: "常＝常常、經常；陪＝陪伴；玩耍＝玩；做遊戲＝玩遊戲。"
+      }
+    },
+    {
+      hi: {
+        s: "मेरी ज़िंदगी खुशियों से भर देते हैं",
+        r: "merī zindagī khuśiyoṅ se bhar dete haiṅ",
+        e: "讓＝使、令；過得＝生活得（「得」是補語標記）；開開心心＝疊字形容詞，快快樂樂。"
+      },
+      en: {
+        s: "You make my days so happy",
+        r: "",
+        e: "讓＝使、令；過得＝生活得（「得」是補語標記）；開開心心＝疊字形容詞，快快樂樂。"
+      },
+      ta: {
+        s: "என்னை மிகவும் மகிழ்ச்சியாக வாழ வைக்கிறீர்கள்",
+        r: "eṉṉai mikavum makiḻcciyāka vāḻa vaikkiṟīrkaḷ",
+        e: "讓＝使、令；過得＝生活得（「得」是補語標記）；開開心心＝疊字形容詞，快快樂樂。"
+      },
+      th: {
+        s: "ทำให้หนูมีความสุขทุกวัน",
+        r: "tham hai nu mi khwam suk thuk wan",
+        e: "讓＝使、令；過得＝生活得（「得」是補語標記）；開開心心＝疊字形容詞，快快樂樂。"
+      },
+      km: {
+        s: "ធ្វើឱ្យខ្ញុំរស់នៅយ៉ាងរីករាយ",
+        r: "thveu aoy khnhom rosnov yang rikreay",
+        e: "讓＝使、令；過得＝生活得（「得」是補語標記）；開開心心＝疊字形容詞，快快樂樂。"
+      },
+      vi: {
+        s: "Cho con sống thật vui vẻ hạnh phúc",
+        r: "",
+        e: "讓＝使、令；過得＝生活得（「得」是補語標記）；開開心心＝疊字形容詞，快快樂樂。"
+      },
+      id: {
+        s: "Membuatku hidup bahagia selalu",
+        r: "",
+        e: "讓＝使、令；過得＝生活得（「得」是補語標記）；開開心心＝疊字形容詞，快快樂樂。"
+      },
+      ne: {
+        s: "मलाई धेरै खुसी राख्नुहुन्छ",
+        r: "malāī dherai khusī rākhnuhuncha",
+        e: "讓＝使、令；過得＝生活得（「得」是補語標記）；開開心心＝疊字形容詞，快快樂樂。"
+      },
+      bn: {
+        s: "আমাকে খুব খুশি রাখো",
+        r: "āmāke khub khuśi rākho",
+        e: "讓＝使、令；過得＝生活得（「得」是補語標記）；開開心心＝疊字形容詞，快快樂樂。"
+      },
+      es: {
+        s: "Me hacen vivir muy feliz",
+        r: "",
+        e: "讓＝使、令；過得＝生活得（「得」是補語標記）；開開心心＝疊字形容詞，快快樂樂。"
+      },
+      de: {
+        s: "Ihr macht mein Leben so fröhlich",
+        r: "",
+        e: "讓＝使、令；過得＝生活得（「得」是補語標記）；開開心心＝疊字形容詞，快快樂樂。"
+      },
+      my: {
+        s: "ကျွန်တော့်ကို ပျော်ပျော်ရွှင်ရွှင် နေစေတယ်",
+        r: "kyun-taw-go pyaw-pyaw shwin-shwin ne sei tal",
+        e: "讓＝使、令；過得＝生活得（「得」是補語標記）；開開心心＝疊字形容詞，快快樂樂。"
+      },
+      ko: {
+        s: "저를 아주 행복하게 해 주세요",
+        r: "jeoreul aju haengbokage hae juseyo",
+        e: "讓＝使、令；過得＝生活得（「得」是補語標記）；開開心心＝疊字形容詞，快快樂樂。"
+      },
+      ja: {
+        s: "ぼくをとっても幸せにしてくれる",
+        r: "boku o tottemo shiawase ni shite kureru",
+        e: "讓＝使、令；過得＝生活得（「得」是補語標記）；開開心心＝疊字形容詞，快快樂樂。"
+      },
+      si: {
+        s: "මාව ඉතා සතුටින් තබනවා",
+        r: "māva ithā sathutin thabanavā",
+        e: "讓＝使、令；過得＝生活得（「得」是補語標記）；開開心心＝疊字形容詞，快快樂樂。"
+      },
+      fa: {
+        s: "مرا خیلی خوشحال می‌کنید",
+        r: "marā xeyli xošhāl mikonid",
+        e: "讓＝使、令；過得＝生活得（「得」是補語標記）；開開心心＝疊字形容詞，快快樂樂。"
+      }
+    },
+    {
+      hi: {
+        s: "मुझे अच्छा इंसान बनना सिखाते हैं",
+        r: "mujhe acchā insān bannā sikhāte haiṅ",
+        e: "教＝教導；做人＝為人處世；道理＝應該遵循的原則。"
+      },
+      en: {
+        s: "You teach me how to be a good person",
+        r: "",
+        e: "教＝教導；做人＝為人處世；道理＝應該遵循的原則。"
+      },
+      ta: {
+        s: "நல்ல மனிதனாக வாழ கற்றுத் தருகிறீர்கள்",
+        r: "nalla maṉitaṉāka vāḻa kaṟṟut tarukiṟīrkaḷ",
+        e: "教＝教導；做人＝為人處世；道理＝應該遵循的原則。"
+      },
+      th: {
+        s: "สอนหนูให้เป็นคนดี",
+        r: "son nu hai pen khon di",
+        e: "教＝教導；做人＝為人處世；道理＝應該遵循的原則。"
+      },
+      km: {
+        s: "បង្រៀនខ្ញុំឱ្យចេះធ្វើជាមនុស្សល្អ",
+        r: "bongrien khnhom aoy cheh thveu chea mnus laor",
+        e: "教＝教導；做人＝為人處世；道理＝應該遵循的原則。"
+      },
+      vi: {
+        s: "Dạy con cách làm người",
+        r: "",
+        e: "教＝教導；做人＝為人處世；道理＝應該遵循的原則。"
+      },
+      id: {
+        s: "Mengajariku cara menjadi orang baik",
+        r: "",
+        e: "教＝教導；做人＝為人處世；道理＝應該遵循的原則。"
+      },
+      ne: {
+        s: "मलाई असल मान्छे बन्न सिकाउनुहुन्छ",
+        r: "malāī asal mānche banna sikāunuhuncha",
+        e: "教＝教導；做人＝為人處世；道理＝應該遵循的原則。"
+      },
+      bn: {
+        s: "আমাকে ভালো মানুষ হতে শেখাও",
+        r: "āmāke bhālo mānuṣ hate śekhāo",
+        e: "教＝教導；做人＝為人處世；道理＝應該遵循的原則。"
+      },
+      es: {
+        s: "Me enseñan a ser buena persona",
+        r: "",
+        e: "教＝教導；做人＝為人處世；道理＝應該遵循的原則。"
+      },
+      de: {
+        s: "Ihr lehrt mich, ein guter Mensch zu sein",
+        r: "",
+        e: "教＝教導；做人＝為人處世；道理＝應該遵循的原則。"
+      },
+      my: {
+        s: "လူကောင်းဖြစ်အောင် သင်ပေးတယ်",
+        r: "lu-kaung pyit-aung thin pei tal",
+        e: "教＝教導；做人＝為人處世；道理＝應該遵循的原則。"
+      },
+      ko: {
+        s: "좋은 사람이 되는 법을 가르쳐 주세요",
+        r: "joeun sarami doeneun beobeul gareuchyeo juseyo",
+        e: "教＝教導；做人＝為人處世；道理＝應該遵循的原則。"
+      },
+      ja: {
+        s: "いい人になる道を教えてくれる",
+        r: "ii hito ni naru michi o oshiete kureru",
+        e: "教＝教導；做人＝為人處世；道理＝應該遵循的原則。"
+      },
+      si: {
+        s: "මට හොඳ මිනිසෙකු වෙන්න උගන්වනවා",
+        r: "mata honda miniseku venna ugannanavā",
+        e: "教＝教導；做人＝為人處世；道理＝應該遵循的原則。"
+      },
+      fa: {
+        s: "به من یاد می‌دهید چطور آدم خوبی باشم",
+        r: "be man yād midehid četowr ādam-e xubi bāšam",
+        e: "教＝教導；做人＝為人處世；道理＝應該遵循的原則。"
+      }
+    },
+    {
+      hi: {
+        s: "असफलता में मुझे हौसला देते हैं",
+        r: "asafaltā meṅ mujhe hauslā dete haiṅ",
+        e: "失敗＝沒有成功；時＝時候（失敗時＝失敗的時候）；鼓勵＝給人勇氣與支持。"
+      },
+      en: {
+        s: "When I fail, you encourage me",
+        r: "",
+        e: "失敗＝沒有成功；時＝時候（失敗時＝失敗的時候）；鼓勵＝給人勇氣與支持。"
+      },
+      ta: {
+        s: "தோல்வியில் எனக்கு ஊக்கம் தருகிறீர்கள்",
+        r: "tōlviyil eṉakku ūkkam tarukiṟīrkaḷ",
+        e: "失敗＝沒有成功；時＝時候（失敗時＝失敗的時候）；鼓勵＝給人勇氣與支持。"
+      },
+      th: {
+        s: "เวลาหนูล้มเหลว พ่อแม่ให้กำลังใจ",
+        r: "wela nu lom leo, pho mae hai kamlang chai",
+        e: "失敗＝沒有成功；時＝時候（失敗時＝失敗的時候）；鼓勵＝給人勇氣與支持。"
+      },
+      km: {
+        s: "ពេលខ្ញុំបរាជ័យ លោកឱ្យកម្លាំងចិត្តខ្ញុំ",
+        r: "pel khnhom borachey, lok aoy kamlang chet khnhom",
+        e: "失敗＝沒有成功；時＝時候（失敗時＝失敗的時候）；鼓勵＝給人勇氣與支持。"
+      },
+      vi: {
+        s: "Khi con thất bại, bố mẹ động viên con",
+        r: "",
+        e: "失敗＝沒有成功；時＝時候（失敗時＝失敗的時候）；鼓勵＝給人勇氣與支持。"
+      },
+      id: {
+        s: "Saat aku gagal, kalian menyemangatiku",
+        r: "",
+        e: "失敗＝沒有成功；時＝時候（失敗時＝失敗的時候）；鼓勵＝給人勇氣與支持。"
+      },
+      ne: {
+        s: "असफल हुँदा मलाई हौसला दिनुहुन्छ",
+        r: "asaphal hũdā malāī hausalā dinuhuncha",
+        e: "失敗＝沒有成功；時＝時候（失敗時＝失敗的時候）；鼓勵＝給人勇氣與支持。"
+      },
+      bn: {
+        s: "ব্যর্থ হলে আমাকে উৎসাহ দাও",
+        r: "byartha hale āmāke utsāha dāo",
+        e: "失敗＝沒有成功；時＝時候（失敗時＝失敗的時候）；鼓勵＝給人勇氣與支持。"
+      },
+      es: {
+        s: "Cuando fracaso, me dan ánimos",
+        r: "",
+        e: "失敗＝沒有成功；時＝時候（失敗時＝失敗的時候）；鼓勵＝給人勇氣與支持。"
+      },
+      de: {
+        s: "Wenn ich scheitere, macht ihr mir Mut",
+        r: "",
+        e: "失敗＝沒有成功；時＝時候（失敗時＝失敗的時候）；鼓勵＝給人勇氣與支持。"
+      },
+      my: {
+        s: "ကျရှုံးတဲ့အခါ အားပေးတယ်",
+        r: "kya-shone-de a-kha a pei tal",
+        e: "失敗＝沒有成功；時＝時候（失敗時＝失敗的時候）；鼓勵＝給人勇氣與支持。"
+      },
+      ko: {
+        s: "실패할 때 저를 격려해 주세요",
+        r: "silpaehal ttae jeoreul gyeongnyeohae juseyo",
+        e: "失敗＝沒有成功；時＝時候（失敗時＝失敗的時候）；鼓勵＝給人勇氣與支持。"
+      },
+      ja: {
+        s: "失敗したとき励ましてくれる",
+        r: "shippai shita toki hagemashite kureru",
+        e: "失敗＝沒有成功；時＝時候（失敗時＝失敗的時候）；鼓勵＝給人勇氣與支持。"
+      },
+      si: {
+        s: "අසාර්ථක වූ විට මට ධෛර්යය දෙනවා",
+        r: "asārthaka vū viṭa mata dhairyya denavā",
+        e: "失敗＝沒有成功；時＝時候（失敗時＝失敗的時候）；鼓勵＝給人勇氣與支持。"
+      },
+      fa: {
+        s: "وقتی شکست می‌خورم، به من دلگرمی می‌دهید",
+        r: "vaqti šekast mixoram, be man delgarmi midehid",
+        e: "失敗＝沒有成功；時＝時候（失敗時＝失敗的時候）；鼓勵＝給人勇氣與支持。"
+      }
+    },
+    {
+      hi: {
+        s: "सफलता में मिठास बाँटते हैं",
+        r: "safaltā meṅ miṭhās bāṅṭte haiṅ",
+        e: "成功＝達到目標；分享＝和別人一起享有；甜蜜＝像糖一樣美好的感覺。"
+      },
+      en: {
+        s: "When I succeed, you share the sweetness",
+        r: "",
+        e: "成功＝達到目標；分享＝和別人一起享有；甜蜜＝像糖一樣美好的感覺。"
+      },
+      ta: {
+        s: "வெற்றியில் இனிமையைப் பகிர்கிறீர்கள்",
+        r: "veṟṟiyil iṉimaiyaip pakirkiṟīrkaḷ",
+        e: "成功＝達到目標；分享＝和別人一起享有；甜蜜＝像糖一樣美好的感覺。"
+      },
+      th: {
+        s: "เวลาสำเร็จ ก็แบ่งปันความหวานชื่น",
+        r: "wela samret, ko baeng pan khwam wan chuen",
+        e: "成功＝達到目標；分享＝和別人一起享有；甜蜜＝像糖一樣美好的感覺。"
+      },
+      km: {
+        s: "ពេលជោគជ័យ ចែករំលែកភាពផ្អែមល្ហែម",
+        r: "pel chokchey, chaek romlek pheap phaem lhem",
+        e: "成功＝達到目標；分享＝和別人一起享有；甜蜜＝像糖一樣美好的感覺。"
+      },
+      vi: {
+        s: "Khi con thành công, bố mẹ chia sẻ niềm ngọt ngào",
+        r: "",
+        e: "成功＝達到目標；分享＝和別人一起享有；甜蜜＝像糖一樣美好的感覺。"
+      },
+      id: {
+        s: "Saat aku berhasil, kalian berbagi kebahagiaan",
+        r: "",
+        e: "成功＝達到目標；分享＝和別人一起享有；甜蜜＝像糖一樣美好的感覺。"
+      },
+      ne: {
+        s: "सफल हुँदा मिठास बाँड्नुहुन्छ",
+        r: "saphal hũdā miṭhās bā̃ḍnuhuncha",
+        e: "成功＝達到目標；分享＝和別人一起享有；甜蜜＝像糖一樣美好的感覺。"
+      },
+      bn: {
+        s: "সফল হলে মিষ্টতা ভাগ করে নাও",
+        r: "saphal hale miṣṭatā bhāg kare nāo",
+        e: "成功＝達到目標；分享＝和別人一起享有；甜蜜＝像糖一樣美好的感覺。"
+      },
+      es: {
+        s: "Cuando triunfo, comparten la dulzura",
+        r: "",
+        e: "成功＝達到目標；分享＝和別人一起享有；甜蜜＝像糖一樣美好的感覺。"
+      },
+      de: {
+        s: "Wenn ich Erfolg habe, teilt ihr das Glück mit mir",
+        r: "",
+        e: "成功＝達到目標；分享＝和別人一起享有；甜蜜＝像糖一樣美好的感覺。"
+      },
+      my: {
+        s: "အောင်မြင်တဲ့အခါ ချိုမြိန်မှုကို မျှဝေတယ်",
+        r: "aung-myin-de a-kha cho-myein-hmu-go mya-we tal",
+        e: "成功＝達到目標；分享＝和別人一起享有；甜蜜＝像糖一樣美好的感覺。"
+      },
+      ko: {
+        s: "성공할 때 달콤함을 나눠 주세요",
+        r: "seonggonghal ttae dalkomhameul nanwo juseyo",
+        e: "成功＝達到目標；分享＝和別人一起享有；甜蜜＝像糖一樣美好的感覺。"
+      },
+      ja: {
+        s: "成功したとき甘さを分かち合ってくれる",
+        r: "seikō shita toki amasa o wakachiatte kureru",
+        e: "成功＝達到目標；分享＝和別人一起享有；甜蜜＝像糖一樣美好的感覺。"
+      },
+      si: {
+        s: "සාර්ථක වූ විට මිහිරියාව බෙදා ගන්නවා",
+        r: "sārthaka vū viṭa mihiriyāva bedā gannavā",
+        e: "成功＝達到目標；分享＝和別人一起享有；甜蜜＝像糖一樣美好的感覺。"
+      },
+      fa: {
+        s: "وقتی موفق می‌شوم، شیرینی را با من تقسیم می‌کنید",
+        r: "vaqti movaffaq mišavam, širini rā bā man taqsim mikonid",
+        e: "成功＝達到目標；分享＝和別人一起享有；甜蜜＝像糖一樣美好的感覺。"
+      }
+    },
+    {
+      hi: {
+        s: "आपके होने से मैं बहुत खुश हूँ",
+        r: "āpke hone se maiṅ bahut khuś hūṅ",
+        e: "因為＝表示原因；有你＝有你在身邊；幸福＝感到滿足快樂（句中空格為原歌詞的分句停頓）。"
+      },
+      en: {
+        s: "Because you're here, I feel so blessed",
+        r: "",
+        e: "因為＝表示原因；有你＝有你在身邊；幸福＝感到滿足快樂（句中空格為原歌詞的分句停頓）。"
+      },
+      ta: {
+        s: "நீங்கள் இருப்பதால் நான் மிகவும் மகிழ்ச்சியாக இருக்கிறேன்",
+        r: "nīṅkaḷ iruppatāl nāṉ mikavum makiḻcciyāka irukkiṟēṉ",
+        e: "因為＝表示原因；有你＝有你在身邊；幸福＝感到滿足快樂（句中空格為原歌詞的分句停頓）。"
+      },
+      th: {
+        s: "เพราะมีพ่อแม่ หนูมีความสุขมาก",
+        r: "phro mi pho mae, nu mi khwam suk mak",
+        e: "因為＝表示原因；有你＝有你在身邊；幸福＝感到滿足快樂（句中空格為原歌詞的分句停頓）。"
+      },
+      km: {
+        s: "ព្រោះមានលោក ខ្ញុំមានសុភមង្គលណាស់",
+        r: "pruoh mean lok, khnhom mean sophomongkol nas",
+        e: "因為＝表示原因；有你＝有你在身邊；幸福＝感到滿足快樂（句中空格為原歌詞的分句停頓）。"
+      },
+      vi: {
+        s: "Vì có bố mẹ, con rất hạnh phúc",
+        r: "",
+        e: "因為＝表示原因；有你＝有你在身邊；幸福＝感到滿足快樂（句中空格為原歌詞的分句停頓）。"
+      },
+      id: {
+        s: "Karena ada kalian, aku sangat bahagia",
+        r: "",
+        e: "因為＝表示原因；有你＝有你在身邊；幸福＝感到滿足快樂（句中空格為原歌詞的分句停頓）。"
+      },
+      ne: {
+        s: "तपाईंहरू हुनुभएकाले म धेरै खुसी छु",
+        r: "tapāī̃harū hunubhaekāle ma dherai khusī chu",
+        e: "因為＝表示原因；有你＝有你在身邊；幸福＝感到滿足快樂（句中空格為原歌詞的分句停頓）。"
+      },
+      bn: {
+        s: "তোমরা আছো বলে আমি খুব সুখী",
+        r: "tomrā ācho bale āmi khub sukhī",
+        e: "因為＝表示原因；有你＝有你在身邊；幸福＝感到滿足快樂（句中空格為原歌詞的分句停頓）。"
+      },
+      es: {
+        s: "Porque están conmigo, soy muy feliz",
+        r: "",
+        e: "因為＝表示原因；有你＝有你在身邊；幸福＝感到滿足快樂（句中空格為原歌詞的分句停頓）。"
+      },
+      de: {
+        s: "Weil es euch gibt, bin ich so glücklich",
+        r: "",
+        e: "因為＝表示原因；有你＝有你在身邊；幸福＝感到滿足快樂（句中空格為原歌詞的分句停頓）。"
+      },
+      my: {
+        s: "ဖေဖေမေမေ ရှိလို့ ကျွန်တော် အရမ်း ပျော်တယ်",
+        r: "phe-phe me-me shi-lo kyun-taw a-yan pyaw tal",
+        e: "因為＝表示原因；有你＝有你在身邊；幸福＝感到滿足快樂（句中空格為原歌詞的分句停頓）。"
+      },
+      ko: {
+        s: "아빠 엄마가 계셔서 저는 정말 행복해요",
+        r: "appa eommaga gyesyeoseo jeoneun jeongmal haengbokaeyo",
+        e: "因為＝表示原因；有你＝有你在身邊；幸福＝感到滿足快樂（句中空格為原歌詞的分句停頓）。"
+      },
+      ja: {
+        s: "二人がいるから、ぼくはとても幸せ",
+        r: "futari ga iru kara, boku wa totemo shiawase",
+        e: "因為＝表示原因；有你＝有你在身邊；幸福＝感到滿足快樂（句中空格為原歌詞的分句停頓）。"
+      },
+      si: {
+        s: "ඔබ සිටින නිසා මම ඉතා සතුටුයි",
+        r: "oba siṭina nisā mama ithā sathutuyi",
+        e: "因為＝表示原因；有你＝有你在身邊；幸福＝感到滿足快樂（句中空格為原歌詞的分句停頓）。"
+      },
+      fa: {
+        s: "چون شما هستید، من خیلی خوشبختم",
+        r: "čon šomā hastid, man xeyli xošbaxtam",
+        e: "因為＝表示原因；有你＝有你在身邊；幸福＝感到滿足快樂（句中空格為原歌詞的分句停頓）。"
+      }
+    },
+    {
+      hi: {
+        s: "मेरे प्यारे पापा मम्मी",
+        r: "mere pyāre pāpā mammī",
+        e: "親愛的＝最心愛的，用來親暱地稱呼；爸爸媽媽＝父母。"
+      },
+      en: {
+        s: "My dear Dad and Mom",
+        r: "",
+        e: "親愛的＝最心愛的，用來親暱地稱呼；爸爸媽媽＝父母。"
+      },
+      ta: {
+        s: "என் அன்பான அப்பா அம்மா",
+        r: "eṉ aṉpāṉa appā ammā",
+        e: "親愛的＝最心愛的，用來親暱地稱呼；爸爸媽媽＝父母。"
+      },
+      th: {
+        s: "พ่อแม่ที่รักของหนู",
+        r: "pho mae thi rak khong nu",
+        e: "親愛的＝最心愛的，用來親暱地稱呼；爸爸媽媽＝父母。"
+      },
+      km: {
+        s: "ប៉ាម៉ាក់ជាទីស្រឡាញ់របស់ខ្ញុំ",
+        r: "pa mak chea ti sralanh robsa khnhom",
+        e: "親愛的＝最心愛的，用來親暱地稱呼；爸爸媽媽＝父母。"
+      },
+      vi: {
+        s: "Bố mẹ thân yêu của con",
+        r: "",
+        e: "親愛的＝最心愛的，用來親暱地稱呼；爸爸媽媽＝父母。"
+      },
+      id: {
+        s: "Ayah Ibu tercinta",
+        r: "",
+        e: "親愛的＝最心愛的，用來親暱地稱呼；爸爸媽媽＝父母。"
+      },
+      ne: {
+        s: "मेरा प्यारा बुबा आमा",
+        r: "merā pyārā bubā āmā",
+        e: "親愛的＝最心愛的，用來親暱地稱呼；爸爸媽媽＝父母。"
+      },
+      bn: {
+        s: "আমার প্রিয় বাবা মা",
+        r: "āmār priẏa bābā mā",
+        e: "親愛的＝最心愛的，用來親暱地稱呼；爸爸媽媽＝父母。"
+      },
+      es: {
+        s: "Mi querido papá y mi querida mamá",
+        r: "",
+        e: "親愛的＝最心愛的，用來親暱地稱呼；爸爸媽媽＝父母。"
+      },
+      de: {
+        s: "Mein lieber Papa, meine liebe Mama",
+        r: "",
+        e: "親愛的＝最心愛的，用來親暱地稱呼；爸爸媽媽＝父母。"
+      },
+      my: {
+        s: "ချစ်ရတဲ့ ဖေဖေနဲ့ မေမေ",
+        r: "chit ya-de phe-phe ne me-me",
+        e: "親愛的＝最心愛的，用來親暱地稱呼；爸爸媽媽＝父母。"
+      },
+      ko: {
+        s: "사랑하는 우리 아빠 엄마",
+        r: "saranghaneun uri appa eomma",
+        e: "親愛的＝最心愛的，用來親暱地稱呼；爸爸媽媽＝父母。"
+      },
+      ja: {
+        s: "大好きなパパとママ",
+        r: "daisuki na papa to mama",
+        e: "親愛的＝最心愛的，用來親暱地稱呼；爸爸媽媽＝父母。"
+      },
+      si: {
+        s: "මාගේ ආදරණීය තාත්තා අම්මා",
+        r: "māgē ādaraṇīya thātthā ammā",
+        e: "親愛的＝最心愛的，用來親暱地稱呼；爸爸媽媽＝父母。"
+      },
+      fa: {
+        s: "بابا و مامان عزیزم",
+        r: "bābā va māmān-e azizam",
+        e: "親愛的＝最心愛的，用來親暱地稱呼；爸爸媽媽＝父母。"
+      }
+    },
+    {
+      hi: {
+        s: "आप मुझे संतोष देते हैं",
+        r: "āp mujhe santoṣ dete haiṅ",
+        e: "你們＝爸爸和媽媽兩人；讓＝使、令；知足＝對現有的一切感到滿足。"
+      },
+      en: {
+        s: "You make me feel so content",
+        r: "",
+        e: "你們＝爸爸和媽媽兩人；讓＝使、令；知足＝對現有的一切感到滿足。"
+      },
+      ta: {
+        s: "நீங்கள் என்னை மனநிறைவுடன் வைத்திருக்கிறீர்கள்",
+        r: "nīṅkaḷ eṉṉai maṉaniṟaivuṭaṉ vaittirukkiṟīrkaḷ",
+        e: "你們＝爸爸和媽媽兩人；讓＝使、令；知足＝對現有的一切感到滿足。"
+      },
+      th: {
+        s: "พ่อแม่ทำให้หนูพอใจในชีวิต",
+        r: "pho mae tham hai nu pho chai nai chiwit",
+        e: "你們＝爸爸和媽媽兩人；讓＝使、令；知足＝對現有的一切感到滿足。"
+      },
+      km: {
+        s: "លោកធ្វើឱ្យខ្ញុំពេញចិត្តណាស់",
+        r: "lok thveu aoy khnhom penh chet nas",
+        e: "你們＝爸爸和媽媽兩人；讓＝使、令；知足＝對現有的一切感到滿足。"
+      },
+      vi: {
+        s: "Bố mẹ làm con thấy thật mãn nguyện",
+        r: "",
+        e: "你們＝爸爸和媽媽兩人；讓＝使、令；知足＝對現有的一切感到滿足。"
+      },
+      id: {
+        s: "Kalian membuatku merasa puas dan cukup",
+        r: "",
+        e: "你們＝爸爸和媽媽兩人；讓＝使、令；知足＝對現有的一切感到滿足。"
+      },
+      ne: {
+        s: "तपाईंहरूले मलाई सन्तुष्ट बनाउनुहुन्छ",
+        r: "tapāī̃harūle malāī santuṣṭa banāunuhuncha",
+        e: "你們＝爸爸和媽媽兩人；讓＝使、令；知足＝對現有的一切感到滿足。"
+      },
+      bn: {
+        s: "তোমরা আমাকে খুব তৃপ্ত রাখো",
+        r: "tomrā āmāke khub tṛpta rākho",
+        e: "你們＝爸爸和媽媽兩人；讓＝使、令；知足＝對現有的一切感到滿足。"
+      },
+      es: {
+        s: "Me hacen sentir tan satisfecho",
+        r: "",
+        e: "你們＝爸爸和媽媽兩人；讓＝使、令；知足＝對現有的一切感到滿足。"
+      },
+      de: {
+        s: "Mit euch bin ich rundum zufrieden",
+        r: "",
+        e: "你們＝爸爸和媽媽兩人；讓＝使、令；知足＝對現有的一切感到滿足。"
+      },
+      my: {
+        s: "ကျွန်တော့်ကို စိတ်ကျေနပ်စေတယ်",
+        r: "kyun-taw-go seit kye-nat sei tal",
+        e: "你們＝爸爸和媽媽兩人；讓＝使、令；知足＝對現有的一切感到滿足。"
+      },
+      ko: {
+        s: "두 분 덕분에 저는 정말 만족해요",
+        r: "du bun deokbune jeoneun jeongmal manjokaeyo",
+        e: "你們＝爸爸和媽媽兩人；讓＝使、令；知足＝對現有的一切感到滿足。"
+      },
+      ja: {
+        s: "二人のおかげで心が満たされる",
+        r: "futari no okage de kokoro ga mitasareru",
+        e: "你們＝爸爸和媽媽兩人；讓＝使、令；知足＝對現有的一切感到滿足。"
+      },
+      si: {
+        s: "ඔබ මාව ඉතා තෘප්තිමත් කරනවා",
+        r: "oba māva ithā thṛpthimath karanavā",
+        e: "你們＝爸爸和媽媽兩人；讓＝使、令；知足＝對現有的一切感到滿足。"
+      },
+      fa: {
+        s: "شما مرا خیلی راضی و خرسند می‌کنید",
+        r: "šomā marā xeyli rāzi va xorsand mikonid",
+        e: "你們＝爸爸和媽媽兩人；讓＝使、令；知足＝對現有的一切感到滿足。"
+      }
+    },
+    {
+      hi: {
+        s: "शुक्रिया, आपके साथ मैं अकेला नहीं हूँ",
+        r: "śukriyā, āpke sāth maiṅ akelā nahīṅ hūṅ",
+        e: "感謝＝謝謝；有你＝有你在身邊；孤獨＝獨自一人、寂寞（句中空格為原歌詞的分句停頓）。"
+      },
+      en: {
+        s: "Thank you — with you I'm never lonely",
+        r: "",
+        e: "感謝＝謝謝；有你＝有你在身邊；孤獨＝獨自一人、寂寞（句中空格為原歌詞的分句停頓）。"
+      },
+      ta: {
+        s: "நன்றி, நீங்கள் இருப்பதால் நான் தனியாக இல்லை",
+        r: "naṉṟi, nīṅkaḷ iruppatāl nāṉ taṉiyāka illai",
+        e: "感謝＝謝謝；有你＝有你在身邊；孤獨＝獨自一人、寂寞（句中空格為原歌詞的分句停頓）。"
+      },
+      th: {
+        s: "ขอบคุณที่มีพ่อแม่ หนูไม่เหงาเลย",
+        r: "khop khun thi mi pho mae, nu mai ngao loei",
+        e: "感謝＝謝謝；有你＝有你在身邊；孤獨＝獨自一人、寂寞（句中空格為原歌詞的分句停頓）。"
+      },
+      km: {
+        s: "អរគុណដែលមានលោក ខ្ញុំមិនឯកាទេ",
+        r: "orkun dael mean lok, khnhom min eka te",
+        e: "感謝＝謝謝；有你＝有你在身邊；孤獨＝獨自一人、寂寞（句中空格為原歌詞的分句停頓）。"
+      },
+      vi: {
+        s: "Cảm ơn vì có bố mẹ, con không cô đơn",
+        r: "",
+        e: "感謝＝謝謝；有你＝有你在身邊；孤獨＝獨自一人、寂寞（句中空格為原歌詞的分句停頓）。"
+      },
+      id: {
+        s: "Terima kasih, bersamamu aku tak kesepian",
+        r: "",
+        e: "感謝＝謝謝；有你＝有你在身邊；孤獨＝獨自一人、寂寞（句中空格為原歌詞的分句停頓）。"
+      },
+      ne: {
+        s: "धन्यवाद, तपाईंहरूसँग म एक्लो छैन",
+        r: "dhanyabād, tapāī̃harūsãga ma eklo chaina",
+        e: "感謝＝謝謝；有你＝有你在身邊；孤獨＝獨自一人、寂寞（句中空格為原歌詞的分句停頓）。"
+      },
+      bn: {
+        s: "ধন্যবাদ, তোমাদের সঙ্গে আমি একা নই",
+        r: "dhanyabād, tomāder saṅge āmi ekā nai",
+        e: "感謝＝謝謝；有你＝有你在身邊；孤獨＝獨自一人、寂寞（句中空格為原歌詞的分句停頓）。"
+      },
+      es: {
+        s: "Gracias por estar conmigo, no me siento solo",
+        r: "",
+        e: "感謝＝謝謝；有你＝有你在身邊；孤獨＝獨自一人、寂寞（句中空格為原歌詞的分句停頓）。"
+      },
+      de: {
+        s: "Danke, dass es euch gibt – ich bin nie allein",
+        r: "",
+        e: "感謝＝謝謝；有你＝有你在身邊；孤獨＝獨自一人、寂寞（句中空格為原歌詞的分句停頓）。"
+      },
+      my: {
+        s: "ကျေးဇူးပါ ဖေဖေမေမေ ရှိလို့ ကျွန်တော် မအထီးကျန်ဘူး",
+        r: "kye-zu par phe-phe me-me shi-lo kyun-taw ma a-hti kyan bu",
+        e: "感謝＝謝謝；有你＝有你在身邊；孤獨＝獨自一人、寂寞（句中空格為原歌詞的分句停頓）。"
+      },
+      ko: {
+        s: "감사해요, 두 분이 계셔서 외롭지 않아요",
+        r: "gamsahaeyo, du buni gyesyeoseo oeropji anayo",
+        e: "感謝＝謝謝；有你＝有你在身邊；孤獨＝獨自一人、寂寞（句中空格為原歌詞的分句停頓）。"
+      },
+      ja: {
+        s: "ありがとう、二人がいるから寂しくない",
+        r: "arigatō, futari ga iru kara sabishiku nai",
+        e: "感謝＝謝謝；有你＝有你在身邊；孤獨＝獨自一人、寂寞（句中空格為原歌詞的分句停頓）。"
+      },
+      si: {
+        s: "ස්තූතියි, ඔබ සමඟ මම තනියම නැහැ",
+        r: "sthūthiyi, oba samaga mama thaniyama næhæ",
+        e: "感謝＝謝謝；有你＝有你在身邊；孤獨＝獨自一人、寂寞（句中空格為原歌詞的分句停頓）。"
+      },
+      fa: {
+        s: "ممنون که هستید، من تنها نیستم",
+        r: "mamnun ke hastid, man tanhā nistam",
+        e: "感謝＝謝謝；有你＝有你在身邊；孤獨＝獨自一人、寂寞（句中空格為原歌詞的分句停頓）。"
+      }
+    },
+    {
+      hi: {
+        s: "आप प्यार से मेरी रक्षा करते हैं",
+        r: "āp pyār se merī rakṣā karte haiṅ",
+        e: "你們＝爸爸和媽媽兩人；用＝以、藉著；將＝把（書面用法）；守護＝保護、守在身邊照顧。"
+      },
+      en: {
+        s: "You guard me with your love",
+        r: "",
+        e: "你們＝爸爸和媽媽兩人；用＝以、藉著；將＝把（書面用法）；守護＝保護、守在身邊照顧。"
+      },
+      ta: {
+        s: "நீங்கள் அன்பால் என்னைக் காக்கிறீர்கள்",
+        r: "nīṅkaḷ aṉpāl eṉṉaik kākkiṟīrkaḷ",
+        e: "你們＝爸爸和媽媽兩人；用＝以、藉著；將＝把（書面用法）；守護＝保護、守在身邊照顧。"
+      },
+      th: {
+        s: "พ่อแม่ปกป้องหนูด้วยความรัก",
+        r: "pho mae pok pong nu duai khwam rak",
+        e: "你們＝爸爸和媽媽兩人；用＝以、藉著；將＝把（書面用法）；守護＝保護、守在身邊照顧。"
+      },
+      km: {
+        s: "លោកការពារខ្ញុំដោយក្ដីស្រឡាញ់",
+        r: "lok karpear khnhom daoy kdei sralanh",
+        e: "你們＝爸爸和媽媽兩人；用＝以、藉著；將＝把（書面用法）；守護＝保護、守在身邊照顧。"
+      },
+      vi: {
+        s: "Bố mẹ dùng tình yêu che chở cho con",
+        r: "",
+        e: "你們＝爸爸和媽媽兩人；用＝以、藉著；將＝把（書面用法）；守護＝保護、守在身邊照顧。"
+      },
+      id: {
+        s: "Kalian menjagaku dengan cinta",
+        r: "",
+        e: "你們＝爸爸和媽媽兩人；用＝以、藉著；將＝把（書面用法）；守護＝保護、守在身邊照顧。"
+      },
+      ne: {
+        s: "तपाईंहरू मायाले मेरो रक्षा गर्नुहुन्छ",
+        r: "tapāī̃harū māyāle mero rakṣā garnuhuncha",
+        e: "你們＝爸爸和媽媽兩人；用＝以、藉著；將＝把（書面用法）；守護＝保護、守在身邊照顧。"
+      },
+      bn: {
+        s: "তোমরা ভালোবাসা দিয়ে আমাকে রক্ষা করো",
+        r: "tomrā bhālobāsā diẏe āmāke rakṣā karo",
+        e: "你們＝爸爸和媽媽兩人；用＝以、藉著；將＝把（書面用法）；守護＝保護、守在身邊照顧。"
+      },
+      es: {
+        s: "Me protegen con su amor",
+        r: "",
+        e: "你們＝爸爸和媽媽兩人；用＝以、藉著；將＝把（書面用法）；守護＝保護、守在身邊照顧。"
+      },
+      de: {
+        s: "Ihr beschützt mich mit eurer Liebe",
+        r: "",
+        e: "你們＝爸爸和媽媽兩人；用＝以、藉著；將＝把（書面用法）；守護＝保護、守在身邊照顧。"
+      },
+      my: {
+        s: "အချစ်နဲ့ ကျွန်တော့်ကို ကာကွယ်ပေးတယ်",
+        r: "a-chit ne kyun-taw-go kar-kwe pei tal",
+        e: "你們＝爸爸和媽媽兩人；用＝以、藉著；將＝把（書面用法）；守護＝保護、守在身邊照顧。"
+      },
+      ko: {
+        s: "사랑으로 저를 지켜 주세요",
+        r: "sarangeuro jeoreul jikyeo juseyo",
+        e: "你們＝爸爸和媽媽兩人；用＝以、藉著；將＝把（書面用法）；守護＝保護、守在身邊照顧。"
+      },
+      ja: {
+        s: "愛でぼくを守ってくれる",
+        r: "ai de boku o mamotte kureru",
+        e: "你們＝爸爸和媽媽兩人；用＝以、藉著；將＝把（書面用法）；守護＝保護、守在身邊照顧。"
+      },
+      si: {
+        s: "ඔබ ආදරයෙන් මාව රකිනවා",
+        r: "oba ādarayen māva rakinavā",
+        e: "你們＝爸爸和媽媽兩人；用＝以、藉著；將＝把（書面用法）；守護＝保護、守在身邊照顧。"
+      },
+      fa: {
+        s: "با عشق از من محافظت می‌کنید",
+        r: "bā ešq az man mohāfezat mikonid",
+        e: "你們＝爸爸和媽媽兩人；用＝以、藉著；將＝把（書面用法）；守護＝保護、守在身邊照顧。"
+      }
+    }
   ]
 };
