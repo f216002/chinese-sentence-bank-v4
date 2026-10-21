@@ -7696,7 +7696,7 @@ function loadDeferredI18n() {
   if (deferredI18nStarted) return;
   deferredI18nStarted = true;
   const jobs = [
-    { src: 'v4-songs-i18n.js?v=20261021-01', done: mergeSongsI18n },
+    { src: 'v4-songs-i18n.js?v=20261021-02', done: mergeSongsI18n },
     { src: 'v4-rituals-i18n.js?v=20260930-6', done: mergeRitualsI18n },
   ];
   let i = 0;
