@@ -17681,5 +17681,1073 @@ const V4_SONGS_I18N = {
         e: "你們＝爸爸和媽媽兩人；用＝以、藉著；將＝把（書面用法）；守護＝保護、守在身邊照顧。"
       }
     }
+  ],
+  weishengmingjiazhi: [
+    {
+      hi: {
+        s: "जीवन में कोई अपवाद नहीं, बस खुद से पूछो कि खुद को कैसे सींचना है,",
+        r: "jīvan meṁ koī apvād nahīṁ, bas khud se pūcho ki khud ko kaise sīṁchnā hai,",
+        e: "沒有例外＝誰都一樣、沒有特殊待遇；培栽＝栽培、培養（像種樹一樣養成自己）。"
+      },
+      en: {
+        s: "Life grants no exceptions; just ask yourself how to nurture yourself,",
+        r: "",
+        e: "沒有例外＝誰都一樣、沒有特殊待遇；培栽＝栽培、培養（像種樹一樣養成自己）。"
+      },
+      ta: {
+        s: "வாழ்க்கையில் விதிவிலக்கு இல்லை, உன்னை எப்படி வளர்த்துக்கொள்வது என்று உன்னிடமே கேள்,",
+        r: "vāḻkkaiyil vitivilakku illai, uṉṉai eppaṭi vaḷarttukkoḷvatu eṉṟu uṉṉiṭamē kēḷ,",
+        e: "沒有例外＝誰都一樣、沒有特殊待遇；培栽＝栽培、培養（像種樹一樣養成自己）。"
+      },
+      th: {
+        s: "ชีวิตไม่มีข้อยกเว้น ถามตัวเองว่าจะบ่มเพาะตัวเองอย่างไร,",
+        r: "chīwit mai mī khǭyokwen, thām tūa eng wā cha bomphet tūa eng yāng rai,",
+        e: "沒有例外＝誰都一樣、沒有特殊待遇；培栽＝栽培、培養（像種樹一樣養成自己）。"
+      },
+      km: {
+        s: "ជីវិតគ្មានករណីលើកលែងទេ សួរខ្លួនឯងថា ត្រូវបណ្តុះខ្លួនឯងយ៉ាងដូចម្តេច,",
+        r: "chīvit kmiən karənī ləəkléng té, suə kluən'éng tha trəv bɑndoh kluən'éng yāng dochmdéch,",
+        e: "沒有例外＝誰都一樣、沒有特殊待遇；培栽＝栽培、培養（像種樹一樣養成自己）。"
+      },
+      vi: {
+        s: "Cuộc đời không có ngoại lệ, hãy tự hỏi mình nuôi dưỡng bản thân thế nào,",
+        r: "",
+        e: "沒有例外＝誰都一樣、沒有特殊待遇；培栽＝栽培、培養（像種樹一樣養成自己）。"
+      },
+      id: {
+        s: "Hidup tidak punya pengecualian, tanyakan pada dirimu bagaimana menumbuhkan dirimu,",
+        r: "",
+        e: "沒有例外＝誰都一樣、沒有特殊待遇；培栽＝栽培、培養（像種樹一樣養成自己）。"
+      },
+      ne: {
+        s: "जीवनमा कुनै अपवाद छैन, आफैलाई कसरी हुर्काउने भनेर आफैँलाई सोध,",
+        r: "jīvanmā kunai apvād chaina, āphailāī kasarī hurkāune bhanera āphailāī sodha,",
+        e: "沒有例外＝誰都一樣、沒有特殊待遇；培栽＝栽培、培養（像種樹一樣養成自己）。"
+      },
+      bn: {
+        s: "জীবনে কোনো ব্যতিক্রম নেই, শুধু নিজেকে জিজ্ঞেস করো কীভাবে নিজেকে লালন করবে,",
+        r: "jībane kono byatikram nei, śudhu nijeke jiggeś karo kībhābe nijeke lālan karbe,",
+        e: "沒有例外＝誰都一樣、沒有特殊待遇；培栽＝栽培、培養（像種樹一樣養成自己）。"
+      },
+      es: {
+        s: "La vida no tiene excepciones; pregúntate cómo cultivarte a ti mismo,",
+        r: "",
+        e: "沒有例外＝誰都一樣、沒有特殊待遇；培栽＝栽培、培養（像種樹一樣養成自己）。"
+      },
+      de: {
+        s: "Das Leben kennt keine Ausnahmen; frag dich nur, wie du dich selbst pflegst,",
+        r: "",
+        e: "沒有例外＝誰都一樣、沒有特殊待遇；培栽＝栽培、培養（像種樹一樣養成自己）。"
+      },
+      my: {
+        s: "ဘဝမှာ ခြွင်းချက်မရှိ၊ ကိုယ့်ကိုယ်ကို ဘယ်လို ပြုစုပျိုးထောင်ရမလဲဆိုတာ ကိုယ့်ကိုယ်ကိုယ် မေးပါ,",
+        r: "bəwa̰ hma chwin chet mə shi, ko ko ko bèlo pyūsu pyó htaung ya ma lè so ta ko ko ko mé ba,",
+        e: "沒有例外＝誰都一樣、沒有特殊待遇；培栽＝栽培、培養（像種樹一樣養成自己）。"
+      },
+      ko: {
+        s: "인생에는 예외가 없으니, 자신을 어떻게 가꾸어 갈 것인지 스스로에게 물어라,",
+        r: "insaeng-eneun yewega eops-euni, jasin-eul eotteohge gakku-eo gal geos-inji seuseuro-ege mur-eora,",
+        e: "沒有例外＝誰都一樣、沒有特殊待遇；培栽＝栽培、培養（像種樹一樣養成自己）。"
+      },
+      ja: {
+        s: "人生に例外はない、ただ自分をどう育てるか自分に問いかけよ,",
+        r: "jinsei ni reigai wa nai, tada jibun o dō sodateru ka jibun ni toikakeyo,",
+        e: "沒有例外＝誰都一樣、沒有特殊待遇；培栽＝栽培、培養（像種樹一樣養成自己）。"
+      },
+      si: {
+        s: "ජීවිතයේ ව්‍යතිරේකයක් නැත, තමා වගා කරගත යුත්තේ කෙසේදැයි තමාගෙන්ම අසන්න,",
+        r: "jīvitayē vyatirēkayak næta, tamā vagā karagata yuttē kesēdæyi tamāgenma asanna,",
+        e: "沒有例外＝誰都一樣、沒有特殊待遇；培栽＝栽培、培養（像種樹一樣養成自己）。"
+      },
+      fa: {
+        s: "زندگی هیچ استثنایی ندارد؛ فقط از خودت بپرس چگونه خود را پرورش دهی،",
+        r: "zendegi hich estesnāyi nadārad; faqat az khodat bepors chegune khod rā parvaresh dahi,",
+        e: "沒有例外＝誰都一樣、沒有特殊待遇；培栽＝栽培、培養（像種樹一樣養成自己）。"
+      }
+    },
+    {
+      hi: {
+        s: "मूल्य खरीदा नहीं जा सकता, बस खुद से पूछो कि उसे कैसे खोद निकालना है,",
+        r: "mūlya kharīdā nahīṁ jā saktā, bas khud se pūcho ki use kaise khod nikālnā hai,",
+        e: "沒有得買＝用錢買不到；開採＝像挖礦一樣，把內在的價值挖出來。"
+      },
+      en: {
+        s: "Worth cannot be bought; just ask yourself how to mine it out,",
+        r: "",
+        e: "沒有得買＝用錢買不到；開採＝像挖礦一樣，把內在的價值挖出來。"
+      },
+      ta: {
+        s: "மதிப்பை வாங்க முடியாது, அதை எப்படித் தோண்டி எடுப்பது என்று உன்னிடமே கேள்,",
+        r: "matippai vāṅka muṭiyātu, atai eppaṭit tōṇṭi eṭuppatu eṉṟu uṉṉiṭamē kēḷ,",
+        e: "沒有得買＝用錢買不到；開採＝像挖礦一樣，把內在的價值挖出來。"
+      },
+      th: {
+        s: "คุณค่าซื้อไม่ได้ ถามตัวเองว่าจะขุดค้นมันออกมาอย่างไร,",
+        r: "khunkhā sue mai dāi, thām tūa eng wā cha khutkhon man ok mā yāng rai,",
+        e: "沒有得買＝用錢買不到；開採＝像挖礦一樣，把內在的價值挖出來。"
+      },
+      km: {
+        s: "តម្លៃទិញមិនបានទេ សួរខ្លួនឯងថា ត្រូវជីកយកវាចេញយ៉ាងដូចម្តេច,",
+        r: "tɑmlai tin min bān té, suə kluən'éng tha trəv chīk yōk vea chenh yāng dochmdéch,",
+        e: "沒有得買＝用錢買不到；開採＝像挖礦一樣，把內在的價值挖出來。"
+      },
+      vi: {
+        s: "Giá trị không mua được, hãy tự hỏi mình khai thác nó thế nào,",
+        r: "",
+        e: "沒有得買＝用錢買不到；開採＝像挖礦一樣，把內在的價值挖出來。"
+      },
+      id: {
+        s: "Nilai tidak bisa dibeli, tanyakan pada dirimu bagaimana menggali dan menemukannya,",
+        r: "",
+        e: "沒有得買＝用錢買不到；開採＝像挖礦一樣，把內在的價值挖出來。"
+      },
+      ne: {
+        s: "मूल्य किन्न सकिँदैन, त्यसलाई कसरी खनेर निकाल्ने भनेर आफैँलाई सोध,",
+        r: "mūlya kinna sakiṁdaina, tyaslāī kasarī khaner nikālne bhanera āphailāī sodha,",
+        e: "沒有得買＝用錢買不到；開採＝像挖礦一樣，把內在的價值挖出來。"
+      },
+      bn: {
+        s: "মূল্য কেনা যায় না, শুধু নিজেকে জিজ্ঞেস করো কীভাবে তাকে খুঁড়ে বের করবে,",
+        r: "mūlya kenā yāy nā, śudhu nijeke jiggeś karo kībhābe tāke khum̐ṛe ber karbe,",
+        e: "沒有得買＝用錢買不到；開採＝像挖礦一樣，把內在的價值挖出來。"
+      },
+      es: {
+        s: "El valor no se compra; pregúntate cómo extraerlo,",
+        r: "",
+        e: "沒有得買＝用錢買不到；開採＝像挖礦一樣，把內在的價值挖出來。"
+      },
+      de: {
+        s: "Wert lässt sich nicht kaufen; frag dich nur, wie du ihn zutage förderst,",
+        r: "",
+        e: "沒有得買＝用錢買不到；開採＝像挖礦一樣，把內在的價值挖出來。"
+      },
+      my: {
+        s: "တန်ဖိုးကို ဝယ်လို့မရဘူး၊ ဘယ်လို တူးဖော်ယူရမလဲဆိုတာ ကိုယ့်ကိုယ်ကိုယ် မေးပါ,",
+        r: "tənphó ko wè lo mə ya bú, bèlo tú phɔ̀ yu ya ma lè so ta ko ko ko mé ba,",
+        e: "沒有得買＝用錢買不到；開採＝像挖礦一樣，把內在的價值挖出來。"
+      },
+      ko: {
+        s: "가치는 살 수 없으니, 그것을 어떻게 캐낼 것인지 스스로에게 물어라,",
+        r: "gachineun sal su eops-euni, geugeos-eul eotteohge kaenael geos-inji seuseuro-ege mur-eora,",
+        e: "沒有得買＝用錢買不到；開採＝像挖礦一樣，把內在的價值挖出來。"
+      },
+      ja: {
+        s: "価値は買うことができない、それをどう掘り出すか自分に問いかけよ,",
+        r: "kachi wa kau koto ga dekinai, sore o dō horidasu ka jibun ni toikakeyo,",
+        e: "沒有得買＝用錢買不到；開採＝像挖礦一樣，把內在的價值挖出來。"
+      },
+      si: {
+        s: "වටිනාකම මිලදී ගත නොහැක, එය කෙසේ කැණීමෙන් සොයාගත යුතුදැයි තමාගෙන්ම අසන්න,",
+        r: "vaṭinākama miladī gata nohæka, eya kesē kæṇīmen soyāgata yuttedæyi tamāgenma asanna,",
+        e: "沒有得買＝用錢買不到；開採＝像挖礦一樣，把內在的價值挖出來。"
+      },
+      fa: {
+        s: "ارزش خریدنی نیست؛ فقط از خودت بپرس چگونه آن را استخراج کنی،",
+        r: "arzesh kharidani nist; faqat az khodat bepors chegune ān rā estekhrāj koni,",
+        e: "沒有得買＝用錢買不到；開採＝像挖礦一樣，把內在的價值挖出來。"
+      }
+    },
+    {
+      hi: {
+        s: "जीवन दोबारा नहीं आता, अच्छा नाटक अभी शुरू हो,",
+        r: "jīvan dobārā nahīṁ ātā, acchā nāṭak abhī śurū ho,",
+        e: "不重來＝不能倒帶重演；好戲開拍＝把人生當一齣好戲、立刻行動。"
+      },
+      en: {
+        s: "Life has no retake; let the good show start rolling now,",
+        r: "",
+        e: "不重來＝不能倒帶重演；好戲開拍＝把人生當一齣好戲、立刻行動。"
+      },
+      ta: {
+        s: "வாழ்க்கை மீண்டும் வராது, நல்ல நாடகம் இப்போதே தொடங்கட்டும்,",
+        r: "vāḻkkai mīṇṭum varātu, nalla nāṭakam ippōtē toṭaṅkaṭṭum,",
+        e: "不重來＝不能倒帶重演；好戲開拍＝把人生當一齣好戲、立刻行動。"
+      },
+      th: {
+        s: "ชีวิตไม่มีเทคสอง ละครดีเริ่มถ่ายทำเดี๋ยวนี้,",
+        r: "chīwit mai mī thek sǭng, lakhǭn dī roem thāitham dīo nī,",
+        e: "不重來＝不能倒帶重演；好戲開拍＝把人生當一齣好戲、立刻行動。"
+      },
+      km: {
+        s: "ជីវិតមិនអាចចាប់ផ្តើមសារជាថ្មីបានទេ រឿងល្អចាប់ផ្តើមថតឥឡូវនេះ,",
+        r: "chīvit min ach chab phdæm sar chea thmei bān té, rœang l'ɑ chab phdæm thɑt eilaov nih,",
+        e: "不重來＝不能倒帶重演；好戲開拍＝把人生當一齣好戲、立刻行動。"
+      },
+      vi: {
+        s: "Đời người không quay lại, vở diễn hay hãy bấm máy ngay,",
+        r: "",
+        e: "不重來＝不能倒帶重演；好戲開拍＝把人生當一齣好戲、立刻行動。"
+      },
+      id: {
+        s: "Hidup tak bisa diulang, pertunjukan bagus mulai syuting sekarang juga,",
+        r: "",
+        e: "不重來＝不能倒帶重演；好戲開拍＝把人生當一齣好戲、立刻行動。"
+      },
+      ne: {
+        s: "जीवन दोहोरिँदैन, राम्रो नाटक अहिले नै सुरु होस्,",
+        r: "jīvan dohoriṁdaina, rāmro nāṭak ahile nai suru hos,",
+        e: "不重來＝不能倒帶重演；好戲開拍＝把人生當一齣好戲、立刻行動。"
+      },
+      bn: {
+        s: "জীবন আর ফিরে আসে না, ভালো নাটকের শুটিং এখনই শুরু হোক,",
+        r: "jīban ār phire āse nā, bhālo nāṭaker śuṭiṁ ekhani śuru hok,",
+        e: "不重來＝不能倒帶重演；好戲開拍＝把人生當一齣好戲、立刻行動。"
+      },
+      es: {
+        s: "La vida no se repite; que la buena obra empiece a rodarse ya,",
+        r: "",
+        e: "不重來＝不能倒帶重演；好戲開拍＝把人生當一齣好戲、立刻行動。"
+      },
+      de: {
+        s: "Das Leben gibt keine Wiederholung; der gute Film beginnt jetzt,",
+        r: "",
+        e: "不重來＝不能倒帶重演；好戲開拍＝把人生當一齣好戲、立刻行動。"
+      },
+      my: {
+        s: "ဘဝမှာ ပြန်စလို့မရဘူး၊ ကောင်းတဲ့ဇာတ်လမ်း အခုပဲ စရိုက်ကူးပါ,",
+        r: "bəwa̰ hma pyan sə lo mə ya bú, káung dè zatta̰n akhu bè sə yaik kú ba,",
+        e: "不重來＝不能倒帶重演；好戲開拍＝把人生當一齣好戲、立刻行動。"
+      },
+      ko: {
+        s: "인생은 다시 오지 않으니, 좋은 연극은 지금 바로 촬영을 시작하라,",
+        r: "insaeng-eun dasi oji anh-euni, joh-eun yeongeug-eun jigeum baro chwalyeong-eul sijakhara,",
+        e: "不重來＝不能倒帶重演；好戲開拍＝把人生當一齣好戲、立刻行動。"
+      },
+      ja: {
+        s: "人生はやり直せない、良い芝居は今すぐクランクインだ,",
+        r: "jinsei wa yarinaosenai, yoi shibai wa ima sugu kurankuin da,",
+        e: "不重來＝不能倒帶重演；好戲開拍＝把人生當一齣好戲、立刻行動。"
+      },
+      si: {
+        s: "ජීවිතය නැවත නොඑයි, හොඳ රංගනය දැන්ම ආරම්භ වේවා,",
+        r: "jīvitaya nævata noeyi, hoṁda raṁganaya dænmama ārambha vēvā,",
+        e: "不重來＝不能倒帶重演；好戲開拍＝把人生當一齣好戲、立刻行動。"
+      },
+      fa: {
+        s: "زندگی تکرار نمی‌شود؛ نمایش خوب همین حالا کلید بخورد،",
+        r: "zendegi tekrār nemishavad; namāyesh-e khub hamin hālā kelid bokhorad,",
+        e: "不重來＝不能倒帶重演；好戲開拍＝把人生當一齣好戲、立刻行動。"
+      }
+    },
+    {
+      hi: {
+        s: "हालाँकि मुझमें दिखावा नहीं, पर मुझमें हौसला है,",
+        r: "hālāṁki mujhmeṁ dikhāvā nahīṁ, par mujhmeṁ hausalā hai,",
+        e: "氣派＝外表的排場、氣勢；氣概＝內在的志氣、骨氣。"
+      },
+      en: {
+        s: "I may lack grandeur, but I have backbone,",
+        r: "",
+        e: "氣派＝外表的排場、氣勢；氣概＝內在的志氣、骨氣。"
+      },
+      ta: {
+        s: "என்னிடம் ஆடம்பரம் இல்லாவிட்டாலும், என்னிடம் துணிவு உண்டு,",
+        r: "eṉṉiṭam āṭamparam illāviṭṭālum, eṉṉiṭam tuṇivu uṇṭu,",
+        e: "氣派＝外表的排場、氣勢；氣概＝內在的志氣、骨氣。"
+      },
+      th: {
+        s: "แม้ไม่มีความโอ่อ่า แต่ฉันมีความองอาจ,",
+        r: "mǣ mai mī khwām ō-ā, tǣ chan mī khwām ong-āt,",
+        e: "氣派＝外表的排場、氣勢；氣概＝內在的志氣、骨氣。"
+      },
+      km: {
+        s: "ទោះបីគ្មានភាពអស្ចារ្យ ក៏ខ្ញុំមានភាពក្លាហាន,",
+        r: "toahbei kmien pheap aschar, kɑ khnom mien pheap klaharn,",
+        e: "氣派＝外表的排場、氣勢；氣概＝內在的志氣、骨氣。"
+      },
+      vi: {
+        s: "Dù không có vẻ hào nhoáng, ta có khí phách,",
+        r: "",
+        e: "氣派＝外表的排場、氣勢；氣概＝內在的志氣、骨氣。"
+      },
+      id: {
+        s: "Meski tak punya kemegahan, aku punya keberanian hati,",
+        r: "",
+        e: "氣派＝外表的排場、氣勢；氣概＝內在的志氣、骨氣。"
+      },
+      ne: {
+        s: "मसँग देखावटी ठाँटबाँट नभए पनि मसँग आँट छ,",
+        r: "masaṁga dekhāvaṭī ṭhāṁṭbāṁṭ nabhae pani masaṁga ām̐ṭa cha,",
+        e: "氣派＝外表的排場、氣勢；氣概＝內在的志氣、骨氣。"
+      },
+      bn: {
+        s: "আড়ম্বর না থাকলেও আমার আছে সাহস,",
+        r: "āṛambar nā thākleo āmār āche sāhas,",
+        e: "氣派＝外表的排場、氣勢；氣概＝內在的志氣、骨氣。"
+      },
+      es: {
+        s: "Aunque no tenga pompa, tengo temple,",
+        r: "",
+        e: "氣派＝外表的排場、氣勢；氣概＝內在的志氣、骨氣。"
+      },
+      de: {
+        s: "Mag mir Prunk fehlen, doch ich habe Rückgrat,",
+        r: "",
+        e: "氣派＝外表的排場、氣勢；氣概＝內在的志氣、骨氣。"
+      },
+      my: {
+        s: "ခမ်းနားမှု မရှိပေမယ့် ငါ့မှာ သတ္တိရှိတယ်,",
+        r: "khan ná hmu mə shi pé mè, nga̰ hma thatti shi dè,",
+        e: "氣派＝外表的排場、氣勢；氣概＝內在的志氣、骨氣。"
+      },
+      ko: {
+        s: "화려함은 없어도, 나에게는 기개가 있다,",
+        r: "hwaryeoham-eun eops-eodo, na-egeneun gigaega itda,",
+        e: "氣派＝外表的排場、氣勢；氣概＝內在的志氣、骨氣。"
+      },
+      ja: {
+        s: "派手さはなくとも、私には気概がある,",
+        r: "hadesa wa nakutomo, watashi ni wa kigai ga aru,",
+        e: "氣派＝外表的排場、氣勢；氣概＝內在的志氣、骨氣。"
+      },
+      si: {
+        s: "ආඩම්බරයක් නැතත්, මට ධෛර්යය තිබේ,",
+        r: "āḍambarayak nætat, maṭa dhairyyaya tibē,",
+        e: "氣派＝外表的排場、氣勢；氣概＝內在的志氣、骨氣。"
+      },
+      fa: {
+        s: "گرچه جلال ندارم، اما شهامت دارم،",
+        r: "garche jalāl nadāram, ammā shahāmat dāram,",
+        e: "氣派＝外表的排場、氣勢；氣概＝內在的志氣、骨氣。"
+      }
+    },
+    {
+      hi: {
+        s: "गुस्सा और बुरी आदतें सुधारो, सावधान, विनम्र और स्नेही बनो,",
+        r: "gussā aur burī ādateṁ sudhāro, sāvdhan, vinamra aur snehī bano,",
+        e: "脾氣毛病＝壞脾氣與壞習慣；謹慎謙恭藹＝小心、謙虛、恭敬、和藹。"
+      },
+      en: {
+        s: "Fix my temper and bad habits; be careful, humble, respectful, kind,",
+        r: "",
+        e: "脾氣毛病＝壞脾氣與壞習慣；謹慎謙恭藹＝小心、謙虛、恭敬、和藹。"
+      },
+      ta: {
+        s: "கோபத்தையும் கெட்ட பழக்கங்களையும் திருத்து, கவனமாக, பணிவாக, மரியாதையாக, அன்பாக இரு,",
+        r: "kōpattaiyum keṭṭa paḻakkaṅkaḷaiyum tiruttu, kavaṉamāka, paṇivāka, mariyātaiyāka, aṉpāka iru,",
+        e: "脾氣毛病＝壞脾氣與壞習慣；謹慎謙恭藹＝小心、謙虛、恭敬、和藹。"
+      },
+      th: {
+        s: "แก้นิสัยเสียและอารมณ์ร้าย จงรอบคอบ ถ่อมตน สุภาพ และอ่อนโยน,",
+        r: "kǣ nisai sīa lae ārom rāi, chong rǭpkhǭp, thǭm ton, suphāp lae ǭn yōn,",
+        e: "脾氣毛病＝壞脾氣與壞習慣；謹慎謙恭藹＝小心、謙虛、恭敬、和藹。"
+      },
+      km: {
+        s: "កែកំហឹងនិងទម្លាប់អាក្រក់ ប្រុងប្រយ័ត្ន សុភាព រាបសារ និងសប្បុរស,",
+        r: "ké kɑmhəng ning tɔmleab akrɑk, brong brɑyɑt, so'pheap, riebsa nung sɑbboroh,",
+        e: "脾氣毛病＝壞脾氣與壞習慣；謹慎謙恭藹＝小心、謙虛、恭敬、和藹。"
+      },
+      vi: {
+        s: "Sửa tính nóng nảy và tật xấu, cẩn trọng, khiêm tốn, cung kính, hòa nhã,",
+        r: "",
+        e: "脾氣毛病＝壞脾氣與壞習慣；謹慎謙恭藹＝小心、謙虛、恭敬、和藹。"
+      },
+      id: {
+        s: "Perbaiki amarah dan kebiasaan buruk, berhati-hati, rendah hati, hormat, dan ramah,",
+        r: "",
+        e: "脾氣毛病＝壞脾氣與壞習慣；謹慎謙恭藹＝小心、謙虛、恭敬、和藹。"
+      },
+      ne: {
+        s: "रिस र नराम्रा बानी सुधार, सतर्क, विनम्र, आदरशील र स्नेहशील बन,",
+        r: "ris ra narāmrā bānī sudhār, satark, vinamra, ādarśīl ra snehśīl ban,",
+        e: "脾氣毛病＝壞脾氣與壞習慣；謹慎謙恭藹＝小心、謙虛、恭敬、和藹。"
+      },
+      bn: {
+        s: "রাগ আর বদভ্যাস শুধরে নাও, সতর্ক, বিনয়ী, শ্রদ্ধাশীল ও স্নেহশীল হও,",
+        r: "rāg ār badabhyās śudhore nāo, satarka, binayī, śraddhāśīl o snehśīl hao,",
+        e: "脾氣毛病＝壞脾氣與壞習慣；謹慎謙恭藹＝小心、謙虛、恭敬、和藹。"
+      },
+      es: {
+        s: "Corrige el mal genio y los malos hábitos; sé prudente, humilde, respetuoso y amable,",
+        r: "",
+        e: "脾氣毛病＝壞脾氣與壞習慣；謹慎謙恭藹＝小心、謙虛、恭敬、和藹。"
+      },
+      de: {
+        s: "Lege Launen und schlechte Gewohnheiten ab; sei umsichtig, bescheiden, respektvoll und freundlich,",
+        r: "",
+        e: "脾氣毛病＝壞脾氣與壞習慣；謹慎謙恭藹＝小心、謙虛、恭敬、和藹。"
+      },
+      my: {
+        s: "ဒေါသနဲ့ အကျင့်ဆိုးတွေ ပြင်ပါ၊ သတိထား၊ နှိမ့်ချ၊ လေးစား၊ ကြင်နာပါ,",
+        r: "dɔ́tha nè akyin só dwe pyin ba, thadi htá, hnein cha, lé zá, kyiŋ ná ba,",
+        e: "脾氣毛病＝壞脾氣與壞習慣；謹慎謙恭藹＝小心、謙虛、恭敬、和藹。"
+      },
+      ko: {
+        s: "성질과 나쁜 버릇을 고치고, 신중하고 겸손하며 공손하고 온화하라,",
+        r: "seongjilgwa nappeun beoreus-eul gochigo, sinjunghago gyeomsonhamyeo gongsonhago onhwahara,",
+        e: "脾氣毛病＝壞脾氣與壞習慣；謹慎謙恭藹＝小心、謙虛、恭敬、和藹。"
+      },
+      ja: {
+        s: "気性と悪い癖を改め、慎重に謙虚に恭しく和やかに,",
+        r: "kishō to warui kuse o aratame, shinchō ni kenkyo ni uyauyashiku nagoyaka ni,",
+        e: "脾氣毛病＝壞脾氣與壞習慣；謹慎謙恭藹＝小心、謙虛、恭敬、和藹。"
+      },
+      si: {
+        s: "කේන්තිය සහ නරක පුරුදු නිවැරදි කර, සැලකිලිමත්, නිහතමානී, ගෞරවනීය සහ කරුණාවන්ත වන්න,",
+        r: "kēntiya saha naraka purudu niværadi kara, sælakiḷimat, nihatamānī, gauravanīya saha karuṇāvanta vanna,",
+        e: "脾氣毛病＝壞脾氣與壞習慣；謹慎謙恭藹＝小心、謙虛、恭敬、和藹。"
+      },
+      fa: {
+        s: "خشم و عادت‌های بد را اصلاح کن؛ محتاط، فروتن، محترم و مهربان باش،",
+        r: "khashm o ādathā-ye bad rā eslāh kon; mohtāt, forutan, mohtaram o mehrabān bāsh,",
+        e: "脾氣毛病＝壞脾氣與壞習慣；謹慎謙恭藹＝小心、謙虛、恭敬、和藹。"
+      }
+    },
+    {
+      hi: {
+        s: "सकारात्मक होकर आगे बढ़ो,",
+        r: "sakārātmak hokar āge baṛho,",
+        e: "積極＝主動正向；向前邁＝大步往前走。"
+      },
+      en: {
+        s: "Stride forward with a positive heart,",
+        r: "",
+        e: "積極＝主動正向；向前邁＝大步往前走。"
+      },
+      ta: {
+        s: "நேர்மறையாக முன்னேறிச் செல்,",
+        r: "nērmaṟaiyāka muṉṉēṟic cel,",
+        e: "積極＝主動正向；向前邁＝大步往前走。"
+      },
+      th: {
+        s: "ก้าวไปข้างหน้าอย่างกระตือรือร้น,",
+        r: "kāo pai khāng nā yāng kratue rue ron,",
+        e: "積極＝主動正向；向前邁＝大步往前走。"
+      },
+      km: {
+        s: "ដើរទៅមុខដោយសកម្ម,",
+        r: "dəə tɨw muk daoy sɑkkɑm,",
+        e: "積極＝主動正向；向前邁＝大步往前走。"
+      },
+      vi: {
+        s: "Tích cực tiến bước về phía trước,",
+        r: "",
+        e: "積極＝主動正向；向前邁＝大步往前走。"
+      },
+      id: {
+        s: "Melangkahlah maju dengan penuh semangat,",
+        r: "",
+        e: "積極＝主動正向；向前邁＝大步往前走。"
+      },
+      ne: {
+        s: "सकारात्मक भएर अगाडि बढ,",
+        r: "sakārātmak bhaera agāḍi baḍha,",
+        e: "積極＝主動正向；向前邁＝大步往前走。"
+      },
+      bn: {
+        s: "ইতিবাচক হয়ে সামনে এগিয়ে যাও,",
+        r: "itibācak haye sāmne egiye yāo,",
+        e: "積極＝主動正向；向前邁＝大步往前走。"
+      },
+      es: {
+        s: "Avanza con ánimo positivo,",
+        r: "",
+        e: "積極＝主動正向；向前邁＝大步往前走。"
+      },
+      de: {
+        s: "Schreite tatkräftig voran,",
+        r: "",
+        e: "積極＝主動正向；向前邁＝大步往前走。"
+      },
+      my: {
+        s: "တက်တက်ကြွကြွနဲ့ ရှေ့သို့ လှမ်းပါ,",
+        r: "tet tet kywɛ kywɛ nè shé tho̰ hlán ba,",
+        e: "積極＝主動正向；向前邁＝大步往前走。"
+      },
+      ko: {
+        s: "적극적으로 앞으로 나아가라,",
+        r: "jeokgeukjeog-euro ap-euro na-agara,",
+        e: "積極＝主動正向；向前邁＝大步往前走。"
+      },
+      ja: {
+        s: "積極的に前へ進め,",
+        r: "sekkyokuteki ni mae e susume,",
+        e: "積極＝主動正向；向前邁＝大步往前走。"
+      },
+      si: {
+        s: "ධනාත්මකව ඉදිරියට පියනඟන්න,",
+        r: "dhanātmakava idiriyaṭa piyanaganna,",
+        e: "積極＝主動正向；向前邁＝大步往前走。"
+      },
+      fa: {
+        s: "با روحیه‌ای مثبت به پیش گام بردار،",
+        r: "bā ruhiye-i mosbat be pish gām bardār,",
+        e: "積極＝主動正向；向前邁＝大步往前走。"
+      }
+    },
+    {
+      hi: {
+        s: "हालाँकि मेरे पास धन नहीं, पर मेरे पास हुनर है,",
+        r: "hālāṁki mere pās dhan nahīṁ, par mere pās hunar hai,",
+        e: "錢財＝金錢財富；長才＝擅長的才能、專長。"
+      },
+      en: {
+        s: "I may lack riches, but I have my talents,",
+        r: "",
+        e: "錢財＝金錢財富；長才＝擅長的才能、專長。"
+      },
+      ta: {
+        s: "என்னிடம் செல்வம் இல்லாவிட்டாலும், என்னிடம் திறமை உண்டு,",
+        r: "eṉṉiṭam celvam illāviṭṭālum, eṉṉiṭam tiṟamai uṇṭu,",
+        e: "錢財＝金錢財富；長才＝擅長的才能、專長。"
+      },
+      th: {
+        s: "แม้ไม่มีเงินทอง แต่ฉันมีความสามารถ,",
+        r: "mǣ mai mī ngoen thǭng, tǣ chan mī khwām sāmāt,",
+        e: "錢財＝金錢財富；長才＝擅長的才能、專長。"
+      },
+      km: {
+        s: "ទោះបីគ្មានទ្រព្យសម្បត្តិ ក៏ខ្ញុំមានទេពកោសល្យ,",
+        r: "toahbei kmien troapsɑmbɑt, kɑ khnom mien tép kaohsɑl,",
+        e: "錢財＝金錢財富；長才＝擅長的才能、專長。"
+      },
+      vi: {
+        s: "Dù không có tiền của, ta có tài năng,",
+        r: "",
+        e: "錢財＝金錢財富；長才＝擅長的才能、專長。"
+      },
+      id: {
+        s: "Meski tak punya harta, aku punya bakat,",
+        r: "",
+        e: "錢財＝金錢財富；長才＝擅長的才能、專長。"
+      },
+      ne: {
+        s: "मसँग धन नभए पनि मसँग सीप छ,",
+        r: "masaṁga dhan nabhae pani masaṁga sīp cha,",
+        e: "錢財＝金錢財富；長才＝擅長的才能、專長。"
+      },
+      bn: {
+        s: "ধনসম্পদ না থাকলেও আমার আছে প্রতিভা,",
+        r: "dhanasampad nā thākleo āmār āche pratibhā,",
+        e: "錢財＝金錢財富；長才＝擅長的才能、專長。"
+      },
+      es: {
+        s: "Aunque no tenga riquezas, tengo talento,",
+        r: "",
+        e: "錢財＝金錢財富；長才＝擅長的才能、專長。"
+      },
+      de: {
+        s: "Mag mir Reichtum fehlen, doch ich habe Talent,",
+        r: "",
+        e: "錢財＝金錢財富；長才＝擅長的才能、專長。"
+      },
+      my: {
+        s: "ငွေကြေး မရှိပေမယ့် ငါ့မှာ အရည်အချင်းရှိတယ်,",
+        r: "ngwe kyé mə shi pé mè, nga̰ hma ayé akhyin shi dè,",
+        e: "錢財＝金錢財富；長才＝擅長的才能、專長。"
+      },
+      ko: {
+        s: "재물은 없어도, 나에게는 재능이 있다,",
+        r: "jaemur-eun eops-eodo, na-egeneun jaeneung-i itda,",
+        e: "錢財＝金錢財富；長才＝擅長的才能、專長。"
+      },
+      ja: {
+        s: "財産はなくとも、私には才能がある,",
+        r: "zaisan wa nakutomo, watashi ni wa sainō ga aru,",
+        e: "錢財＝金錢財富；長才＝擅長的才能、專長。"
+      },
+      si: {
+        s: "ධනය නැතත්, මට දක්ෂතාව තිබේ,",
+        r: "dhanaya nætat, maṭa dakṣatāva tibē,",
+        e: "錢財＝金錢財富；長才＝擅長的才能、專長。"
+      },
+      fa: {
+        s: "گرچه ثروت ندارم، اما استعداد دارم،",
+        r: "garche servat nadāram, ammā este'dād dāram,",
+        e: "錢財＝金錢財富；長才＝擅長的才能、專長。"
+      }
+    },
+    {
+      hi: {
+        s: "लगन से आगे बढ़ो, आलस न करो; सोच में रुकावट न आने दो,",
+        r: "lagan se āge baṛho, ālas na karo; soch meṁ rukāvaṭ na āne do,",
+        e: "精進＝努力上進；不懈怠＝不偷懶；思路不阻塞＝想法通暢、不卡住。"
+      },
+      en: {
+        s: "Diligent and never idle; keep your thinking unblocked,",
+        r: "",
+        e: "精進＝努力上進；不懈怠＝不偷懶；思路不阻塞＝想法通暢、不卡住。"
+      },
+      ta: {
+        s: "விடாமுயற்சியுடன் முன்னேறு, சோம்பேறித்தனம் வேண்டாம்; சிந்தனை தடைபட வேண்டாம்,",
+        r: "viṭāmuyaṟciyuṭaṉ muṉṉēṟu, cōmpēṟittaṉam vēṇṭām; cintaṉai taṭaipaṭa vēṇṭām,",
+        e: "精進＝努力上進；不懈怠＝不偷懶；思路不阻塞＝想法通暢、不卡住。"
+      },
+      th: {
+        s: "พากเพียรไม่ย่อท้อ ความคิดไม่ติดขัด,",
+        r: "phāk phīan mai yǭ thǭ, khwām khit mai tit khat,",
+        e: "精進＝努力上進；不懈怠＝不偷懶；思路不阻塞＝想法通暢、不卡住。"
+      },
+      km: {
+        s: "ឧស្សាហ៍ព្យាយាមមិនខ្ជិលច្រអូស គំនិតមិនជាប់គាំង,",
+        r: "osah piyeam min khchɨl chrɑos, kɑmnit min cheab kɨng,",
+        e: "精進＝努力上進；不懈怠＝不偷懶；思路不阻塞＝想法通暢、不卡住。"
+      },
+      vi: {
+        s: "Tinh tấn không lười biếng, tư duy không bế tắc,",
+        r: "",
+        e: "精進＝努力上進；不懈怠＝不偷懶；思路不阻塞＝想法通暢、不卡住。"
+      },
+      id: {
+        s: "Tekun dan tak pernah malas; jangan biarkan pikiran tersumbat,",
+        r: "",
+        e: "精進＝努力上進；不懈怠＝不偷懶；思路不阻塞＝想法通暢、不卡住。"
+      },
+      ne: {
+        s: "लगनशील बन, अल्छी नगर; सोचलाई अवरुद्ध हुन नदे,",
+        r: "laganśīl ban, alchī nagar; soclāī avaruddha hun nade,",
+        e: "精進＝努力上進；不懈怠＝不偷懶；思路不阻塞＝想法通暢、不卡住。"
+      },
+      bn: {
+        s: "অধ্যবসায়ী হও, অলসতা নয়; চিন্তা যেন বাধাগ্রস্ত না হয়,",
+        r: "adhyabasāyī hao, alasatā nay; cintā yen bādhāgrasta nā hay,",
+        e: "精進＝努力上進；不懈怠＝不偷懶；思路不阻塞＝想法通暢、不卡住。"
+      },
+      es: {
+        s: "Diligente y sin pereza; que el pensamiento no se bloquee,",
+        r: "",
+        e: "精進＝努力上進；不懈怠＝不偷懶；思路不阻塞＝想法通暢、不卡住。"
+      },
+      de: {
+        s: "Fleißig und nie träge; lass das Denken nie stocken,",
+        r: "",
+        e: "精進＝努力上進；不懈怠＝不偷懶；思路不阻塞＝想法通暢、不卡住。"
+      },
+      my: {
+        s: "ကြိုးစား၍ မပျင်းရိနှင့်၊ အတွေးအခေါ် မပိတ်ဆို့စေနှင့်,",
+        r: "kyó zá yè mə pyin yi hnin, atwé akhɔ̀ mə peik só zé hnin,",
+        e: "精進＝努力上進；不懈怠＝不偷懶；思路不阻塞＝想法通暢、不卡住。"
+      },
+      ko: {
+        s: "정진하여 게으르지 말고, 생각이 막히지 않게 하라,",
+        r: "jeongjinhayeo ge-eureuji malgo, saenggag-i makhiji anhge hara,",
+        e: "精進＝努力上進；不懈怠＝不偷懶；思路不阻塞＝想法通暢、不卡住。"
+      },
+      ja: {
+        s: "精進して怠けず、思考を滞らせない,",
+        r: "shōjin shite namakezu, shikō o todorokasenai,",
+        e: "精進＝努力上進；不懈怠＝不偷懶；思路不阻塞＝想法通暢、不卡住。"
+      },
+      si: {
+        s: "කඩිසරව ඉදිරියට යන්න, කම්මැලිකම නොකරන්න; සිතුවිලි අවහිර නොවන්න,",
+        r: "kaḍisarava idiriyaṭa yanna, kammælikama nokaranna; sitivili avahira novanna,",
+        e: "精進＝努力上進；不懈怠＝不偷懶；思路不阻塞＝想法通暢、不卡住。"
+      },
+      fa: {
+        s: "کوشا باش و تنبلی مکن؛ اندیشه‌ات را مسدود مگذار،",
+        r: "kushā bāsh o tanbali makon; andishe-at rā masdud magozār,",
+        e: "精進＝努力上進；不懈怠＝不偷懶；思路不阻塞＝想法通暢、不卡住。"
+      }
+    },
+    {
+      hi: {
+        s: "हर काम में किसी पर निर्भर न रहो,",
+        r: "har kām meṁ kisī par nirbhar na raho,",
+        e: "事事＝每一件事；不依賴＝不靠別人、靠自己。"
+      },
+      en: {
+        s: "In all things, depend on no one,",
+        r: "",
+        e: "事事＝每一件事；不依賴＝不靠別人、靠自己。"
+      },
+      ta: {
+        s: "எல்லாவற்றிலும் யாரையும் சார்ந்திருக்காதே,",
+        r: "ellāvaṟṟilum yāraiyum cārn tirukkātē,",
+        e: "事事＝每一件事；不依賴＝不靠別人、靠自己。"
+      },
+      th: {
+        s: "ทุกเรื่องไม่พึ่งพาใคร,",
+        r: "thuk rueang mai phuengphā khrai,",
+        e: "事事＝每一件事；不依賴＝不靠別人、靠自己。"
+      },
+      km: {
+        s: "គ្រប់រឿងមិនពឹងផ្អែកអ្នកណា,",
+        r: "krup rœang min pɨng ph'aek neak na,",
+        e: "事事＝每一件事；不依賴＝不靠別人、靠自己。"
+      },
+      vi: {
+        s: "Mọi việc đều không ỷ lại,",
+        r: "",
+        e: "事事＝每一件事；不依賴＝不靠別人、靠自己。"
+      },
+      id: {
+        s: "Dalam segala hal, jangan bergantung pada siapa pun,",
+        r: "",
+        e: "事事＝每一件事；不依賴＝不靠別人、靠自己。"
+      },
+      ne: {
+        s: "हरेक कुरामा कसैमाथि निर्भर नगर,",
+        r: "harek kurāmā kasaimāthi nirbhar nagar,",
+        e: "事事＝每一件事；不依賴＝不靠別人、靠自己。"
+      },
+      bn: {
+        s: "সব বিষয়ে কারো উপর নির্ভর কোরো না,",
+        r: "sab biṣaye kāro upar nirbhar koro nā,",
+        e: "事事＝每一件事；不依賴＝不靠別人、靠自己。"
+      },
+      es: {
+        s: "En todo, no dependas de nadie,",
+        r: "",
+        e: "事事＝每一件事；不依賴＝不靠別人、靠自己。"
+      },
+      de: {
+        s: "Verlass dich in allem auf niemanden,",
+        r: "",
+        e: "事事＝每一件事；不依賴＝不靠別人、靠自己。"
+      },
+      my: {
+        s: "အရာရာမှာ ဘယ်သူ့ကိုမှ မမှီခိုနှင့်,",
+        r: "ayá yá hma bè dhu ko hma mə mhí khó hnin,",
+        e: "事事＝每一件事；不依賴＝不靠別人、靠自己。"
+      },
+      ko: {
+        s: "모든 일에 누구에게도 의존하지 마라,",
+        r: "modeun ir-e nuguegedo uijonhaji mara,",
+        e: "事事＝每一件事；不依賴＝不靠別人、靠自己。"
+      },
+      ja: {
+        s: "何事も誰にも頼らない,",
+        r: "nanigoto mo dare ni mo tayoranai,",
+        e: "事事＝每一件事；不依賴＝不靠別人、靠自己。"
+      },
+      si: {
+        s: "සියල්ලෙහි කිසිවෙකු මත යැපෙන්න එපා,",
+        r: "siyallehi kisiveku mata yæpenna epā,",
+        e: "事事＝每一件事；不依賴＝不靠別人、靠自己。"
+      },
+      fa: {
+        s: "در همه‌چیز به هیچ‌کس تکیه مکن،",
+        r: "dar hame-chiz be hich-kas tekye makon,",
+        e: "事事＝每一件事；不依賴＝不靠別人、靠自己。"
+      }
+    },
+    {
+      hi: {
+        s: "दिल में एक मालिक हो, छोटी बातों का आदर करो और दिल में धैर्य रखो,",
+        r: "dil meṁ ek mālik ho, choṭī bātoṁ kā ādar karo aur dil meṁ dhairya rakho,",
+        e: "心中有主宰＝心裡有主見、有定見（道場語：以道為主）；敬重小事＝連小事都認真；恆耐＝長久忍耐。"
+      },
+      en: {
+        s: "Hold a master within your heart; honor small matters with enduring patience,",
+        r: "",
+        e: "心中有主宰＝心裡有主見、有定見（道場語：以道為主）；敬重小事＝連小事都認真；恆耐＝長久忍耐。"
+      },
+      ta: {
+        s: "உள்ளத்தில் ஒரு தலைவன் இருக்கட்டும்; சிறு விஷயங்களை மதித்து, நிலையான பொறுமையுடன் இரு,",
+        r: "uḷḷattil oru talaivaṉ irukkaṭṭum; ciṟu viṣayaṅkaḷai matittu, nilaiyāṉa poṟumaiyuṭaṉ iru,",
+        e: "心中有主宰＝心裡有主見、有定見（道場語：以道為主）；敬重小事＝連小事都認真；恆耐＝長久忍耐。"
+      },
+      th: {
+        s: "ใจมีหลักยึด เคารพเรื่องเล็กน้อยด้วยความอดทนมั่นคง,",
+        r: "chai mī lak yuet, khaorop rueang lek noi duai khwām ot thon man khong,",
+        e: "心中有主宰＝心裡有主見、有定見（道場語：以道為主）；敬重小事＝連小事都認真；恆耐＝長久忍耐。"
+      },
+      km: {
+        s: "ក្នុងចិត្តមានម្ចាស់ គោរពរឿងតូចតាចដោយចិត្តអត់ធ្មត់ជាប់លាប់,",
+        r: "knong chet mien mcheah, koarop rœang touch tach daoy chet ɑtdhmɑt cheabléab,",
+        e: "心中有主宰＝心裡有主見、有定見（道場語：以道為主）；敬重小事＝連小事都認真；恆耐＝長久忍耐。"
+      },
+      vi: {
+        s: "Trong lòng có chủ, kính trọng việc nhỏ với lòng kiên nhẫn bền bỉ,",
+        r: "",
+        e: "心中有主宰＝心裡有主見、有定見（道場語：以道為主）；敬重小事＝連小事都認真；恆耐＝長久忍耐。"
+      },
+      id: {
+        s: "Di hati ada yang memimpin, hormati hal-hal kecil dengan kesabaran yang teguh,",
+        r: "",
+        e: "心中有主宰＝心裡有主見、有定見（道場語：以道為主）；敬重小事＝連小事都認真；恆耐＝長久忍耐。"
+      },
+      ne: {
+        s: "मनमा मालिक होस्, साना कुराको आदर गर र मनमा निरन्तर धैर्य राख,",
+        r: "manmā mālik hos, sānā kurāko ādar gar ra manmā nirantar dhairya rākh,",
+        e: "心中有主宰＝心裡有主見、有定見（道場語：以道為主）；敬重小事＝連小事都認真；恆耐＝長久忍耐。"
+      },
+      bn: {
+        s: "মনে একজন প্রভু থাকুক, ছোট বিষয়কে সম্মান করো ধৈর্যশীল মনে,",
+        r: "mane ekjan prabhu thākuk, choṭo biṣayke sammān karo dhairyāśīl mane,",
+        e: "心中有主宰＝心裡有主見、有定見（道場語：以道為主）；敬重小事＝連小事都認真；恆耐＝長久忍耐。"
+      },
+      es: {
+        s: "Que haya un guía en tu corazón; honra lo pequeño con paciencia constante,",
+        r: "",
+        e: "心中有主宰＝心裡有主見、有定見（道場語：以道為主）；敬重小事＝連小事都認真；恆耐＝長久忍耐。"
+      },
+      de: {
+        s: "Trage einen Herrn im Herzen; ehre das Kleine mit beständiger Geduld,",
+        r: "",
+        e: "心中有主宰＝心裡有主見、有定見（道場語：以道為主）；敬重小事＝連小事都認真；恆耐＝長久忍耐。"
+      },
+      my: {
+        s: "နှလုံးသားမှာ အရှင်သခင်ရှိစေ၊ အသေးအဖွဲတွေကို လေးစား၍ စိတ်ရှည်သည်းခံစေ,",
+        r: "hnəlon thá hma əshin thəkhin shi zé, əthé əphwɛ́ dwe ko lé zá yè seik shé thín khan zé,",
+        e: "心中有主宰＝心裡有主見、有定見（道場語：以道為主）；敬重小事＝連小事都認真；恆耐＝長久忍耐。"
+      },
+      ko: {
+        s: "마음속에 주인이 있게 하고, 작은 일도 공경하며 늘 인내하라,",
+        r: "ma-eumsog-e juin-i itge hago, jag-eun ildo gonggyeonghamyeo neul innaehara,",
+        e: "心中有主宰＝心裡有主見、有定見（道場語：以道為主）；敬重小事＝連小事都認真；恆耐＝長久忍耐。"
+      },
+      ja: {
+        s: "心に主を持ち、小さな事を敬い恒に耐えよ,",
+        r: "kokoro ni omo o mochi, chīsana koto o uyamai tsune ni taeyo,",
+        e: "心中有主宰＝心裡有主見、有定見（道場語：以道為主）；敬重小事＝連小事都認真；恆耐＝長久忍耐。"
+      },
+      si: {
+        s: "හදවතේ ස්වාමියෙක් සිටීවා, කුඩා දේවල්වලට ගෞරව කරමින් ස්ථිර ඉවසීමෙන් සිටින්න,",
+        r: "hadavatē svāmiyek siṭīvā, kuḍā dēvalvalaṭa gaurava karamin sthira ivasīmen siṭinna,",
+        e: "心中有主宰＝心裡有主見、有定見（道場語：以道為主）；敬重小事＝連小事都認真；恆耐＝長久忍耐。"
+      },
+      fa: {
+        s: "در دلت فرمانروایی باشد؛ کارهای کوچک را با صبری پایدار گرامی دار،",
+        r: "dar delat farmānravāyi bāshad; kārhā-ye kuchak rā bā sabr-i pāydār gerāmi dār,",
+        e: "心中有主宰＝心裡有主見、有定見（道場語：以道為主）；敬重小事＝連小事都認真；恆耐＝長久忍耐。"
+      }
+    },
+    {
+      hi: {
+        s: "एक-एक शब्द, सब धर्म के अनुकूल हो,",
+        r: "ek-ek śabd, sab dharm ke anukūl ho,",
+        e: "一言一語＝說的每一句話；合乎道的風采＝符合大道的氣度風範。"
+      },
+      en: {
+        s: "Every word I speak befits the grace of the Dao,",
+        r: "",
+        e: "一言一語＝說的每一句話；合乎道的風采＝符合大道的氣度風範。"
+      },
+      ta: {
+        s: "ஒவ்வொரு சொல்லும் தர்மத்தின் அழகுக்கு ஏற்றதாக இருக்கட்டும்,",
+        r: "ovvoru collum tarmattiṉ aḻakukku ēṟṟatāka irukkaṭṭum,",
+        e: "一言一語＝說的每一句話；合乎道的風采＝符合大道的氣度風範。"
+      },
+      th: {
+        s: "ทุกคำพูด ล้วนสมกับความสง่าของธรรม,",
+        r: "thuk kham phūt, luan som kap khwām sa-ngā khǭng tham,",
+        e: "一言一語＝說的每一句話；合乎道的風采＝符合大道的氣度風範。"
+      },
+      km: {
+        s: "គ្រប់ពាក្យសម្ដី សុទ្ធតែសមនឹងភាពថ្លៃថ្នូរនៃធម៌,",
+        r: "krup peak sɑmdəy, sot te som nɨng pheap thlai thnor nei thoam,",
+        e: "一言一語＝說的每一句話；合乎道的風采＝符合大道的氣度風範。"
+      },
+      vi: {
+        s: "Từng lời từng tiếng, đều xứng với phong thái của Đạo,",
+        r: "",
+        e: "一言一語＝說的每一句話；合乎道的風采＝符合大道的氣度風範。"
+      },
+      id: {
+        s: "Setiap kata, semuanya pantas dengan keanggunan Jalan (Dao),",
+        r: "",
+        e: "一言一語＝說的每一句話；合乎道的風采＝符合大道的氣度風範。"
+      },
+      ne: {
+        s: "प्रत्येक शब्द धर्मको शोभाअनुसार होस्,",
+        r: "pratyek śabd dharmako śobhā anusār hos,",
+        e: "一言一語＝說的每一句話；合乎道的風采＝符合大道的氣度風範。"
+      },
+      bn: {
+        s: "প্রতিটি কথা ধর্মের মর্যাদার উপযুক্ত হোক,",
+        r: "pratiṭi kathā dharmmer maryādār upayukta hok,",
+        e: "一言一語＝說的每一句話；合乎道的風采＝符合大道的氣度風範。"
+      },
+      es: {
+        s: "Cada palabra sea digna de la elegancia del Dao,",
+        r: "",
+        e: "一言一語＝說的每一句話；合乎道的風采＝符合大道的氣度風範。"
+      },
+      de: {
+        s: "Jedes Wort sei der Würde des Dao angemessen,",
+        r: "",
+        e: "一言一語＝說的每一句話；合乎道的風采＝符合大道的氣度風範。"
+      },
+      my: {
+        s: "စကားတစ်လုံးချင်းစီက တရား(တာအို)ရဲ့ ဂုဏ်သိက္ခာနဲ့ လိုက်ဖက်စေ,",
+        r: "səgá təlón khyin zí ga təyá (ta áo) yé goun theikkha nè laik phet zé,",
+        e: "一言一語＝說的每一句話；合乎道的風采＝符合大道的氣度風範。"
+      },
+      ko: {
+        s: "한 마디 한 마디가 도의 풍채에 어울리게 하라,",
+        r: "han madi han madiga do-ui pungchae-e eoullige hara,",
+        e: "一言一語＝說的每一句話；合乎道的風采＝符合大道的氣度風範。"
+      },
+      ja: {
+        s: "一言一句が道の風格にふさわしくあれ,",
+        r: "ichigon ikku ga michi no fūkaku ni fusawashiku are,",
+        e: "一言一語＝說的每一句話；合乎道的風采＝符合大道的氣度風範。"
+      },
+      si: {
+        s: "සෑම වචනයක්ම ධර්මයේ අලංකාරයට ගැලපේවා,",
+        r: "sæma vacanayakma dharmayē alaṁkārȧyaṭa gælapēvā,",
+        e: "一言一語＝說的每一句話；合乎道的風采＝符合大道的氣度風範。"
+      },
+      fa: {
+        s: "هر سخنی شایسته‌ی شکوهِ دائو باشد،",
+        r: "har sokhani shāyeste-ye shokuh-e dā'o bāshad,",
+        e: "一言一語＝說的每一句話；合乎道的風采＝符合大道的氣度風範。"
+      }
+    },
+    {
+      hi: {
+        s: "विस्तार से फैलाओ, वर्तमान को पकड़ो और कोई खालीपन न छोड़ो,",
+        r: "vistār se phailāo, vartamān ko pakaṛo aur koī khālīpan na choṛo,",
+        e: "寬廣拓展開＝把心量與格局放大；不留白＝人生畫布不留空白、不留遺憾。"
+      },
+      en: {
+        s: "Expand far and wide; seize the present, leaving no blank,",
+        r: "",
+        e: "寬廣拓展開＝把心量與格局放大；不留白＝人生畫布不留空白、不留遺憾。"
+      },
+      ta: {
+        s: "பரந்து விரிவடை; நிகழ்காலத்தைப் பற்றி, வெற்றிடம் விடாதே,",
+        r: "parantu virivaṭai; nikaḻkālattai paṟṟi, veṟṟiṭam viṭātē,",
+        e: "寬廣拓展開＝把心量與格局放大；不留白＝人生畫布不留空白、不留遺憾。"
+      },
+      th: {
+        s: "ขยายออกไปกว้างไกล คว้าปัจจุบันไว้ ไม่เหลือที่ว่าง,",
+        r: "kha yāi ok pai kwāng klai, khwā patchuban wai, mai luea thī wāng,",
+        e: "寬廣拓展開＝把心量與格局放大；不留白＝人生畫布不留空白、不留遺憾。"
+      },
+      km: {
+        s: "ពង្រីកឱ្យទូលំទូលាយ ចាប់យកបច្ចុប្បន្ន មិនទុកចន្លោះទទេ,",
+        r: "pɑngrɨk aoy tulom tulay, chab yōk bɑchchobɑn, min tuk chɑnlɑh tɨté,",
+        e: "寬廣拓展開＝把心量與格局放大；不留白＝人生畫布不留空白、不留遺憾。"
+      },
+      vi: {
+        s: "Mở rộng thênh thang, nắm lấy hiện tại, không để trắng,",
+        r: "",
+        e: "寬廣拓展開＝把心量與格局放大；不留白＝人生畫布不留空白、不留遺憾。"
+      },
+      id: {
+        s: "Bentangkan luas-luas, genggam saat ini, jangan sisakan yang kosong,",
+        r: "",
+        e: "寬廣拓展開＝把心量與格局放大；不留白＝人生畫布不留空白、不留遺憾。"
+      },
+      ne: {
+        s: "फराकिलो फैलाऊ, वर्तमानलाई समात र खालीपन नछोड,",
+        r: "pharākilo phailāū, vartamānlāī samāt ra khālīpan nachoḍa,",
+        e: "寬廣拓展開＝把心量與格局放大；不留白＝人生畫布不留空白、不留遺憾。"
+      },
+      bn: {
+        s: "বিস্তৃতভাবে ছড়িয়ে দাও, বর্তমানকে ধরো, শূন্যতা রেখো না,",
+        r: "bistṛtabhābe choṛiye dāo, bartamānke dharo, śūnyatā rekho nā,",
+        e: "寬廣拓展開＝把心量與格局放大；不留白＝人生畫布不留空白、不留遺憾。"
+      },
+      es: {
+        s: "Expándete a lo ancho; aprovecha el presente sin dejar blancos,",
+        r: "",
+        e: "寬廣拓展開＝把心量與格局放大；不留白＝人生畫布不留空白、不留遺憾。"
+      },
+      de: {
+        s: "Weite dich aus; ergreife die Gegenwart und lass keine Leere,",
+        r: "",
+        e: "寬廣拓展開＝把心量與格局放大；不留白＝人生畫布不留空白、不留遺憾。"
+      },
+      my: {
+        s: "ကျယ်ကျယ်ပြန့်ပြန့် ဖြန့်ကျက်ပါ၊ ပစ္စုပ္ပန်ကို ဆုပ်ကိုင်၍ အလွတ်မချန်နှင့်,",
+        r: "kyè kyè pyan pyan phyant kyet pa, pissuppan ko hsouk kain yè əhlwat mə khyan hnin,",
+        e: "寬廣拓展開＝把心量與格局放大；不留白＝人生畫布不留空白、不留遺憾。"
+      },
+      ko: {
+        s: "넓게 펼쳐 나아가고, 현재를 붙잡아 빈틈을 남기지 마라,",
+        r: "neolpge pyeolchyeo na-agago, hyeonjaereul butjab-a binteum-eul namgiji mara,",
+        e: "寬廣拓展開＝把心量與格局放大；不留白＝人生畫布不留空白、不留遺憾。"
+      },
+      ja: {
+        s: "広く拓いて展開し、今を掴んで空白を残すな,",
+        r: "hiroku hiraite tenkai shi, ima o tsukande kūhaku o nokosuna,",
+        e: "寬廣拓展開＝把心量與格局放大；不留白＝人生畫布不留空白、不留遺憾。"
+      },
+      si: {
+        s: "පුළුල්ව විහිදුවන්න, වර්තමානය අල්ලාගෙන හිස්තැනක් නොතබන්න,",
+        r: "puḷulva vihiduvanna, vartamānaya allāgena histænak notabanna,",
+        e: "寬廣拓展開＝把心量與格局放大；不留白＝人生畫布不留空白、不留遺憾。"
+      },
+      fa: {
+        s: "گسترده بگستر؛ اکنون را دریاب و جای خالی مگذار،",
+        r: "gostarde begostar; aknun rā daryāb o jā-ye khāli magozār,",
+        e: "寬廣拓展開＝把心量與格局放大；不留白＝人生畫布不留空白、不留遺憾。"
+      }
+    },
+    {
+      hi: {
+        s: "हर हरकत को सबसे शानदार बनाओ,",
+        r: "har harkat ko sabse śāndār banāo,",
+        e: "一舉一動＝每一個動作；最精彩＝做到最好、最出色。"
+      },
+      en: {
+        s: "Make every move the most splendid,",
+        r: "",
+        e: "一舉一動＝每一個動作；最精彩＝做到最好、最出色。"
+      },
+      ta: {
+        s: "ஒவ்வொரு அசைவையும் மிகச் சிறப்பாகச் செய்,",
+        r: "ovvoru acaivaiyum mikac ciṟappākac cey,",
+        e: "一舉一動＝每一個動作；最精彩＝做到最好、最出色。"
+      },
+      th: {
+        s: "ทุกการเคลื่อนไหว จงทำให้ยอดเยี่ยมที่สุด,",
+        r: "thuk kān khluean wai, chong tham hai yǭt yīam thī sut,",
+        e: "一舉一動＝每一個動作；最精彩＝做到最好、最出色。"
+      },
+      km: {
+        s: "គ្រប់ចលនា ធ្វើឱ្យអស្ចារ្យបំផុត,",
+        r: "krup chɑlɑnea, thvə aoy ɑschar bɑmphot,",
+        e: "一舉一動＝每一個動作；最精彩＝做到最好、最出色。"
+      },
+      vi: {
+        s: "Mỗi cử chỉ đều làm cho đặc sắc nhất,",
+        r: "",
+        e: "一舉一動＝每一個動作；最精彩＝做到最好、最出色。"
+      },
+      id: {
+        s: "Setiap gerak-gerik, jadikan yang paling gemilang,",
+        r: "",
+        e: "一舉一動＝每一個動作；最精彩＝做到最好、最出色。"
+      },
+      ne: {
+        s: "प्रत्येक चाललाई सबैभन्दा उत्कृष्ट बनाऊ,",
+        r: "pratyek cāllāī sabhaibhandā utkṛṣṭa banāū,",
+        e: "一舉一動＝每一個動作；最精彩＝做到最好、最出色。"
+      },
+      bn: {
+        s: "প্রতিটি অঙ্গভঙ্গি সবচেয়ে চমৎকার করে তোলো,",
+        r: "pratiṭi aṅgabhaṅgi sabceye camatkār kare tolo,",
+        e: "一舉一動＝每一個動作；最精彩＝做到最好、最出色。"
+      },
+      es: {
+        s: "Haz que cada gesto sea el más espléndido,",
+        r: "",
+        e: "一舉一動＝每一個動作；最精彩＝做到最好、最出色。"
+      },
+      de: {
+        s: "Mache jede Bewegung zur prächtigsten,",
+        r: "",
+        e: "一舉一動＝每一個動作；最精彩＝做到最好、最出色。"
+      },
+      my: {
+        s: "လှုပ်ရှားမှုတိုင်းကို အထူးခြားဆုံး ဖြစ်အောင် လုပ်ပါ,",
+        r: "hlouk shá hmu táing ko əhtú chaa són phyit aung loke ba,",
+        e: "一舉一動＝每一個動作；最精彩＝做到最好、最出色。"
+      },
+      ko: {
+        s: "일거수일투족을 가장 멋지게 하라,",
+        r: "ilgeosuiltujog-eul gajang meosjige hara,",
+        e: "一舉一動＝每一個動作；最精彩＝做到最好、最出色。"
+      },
+      ja: {
+        s: "一挙手一投足を最も素晴らしく,",
+        r: "ikkyoshu ittō o mottomo subarashiku,",
+        e: "一舉一動＝每一個動作；最精彩＝做到最好、最出色。"
+      },
+      si: {
+        s: "සෑම චලනයක්ම ඉතාම විශිෂ්ට ලෙස කරන්න,",
+        r: "sæma calanayakma itāma viśiṣṭa lesa karanna,",
+        e: "一舉一動＝每一個動作；最精彩＝做到最好、最出色。"
+      },
+      fa: {
+        s: "هر حرکتی را درخشان‌ترین کن،",
+        r: "har harekati rā derakhshān-tarin kon,",
+        e: "一舉一動＝每一個動作；最精彩＝做到最好、最出色。"
+      }
+    }
   ]
 };
