@@ -995,6 +995,13 @@ async function uploadModelRecording(sentence, recording) {
     await teacherSentencesRef(sentence._owner).doc(sentence.recordId).update(audioFields);
   } else {
     await teacherOverridesRef(uid).doc(sentence.recordId).set(audioFields, { merge: true });
+    /* 同步記憶體覆寫表：歌曲／禮節卡每次重繪都由 state.overlayMap 重建句子物件
+       （songLineToSentence），若只寫 Firestore 而不更新 overlayMap，存檔後的重繪
+       會把新錄音洗掉、必須整頁重新整理才出現（2026-10-23 Cheng 回報後修）。 */
+    if (state.overlayMap) {
+      const prevOv = state.overlayMap.get(sentence.recordId) || {};
+      state.overlayMap.set(sentence.recordId, { ...prevOv, audioPath: path, audioMime: mime });
+    }
   }
   const saved = state.sentences.find(row => row.recordId === sentence.recordId);
   if (saved) { saved.audioPath = path; saved.audioMime = mime; saved.standardAudioUrl = path; }
