@@ -2967,7 +2967,7 @@ const V4_SONGS = [
     id: 'babamamaxiexieni',
     title: '爸爸媽媽謝謝你',
     videoType: 'youtube',
-    youtubeId: 'VaPmwNCADmA',
+    youtubeId: 'EGNJ4k9OdAU',
     lines: [
       { zh: '爸爸媽媽謝謝你', py: 'bà ba mā ma xiè xie nǐ' },
       { zh: '放下心愛的手機', py: 'fàng xià xīn ài de shǒu jī' },
