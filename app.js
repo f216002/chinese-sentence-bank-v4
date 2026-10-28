@@ -2968,7 +2968,6 @@ const V4_SONGS = [
     title: '爸爸媽媽謝謝你',
     videoType: 'youtube',
     youtubeId: 'VaPmwNCADmA',
-    youtubeList: 'RDVaPmwNCADmA',
     lines: [
       { zh: '爸爸媽媽謝謝你', py: 'bà ba mā ma xiè xie nǐ' },
       { zh: '放下心愛的手機', py: 'fàng xià xīn ài de shǒu jī' },
@@ -4632,7 +4631,7 @@ async function renderSongView(songId) {
   } else if (song.videoType === 'youtube' && song.youtubeId) {
     content.innerHTML = `
       <div class="song-video-wrap">
-        <iframe class="song-youtube" src="https://www.youtube.com/embed/${song.youtubeId}${song.youtubeList ? '?list=' + song.youtubeList : ''}" title="${escapeHtml(song.title)}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe class="song-youtube" src="https://www.youtube.com/embed/${song.youtubeId}" title="${escapeHtml(song.title)}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>`;
   } else {
     /* Storage 鎖死（2026-10-10）：經下載票取影片網址。 */
