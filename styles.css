@@ -404,3 +404,8 @@ button .en-sub { pointer-events: none; }
 
 /* 底部導航列調整（移除按鈕後置中） */
 .ebook-nav{justify-content:center;gap:16px}
+
+/* 羅馬拼音收合（2026-10-29，第二冊第2課）：預設展開，點合起隱藏、點展開恢復；非第2課卡片按鈕維持隱藏。 */
+.pinyin-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.pinyin-row .pinyin{flex:1;min-width:0}
+.pinyin-toggle{flex:none;margin:12px 0 0;padding:6px 14px;border-radius:999px;border:1.5px solid var(--teal);background:transparent;color:var(--teal);font-size:14px;font-weight:700;cursor:pointer}
