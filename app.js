@@ -1333,7 +1333,21 @@ function createCard(sentence, preview = false) {
   const chineseEl = node.querySelector('.chinese');
   chineseEl.textContent = zhConvert(sentence.chineseSentence);
   chineseEl.setAttribute('lang', getZhMode() === 'simp' ? 'zh-Hans' : 'zh-Hant');
-  node.querySelector('.pinyin').textContent = sentence.pinyin;
+  const pinyinEl = node.querySelector('.pinyin');
+  pinyinEl.textContent = sentence.pinyin;
+  /* 羅馬拼音收合（2026-10-29，Cheng 指示）：僅第二冊第2課句子卡顯示，預設展開，點合起隱藏、點展開恢復；每張卡獨立。 */
+  const pinyinToggle = node.querySelector('.pinyin-toggle');
+  const lessonNum = Number(courseMeta(sentence).lesson);
+  if (pinyinToggle && sentence.pinyin && bookOf(lessonNum) === 2 && bookLessonNum(lessonNum) === 2) {
+    pinyinToggle.hidden = false;
+    pinyinToggle.setAttribute('aria-expanded', 'true');
+    pinyinToggle.addEventListener('click', () => {
+      const collapsed = pinyinEl.hidden;
+      pinyinEl.hidden = !collapsed;
+      pinyinToggle.textContent = collapsed ? '合起' : '展開';
+      pinyinToggle.setAttribute('aria-expanded', collapsed ? 'true' : 'false');
+    });
+  }
   /* 句子卡解說區塊已移除（2026-10-15，Cheng 指示：實際操作用不到）；解說資料本身保留於句庫與編輯框。 */
   const tags = [...new Set(String(sentence.tags || '').split(/[,;|]/).map(t => t.trim().toLowerCase()).filter(Boolean))];
   node.querySelector('.tags').innerHTML = tags.map(tag => `<span class="tag"></span>`).join('');
