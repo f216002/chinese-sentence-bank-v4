@@ -1335,10 +1335,9 @@ function createCard(sentence, preview = false) {
   chineseEl.setAttribute('lang', getZhMode() === 'simp' ? 'zh-Hans' : 'zh-Hant');
   const pinyinEl = node.querySelector('.pinyin');
   pinyinEl.textContent = sentence.pinyin;
-  /* 羅馬拼音收合（2026-10-29，Cheng 指示）：僅第二冊第2課句子卡顯示，預設展開，點合起隱藏、點展開恢復；每張卡獨立。 */
+  /* 羅馬拼音收合（2026-10-29，Cheng 指示：全部句子卡）：有拼音的卡都顯示，預設展開，點合起隱藏、點展開恢復；每張卡獨立。 */
   const pinyinToggle = node.querySelector('.pinyin-toggle');
-  const lessonNum = Number(courseMeta(sentence).lesson);
-  if (pinyinToggle && sentence.pinyin && bookOf(lessonNum) === 2 && bookLessonNum(lessonNum) === 2) {
+  if (pinyinToggle && sentence.pinyin) {
     pinyinToggle.hidden = false;
     pinyinToggle.setAttribute('aria-expanded', 'true');
     pinyinToggle.addEventListener('click', () => {
