@@ -1769,7 +1769,62 @@ function courseMeta(sentence) {
   return meta;
 }
 
+/* 主列表分段渲染（20261030 效能修復）：搜尋命中上千句時不再一次全量進 DOM。
+   第一批同步渲染；剩下的由置底 sentinel 分批補上（滑近時自動載入，也可按鈕手動載入）；
+   全部載完移除 sentinel。renderSentences 每次重渲染都會作廢舊批次（token 比對）。 */
+const GRID_CHUNK = 100;
+let gridChunkToken = 0;
+let gridChunkObserver = null;
+function renderGridChunked(container, items, buildAt, onChunk, token) {
+  if (token !== undefined && token !== gridChunkToken) return;
+  const total = items.length;
+  let next = 0;
+  const sentinel = document.createElement('div');
+  sentinel.className = 'load-more-row';
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'secondary-button';
+  sentinel.appendChild(btn);
+  const updateBtn = () => {
+    btn.innerHTML = '顯示更多（還剩 ' + (total - next) + ' 句） <span class="en-sub">Show more</span>';
+  };
+  const appendChunk = () => {
+    if (token !== undefined && token !== gridChunkToken) return false;
+    const end = Math.min(next + GRID_CHUNK, total);
+    for (let i = next; i < end; i++) {
+      const el = buildAt(i);
+      container.insertBefore(el, (sentinel.parentElement === container) ? sentinel : null);
+    }
+    next = end;
+    if (onChunk) onChunk();
+    if (next >= total) {
+      if (sentinel.parentElement === container) container.removeChild(sentinel);
+      if (gridChunkObserver) { gridChunkObserver.disconnect(); gridChunkObserver = null; }
+      return false;
+    }
+    updateBtn();
+    return true;
+  };
+  appendChunk();
+  if (next < total) {
+    updateBtn();
+    container.appendChild(sentinel);
+    btn.addEventListener('click', () => { appendChunk(); });
+    if ('IntersectionObserver' in window) {
+      if (gridChunkObserver) gridChunkObserver.disconnect();
+      gridChunkObserver = new IntersectionObserver((entries) => {
+        for (const en of entries) { if (en.isIntersecting) appendChunk(); }
+      }, { rootMargin: '1000px 0px' });
+      gridChunkObserver.observe(sentinel);
+    }
+  }
+}
+
 function renderSentences() {
+  /* 分段渲染：新一次渲染先作廢舊批次（20261030）。 */
+  if (gridChunkObserver) { gridChunkObserver.disconnect(); gridChunkObserver = null; }
+  gridChunkToken++;
+  const chunkToken = gridChunkToken;
   /* 搜尋：有关键字时搜尋全資料庫（含課程記錄）；無搜尋條件時只顯示個人句庫。
      v20260925-23: 徹底簡化邏輯，確保課程記錄能被搜到。 */
   const kwA = normalizeSearchText($('keywordA').value);
@@ -1861,13 +1916,15 @@ function renderSentences() {
   const grid = $('sentenceGrid'); grid.innerHTML = '';
   if (searching) {
     /* 搜尋結果：只編號，不開放拖曳。 */
-    renderNumberedStatic(grid, visible, (s) => createCard(s));
+    renderNumberedStatic(grid, visible, (s) => createCard(s), chunkToken);
   } else {
     /* 個人句庫：編號＋↑↓移動鈕排序（順序存老師個人帳號）。 */
     renderNumberedUnit(grid, visible, {
       unitKey: 'library',
       buildCard: (s) => createCard(s),
-      canDrag: () => !!currentTeacherUid()
+      canDrag: () => !!currentTeacherUid(),
+      chunked: true,
+      chunkToken
     });
   }
   setBilingualText($('resultCount'), `${visible.length} 句`, `${visible.length} shown`);
@@ -2300,7 +2357,13 @@ $('pasteInput').addEventListener('paste', () => {
 });
 $('clearButton').addEventListener('click', () => { $('pasteInput').value = ''; $('parseMessage').textContent = ''; $('previewPanel').classList.add('hidden'); });
 $('previewButton').addEventListener('click', handlePreview);
-['keywordA','keywordB','keywordC'].forEach(id => $(id).addEventListener('input', renderSentences));
+/* 搜尋框輸入防抖（20261030）：每字全量重渲染是手機卡頓主因之一，停手 250ms 後才渲染。 */
+let searchDebounceTimer = null;
+const renderSentencesDebounced = () => {
+  if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
+  searchDebounceTimer = setTimeout(() => { searchDebounceTimer = null; renderSentences(); }, 250);
+};
+['keywordA','keywordB','keywordC'].forEach(id => $(id).addEventListener('input', renderSentencesDebounced));
 ['operatorAB','operatorBC'].forEach(id => $(id).addEventListener('change', renderSentences));
 $('topicToggle').addEventListener('click', () => {
   const open = !$('topicMenu').classList.contains('hidden');
@@ -8486,6 +8549,19 @@ function renderNumberedUnit(container, recs, opts) {
   recs.length = 0;
   ordered.forEach(s => recs.push(s));
   const canMove = !!(opts.unitKey && uid && (!opts.canDrag || opts.canDrag()));
+  if (opts.chunked) {
+    /* 分段渲染（20261030）：只在主列表用；其餘呼叫點（課程、歌詞）維持原樣。 */
+    if (canMove) attachMoveHandlers(container, opts.unitKey, uid);
+    renderGridChunked(container, ordered, (i) => {
+      const card = opts.buildCard(ordered[i]);
+      addCardNumber(card, i + 1);
+      card.classList.add('mv-card');
+      card.dataset.recordId = String(ordered[i].recordId);
+      if (canMove) addMoveButtons(card);
+      return card;
+    }, canMove ? () => refreshMoveButtons(container) : null, opts.chunkToken);
+    return ordered;
+  }
   ordered.forEach((s, i) => {
     const card = opts.buildCard(s);
     addCardNumber(card, i + 1);
@@ -8502,7 +8578,15 @@ function renderNumberedUnit(container, recs, opts) {
 }
 
 /* 只編號不移動（搜尋結果、訪客視角）。 */
-function renderNumberedStatic(container, recs, buildCard) {
+function renderNumberedStatic(container, recs, buildCard, chunkToken) {
+  if (chunkToken !== undefined) {
+    renderGridChunked(container, recs, (i) => {
+      const card = buildCard(recs[i]);
+      addCardNumber(card, i + 1);
+      return card;
+    }, null, chunkToken);
+    return;
+  }
   recs.forEach((s, i) => {
     const card = buildCard(s);
     addCardNumber(card, i + 1);
